@@ -76,6 +76,7 @@ export type Device = CpuDevice | GpuDevice;
 export type Architecture = {
   uuid: string;
   platform?: 'darwin' | 'win32' | 'linux';
+  cpuArch: 'x32' | 'x64';
   warnings: string[];
   devices: Device[];
 };

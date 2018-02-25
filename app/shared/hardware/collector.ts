@@ -1,10 +1,13 @@
 import { graphics, cpu, system } from 'systeminformation';
+import { arch } from 'os';
 import { Architecture } from '../../renderer/api/Api';
 
-function checkVendor(vendor: string, type: 'gpu' | 'cpu') {
+function checkVendor(vendor: string, type: 'gpu' | 'cpu', model: string) {
   const lowerCased = vendor.toLowerCase();
+  const lowerCasedModel = model.toLowerCase();
 
-  if (lowerCased.includes('amd')) return 'amd';
+  if (lowerCased.includes('amd') || lowerCasedModel.includes('amd'))
+    return 'amd';
   else if (type === 'gpu' && lowerCased.includes('nvidia'))
     // amd can be both cpu's and gpu's
     return 'nvidia';
@@ -13,7 +16,7 @@ function checkVendor(vendor: string, type: 'gpu' | 'cpu') {
     return 'intel';
   else
     throw new Error(
-      `Your ${type.toUpperCase()} vendor (${vendor}) is unsupported. If you think that is mistake, try to update your drivers`,
+      `Your ${type.toUpperCase()} vendor (${vendor}) is unsupported. If you think that is mistake, try to update your drivers`
     );
 }
 
@@ -23,17 +26,22 @@ export default async function collectHardware(): Promise<Architecture> {
   const collectedCpu = await cpu();
   const uuid = (await system()).uuid.toLowerCase();
 
-  const report: Architecture = { devices: [], warnings: [], uuid };
+  const report: Architecture = {
+    devices: [],
+    warnings: [],
+    uuid,
+    cpuArch: arch(),
+  };
   if (['win32', 'darwin', 'linux'].includes(process.platform)) {
     report.platform = process.platform as any;
   } else
     throw new Error(
-      "Your platform (OS) is unsupported. It's strange, we will try to investigate your problem.",
+      "Your platform (OS) is unsupported. It's strange, we will try to investigate your problem."
     );
 
   controllers.forEach((gpu, index) => {
     try {
-      const platform = checkVendor(gpu.vendor, 'gpu') as any;
+      const platform = checkVendor(gpu.vendor, 'gpu', gpu.model) as any;
 
       report.devices.push({
         type: 'gpu',

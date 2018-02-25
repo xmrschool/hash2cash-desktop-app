@@ -48,7 +48,6 @@ export class AppWindow {
     };
 
     if (__WIN32__) {
-      windowOptions.frame = false;
     } else if (__LINUX__) {
     }
 
