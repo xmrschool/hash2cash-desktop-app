@@ -1,0 +1,77 @@
+.root {
+    display: flex;
+    position: relative;
+    max-width: var(--input-width, 85%);
+    width: 100%;
+    margin-bottom: 10px;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.label {
+    flex-grow: 0.2;
+    text-align: right;
+    opacity: 0.7;
+    margin-right: 1em;
+    font-weight: 200;
+    min-width: 25%;
+}
+
+.inputContainer {
+    position: relative;
+    flex-grow: 0.6;
+}
+
+.inputContainer:after {
+    content: '';
+    height: 1px;
+    width: 100%;
+    background: #fff;
+    opacity: 0.3;
+
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+}
+
+.input {
+    background: none;
+    border: none;
+    outline: none;
+    position: relative;
+    font-family: inherit;
+    font-size: 90%;
+    width: 100%;
+    font-weight: 300;
+    color: inherit;
+}
+
+.shaking {
+    animation: shake 0.42s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+}
+
+.error {
+    position: absolute;
+    font-size: 90%;
+    color: #fd6565;
+    top: 34px;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-3px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(3px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-3px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(3px, 0, 0);
+    }
+}

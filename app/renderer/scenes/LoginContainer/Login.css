@@ -1,0 +1,75 @@
+.root {
+  height: 100vh;
+  transition: var(--animation-delay) opacity var(--animation-type),
+    var(--animation-delay) transform var(--animation-type);
+  opacity: 0;
+  transform: translateY(var(--navigating-transition));
+
+  display: flex;
+  align-items: center;
+
+  --padding-between: 3em;
+}
+
+.appeared {
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+.logoContainer {
+  max-width: 40%;
+  margin-bottom: var(--padding-between);
+  flex-grow: 1;
+  align-items: center;
+  display: flex;
+}
+
+.logo {
+  width: 100%;
+}
+
+.container {
+  height: 50%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loginContainer {
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-end;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    height: 0;
+    flex-grow: 0.0001;
+    transform: translateY(82px);
+  }
+  to {
+    opacity: 1;
+    height: 82px;
+    flex-grow: 1;
+    transform: translateY(0);
+  }
+}
+.secondView {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(82px);
+  animation: fadeIn 300ms var(--animation-type) forwards;
+}
+
+.warn {
+  font-size: 80%;
+  margin-top: 2rem;
+  opacity: 0.9;
+}

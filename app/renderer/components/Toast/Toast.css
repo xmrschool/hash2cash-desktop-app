@@ -1,0 +1,24 @@
+.toast {
+  position: absolute;
+  bottom: -50px;
+  max-height: 44px;
+  height: 100%;
+  left: 0;
+  width: 100%;
+  font-size: 96%;
+  z-index: 1;
+  transition: var(--animation-delay) bottom var(--animation-type);
+  background: #da4141;
+}
+
+.message {
+  padding: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  user-select: text;
+  overflow: hidden;
+}
+
+.show {
+  bottom: 0;
+}

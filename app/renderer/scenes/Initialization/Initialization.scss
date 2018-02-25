@@ -1,0 +1,172 @@
+.root {
+  height: 100%;
+  transition: var(--animation-delay) opacity var(--animation-type),
+  var(--animation-delay) transform var(--animation-type);
+  opacity: 0;
+  transform: translateY(var(--navigating-transition));
+
+  display: flex;
+  padding: 60px 30px 40px;
+  flex-direction: column;
+}
+
+.root h2 {
+  font-size: 130%;
+}
+
+.appeared {
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+.hey {
+  margin-top: 40px;
+}
+
+.time {
+  color: #fff;
+  letter-spacing: 1.5px;
+  margin-top: 40px;
+}
+
+.button {
+  text-align: center;
+  flex-grow: 1;
+  margin-top: 70px;
+}
+
+.circle {
+  position: relative;
+  margin-top: 20px;
+}
+
+@keyframes cardIn {
+  0% {
+    opacity: 0;
+    transform: translateY(2em)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+.hardware {
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(2em);
+  animation: cardIn var(--animation-delay) var(--animation-type) forwards;
+  display: flex;
+  user-select: text;
+  position: relative;
+}
+
+.behind {
+  z-index: 2;
+}
+
+@for $i from 1 through 10 {
+  .hardware:nth-child(#{$i}) {
+    animation-delay: #{$i * 0.2}s;
+  }
+}
+
+.hardware * {
+  user-select: text;
+}
+
+.model {
+  flex-grow: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.unavailable {
+  flex-grow: 1;
+  position: relative;
+  z-index: 1;
+
+  &:hover + .reasonContainer {
+    transform: translateY(10px);
+    opacity: 1;
+    z-index: 5;
+  }
+
+  & span {
+    opacity: 0.5;
+    flex-grow: initial;
+  }
+
+  & div {
+
+  }
+}
+
+.reasonContainer {
+  transition: var(--animation-delay) all var(--animation-type);
+  position: absolute;
+  opacity: 0;
+  z-index: 0;
+  background: #fff;
+  padding: 10px;
+  filter: drop-shadow(rgba(0, 0, 0, 0.1) 0px 0px 5px);
+  border-radius: 4px;
+  color: var(--accent-color);
+  transform: translateY(30px);
+}
+
+.warning {
+  max-width: 21px;
+  height: 21px;
+  margin-left: 10px;
+}
+
+.power {
+  opacity: 0.65;
+  white-space: nowrap;
+}
+
+.hardwares {
+  margin-top: 80px;
+  user-select: text;
+}
+
+.badge {
+  border-radius: 6px;
+  background: #fecb16;
+  color: var(--accent-color);
+  margin-right: 10px;
+  padding: 3px 11px;
+  text-transform: uppercase;
+}
+
+.blurred {
+  filter: blur(6px);
+}
+
+.benchmarks {
+  display: flex;
+  margin-top: 30px;
+}
+
+.benchmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.benchmarkMonthly {
+  font-size: 160%;
+}
+
+.benchmarkText {
+  opacity: 0.7;
+  font-size: 80%;
+}
+
+.earnWithWhat {
+  opacity: 0.9;
+  margin-top: 20px;
+}

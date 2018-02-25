@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2017",
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "baseUrl": "./app/renderer/",
+    "sourceMap": true,
+    "jsx": "react",
+    "strict": true,
+    "outDir": "./out",
+    "rootDirs": ["app/renderer/", "test/", "app/"],
+    "experimentalDecorators": true
+  },
+  "files": ["app/renderer/index.tsx"],
+  "include": ["app/**/*.ts", "app/**/*.tsx", "app/**/*.d.tsx"],
+  "exclude": [
+    "node_modules",
+    "app/renderer/node_modules",
+    "app/node_modules",
+    "dist",
+    "out"
+  ],
+  "compileOnSave": false
+}

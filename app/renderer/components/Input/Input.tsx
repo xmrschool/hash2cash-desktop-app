@@ -1,0 +1,54 @@
+import * as React from 'react';
+import * as cx from 'classnames';
+
+const s = require('./Input.css');
+
+export interface IProps {
+  label?: string;
+  placeholder?: string;
+  className?: string;
+  error?: string | null;
+}
+
+export interface IState {
+  shaking?: boolean;
+}
+
+export default class Input extends React.Component<
+  React.InputHTMLAttributes<HTMLInputElement> & IProps,
+  IState
+> {
+  state = {
+    shaking: false,
+  };
+
+  componentWillReceiveProps(nextProps: IProps) {
+    if (nextProps.error !== this.props.error && nextProps.error !== null) {
+      return this.shake();
+    }
+  }
+
+  shake() {
+    this.setState({ shaking: true });
+
+    setTimeout(() => this.setState({ shaking: false }), 430);
+  }
+
+  render() {
+    const { label, placeholder, className, error, ...inputProps } = this.props;
+    const shouldShake = this.state.shaking;
+
+    return (
+      <div className={s.root}>
+        <span className={s.label}>{label || placeholder}</span>
+        <div className={s.inputContainer}>
+          <input
+            className={cx(s.input, className, shouldShake && s.shaking)}
+            {...inputProps}
+          />
+          {!!error && <div className={s.error}>{error}</div>}
+        </div>
+      </div>
+    );
+  }
+}

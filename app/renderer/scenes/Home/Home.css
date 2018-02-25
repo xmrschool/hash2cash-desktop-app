@@ -1,0 +1,12 @@
+.root {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--animation-delay) all var(--animation-type);
+}
+
+.animating {
+  opacity: 0;
+  transform: translateY(var(--navigating-transition-negative));
+}
