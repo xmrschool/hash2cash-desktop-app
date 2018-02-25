@@ -1,5 +1,4 @@
-[2018-02-25 15:15:23] accepted (12/0) diff 3000 (58 ms)
-8080 diff 3000
+[2018-02-25 15:52:36] new job from xmr.pool.hashto.cash:8080 diff 3000
 ume
 GHz (1) x64 AES-NI
 , code: -1

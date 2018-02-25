@@ -30,7 +30,7 @@ export default async function collectHardware(): Promise<Architecture> {
     devices: [],
     warnings: [],
     uuid,
-    cpuArch: arch(),
+    cpuArch: arch() as 'x32' | 'x64',
   };
   if (['win32', 'darwin', 'linux'].includes(process.platform)) {
     report.platform = process.platform as any;
@@ -64,7 +64,11 @@ export default async function collectHardware(): Promise<Architecture> {
   });
 
   try {
-    const cpuVendor = checkVendor(collectedCpu.vendor, 'cpu') as any;
+    const cpuVendor = checkVendor(
+      collectedCpu.vendor,
+      'cpu',
+      collectedCpu.model
+    ) as any;
 
     report.devices.push({
       type: 'cpu',
