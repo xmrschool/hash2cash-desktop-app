@@ -4,6 +4,8 @@ import { ANIMATION_TIME } from 'scenes/Home/Home';
 import { sleep } from 'utils/sleep';
 import { RouteComponentProps } from 'react-router';
 import Button from 'components/Button';
+import globalState from 'mobx-store/GlobalState';
+import InnerDashboard from 'components/InnerDashboard';
 
 const s = require('./Dashboard.css');
 export default class Dashboard extends React.Component<
@@ -33,9 +35,9 @@ export default class Dashboard extends React.Component<
     return this.props.history.push('/init');
   }
 
-  render() {
+  renderInitialScene() {
     return (
-      <div className={cx(s.root, this.state.appeared && s.appeared)}>
+      <>
         <h2>To start, we need to clarify some things</h2>
         <p className={s.hey}>
           Some antiviruses are taking our app as virus. And the reason for this
@@ -54,6 +56,14 @@ export default class Dashboard extends React.Component<
         <div className={s.button}>
           <Button onClick={() => this.navigate()}>Ok, start</Button>
         </div>
+      </>
+    );
+  }
+
+  render() {
+    return (
+      <div className={cx(s.root, this.state.appeared && s.appeared)}>
+        {globalState.benchmark ? <InnerDashboard {...this.props} /> : this.renderInitialScene()}
       </div>
     );
   }

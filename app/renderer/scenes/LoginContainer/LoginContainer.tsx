@@ -91,6 +91,7 @@ export default class LoginContainer extends React.Component<
               value={loginState.email}
               onChange={event => loginState.setEmail(event.target.value)}
               label="your email"
+              autoFocus
               placeholder="your@mail.com"
               error={loginState.error}
             />

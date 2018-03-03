@@ -4,15 +4,15 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const baseConfig = require('./webpack.config.base');
 const getReplacements = require('./app/app-info').getReplacements;
 
 module.exports = merge(baseConfig, {
-  devtool: 'cheap-module-source-map',
+  devtool: 'none',
 
+  mode: 'production',
   entry: ['./app/renderer/index.tsx'],
 
   output: {
@@ -21,17 +21,19 @@ module.exports = merge(baseConfig, {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.global\.css$/,
-        loaders: ['style-loader', 'css-loader?sourceMap'],
-      },
-
-      {
-        test: /^((?!\.global).)*\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[hash:base64:5]',
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: false,
+            },
+          },
         ],
       },
 
@@ -64,13 +66,37 @@ module.exports = merge(baseConfig, {
             loader: 'css-loader',
             options: {
               modules: true,
-              sourceMap: true,
+              sourceMap: false,
+              minimize: {
+                discardComments: { removeAll: true },
+              },
               importLoaders: 1,
               localIdentName: '[hash:base64:5]',
             },
           },
           {
             loader: 'sass-loader',
+          },
+        ],
+      },
+
+      {
+        test: /^((?!\.global).)*\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: false,
+              minimize: {
+                discardComments: { removeAll: true },
+              },
+              importLoaders: 1,
+              localIdentName: '[hash:base64:5]',
+            },
           },
         ],
       },
@@ -133,18 +159,17 @@ module.exports = merge(baseConfig, {
   },
 
   plugins: [
-    // https://webpack.github.io/docs/list-of-plugins.html#occurrenceorderplugin
-    // https://github.com/webpack/webpack/issues/864
-    new webpack.optimize.OccurrenceOrderPlugin(),
-
-    new ExtractTextPlugin('style.css'),
-
     new HtmlWebpackPlugin({
       filename: '../app.html',
       template: 'app/renderer/app.html',
       inject: false,
     }),
   ],
+
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
   target: 'electron-renderer',

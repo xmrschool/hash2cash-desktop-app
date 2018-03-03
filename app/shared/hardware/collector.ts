@@ -2,7 +2,11 @@ import { graphics, cpu, system } from 'systeminformation';
 import { arch } from 'os';
 import { Architecture } from '../../renderer/api/Api';
 
-function checkVendor(vendor: string, type: 'gpu' | 'cpu', model: string) {
+function checkVendor(
+  vendor: string,
+  type: 'gpu' | 'cpu',
+  model: string
+): string | false {
   const lowerCased = vendor.toLowerCase();
   const lowerCasedModel = model.toLowerCase();
 
@@ -10,7 +14,7 @@ function checkVendor(vendor: string, type: 'gpu' | 'cpu', model: string) {
     return 'amd';
   else if (type === 'gpu' && lowerCased.includes('nvidia'))
     // amd can be both cpu's and gpu's
-    return 'nvidia';
+    return false;
   else if (type === 'cpu' && lowerCased.includes('intel'))
     // nvidia have only gpu
     return 'intel';
@@ -43,17 +47,19 @@ export default async function collectHardware(): Promise<Architecture> {
     try {
       const platform = checkVendor(gpu.vendor, 'gpu', gpu.model) as any;
 
+      if (platform === false) return; // Do not emit nvidia gpu's, let deviceCollector do that thing
       report.devices.push({
         type: 'gpu',
         platform,
-        deviceID: index.toString(),
+        deviceID: report.devices.length.toString(),
         model: gpu.model,
         collectedInfo: gpu,
       });
     } catch (e) {
       report.devices.push({
         type: 'gpu',
-        deviceID: index.toString(),
+        platform: gpu.vendor as any,
+        deviceID: report.devices.length.toString(),
         model: gpu.model,
         unavailableReason: e.message,
         collectedInfo: gpu,
@@ -62,6 +68,27 @@ export default async function collectHardware(): Promise<Architecture> {
       report.warnings.push(e.message);
     }
   });
+
+  try {
+    const cudaGpus = [] as any;
+
+    // We dont care about systeminformation gpu's, instead we collect from our build library
+    if (cudaGpus.error) {
+      console.error('Failed to get any cuda devices: ', cudaGpus.error);
+    } else {
+      cudaGpus.devices.forEach((device: any) =>
+        report.devices.push({
+          type: 'gpu',
+          deviceID: report.devices.length.toString(),
+          platform: 'nvidia',
+          model: device.name,
+          collectedInfo: device,
+        })
+      );
+    }
+  } catch (e) {
+    console.error('failed to get cuda devices: ', e);
+  }
 
   try {
     const cpuVendor = checkVendor(
@@ -80,6 +107,8 @@ export default async function collectHardware(): Promise<Architecture> {
   } catch (e) {
     report.warnings.push(e.message);
   }
+
+  localStorage.collectedReport = JSON.stringify(report);
 
   console.timeEnd('hardwareCollecting');
 

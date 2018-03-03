@@ -12,13 +12,6 @@ export default function buildDefaultMenu() {
   template.push({
     label: 'Hash to Cash',
     submenu: [
-      {
-        label: 'About Hash to Cash',
-        click() {
-          console.log('Clicked about');
-        },
-        id: 'about',
-      },
       { role: 'hide' },
       { role: 'hideothers' },
       { role: 'unhide' },

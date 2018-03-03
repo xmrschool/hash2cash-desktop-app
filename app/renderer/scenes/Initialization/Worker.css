@@ -1,0 +1,50 @@
+.worker {
+  display: flex;
+  flex-direction: row;
+  opacity: var(--worker-opacity, 0.7);
+
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.07);
+  padding: 10px 20px;
+  border-radius: 6px;
+}
+
+.worker + .worker {
+  margin-top: 10px;
+}
+
+.name {
+  flex-grow: 1;
+}
+
+.profits {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: right;
+  font-size: 90%;
+}
+
+.highlighted {
+  opacity: 1;
+}
+
+.daily {
+  opacity: 0.7;
+  margin-top: 3px;
+}
+.monthly {
+  font-size: 120%;
+}
+
+.caption {
+  font-size: 90%;
+  opacity: 0.8;
+}
+
+.badge {
+  font-size: 16px;
+  opacity: 0.8;
+  margin-top: 10px;
+  text-transform: uppercase;
+}

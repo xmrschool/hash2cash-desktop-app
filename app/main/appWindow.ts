@@ -5,7 +5,7 @@ import { EventEmitter } from 'events';
 
 let windowStateKeeper: any | null = null;
 
-export const RENDERER_PATH = 'file://' + path.join(__dirname, '..', 'renderer', 'app.html');
+export let RENDERER_PATH: string;
 export class AppWindow {
   private window: Electron.BrowserWindow;
   private emitter = new EventEmitter();
@@ -46,14 +46,10 @@ export class AppWindow {
         backgroundThrottling: false,
       },
     };
-
-    if (__WIN32__) {
-    } else if (__LINUX__) {
-    }
-
     this.window = new BrowserWindow(windowOptions);
     savedWindowState.manage(this.window);
 
+    this.window.setClosable(true);
     let quitting = false;
     app.on('before-quit', () => {
       quitting = true;
@@ -64,18 +60,17 @@ export class AppWindow {
       event.returnValue = true;
     });
 
+    this.window.setAutoHideMenuBar(true);
+    this.window.setMenuBarVisibility(false);
     // on macOS, when the user closes the window we really just hide it. This
     // lets us activate quickly and keep all our interesting logic in the
     // renderer.
-    if (__DARWIN__) {
-      this.window.on('close', e => {
-        console.log('e is: ', e, quitting);
-        if (!quitting) {
-          e.preventDefault();
-          Menu.sendActionToFirstResponder('hide:');
-        }
-      });
-    }
+    this.window.on('close', e => {
+      if (!quitting) {
+        e.preventDefault();
+        this.hide();
+      }
+    });
 
     this.window.setMenu(null);
   }
@@ -112,7 +107,6 @@ export class AppWindow {
     });
 
     this.window.webContents.on('did-fail-load', (e, th) => {
-      console.log('failed to load: ', e, th);
       this.window.webContents.openDevTools();
       this.window.show();
     });
@@ -129,19 +123,14 @@ export class AppWindow {
     this.window.on('focus', () => this.window.webContents.send('focus'));
     this.window.on('blur', () => this.window.webContents.send('blur'));
 
-    console.log(
-      'URL is being loaded',
-      path.join(__dirname, '..', 'renderer', 'app.html')
-    );
-    this.window.loadURL(RENDERER_PATH);
+    RENDERER_PATH = `file://${path.join(__dirname, '../renderer/app.html')}`;
+    this.window.loadURL(`file://${path.join(__dirname, '../renderer/app.html')}`);
   }
 
   // Helps you to inspect element
   public bindContextMenu() {
     this.window.webContents.on('context-menu', (e, props) => {
       const { x, y } = props;
-
-      console.log('coordinats: ', x, y);
 
       Menu.buildFromTemplate([
         {
@@ -161,10 +150,21 @@ export class AppWindow {
     this.emitter.emit('did-load', null);
   }
 
+  public destroyed() {
+    return this.window.isDestroyed();
+  }
+
   public onClose(fn: () => void) {
     this.window.on('closed', fn);
   }
 
+  public beforeClose(fn: (event: Electron.Event) => void) {
+    this.window.on('close', fn);
+  }
+
+  public onMinimize(fn: (event: Electron.Event) => void) {
+    this.window.on('minimize', fn);
+  }
   /**
    * Register a function to call when the window is done loading. At that point
    * the page has loaded and the renderer has signalled that it is ready.
@@ -227,6 +227,10 @@ export class AppWindow {
   }
 
   public destroy() {
+    this.window.destroy();
+  }
+
+  public hide() {
     this.window.destroy();
   }
 }

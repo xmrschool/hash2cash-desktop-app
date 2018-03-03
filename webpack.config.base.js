@@ -6,18 +6,24 @@ const path = require('path');
 const getReplacements = require('./app/app-info').getReplacements;
 const { dependencies: externals } = require('./app/renderer/package.json');
 
+const isDebug = process.env.NODE_ENV !== 'production';
+
 module.exports = {
+  mode: isDebug ? 'development' : 'production',
   module: {
     noParse: [path.join(__dirname, 'node_modules/ws')],
-    loaders: [
+    rules: [
       {
         test: /\.tsx?$/,
-        loaders: ['react-hot-loader/webpack', 'ts-loader'],
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'ts-loader',
+          },
+        ],
         exclude: /node_modules/,
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader',
       },
     ],
   },
@@ -29,16 +35,16 @@ module.exports = {
     // https://github.com/webpack/webpack/issues/1114
     libraryTarget: 'commonjs2',
   },
-
   // https://webpack.github.io/docs/configuration.html#resolve
   resolve: {
-    extensions: ['.js', '.ts', '.tsx', '.json'],
+    extensions: ['.js', '.ts', '.tsx', 'json'],
     modules: [path.join(__dirname, 'app', 'renderer'), 'node_modules'],
   },
-
-  plugins: [
-    new webpack.DefinePlugin(getReplacements()),
-  ],
+  node: {
+    __dirname: false,
+    __filename: false
+  },
+  plugins: [new webpack.DefinePlugin(getReplacements())],
 
   externals: [...Object.keys(externals || {}), 'ws'],
 };

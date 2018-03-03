@@ -1,25 +1,27 @@
-import { app, Menu } from 'electron';
+import { app, ipcMain, Menu } from 'electron';
 
 import { AppWindow } from './appWindow';
 import { now } from './now';
 import buildDefaultMenu from './menu';
-import { Server } from './server';
+import { Server, serverPort } from './server';
+import * as path from 'path';
+import buildTray from './tray';
 
 require('source-map-support').install();
+
 let mainWindow: AppWindow | null = null;
 
 const launchTime = now();
 
-let preventQuit = false;
 let readyTime: number | null = null;
+let server: Server | null = null;
+const quitting = false;
 
 type OnDidLoadFn = (window: AppWindow) => void;
 /** See the `onDidLoad` function. */
 let onDidLoadFns: Array<OnDidLoadFn> | null = [];
 
 function handleUncaughtException(error: Error) {
-  preventQuit = true;
-
   if (mainWindow) {
     mainWindow.destroy();
     mainWindow = null;
@@ -27,6 +29,10 @@ function handleUncaughtException(error: Error) {
 
   const isLaunchError = !mainWindow;
   console.log('Error is: ', error, isLaunchError);
+}
+
+async function quit() {
+  app.quit();
 }
 
 process.on('uncaughtException', (error: Error) => {
@@ -56,33 +62,70 @@ if (isDuplicateInstance) {
   app.quit();
 }
 
+
 app.on('ready', () => {
   if (isDuplicateInstance) {
     return;
   }
 
+  buildTray();
   readyTime = now() - launchTime;
+
+  ipcMain.on(
+    'resolveUtil',
+    (event: Electron.IpcMessageEvent, message: string) => {
+      // Asar have limitations for executing binaries. See: https://electronjs.org/docs/tutorial/application-packaging#executing-binaries-inside-asar-archive
+      const basePath = !__DEV__
+        ? path.join(__dirname, '..')
+        : path.join(__dirname, '../../../app.asar.unpacked/app');
+      // Base path must refer to app folder
+      return event.sender.send(
+        'resolveUtil',
+        path.join(basePath, 'compiledUtils', message)
+      );
+    }
+  );
+
+  ipcMain.on('quit', quit);
 
   createWindow();
   createServer();
 
   const menu = buildDefaultMenu();
   Menu.setApplicationMenu(menu);
-
-  mainWindow!.bindContextMenu();
 });
 
-app.on('activate', () => {
+export function openMainWindow() {
   onDidLoad(window => {
-    window.show();
+    if (quitting) return;
+
+    window!.destroyed() && createWindow();
+    onDidLoad(() => {
+      !window.isVisible() && mainWindow!.show();
+      mainWindow!.focus();
+    });
   });
+}
+app.on('activate', () => {
+  openMainWindow();
 });
+/*
+
+app.on('before-quit', event => {
+  // Double ensure if windows and miners are closed
+  if (!quitting) event.preventDefault();
+  console.log('before-quit');
+
+  quit();
+});
+*/
 
 function createServer() {
-  const server = new Server();
+  server = new Server();
 
   server.load(mainWindow!);
 }
+
 function createWindow() {
   const window = new AppWindow();
 
@@ -100,23 +143,21 @@ function createWindow() {
     }
   }
 
-  window.onClose(() => {
-    mainWindow = null;
-    if (!__DARWIN__ && !preventQuit) {
-      app.quit();
-    }
-  });
-
+  window.show();
   window.onDidLoad(() => {
     if (onDidLoadFns === null) return;
-    window.show();
     window.sendLaunchTimingStats({
       mainReadyTime: readyTime!,
       loadTime: window.loadTime!,
       rendererReadyTime: window.rendererReadyTime!,
     });
 
-    console.log('onload fns: ', onDidLoadFns);
+    // Renderer doesn't keep state of port so we save it
+    if (serverPort) {
+      window.sendMinerPort(serverPort);
+    }
+
+    window.bindContextMenu();
     const fns = onDidLoadFns!;
     onDidLoadFns = null;
     for (const fn of fns) {

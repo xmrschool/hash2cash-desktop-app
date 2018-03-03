@@ -1,0 +1,69 @@
+.root {
+  height: 100vh;
+  padding: 60px 30px 40px;
+  transition: var(--animation-delay) all var(--animation-type);
+}
+
+.root select {
+  width: 200px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  font: inherit;
+}
+
+.root p {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+.animating {
+  opacity: 0;
+  transform: translateY(var(--navigating-transition-negative));
+}
+
+.pick {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.questionText {
+  letter-spacing: 1px;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.question {
+  flex-grow: 1;
+  max-width: 50%;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: translateX(-60px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.left {
+  max-height: 24px;
+  cursor: pointer;
+  margin-right: 18px;
+  transform: translateX(-60px);
+  opacity: 0;
+  animation: fadeIn var(--animation-delay) forwards;
+  animation-delay: 0.1s;
+}

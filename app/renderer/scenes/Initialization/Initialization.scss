@@ -1,5 +1,5 @@
 .root {
-  height: 100%;
+  height: calc(100vh - 100px);
   transition: var(--animation-delay) opacity var(--animation-type),
   var(--animation-delay) transform var(--animation-type);
   opacity: 0;
@@ -8,10 +8,6 @@
   display: flex;
   padding: 60px 30px 40px;
   flex-direction: column;
-}
-
-.root h2 {
-  font-size: 130%;
 }
 
 .appeared {
@@ -53,13 +49,18 @@
 }
 
 .hardware {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   opacity: 0;
   transform: translateY(2em);
   animation: cardIn var(--animation-delay) var(--animation-type) forwards;
   display: flex;
   user-select: text;
   position: relative;
+
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.07);
+  padding: 10px 20px;
+  border-radius: 6px;
 }
 
 .behind {
@@ -129,26 +130,34 @@
 }
 
 .hardwares {
-  margin-top: 80px;
+  margin-top: 3px;
   user-select: text;
 }
 
 .badge {
-  border-radius: 6px;
-  background: #fecb16;
-  color: var(--accent-color);
-  margin-right: 10px;
-  padding: 3px 11px;
+  font-size: 16px;
+  opacity: 0.8;
+  margin-top: 10px;
   text-transform: uppercase;
+}
+
+.header {
+  opacity: 0.45;
+  font-weight: 400;
+  font-size: 19px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  letter-spacing: 0.45px;
 }
 
 .blurred {
   filter: blur(6px);
+  opacity: 0.4;
 }
 
 .benchmarks {
   display: flex;
-  margin-top: 30px;
+  flex-direction: column;
 }
 
 .benchmark {
@@ -169,4 +178,78 @@
 .earnWithWhat {
   opacity: 0.9;
   margin-top: 20px;
+}
+
+.scrollable {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.final {
+  text-align: center;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: 0.3s all;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 255, 255, 0);
+
+}
+
+@keyframes doneIn {
+  0% {
+    transform: translateY(140px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.done {
+  text-align: center;
+  position: fixed;
+  bottom: -73px;
+  left: 0;
+  width: 100%;
+  background: rgb(49, 54, 60);
+  padding-bottom: 10px;
+  box-shadow: 0px -6px 57px 0 rgba(0,0,0,0.05);
+  animation: doneIn var(--animation-delay) var(--animation-type) forwards;
+  transition: var(--animation-delay) bottom var(--animation-type);
+}
+
+.transformDone {
+  bottom: 0;
+}
+
+.doneInner {
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.doneAmount {
+  font-size: 170%;
+  display: flex;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.donePerMonth {
+  font-size: 59%;
+  opacity: 0.8;
+  padding-left: 10px;
+}
+
+.doneDescription {
+  margin-top: 10px;
+  opacity: 0.8;
 }

@@ -1,6 +1,7 @@
 // A backend for starting / ending / fetching stats of miner
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
+import { ipcRenderer, remote } from 'electron';
 import { getPort } from '../../shared/utils';
 import {
   getManifest,
@@ -10,7 +11,7 @@ import {
 } from './utils';
 import writeLog from './eventLog';
 import workersCache from './workersCache';
-import { ipcRenderer } from 'electron';
+
 updateWorkersInCache();
 const koa = new Koa();
 const router = new Router();
@@ -110,7 +111,6 @@ router.get('/workers/:id/:action(start|stop|reload)', async ctx => {
       return;
     }
 
-    console.log('worker is: ', worker, worker[action], action);
     await worker[action]();
     ctx.body = { success: true, message: 'Action performed' };
   } catch (e) {
@@ -137,7 +137,7 @@ router.get('/workers/:id/setCustomParameter', async ctx => {
 
       return;
     }
-    await worker.setCustomParameter(ctx.query.id, ctx.query.value)
+    await worker.setCustomParameter(ctx.query.id, ctx.query.value);
     ctx.body = { success: true };
   } catch (e) {
     throw e;
@@ -182,7 +182,20 @@ router.get('/workers/:id', async ctx => {
 
 koa.use(router.routes());
 
-getPort(8000).then(port => {
+ipcRenderer.on('quit', async () => {
+  console.log('quit() received, so shutting down...');
+  for (const [_, worker] of await getWorkers()) {
+    if (worker.running) {
+      // We check if worker running and close without commiting
+      await worker.stop(false);
+    }
+  }
+
+  console.log('all workers are stopped, so close an app');
+  remote.getCurrentWindow().destroy();
+});
+
+getPort(8024).then(port => {
   koa.listen(port as any, 'localhost', 34, () => {
     ipcRenderer.send('miner-server-port', port);
     console.log(`Successfully listening on ${port} port`);

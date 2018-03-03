@@ -18,15 +18,3 @@ render(
   </AppContainer>,
   document.getElementById('root')
 );
-
-if ((module as any).hot) {
-  (module as any).hot.accept('components/Root', () => {
-    const NextRoot = require('components/Root').default;
-    render(
-      <AppContainer>
-        <NextRoot store={store} history={history} socket={socket} />
-      </AppContainer>,
-      document.getElementById('root')
-    );
-  });
-}

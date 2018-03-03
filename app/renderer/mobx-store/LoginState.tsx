@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
 import Api, { EmailInfoResponse } from '../api/Api';
 import { AUTH_TOKEN } from '../../shared/storage/actions';
+import User from './User';
 export type StringOrNull = string | null;
 
 export class LoginState {
@@ -67,6 +68,9 @@ export class LoginState {
       }
 
       localStorage[AUTH_TOKEN] = response.token;
+      User.setToken(response.token!);
+
+      await User.attemptToLogin();
 
       this.submitting = false;
       return true;

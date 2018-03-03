@@ -100,7 +100,7 @@ export abstract class BaseWorker<P extends string> extends EventEmitter
   abstract getStats(): Promise<any>;
 
   abstract start(): Promise<boolean>;
-  abstract stop(): Promise<boolean>;
+  abstract stop(commit?: boolean): Promise<boolean>;
 
   async reload() {
     await this.stop();

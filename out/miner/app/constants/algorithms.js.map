@@ -1,1 +1,0 @@
-{"version":3,"file":"algorithms.js","sourceRoot":"","sources":["../../../../app/miner/app/constants/algorithms.ts"],"names":[],"mappings":";;AAEa,QAAA,qBAAqB,GAAG;IACnC,WAAW,EAAE,IAAI;IACjB,KAAK,EAAE,KAAK;IACZ,QAAQ,EAAE,KAAK;CACmB,CAAC;AAExB,QAAA,iBAAiB,GAAG;IAC/B,WAAW,EAAE,KAAK;IAClB,KAAK,EAAE,KAAK;IACZ,QAAQ,EAAE,KAAK;CACmB,CAAC"}

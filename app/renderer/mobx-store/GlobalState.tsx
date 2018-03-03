@@ -12,21 +12,33 @@ export type Toast = {
   closable?: boolean;
 };
 
+export type BenchmarkMiner = {
+  speed: number;
+  name: string;
+};
+
+export type Benchmark = {
+  data: BenchmarkMiner[];
+  time: Date;
+};
+
 export class GlobalState {
   connectionTimeout?: number;
   connectionPromise?: Promise<void>;
   connectionResolve?: () => void;
 
-  @observable minerPort?: number;
+  @observable minerPort?: number = 8024;
   @observable socketConnected: boolean = false;
   @observable socketCantConnect: boolean = false;
   @observable userShare: number = 0.7;
+  @observable benchmark?: Benchmark;
 
   @observable toast?: Toast;
 
   public constructor() {
     this.waitTilSocket();
     this.waitForPort();
+    this.setBenchmark();
   }
 
   @action
@@ -34,6 +46,33 @@ export class GlobalState {
     ipcRenderer.on('miner-server-port', (e: any, port: number) => {
       this.setMinerPort(port);
     });
+  }
+
+  @action
+  setBenchmark(
+    benchmark: string | undefined | object = localStorage.benchmark
+  ) {
+    if (typeof benchmark === 'undefined') return;
+
+    const parsed =
+      typeof benchmark === 'string' ? JSON.parse(benchmark) : benchmark;
+
+    this.benchmark = {
+      data: parsed.data,
+      time: new Date(parsed.time),
+    };
+
+    return this.benchmark;
+  }
+
+  getBenchmarkHashrate(miner: string): number | null {
+    if (this.benchmark) {
+      const possible = this.benchmark.data.find(d => d.name === miner);
+
+      return possible ? possible.speed : null;
+    }
+
+    return null;
   }
 
   @action
@@ -54,7 +93,7 @@ export class GlobalState {
 
         this.setSocketState(false);
         this.connectionPromise = new Promise(
-          resolve => (this.connectionResolve = resolve),
+          resolve => (this.connectionResolve = resolve)
         );
       });
     });
@@ -97,7 +136,7 @@ export class GlobalState {
     if (toast.timeout !== Infinity)
       setTimeout(
         () => (this.toast = undefined),
-        toast.timeout || DEFAULT_TOAST_TIMEOUT,
+        toast.timeout || DEFAULT_TOAST_TIMEOUT
       );
   }
 

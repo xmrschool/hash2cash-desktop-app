@@ -13,7 +13,6 @@ async function createMiddleware(port, configPath) {
 
   const config = require(configPath);
 
-
   const app = express();
   const compiler = webpack(config);
   const PORT = process.env.PORT || port;
@@ -21,8 +20,8 @@ async function createMiddleware(port, configPath) {
   const wdm = webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
     stats: {
-      colors: true
-    }
+      colors: true,
+    },
   });
 
   app.use(wdm);
@@ -46,11 +45,15 @@ async function createMiddleware(port, configPath) {
   });
 }
 
-createMiddleware(3000, './webpack.config.development')
-createMiddleware(3010, './webpack.config.server');
+createMiddleware(4512, './webpack.config.development'); // A main renderer process
+createMiddleware(4513, './webpack.config.server'); // A backend for communicating between renderer and remote server
 
 if (argv['start-hot']) {
-  spawn('npm', ['run', 'start-hot'], { shell: true, env: process.env, stdio: 'inherit' })
+  spawn('npm', ['run', 'start-hot'], {
+    shell: true,
+    env: process.env,
+    stdio: 'inherit',
+  })
     .on('close', code => process.exit(code))
     .on('error', spawnError => console.error(spawnError));
 }

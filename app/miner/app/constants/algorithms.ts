@@ -1,13 +1,15 @@
-export type Algorithms = 'cryptonight' | 'ether' | 'equihash';
+export type Algorithms = 'MoneroCryptonight' | 'ether' | 'equihash' | 'GpuCryptonight';
 
 export const algorithmsDefaultDiff = {
-  cryptonight: 3000,
+  MoneroCryptonight: 3000,
+  GpuCryptonight: 4000,
   ether: 10000,
   equihash: 10000,
 } as { [key in Algorithms]: number };
 
 export const algorithmsMaxDiff = {
-  cryptonight: 50000,
+  MoneroCryptonight: 50000,
   ether: 10000,
+  GpuCryptonight: 50000,
   equihash: 10000,
 } as { [key in Algorithms]: number };

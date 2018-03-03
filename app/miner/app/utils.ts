@@ -2,7 +2,7 @@ import { readJson } from 'fs-extra';
 import * as path from 'path';
 import { difference } from 'lodash';
 import workers from './workers';
-import { Downloadable } from '../../renderer/api/Api';
+import { Architecture, Downloadable } from '../../renderer/api/Api';
 import workersCache, { WorkersCache } from './workersCache';
 import { algorithmsDefaultDiff } from './constants/algorithms';
 import { Algorithms } from './constants/algorithms';
@@ -35,10 +35,10 @@ export async function getManifest(): Promise<Downloadable[]> {
   try {
     debug(
       'Full path to manifest: %s',
-      path.join(config.MINERS_PATH, 'manifest.json'),
+      path.join(config.MINERS_PATH, 'manifest.json')
     );
     const content = await readJson(
-      path.join(config.MINERS_PATH, 'manifest.json'),
+      path.join(config.MINERS_PATH, 'manifest.json')
     );
 
     return content;
@@ -60,7 +60,8 @@ export async function updateWorkersInCache(): Promise<void> {
     });
 
     outerWorkers.forEach(worker => {
-      workersCache.set(worker.name, new worker());
+      const instance = new worker();
+      workersCache.set(instance.workerName, instance);
     });
 
     console.log('cache is :', workersCache);
@@ -89,22 +90,25 @@ export async function getWorkers(updateCache = false): Promise<WorkersCache> {
   return workersCache;
 }
 
-export function getLogin(algorithm: Algorithms): string {
-  return `${localStorage.userId}+${getDifficulty(
-    algorithm
-  )}`;
+export function getCollectedReport(): Promise<Architecture> {
+  return JSON.parse(localStorage.collectedReport);
 }
+
+export function getLogin(algorithm: Algorithms): string {
+  return `${localStorage.userId}+${getDifficulty(algorithm)}`;
+}
+
 export function getDifficulty(algorithm: Algorithms): number {
   try {
     const benchmark = JSON.parse(localStorage.benchmark).data;
 
-    return benchmark[algorithm].speed * 60;
+    return benchmark.find((d: any) => d.name === algorithm)!.speed * 30;
   } catch (e) {
     const fallback = algorithmsDefaultDiff[algorithm];
 
     console.error(
       `Failed to get benchmark... Using ${fallback} as fallback`,
-      e,
+      e
     );
     return fallback;
   }

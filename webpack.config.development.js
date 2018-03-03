@@ -9,7 +9,7 @@ const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config.base');
 const getReplacements = require('./app/app-info').getReplacements;
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4512;
 
 module.exports = merge(baseConfig, {
   devtool: 'inline-source-map',
@@ -32,17 +32,32 @@ module.exports = merge(baseConfig, {
     //     exclude: /node_modules/
     //   }
     // ],
-    loaders: [
+    rules: [
       {
         test: /\.global\.css$/,
-        loaders: ['style-loader', 'css-loader?sourceMap'],
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
       },
 
       {
         test: /^((?!\.global).)*\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader:
+              'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          },
         ],
       },
 
@@ -147,8 +162,6 @@ module.exports = merge(baseConfig, {
     // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
     new webpack.HotModuleReplacementPlugin(),
 
-    new webpack.NoEmitOnErrorsPlugin(),
-
     new webpack.LoaderOptionsPlugin({
       debug: true,
     }),
@@ -156,4 +169,8 @@ module.exports = merge(baseConfig, {
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
   target: 'electron-renderer',
+  node: {
+    __dirname: false,
+    __filename: false
+  },
 });

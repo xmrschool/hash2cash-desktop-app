@@ -9,8 +9,9 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 const config = require('../../config.js');
 import FileDownloader, { DownloadError } from '../utils/FileDownloader';
-import minerApi, { Worker } from '../api/MinerApi';
-import minerObserver from './MinerObserver';
+import minerApi from '../api/MinerApi';
+import minerObserver, { InternalObserver } from './MinerObserver';
+import globalState from './GlobalState';
 import { sleep } from '../utils/sleep';
 
 const debug = require('debug')('app:mobx:initialization');
@@ -27,7 +28,10 @@ export class InitializationState {
   @observable downloadError?: DownloadError & { miner: Downloadable };
 
   @observable bechmarking = false;
+  @observable benchmarkQueue: InternalObserver[] = [];
+  @observable benchmarkQueueIndex = 0;
   @observable benchmarkSecsLeft = 0;
+  @observable everythingDone = false;
   benchmarkCountDown: any;
 
   // Used for downloader
@@ -92,41 +96,74 @@ export class InitializationState {
     await minerApi.stopAll();
     // Wait till all workers are done
     await sleep(200);
-    await minerApi.getWorkers();
+    const workers = await minerApi.getWorkers();
     if (minerApi.workers.length === 0) {
       throw new Error('Failed to get any of workers. Seems to be strange!');
     }
-    const profitableWorkers = minerApi.findMostProfitableWorkers();
-    const workersKeys = Object.keys(profitableWorkers);
 
-    debug('Most profitable workers: ', profitableWorkers);
-    let leftSignals = workersKeys.map(d => profitableWorkers[d][0].name);
-    this.benchmarkSecsLeft = TOTAL_BENCHMARK_TIME;
+    this.benchmarkQueue = workers.map(worker =>
+      minerObserver.observe(worker, false)
+    );
+    this.benchmarkSecsLeft = TOTAL_BENCHMARK_TIME * workers.length;
 
-    Object.keys(profitableWorkers).forEach(async hardware => {
-      const miner = profitableWorkers[hardware][0];
+    await this.nextMiner();
 
-      await miner.start();
+    const results = minerObserver.workers.map(result => ({
+      speed: result.speedPerMinute,
+      name: result._data.name,
+    }));
 
-      minerObserver.observe(miner);
+    const benchmark = {
+      data: results,
+      time: new Date(),
+    };
 
-      const speedListener = ({ worker, speed }: any) => {
-        debug('Received speed event: ', worker, speed);
+    globalState.setBenchmark(benchmark);
+    localStorage.benchmark = JSON.stringify(benchmark);
+
+    console.log('Benchmark is done!');
+  }
+
+  @action
+  async nextMiner(): Promise<any> {
+    if (this.benchmarkQueue.length <= this.benchmarkQueueIndex) {
+      // element doesnt exist
+      console.log('Its end!');
+      return;
+    }
+    const miner = this.benchmarkQueue[this.benchmarkQueueIndex];
+
+    await miner._data.start();
+    miner.start();
+
+    const promise = new Promise(resolve => {
+      const speedListener = (speed: number[]) => {
         // What we do here? If current speed is 0, we do nothing
-        if (speed[0] === 0) return;
+        if (!speed[0]) return;
         // We only need average minute speed
-        if (speed[1] > 0) this.considerAsDone(worker._data);
+        if (speed[1] > 0) {
+          resolve(speed[1]);
+        }
 
-        leftSignals = leftSignals.filter(d => d !== worker.name);
-
-        // Once every miner is on, we start count down
-        if (leftSignals.length === 0 && !this.benchmarkCountDown) {
+        // Once miner is on and benchmark is down we start benchmark
+        if (!this.benchmarkCountDown) {
           this.startBenchmarkCountDown();
         }
       };
-      // We listen for speed and delete signal once any speed is received
-      minerObserver.on('speed', speedListener);
-    });
+      miner.on('speed', speedListener);
+    }); // wait til events are done
+
+    await promise;
+    // Once benchmark is done we shut down each things
+    minerObserver.stopObserving(miner, false);
+    clearInterval(this.benchmarkCountDown);
+    this.benchmarkCountDown = false;
+
+    await miner._data.stop();
+
+    this.benchmarkQueueIndex = this.benchmarkQueueIndex + 1;
+
+    return this.nextMiner();
   }
 
   // Actions to manage seconds left in benchmark
@@ -141,9 +178,14 @@ export class InitializationState {
   @action
   countDownBenchmark() {
     this.benchmarkSecsLeft = this.benchmarkSecsLeft - 1;
+    if (this.benchmarkSecsLeft <= 0) {
+      clearInterval(this.benchmarkCountDown);
+      return;
+    }
+
     const difference = 1 - 4 / 7;
-    const percents =
-      difference * (this.benchmarkSecsLeft / TOTAL_BENCHMARK_TIME);
+    const totalTime = TOTAL_BENCHMARK_TIME * this.benchmarkQueue.length;
+    const percents = difference * (this.benchmarkSecsLeft / totalTime);
 
     this.setStep(1 - percents);
     this.setText(
@@ -151,11 +193,6 @@ export class InitializationState {
         this.benchmarkSecsLeft
       } secs left`
     );
-  }
-
-  @action
-  async considerAsDone(worker: Worker) {
-    await worker.stop();
   }
 
   @action

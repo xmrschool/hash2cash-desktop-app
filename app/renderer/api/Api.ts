@@ -1,5 +1,6 @@
 import socket from 'socket';
 import { Systeminformation } from 'systeminformation';
+import { CudaDevice } from '../../compiledUtils/cudaDeviceQuery';
 
 const debug = require('debug')('app:socket');
 
@@ -55,12 +56,22 @@ export type AuthAttachResponse = {
 
 export type GpuDevice = {
   type: 'gpu';
-  platform?: 'nvidia' | 'amd';
+  platform: 'amd' | false;
   deviceID: string;
   model: string;
   unavailableReason?: string;
   driverVersion?: string | null;
   collectedInfo: Systeminformation.GraphicsControllerInfo;
+};
+
+export type GpuCudaDevice = {
+  type: 'gpu';
+  platform: 'nvidia';
+  deviceID: string;
+  model: string;
+  unavailableReason?: string;
+  driverVersion?: string | null;
+  collectedInfo: CudaDevice;
 };
 
 export type CpuDevice = {
@@ -72,7 +83,7 @@ export type CpuDevice = {
   collectedInfo: Systeminformation.CpuData;
 };
 
-export type Device = CpuDevice | GpuDevice;
+export type Device = CpuDevice | GpuDevice | GpuCudaDevice;
 export type Architecture = {
   uuid: string;
   platform?: 'darwin' | 'win32' | 'linux';

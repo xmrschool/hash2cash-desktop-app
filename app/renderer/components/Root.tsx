@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'react-redux';
 import { History } from 'history';
+import { hot } from 'react-hot-loader';
 
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
@@ -17,7 +18,11 @@ interface IRootType {
   socket: SocketIOClient.Socket;
 }
 
-export default function Root({ store, history, socket }: IRootType) {
+export default hot(module)(function Root({
+  store,
+  history,
+  socket,
+}: IRootType) {
   const Fragment = (React as any).Fragment;
   return (
     <>
@@ -36,4 +41,4 @@ export default function Root({ store, history, socket }: IRootType) {
       {process.env.NODE_ENV === 'development' && <DevTools />}
     </>
   );
-}
+});

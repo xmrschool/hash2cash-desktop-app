@@ -15,6 +15,12 @@ import collectHardware from '../../../shared/hardware/collector';
 import ProgressBar from '../../components/ProgressBar';
 import Modal from '../../components/Modal/Modal';
 import Button from '../../components/Button/Button';
+import Worker from './Worker';
+import {
+  default as currenciesService,
+  CurrencyNumber,
+} from '../../mobx-store/CurrenciesService';
+import userOptions from '../../mobx-store/UserOptions';
 
 const s = require('./Initialization.scss');
 const warning = require('./warning.svg');
@@ -34,6 +40,13 @@ export default class Initialization extends React.Component<
     appeared: false,
   };
 
+  constructor(props: any) {
+    super(props);
+
+    this.navigateToDashboard = this.navigateToDashboard.bind(this);
+    this.reload = this.reload.bind(this);
+  }
+
   componentDidMount() {
     setTimeout(() => this.setState({ appeared: true }), 10);
 
@@ -47,6 +60,10 @@ export default class Initialization extends React.Component<
   async disappear() {
     this.setState({ appeared: false });
     await sleep(ANIMATION_TIME);
+  }
+
+  navigateToDashboard() {
+    this.props.history.push('/dashboard');
   }
 
   async action() {
@@ -72,6 +89,10 @@ export default class Initialization extends React.Component<
       initializationState.bechmarking = true;
       console.log('I hope youare doing well');
       await initializationState.benchmark();
+
+      initializationState.setStep(1);
+      initializationState.progressText = '100%';
+      initializationState.everythingDone = true;
     } catch (e) {
       console.error('Main action failed: ', e);
       initializationState.setUnexpectedError(e);
@@ -79,11 +100,18 @@ export default class Initialization extends React.Component<
   }
 
   formatPower(device: Device): string {
+    const vram =
+      device.type === 'gpu'
+        ? device.platform === 'nvidia'
+          ? device.collectedInfo.memory
+          : device.collectedInfo.vram
+        : 0;
+
     return device.type === 'cpu'
       ? `${parseFloat(device.collectedInfo.speed)}GHz * ${
           device.collectedInfo.cores
         }`
-      : `${device.collectedInfo.vram}Gb VRAM`;
+      : `${vram}Mb VRAM`;
   }
 
   buildKey(device: Device): string {
@@ -108,32 +136,50 @@ export default class Initialization extends React.Component<
 
   async reload() {
     initializationState = new InitializationState();
+    minerObserver.clearAll();
     this.forceUpdate();
     await sleep(1000);
     this.action();
   }
 
-  renderBenchmarkDetails() {
+  renderBenchmarkDetails(initializationState: any) {
     return (
-      <div className={s.benchmarks}>
-        {minerObserver.workers.map(worker => (
-          <div key={worker.name} className={s.benchmark}>
-            <span className={s.benchmarkMonthly}>
-              {minerObserver.monthlyProfit(worker).formatted()}{' '}
-              <span className={s.benchmarkText}>per month</span>
-            </span>
-            <span className={s.power}>
-              {minerObserver.dailyProfit(worker).formatted()} per day
-            </span>
-            <span className={s.earnWithWhat}>
-              you can earn with your {worker._data.data.usesHardware![0].toUpperCase()}
-            </span>
-          </div>
-        ))}
-      </div>
+      <>
+        <h2 className={s.header}>Algorithms</h2>
+        <div className={s.benchmarks}>
+          {minerObserver.workers.map(worker => (
+            <Worker worker={worker} key={worker.name} />
+          ))}
+        </div>
+      </>
     );
   }
 
+  renderResults() {
+    const instance = currenciesService.ticker[userOptions.get('currency')];
+
+    const total = minerObserver.workers
+      .map(queue => queue.monthlyProfit().float())
+      .reduce((d, prev) => prev + d, 0);
+
+    const doneAmount = new CurrencyNumber(total, instance);
+    return (
+      <div
+        className={cx(
+          s.done,
+          initializationState.everythingDone && s.transformDone
+        )}
+      >
+        <div className={s.doneInner}>
+          <span className={s.doneAmount}>
+            <span>{doneAmount.formatted()}</span>
+            <span className={s.donePerMonth}>you can mine per month</span>
+          </span>
+          <Button onClick={this.navigateToDashboard}>Continue</Button>
+        </div>
+      </div>
+    );
+  }
   render() {
     return (
       <React.Fragment>
@@ -141,7 +187,9 @@ export default class Initialization extends React.Component<
           className={cx(
             s.root,
             this.state.appeared && s.appeared,
-            initializationState.downloadError && s.blurred
+            (initializationState.downloadError ||
+              initializationState.unexpectedError) &&
+              s.blurred
           )}
         >
           <h2>{initializationState.status}</h2>
@@ -150,35 +198,42 @@ export default class Initialization extends React.Component<
             step={initializationState.step}
             text={initializationState.progressText}
           />
-          <div className={s.hardwares}>
-            {initializationState.hardware &&
-              initializationState.hardware.devices.map(device => (
-                <div
-                  key={this.buildKey(device)}
-                  className={cx(
-                    s.hardware,
-                    device.unavailableReason && s.behind
-                  )}
-                >
-                  <span className={s.badge}>{device.type}</span>
-                  {this.renderModel(device)}
-                  <span className={s.power}>{this.formatPower(device)}</span>
-                </div>
-              ))}
+          <div className={s.scrollable}>
+            <div className={s.hardwares}>
+              <h2 className={s.header}>Hardware</h2>
+              {initializationState.hardware &&
+                initializationState.hardware.devices.map(device => (
+                  <div
+                    key={this.buildKey(device)}
+                    className={cx(
+                      s.hardware,
+                      device.unavailableReason && s.behind
+                    )}
+                  >
+                    <div style={{ flexGrow: 1 }}>
+                      {this.renderModel(device)}
+                      <p className={s.badge}>{device.type}</p>
+                    </div>
+                    <span className={s.power}>{this.formatPower(device)}</span>
+                  </div>
+                ))}
+            </div>
+            {initializationState.bechmarking &&
+              this.renderBenchmarkDetails(initializationState)}
           </div>
-          {initializationState.bechmarking && this.renderBenchmarkDetails()}
+          {this.renderResults()}
         </div>
         {initializationState.unexpectedError && (
           <Modal>
-            <h2>It seems that error happened</h2>
+            <h2>It seems that internal error happened</h2>
             <p style={{ opacity: 0.6 }}>
-              ${initializationState.unexpectedError}
+              {(initializationState.unexpectedError as any).message}
             </p>
             <p>
               You can try again, or if you think that problem is on our side,
               get us in touch
             </p>
-            <Button onClick={() => this.reload()} style={{ marginTop: 40 }}>
+            <Button onClick={this.reload} style={{ marginTop: 40 }}>
               Try again
             </Button>
           </Modal>
@@ -196,7 +251,7 @@ export default class Initialization extends React.Component<
               You can try again, or if you think that problem is on our side,
               get us in touch
             </p>
-            <Button onClick={() => this.reload()} style={{ marginTop: 40 }}>
+            <Button onClick={this.reload} style={{ marginTop: 40 }}>
               Try again
             </Button>
           </Modal>

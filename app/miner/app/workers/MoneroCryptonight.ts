@@ -36,7 +36,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   getSpeeds(): Pick[] {
     return [
       {
-        name: '🔥🔥 Ultra 🔥🔥',
+        name: '🔥 Ultra 🔥',
         value: 100,
       },
       {
@@ -48,7 +48,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
         value: 50,
       },
       {
-        name: 'Lowest',
+        name: 'Low',
         value: 25,
       },
       {
@@ -81,7 +81,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
         value: 4,
       },
       {
-        name: '🔥 Realtime 🔥',
+        name: '🔥Realtime',
         value: 5,
       },
     ];
@@ -129,7 +129,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       this.parameters.power
     } --cpu-priority ${this.parameters.priority} -o ${this.getPool(
       'cryptonight',
-    )} -u ${getLogin('cryptonight')} -p x -k`.split(' ');
+    )} -u ${getLogin('MoneroCryptonight')} -p x -k`.split(' ');
   }
 
   getCustomParameters(): Parameter<Parameteres>[] {
@@ -215,13 +215,13 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     return true;
   }
 
-  async stop(): Promise<boolean> {
+  async stop(commit: boolean = true): Promise<boolean> {
     if (!this.running) throw new Error('Miner not running');
 
     this.daemon!.kill();
     this.running = false;
 
-    this.commit();
+    if (commit) this.commit();
     return true;
   }
 
@@ -232,7 +232,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
 
   async toJSON() {
     return {
-      name: MoneroCryptonight.name,
+      name: this.workerName,
       usesHardware: MoneroCryptonight.usesHardware,
       running: this.running,
       requiredModules: MoneroCryptonight.requiredModules,

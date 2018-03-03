@@ -26,7 +26,6 @@ export class HomePage extends React.Component<
   };
 
   componentDidMount() {
-    console.log('entered: ', this, window.location);
     this.onEntered();
   }
 

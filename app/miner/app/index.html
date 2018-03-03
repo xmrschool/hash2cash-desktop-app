@@ -10,10 +10,10 @@
 <script>
   {
     const script = document.createElement('script');
-    const port = process.env.PORT || 3010;
+    const port = process.env.PORT || 4513;
     script.src = (process.env.HOT)
       ? 'http://localhost:' + port + '/dist/bundle.js'
-      : '../main/dist/index.js';
+      : '../../main/dist/server.js';
     // HACK: Writing the script path should be done with webpack
     document.body.appendChild(script);
   }

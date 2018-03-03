@@ -1,45 +1,120 @@
 import { action, observable } from 'mobx';
 import { Worker } from '../api/MinerApi';
-import CurrenciesService, { AllowedCurrencies, CurrencyNumber } from './CurrenciesService';
+import CurrenciesService, {
+  AllowedCurrencies,
+  CurrencyNumber,
+} from './CurrenciesService';
 import globalState from './GlobalState';
 import { EventEmitter } from 'events';
-import userOptions from './UserOptions';
 
 export const INTERVAL_TIME = 1000;
 
-export type InternalWorker = {
-  name: string;
-  latestSpeed?: number | null;
-  speedPerMinute?: number | null;
+export class InternalObserver extends EventEmitter {
+  @observable name: string;
+  @observable latestSpeed?: number | null;
+  @observable speedPerMinute?: number | null;
+  @observable hashesSubmitted = 0;
   _interval: any;
+  _isObserver: true = true;
   _data: Worker;
-};
 
-// This class observes speed of miner
-export class MinerObserver extends EventEmitter {
-  @observable workers: InternalWorker[] = [];
+  constructor(worker: Worker) {
+    super();
 
-  @action
-  async updateWorkerData(name: string) {
-    const worker = this.workers.find(w => w.name === name);
-
-    if (!worker) {
-      throw new Error('Worker not found');
-    }
-
-    if (!worker._data.running) return;
-
-    const speed = await worker._data.getSpeed();
-
-    this.emit('speed', { worker, speed });
-    worker.latestSpeed = speed[0];
-    worker.speedPerMinute = speed[1];
+    this.name = worker.name;
+    this._data = worker;
   }
 
   @action
-  stopObserving(worker: Worker) {
+  async updateWorkerData() {
+    if (!this._data.running) return;
+
+    const stats = await this._data.getStats();
+
+    if (stats === null) return;
+    const speed = stats.hashrate.total;
+
+    this.emit('speed', speed);
+    // Do not emit if not a number
+    if (speed[0]) this.latestSpeed = speed[0];
+    if (speed[1]) this.speedPerMinute = speed[1];
+    this.hashesSubmitted = stats.results.hashes_total;
+  }
+
+  @action
+  async stop() {
+    if (this._interval) clearInterval(this._interval);
+  }
+
+  async start() {
+    if (!this._interval) {
+      this._interval = setInterval(
+        () => this.updateWorkerData(),
+        INTERVAL_TIME
+      );
+      this.updateWorkerData();
+    }
+  }
+
+  dailyProfit() {
+    const currency = this._data.data.usesAccount!;
+    const service = CurrenciesService.ticker[currency];
+
+    const speed = Math.max(this.speedPerMinute || 0, this.latestSpeed || 0);
+    const hashesPerDay = speed * 60 * 60 * 24; // speed per day, non-stop of course
+
+    // What does formule looks like? (<solved_hashes>/<global_difficulty>) * <block_reward> * 0.7
+    const localCurrency =
+      hashesPerDay /
+      service.difficulty *
+      service.blockReward *
+      globalState.userShare;
+
+    return CurrenciesService.toLocalCurrency(
+      currency as AllowedCurrencies,
+      localCurrency
+    );
+  }
+
+  monthlyProfit(): CurrencyNumber {
+    const currency = this._data.data.usesAccount!;
+    const service = CurrenciesService.ticker[currency];
+
+    const speed = Math.max(this.speedPerMinute || 0, this.latestSpeed || 0);
+    const hashesPerDay = speed * 60 * 60 * 24 * 30; // speed per day, non-stop of course
+
+    // What does formule looks like? (<solved_hashes>/<global_difficulty>) * <block_reward> * 0.7
+    const localCurrency =
+      hashesPerDay /
+      service.difficulty *
+      service.blockReward *
+      globalState.userShare;
+
+    return CurrenciesService.toLocalCurrency(
+      currency as AllowedCurrencies,
+      localCurrency
+    );
+  }
+}
+export function isInternalWorker(arg: any): arg is InternalObserver {
+  return arg._isObserver;
+}
+
+// This class observes speed of miner
+export class MinerObserver extends EventEmitter {
+  @observable workers: InternalObserver[] = [];
+
+  /**
+   * Stop observing that worker
+   * @param {InternalObserver | Worker} _worker
+   * @param {boolean} removeWorker – if we have to remove from `this.workers`
+   */
+  @action
+  stopObserving(_worker: InternalObserver | Worker, removeWorker = true) {
+    const worker = isInternalWorker(_worker) ? _worker._data : _worker;
+
     if (!worker.data || !worker.data.running) {
-      throw new Error('To observe this worker you must run it');
+      return;
     }
 
     const internalWorker = this.workers.find(w => w.name === worker.name);
@@ -51,72 +126,31 @@ export class MinerObserver extends EventEmitter {
       throw new Error('Worker is not observing');
     }
 
-    clearInterval(internalWorker._interval);
-    this.workers.splice(internalWorkerIndex, 1);
+    internalWorker.stop();
+    if (removeWorker) {
+      this.workers.splice(internalWorkerIndex, 1);
+    }
   }
 
   @action
-  observe(worker: Worker) {
-    if (!worker.data || !worker.data.running) {
+  clearAll() {
+    this.workers.forEach(work => work.stop().catch(console.error));
+    this.workers.splice(0);
+  }
+
+  @action
+  observe(worker: Worker, instantRun = true) {
+    if ((!worker.data || !worker.data.running) && instantRun) {
       throw new Error('To observe this worker you must run it');
     }
 
-    if (this.workers.find(w => w.name === worker.name)) {
-      throw new Error('This worker is already observing');
-    }
+    const findWorker = this.workers.find(w => w.name === worker.name);
 
-    this.workers.push({
-      name: worker.name,
-      latestSpeed: null,
-      speedPerMinute: null,
-      _interval: setInterval(
-        () => this.updateWorkerData(worker.name),
-        INTERVAL_TIME
-      ),
-      _data: worker,
-    });
-  }
+    const internalObserver = findWorker || new InternalObserver(worker);
+    if (instantRun) internalObserver.start();
 
-  dailyProfit(worker: InternalWorker) {
-    const currency = worker._data.data.usesAccount!;
-    const service = CurrenciesService.ticker[currency];
-
-    const speed = Math.max(worker.speedPerMinute || 0, worker.latestSpeed || 0);
-    const hashesPerDay = speed * 60 * 60 * 24; // speed per day, non-stop of course
-
-    // What does formule looks like? (<solved_hashes>/<global_difficulty>) * <block_reward> * 0.7
-    const localCurrency =
-      hashesPerDay /
-      service.difficulty *
-      service.blockReward *
-      globalState.userShare;
-
-    return CurrenciesService.exchange(
-      currency as AllowedCurrencies,
-      userOptions.get('currency') as AllowedCurrencies,
-      localCurrency
-    );
-  }
-
-  monthlyProfit(worker: InternalWorker): CurrencyNumber {
-    const currency = worker._data.data.usesAccount!;
-    const service = CurrenciesService.ticker[currency];
-
-    const speed = Math.max(worker.speedPerMinute || 0, worker.latestSpeed || 0);
-    const hashesPerDay = speed * 60 * 60 * 24 * 30; // speed per day, non-stop of course
-
-    // What does formule looks like? (<solved_hashes>/<global_difficulty>) * <block_reward> * 0.7
-    const localCurrency =
-      hashesPerDay /
-      service.difficulty *
-      service.blockReward *
-      globalState.userShare;
-
-    return CurrenciesService.exchange(
-      currency as AllowedCurrencies,
-      userOptions.get('currency') as AllowedCurrencies,
-      localCurrency
-    );
+    !findWorker && this.workers.push(internalObserver);
+    return internalObserver;
   }
 }
 

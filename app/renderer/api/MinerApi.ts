@@ -4,11 +4,13 @@ import { groupBy, sortBy } from 'lodash';
 import globalState from '../mobx-store/GlobalState';
 import { OuterJSON } from '../../miner/app/workers/BaseWorker';
 import accountService from '../mobx-store/CurrenciesService';
+import { action, observable } from 'mobx';
 
 export type Workers = OuterJSON<any>;
 
 export class Worker {
-  data: Workers;
+  @observable data: Workers;
+  @observable httpRequest: boolean = false;
 
   constructor(json: Workers) {
     this.data = json;
@@ -22,13 +24,18 @@ export class Worker {
     return this.data.running;
   }
 
+  get parameters() {
+    return this.data.parameters;
+  }
+
   get customParameters() {
     return this.data.options;
   }
 
+  @action
   async setCustomParameter(id: string, value: string) {
     const resp = await minerApi.fetch(
-      `/miners/${this.data.name}/setCustomParameter`,
+      `/workers/${this.data.name}/setCustomParameter`,
       { id, value }
     );
 
@@ -37,21 +44,30 @@ export class Worker {
     return resp;
   }
 
+  @action
   // Daemon management
   async start() {
+    this.httpRequest = true;
     const resp = await minerApi.fetch(`/workers/${this.data.name}/start`);
+    this.httpRequest = false;
     this.data.running = true;
     return resp;
   }
 
+  @action
   async stop() {
+    this.httpRequest = true;
     const resp = await minerApi.fetch(`/workers/${this.data.name}/stop`);
+    this.httpRequest = false;
     this.data.running = false;
     return resp;
   }
 
+  @action
   async reload() {
+    this.httpRequest = true;
     const resp = await minerApi.fetch(`/workers/${this.data.name}/reload`);
+    this.httpRequest = false;
     this.data.running = !!this.data.running;
     return resp;
   }
@@ -59,10 +75,14 @@ export class Worker {
   async getSpeed(): Promise<(number | null)[]> {
     return minerApi.fetch(`/workers/${this.data.name}/getSpeed`);
   }
+
+  async getStats(): Promise<any | null> {
+    return minerApi.fetch(`/workers/${this.data.name}/getStats`);
+  }
 }
 
 export class Api {
-  workers: Worker[] = [];
+  @observable workers: Worker[] = [];
 
   get host() {
     return 'http://127.0.0.1:' + globalState.minerPort;
@@ -71,14 +91,9 @@ export class Api {
   // What does this algorithm do? Sorts by usedHardware, orders by profitability
   findMostProfitableWorkers(): { [hardware: string]: Worker[] } {
     const ticker = accountService.ticker;
-    console.log('workers are: ', this.workers);
     const groupedWorkers = groupBy(this.workers, object => {
-      console.log('obj is : ', object);
-
       return object.data!.usesHardware![0];
     });
-
-    console.log('Workers are grouped: ', groupedWorkers);
 
     const keys = Object.keys(groupedWorkers);
 
@@ -92,6 +107,8 @@ export class Api {
 
     return groupedWorkers;
   }
+
+  @action
   async getWorkers(): Promise<Worker[]> {
     const response = (await this.fetch('/workers?asArray=true')) as Workers[];
 

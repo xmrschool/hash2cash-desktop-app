@@ -1,3 +1,4 @@
 import MoneroCryptonight from './MoneroCryptonight';
+import GpuCryptonight from './GpuCryptonight';
 
-export default [MoneroCryptonight];
+export default [GpuCryptonight, MoneroCryptonight];
