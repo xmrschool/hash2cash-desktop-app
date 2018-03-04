@@ -19,6 +19,10 @@ export class Server extends EventEmitter {
     this.bindClose();
   }
 
+  openDevTools() {
+    this.window.webContents.openDevTools();
+  }
+
   bindClose() {
     this.window.on('close', async event => {
       event.preventDefault();

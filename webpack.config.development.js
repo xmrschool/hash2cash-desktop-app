@@ -12,8 +12,8 @@ const getReplacements = require('./app/app-info').getReplacements;
 const port = process.env.PORT || 4512;
 
 module.exports = merge(baseConfig, {
-  devtool: 'inline-source-map',
-
+  devtool: 'cheap-module-inline-source-map',
+  mode: 'development',
   entry: [
     'react-hot-loader/patch',
     `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr&reload=true`,

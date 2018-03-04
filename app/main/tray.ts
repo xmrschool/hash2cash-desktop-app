@@ -1,4 +1,4 @@
-import { Tray, Menu, app } from 'electron';
+import { Tray, Menu, app, nativeImage } from 'electron';
 import * as path from 'path';
 
 export default function buildTray() {
@@ -6,7 +6,10 @@ export default function buildTray() {
     { label: 'Open', click: () => require('./index').openMainWindow() },
     { label: 'Quit', click: () => app.quit() },
   ]);
-  const tray = new Tray(path.join(__dirname, 'trayIcon.png'));
+  const image = nativeImage.createFromPath(
+    path.join(__dirname, 'trayIcon.png')
+  );
+  const tray = new Tray(image);
 
   tray.on('double-click', () => require('./index').openMainWindow());
   tray.setToolTip('Hash to Cash');

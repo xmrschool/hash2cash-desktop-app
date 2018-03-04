@@ -1,17 +1,25 @@
 /**
  * Build config for electron 'Main Process' file
  */
-
+const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config.base');
 const getReplacements = require('./app/app-info').getReplacements;
 
-module.exports = merge(baseConfig, {
-  devtool: 'source-map',
+const isDebug = process.env.NODE_ENV !== 'production';
 
+module.exports = merge(baseConfig, {
+  devtool: isDebug ? 'cheap-module-inline-source-map' : 'none',
+
+  mode: isDebug ? 'development' : 'production',
   entry: ['./app/main/index.ts'],
 
+  externals: [
+    nodeExternals({
+      whitelist: [/webpack-hot-middleware/],
+    }),
+  ],
   // 'main.js' in root
   output: {
     path: __dirname,

@@ -2,6 +2,7 @@
  * Base webpack config used across other specific configs
  */
 const webpack = require('webpack');
+const SentryCliPlugin = require('@sentry/webpack-plugin');
 const path = require('path');
 const getReplacements = require('./app/app-info').getReplacements;
 const { dependencies: externals } = require('./app/renderer/package.json');
@@ -42,9 +43,7 @@ module.exports = {
   },
   node: {
     __dirname: false,
-    __filename: false
+    __filename: false,
   },
   plugins: [new webpack.DefinePlugin(getReplacements())],
-
-  externals: [...Object.keys(externals || {}), 'ws'],
 };

@@ -1,6 +1,9 @@
 import { graphics, cpu, system } from 'systeminformation';
 import { arch } from 'os';
+import cudaDeviceQuery from '../../compiledUtils/cudaDeviceQuery';
+
 import { Architecture } from '../../renderer/api/Api';
+import trackError from '../raven';
 
 function checkVendor(
   vendor: string,
@@ -38,10 +41,16 @@ export default async function collectHardware(): Promise<Architecture> {
   };
   if (['win32', 'darwin', 'linux'].includes(process.platform)) {
     report.platform = process.platform as any;
-  } else
-    throw new Error(
-      "Your platform (OS) is unsupported. It's strange, we will try to investigate your problem."
+  } else {
+    const error = new Error(
+      `Your platform (OS) is unsupported [${
+        process.platform
+      }]. It's strange, we will try to investigate your problem.`
     );
+
+    trackError(error);
+    throw error;
+  }
 
   controllers.forEach((gpu, index) => {
     try {
@@ -56,6 +65,7 @@ export default async function collectHardware(): Promise<Architecture> {
         collectedInfo: gpu,
       });
     } catch (e) {
+      trackError(new Error('unsupported gpu'), { extra: { gpu }});
       report.devices.push({
         type: 'gpu',
         platform: gpu.vendor as any,
@@ -70,13 +80,13 @@ export default async function collectHardware(): Promise<Architecture> {
   });
 
   try {
-    const cudaGpus = [] as any;
+    const cudaGpus = await cudaDeviceQuery();
 
     // We dont care about systeminformation gpu's, instead we collect from our build library
     if (cudaGpus.error) {
       console.error('Failed to get any cuda devices: ', cudaGpus.error);
     } else {
-      cudaGpus.devices.forEach((device: any) =>
+      cudaGpus.devices.forEach(device =>
         report.devices.push({
           type: 'gpu',
           deviceID: report.devices.length.toString(),
@@ -87,6 +97,7 @@ export default async function collectHardware(): Promise<Architecture> {
       );
     }
   } catch (e) {
+    trackError(e);
     console.error('failed to get cuda devices: ', e);
   }
 
@@ -105,6 +116,7 @@ export default async function collectHardware(): Promise<Architecture> {
       collectedInfo: collectedCpu,
     });
   } catch (e) {
+    trackError(e);
     report.warnings.push(e.message);
   }
 

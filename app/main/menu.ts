@@ -44,13 +44,12 @@ export default function buildDefaultMenu() {
         // chorded shortcuts, but this menu item is not a user-facing feature
         // so we are going to keep this one around and save Ctrl+Shift+R for
         // a different shortcut in the future...
-        accelerator: 'CmdOrCtrl+Alt+R',
+        accelerator: 'CmdOrCtrl+R',
         click(item: any, focusedWindow: Electron.BrowserWindow) {
           if (focusedWindow) {
             focusedWindow.loadURL(RENDERER_PATH);
           }
         },
-        visible: __DEV__,
       },
       {
         id: 'show-devtools',
@@ -58,10 +57,21 @@ export default function buildDefaultMenu() {
           ? 'Toggle Developer Tools'
           : '&Toggle developer tools',
         accelerator: __DARWIN__ ? 'Alt+Command+I' : 'Ctrl+Shift+I',
-        visible: __DEV__,
         click(item: any, focusedWindow: Electron.BrowserWindow) {
           if (focusedWindow) {
             focusedWindow.webContents.toggleDevTools();
+          }
+        },
+      },
+      {
+        id: 'show-devtools',
+        label: __DARWIN__
+          ? 'Toggle Server Developer Tools'
+          : '&Toggle server developer tools',
+        click(item: any, focusedWindow: Electron.BrowserWindow) {
+          const server = require('./index').server;
+          if (server) {
+            server.openDevTools();
           }
         },
       },

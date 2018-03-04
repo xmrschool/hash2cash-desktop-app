@@ -6,6 +6,8 @@ import buildDefaultMenu from './menu';
 import { Server, serverPort } from './server';
 import * as path from 'path';
 import buildTray from './tray';
+import enableUpdates from './appUpdater';
+import trackError from '../shared/raven';
 
 require('source-map-support').install();
 
@@ -14,7 +16,7 @@ let mainWindow: AppWindow | null = null;
 const launchTime = now();
 
 let readyTime: number | null = null;
-let server: Server | null = null;
+export let server: Server | null = null;
 const quitting = false;
 
 type OnDidLoadFn = (window: AppWindow) => void;
@@ -28,6 +30,8 @@ function handleUncaughtException(error: Error) {
   }
 
   const isLaunchError = !mainWindow;
+
+  trackError(error);
   console.log('Error is: ', error, isLaunchError);
 }
 
@@ -62,12 +66,12 @@ if (isDuplicateInstance) {
   app.quit();
 }
 
-
 app.on('ready', () => {
   if (isDuplicateInstance) {
     return;
   }
 
+  enableUpdates();
   buildTray();
   readyTime = now() - launchTime;
 
@@ -75,7 +79,7 @@ app.on('ready', () => {
     'resolveUtil',
     (event: Electron.IpcMessageEvent, message: string) => {
       // Asar have limitations for executing binaries. See: https://electronjs.org/docs/tutorial/application-packaging#executing-binaries-inside-asar-archive
-      const basePath = !__DEV__
+      const basePath = __DEV__
         ? path.join(__dirname, '..')
         : path.join(__dirname, '../../../app.asar.unpacked/app');
       // Base path must refer to app folder
@@ -99,11 +103,16 @@ export function openMainWindow() {
   onDidLoad(window => {
     if (quitting) return;
 
-    window!.destroyed() && createWindow();
-    onDidLoad(() => {
-      !window.isVisible() && mainWindow!.show();
-      mainWindow!.focus();
-    });
+    if (window.destroyed()) {
+      createWindow();
+    } else {
+      onDidLoad(() => {
+        try {
+          !window.isVisible() && mainWindow!.show();
+          mainWindow!.focus();
+        } catch (e) {}
+      });
+    }
   });
 }
 app.on('activate', () => {
@@ -128,6 +137,10 @@ function createServer() {
 
 function createWindow() {
   const window = new AppWindow();
+
+  if (!Array.isArray(onDidLoadFns)) {
+    onDidLoadFns = [];
+  }
 
   console.log('Is dev?', __DEV__);
   if (__DEV__) {

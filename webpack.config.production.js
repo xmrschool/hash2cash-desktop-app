@@ -17,7 +17,7 @@ module.exports = merge(baseConfig, {
 
   output: {
     path: path.join(__dirname, 'app/main/dist'),
-    publicPath: '../dist/',
+    publicPath: '../main/dist/',
   },
 
   module: {

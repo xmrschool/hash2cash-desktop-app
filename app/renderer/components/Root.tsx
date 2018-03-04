@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'react-redux';
 import { History } from 'history';
-import { hot } from 'react-hot-loader';
 
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
@@ -12,17 +11,18 @@ import SocketProvider from './SocketProvider';
 import DevTools from 'mobx-react-devtools';
 import Toast from './Toast';
 
+let hot: any;
+
+if (__DEV__) {
+  hot = require('react-hot-loader').hot;
+}
+
 interface IRootType {
   store: Redux.Store<any>;
   history: History;
   socket: SocketIOClient.Socket;
 }
-
-export default hot(module)(function Root({
-  store,
-  history,
-  socket,
-}: IRootType) {
+function Root({ store, history, socket }: IRootType) {
   const Fragment = (React as any).Fragment;
   return (
     <>
@@ -41,4 +41,8 @@ export default hot(module)(function Root({
       {process.env.NODE_ENV === 'development' && <DevTools />}
     </>
   );
-});
+}
+
+const wrapped = hot ? hot(module)(Root) : Root;
+
+export default wrapped;

@@ -1,5 +1,5 @@
-[2018-03-03 19:23:25] no active pools, stop mining
-cash:8080 diff 2046
-ume
+[2018-03-04 21:13:21] no active pools, stop mining
+cash:8080 diff 2337
+H/s
 GHz (1) x64 AES-NI
 , code: -1

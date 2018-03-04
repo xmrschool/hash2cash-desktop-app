@@ -3,7 +3,7 @@
  * Build config for development process that uses Hot-Module-Replacement
  * https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
  */
-
+const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
@@ -14,10 +14,16 @@ const isDebug = process.env.NODE_ENV !== 'production';
 
 const port = process.env.PORT || 4513;
 
+console.log('isDebug: ', isDebug);
 module.exports = merge(baseConfig, {
-  devtool: isDebug ? 'inline-source-map' : 'none',
+  devtool: isDebug ? 'cheap-module-inline-source-map' : 'none',
 
   mode: isDebug ? 'development' : 'production',
+  externals: [
+    nodeExternals({
+      whitelist: [/webpack-hot-middleware/],
+    }),
+  ],
   entry: isDebug
     ? [
         `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr&reload=true`,

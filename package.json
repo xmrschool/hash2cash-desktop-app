@@ -21,7 +21,7 @@
     "package-win": "npm run build && build --win --x64",
     "package-mac": "npm run build && build --mac",
     "package-linux": "npm run build && build --linux",
-    "package-all": "npm run build && build -mwl --publish always",
+    "package-all": "NODE_ENV=production npm run build && build -mwl --publish always",
     "cleanup": "mop -v"
   },
   "build": {
@@ -37,6 +37,7 @@
     "files": [
       "app/main/dist/",
       "app/renderer/app.html",
+      "app/main/appIcon.png",
       "app/compiledUtils/darwin",
       "app/miner/app/index.html",
       "app/main/main.js",
@@ -109,6 +110,7 @@
   "homepage": "https://hashto.cash/?utm_source=extension&utm_medium=pkg",
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.40",
+    "@sentry/webpack-plugin": "^1.3.3",
     "@types/enzyme": "^3.1.9",
     "@types/history": "4.6.2",
     "@types/jest": "^22.1.3",
@@ -173,7 +175,8 @@
     "webpack-cli": "^2.0.9",
     "webpack-dev-middleware": "^2.0.6",
     "webpack-hot-middleware": "^2.21.0",
-    "webpack-merge": "^4.1.2"
+    "webpack-merge": "^4.1.2",
+    "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
     "@types/bluebird": "^3.5.20",
@@ -185,6 +188,8 @@
     "@types/lodash": "^4.14.104",
     "@types/p-queue": "^2.3.1",
     "@types/prop-types": "^15.5.2",
+    "@types/raven": "^2.1.5",
+    "@types/raven-js": "^3.10.0",
     "@types/request": "^2.47.0",
     "@types/socket.io-client": "^1.4.32",
     "@types/systeminformation": "^3.23.0",
@@ -194,6 +199,7 @@
     "decompress-zip": "^0.3.0",
     "electron-debug": "^1.5.0",
     "electron-json-storage": "^4.0.2",
+    "electron-updater": "^2.20.1",
     "electron-window-state": "^4.1.1",
     "font-awesome": "^4.7.0",
     "fs-extra": "^5.0.0",
@@ -207,6 +213,8 @@
     "mobx-react-devtools": "^4.2.15",
     "p-queue": "^2.3.0",
     "progressbar.js": "^1.0.1",
+    "raven": "^2.4.2",
+    "raven-js": "^3.23.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-progressbar.js": "^0.2.0",

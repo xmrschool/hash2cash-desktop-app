@@ -91,6 +91,12 @@ export class AppWindow {
     });
 
     this.window.webContents.once('did-finish-load', () => {
+      console.log(
+        'process.env.NODE_ENV is ',
+        process.env.NODE_ENV,
+        ' so __DEV__ is ',
+        __DEV__
+      );
       if (__DEV__) {
         this.window.webContents.openDevTools();
       }
@@ -124,7 +130,9 @@ export class AppWindow {
     this.window.on('blur', () => this.window.webContents.send('blur'));
 
     RENDERER_PATH = `file://${path.join(__dirname, '../renderer/app.html')}`;
-    this.window.loadURL(`file://${path.join(__dirname, '../renderer/app.html')}`);
+    this.window.loadURL(
+      `file://${path.join(__dirname, '../renderer/app.html')}`
+    );
   }
 
   // Helps you to inspect element
@@ -179,7 +187,12 @@ export class AppWindow {
 
   /** Is the window currently visible? */
   public isVisible() {
-    return this.window.isVisible();
+    try {
+      return this.window.isVisible();
+    } catch (e) {
+      return false;
+    }
+
   }
 
   public restore() {
