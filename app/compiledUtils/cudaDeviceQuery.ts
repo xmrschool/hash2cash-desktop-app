@@ -31,9 +31,13 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 export default async function cudaDeviceQuery(): Promise<CollectorResponse> {
+  const extension = __WIN32__ ? '.exe' : '';
   const file = (await new Promise(resolve => {
     ipcRenderer.once('resolveUtil', (event: any, arg: string) => resolve(arg));
-    ipcRenderer.send('resolveUtil', 'darwin/cudaDeviceQuery');
+    ipcRenderer.send(
+      'resolveUtil',
+      `${process.platform}/cudaDeviceQuery${extension}`,
+    );
   })) as string;
 
   console.log('cuda directory is: ', file);
@@ -45,11 +49,23 @@ export default async function cudaDeviceQuery(): Promise<CollectorResponse> {
       outerData += data;
     });
 
+    descriptor.on('error', e => {
+      console.error(
+        'Failed to get cuda devices. Returning nothing as fallback!',
+        e,
+      );
+      resolve({
+        totalCount: 0,
+        devices: [],
+      });
+    });
     descriptor.on('close', () => {
       try {
+        console.log('Received data from cuda: ', outerData);
         resolve(JSON.parse(outerData));
       } catch (e) {
-        reject(e);
+        console.error('Failed to get any cudaDevices!', e);
+        resolve({ totalCount: 0, devices: [] });
       }
     });
   });

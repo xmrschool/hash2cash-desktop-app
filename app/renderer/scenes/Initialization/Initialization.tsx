@@ -63,6 +63,7 @@ export default class Initialization extends React.Component<
   }
 
   navigateToDashboard() {
+    minerObserver.clearAll();
     this.props.history.push('/dashboard');
   }
 
@@ -100,18 +101,22 @@ export default class Initialization extends React.Component<
   }
 
   formatPower(device: Device): string {
-    const vram =
-      device.type === 'gpu'
-        ? device.platform === 'nvidia'
-          ? device.collectedInfo.memory
-          : device.collectedInfo.vram
-        : 0;
+    try {
+      const vram =
+        device.type === 'gpu'
+          ? device.platform === 'nvidia'
+            ? device.collectedInfo.memory
+            : device.collectedInfo.vram
+          : 0;
 
-    return device.type === 'cpu'
-      ? `${parseFloat(device.collectedInfo.speed)}GHz * ${
-          device.collectedInfo.cores
-        }`
-      : `${vram}Mb VRAM`;
+      return device.type === 'cpu'
+        ? `${parseFloat(device.collectedInfo.speed)}GHz * ${
+            device.collectedInfo.cores
+          }`
+        : `${vram}Mb VRAM`;
+    } catch (e) {
+      return '';
+    }
   }
 
   buildKey(device: Device): string {
@@ -181,6 +186,7 @@ export default class Initialization extends React.Component<
     );
   }
   render() {
+    console.log(initializationState.hardware);
     return (
       <React.Fragment>
         <div
@@ -221,8 +227,10 @@ export default class Initialization extends React.Component<
             {initializationState.bechmarking &&
               this.renderBenchmarkDetails(initializationState)}
           </div>
-          {this.renderResults()}
         </div>
+        {initializationState.hardware &&
+          minerObserver.workers &&
+          this.renderResults()}
         {initializationState.unexpectedError && (
           <Modal>
             <h2>It seems that internal error happened</h2>

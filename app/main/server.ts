@@ -31,7 +31,7 @@ export class Server extends EventEmitter {
     });
   }
 
-  load(appWindow: AppWindow) {
+  load(appWindow: AppWindow | null) {
     this.window.loadURL(
       `file://${path.join(__dirname, '../miner/app/index.html')}`
     );
@@ -42,7 +42,7 @@ export class Server extends EventEmitter {
     });
     ipcMain.on('miner-server-port', (e: any, port: number) => {
       console.log('received port: ', port);
-      appWindow.sendMinerPort(port);
+      appWindow && appWindow.sendMinerPort(port);
       serverPort = port;
     });
   }

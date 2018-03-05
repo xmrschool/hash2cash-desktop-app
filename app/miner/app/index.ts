@@ -45,7 +45,7 @@ router.get('/set/userId', async ctx => {
 });
 
 router.get('/workers', async ctx => {
-  const cacheShouldBeUpdated = !!ctx.query.updateCache;
+  const cacheShouldBeUpdated = ctx.query.updateCache === true;
   const asArray = ctx.query.asArray;
 
   const obj: any = asArray ? [] : {};

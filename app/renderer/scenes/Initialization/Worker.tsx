@@ -33,6 +33,7 @@ export default class Worker extends React.Component<PropTypes> {
       return 'Undefined symbol';
     }
 
+    console.log('Service is: ', currenciesService);
     if (currencies.includes(symbol)) {
       return currenciesService.ticker[symbol].name;
     }

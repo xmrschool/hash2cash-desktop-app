@@ -96,7 +96,7 @@ export class InitializationState {
     await minerApi.stopAll();
     // Wait till all workers are done
     await sleep(200);
-    const workers = await minerApi.getWorkers();
+    const workers = await minerApi.getWorkers(true); // Force get new workers
     if (minerApi.workers.length === 0) {
       throw new Error('Failed to get any of workers. Seems to be strange!');
     }

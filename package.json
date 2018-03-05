@@ -1,7 +1,7 @@
 {
   "name": "hashtocash",
-  "productName": "hashtocash",
-  "version": "0.10.0",
+  "productName": "Hash to Cash",
+  "version": "0.11.1",
   "description": "Hash to cash allows you to mine cryptocurrencies and transform them directly to fiat. Future is here!",
   "main": "app/main/main.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "build-server": "cross-env NODE_ENV=production node ./node_modules/webpack/bin/webpack --config webpack.config.server.js --progress --profile --colors",
     "build": "npm run build-main && npm run build-renderer && npm run build-server",
     "start": "cross-env NODE_ENV=production electron ./app/main/main.js",
-    "start-hot": "cross-env HOT=1 NODE_ENV=development electron ./app/main/",
+    "start-hot": "cross-env HOT=1 NODE_ENV=development electron ./app/main/main.js",
     "dev": "npm run build-main && npm run hot-server -- --start-hot",
     "package": "npm run build && which build && build --publish always",
     "package-win": "npm run build && build --win --x64",
@@ -37,15 +37,16 @@
     "files": [
       "app/main/dist/",
       "app/renderer/app.html",
-      "app/main/appIcon.png",
+      "app/main/trayIcon.png",
       "app/compiledUtils/darwin",
+      "app/compiledUtils/win32",
       "app/miner/app/index.html",
       "app/main/main.js",
       "node_modules/",
       "package.json"
     ],
     "asarUnpack": [
-      "app/compiledUtils/darwin/*"
+      "**/app/compiledUtils/**/*"
     ],
     "dmg": {
       "contents": [

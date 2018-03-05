@@ -67,12 +67,22 @@ if (isDuplicateInstance) {
 }
 
 app.on('ready', () => {
+  const startMinimized = (process.argv || []).indexOf('--hidden') !== -1 || app.getLoginItemSettings().openAsHidden;
+
+  console.log('if we gonna start minimized: ', startMinimized);
   if (isDuplicateInstance) {
     return;
   }
 
   enableUpdates();
   buildTray();
+  // Auto start on OS startup
+  app.setLoginItemSettings({
+    openAtLogin: true,
+    openAsHidden: true,
+    args: ['--hidden'], // openAsHidden supported on OS X, but arguments are supported on Windows
+  });
+
   readyTime = now() - launchTime;
 
   ipcMain.on(
@@ -92,7 +102,12 @@ app.on('ready', () => {
 
   ipcMain.on('quit', quit);
 
-  createWindow();
+  if (!startMinimized) {
+    createWindow();
+  } else if (onDidLoadFns) {
+    onDidLoadFns = null;
+  }
+
   createServer();
 
   const menu = buildDefaultMenu();
@@ -118,6 +133,10 @@ export function openMainWindow() {
 app.on('activate', () => {
   openMainWindow();
 });
+
+app.on('window-all-closed', () => {
+  app.quit();
+})
 /*
 
 app.on('before-quit', event => {
@@ -132,7 +151,7 @@ app.on('before-quit', event => {
 function createServer() {
   server = new Server();
 
-  server.load(mainWindow!);
+  server.load(mainWindow);
 }
 
 function createWindow() {

@@ -253,11 +253,6 @@ export class CurrenciesService extends EventEmitter {
 
     localStorage.ticker = JSON.stringify(ticker);
     ticker.forEach(currency => {
-      console.log(
-        'default is: ',
-        defaultOptions[currency.symbol],
-        currency.symbol
-      );
       const assigned = Object.assign(
         {},
         defaultOptions[currency.symbol],

@@ -8,7 +8,12 @@ const socket = io(config.SOCKET_URL, { path: '/websocket_desktop' });
 socket.emit('appInfo', '', (response: any) => {
   localStorage.appInfo = JSON.stringify(response);
 
-  CurrenciesService.setTickerFromObject(response.ticker);
+  const ticker = response.ticker;
+  if (Array.isArray(ticker)) {
+    CurrenciesService.setTicker(response.ticker);
+  } else {
+    CurrenciesService.setTickerFromObject(response.ticker);
+  }
 });
 
 // Then we subscribe to updates

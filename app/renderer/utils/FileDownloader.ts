@@ -14,6 +14,7 @@ const app = electron.app || electron.remote.app;
 const debug = require('debug')('app:fileDownloader');
 export const librariesPath = path.join(app.getPath('userData'), 'libraries');
 
+debug('userData location is %s', librariesPath);
 type DownloadErrorOptions = {
   context: 'request' | 'md5' | 'unexpected';
   code?: string;

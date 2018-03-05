@@ -135,6 +135,10 @@
   transform: translateY(-3px);
 }
 
+option {
+  background: rgb(49, 54, 61);
+}
+
 .period {
   opacity: 0.7;
   font-size: 85%;

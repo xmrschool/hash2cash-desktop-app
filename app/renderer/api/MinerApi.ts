@@ -36,7 +36,7 @@ export class Worker {
   async setCustomParameter(id: string, value: string) {
     const resp = await minerApi.fetch(
       `/workers/${this.data.name}/setCustomParameter`,
-      { id, value }
+      { id, value },
     );
 
     this.data.parameters![id] = value;
@@ -109,8 +109,10 @@ export class Api {
   }
 
   @action
-  async getWorkers(): Promise<Worker[]> {
-    const response = (await this.fetch('/workers?asArray=true')) as Workers[];
+  async getWorkers(updateCache: boolean = false): Promise<Worker[]> {
+    const response = (await this.fetch(
+      '/workers?asArray=true&updateCache=' + updateCache,
+    )) as Workers[];
 
     this.workers = response.map(d => new Worker(d));
 
@@ -127,12 +129,12 @@ export class Api {
 
   async fetch(
     resource: string,
-    query: { [st: string]: any } = {}
+    query: { [st: string]: any } = {},
   ): Promise<any> {
     const querified = queryString.stringify(query);
 
     const resp = await fetch(
-      `${this.host}${resource}${querified.length > 0 ? `?${querified}` : ''}`
+      `${this.host}${resource}${querified.length > 0 ? `?${querified}` : ''}`,
     );
     const json = await resp.json();
 

@@ -44,10 +44,10 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
 
   get maps() {
     return {
-      full: __WIN32__ ? [6, 25] : [0, 0],
-      middle: [7, 50],
-      optimized: [8, 100],
-      ultraOptimized: [9, 120],
+      full: __WIN32__ ? [6, 25, 1] : [0, 0, 1],
+      middle: [7, 60, 0.8],
+      optimized: [8, 110, 0.6],
+      ultraOptimized: [10, 150, 0.4],
     } as any;
   }
 
@@ -74,7 +74,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
         value: 'optimized',
       },
       {
-        name: 'Low',
+        name: 'Lowest possible',
         value: 'ultraOptimized',
       },
     ];
@@ -92,10 +92,10 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
 
       nvidiaGpus.forEach(device => {
         const props = device.collectedInfo as CudaDevice;
-        const [bfactor, bsleep] = this.getArgsFor(props.index);
+        const [bfactor, bsleep, threads] = this.getArgsFor(props.index);
 
         outer.push(`{ "index" : ${props.index},
-    "threads" : ${props.deviceThreads}, "blocks" : ${props.deviceBlocks},
+    "threads" : ${(props.deviceThreads * threads).toFixed()}, "blocks" : ${props.deviceBlocks},
     "bfactor" : ${bfactor}, "bsleep" : ${bsleep},
     "affine_to_cpu" : true, "sync_mode" : 3,
   },`);

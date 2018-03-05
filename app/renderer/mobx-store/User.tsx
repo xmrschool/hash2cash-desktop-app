@@ -43,6 +43,7 @@ export class User {
 
   @action
   updateBalance({ balance }: { balance: number }) {
+    debug('Received new balance: ', balance);
     this.balance = balance;
   }
 
