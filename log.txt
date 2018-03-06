@@ -1,6 +1,6 @@
-[2018-03-04 21:13:21] no active pools, stop mining
-cash:8080 diff 2337
-H/s
+[2018-03-06 11:16:01] no active pools, stop mining
+cash:8080 diff 3000
+ume
 GHz (1) x64 AES-NI
 , code: -1
 [2018-03-05 10:22:52]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0

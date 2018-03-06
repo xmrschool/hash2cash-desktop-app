@@ -4,8 +4,9 @@ import * as path from 'path';
 import { AppWindow } from './appWindow';
 
 let serverPort: number | null = null;
+let server: Server | null = null;
 
-export { serverPort };
+export { serverPort, server };
 export class Server extends EventEmitter {
   private window: Electron.BrowserWindow;
 
@@ -16,11 +17,15 @@ export class Server extends EventEmitter {
       show: false,
     });
 
+    server = this;
     this.bindClose();
   }
 
   openDevTools() {
-    this.window.webContents.openDevTools();
+    console.log('Trying to open server developer tools.. Hang on');
+    this.window.webContents.openDevTools({
+      mode: 'detach',
+    });
   }
 
   bindClose() {

@@ -96,6 +96,7 @@ export class InitializationState {
     await minerApi.stopAll();
     // Wait till all workers are done
     await sleep(200);
+
     const workers = await minerApi.getWorkers(true); // Force get new workers
     if (minerApi.workers.length === 0) {
       throw new Error('Failed to get any of workers. Seems to be strange!');
@@ -128,7 +129,7 @@ export class InitializationState {
   async nextMiner(): Promise<any> {
     if (this.benchmarkQueue.length <= this.benchmarkQueueIndex) {
       // element doesnt exist
-      console.log('Its end!');
+      debug('No miners anymore');
       return;
     }
     const miner = this.benchmarkQueue[this.benchmarkQueueIndex];
@@ -139,7 +140,7 @@ export class InitializationState {
     const promise = new Promise(resolve => {
       const speedListener = (speed: number[]) => {
         // What we do here? If current speed is 0, we do nothing
-        if (!speed[0]) return;
+        if (!speed[0] || speed[0] === 0) return;
         // We only need average minute speed
         if (speed[1] > 0) {
           resolve(speed[1]);

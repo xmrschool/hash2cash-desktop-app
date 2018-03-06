@@ -1,6 +1,7 @@
 import { Menu, shell } from 'electron';
 import { getRelativeLink } from './utils';
 import { RENDERER_PATH } from './appWindow';
+import { server } from './server';
 
 const openExternal = (link: string) => () =>
   shell.openExternal(getRelativeLink(link));
@@ -59,7 +60,13 @@ export default function buildDefaultMenu() {
         accelerator: __DARWIN__ ? 'Alt+Command+I' : 'Ctrl+Shift+I',
         click(item: any, focusedWindow: Electron.BrowserWindow) {
           if (focusedWindow) {
-            focusedWindow.webContents.toggleDevTools();
+            if (focusedWindow.webContents.isDevToolsOpened()) {
+              focusedWindow.webContents.toggleDevTools();
+            } else {
+              focusedWindow.webContents.openDevTools({
+                mode: 'detach',
+              });
+            }
           }
         },
       },
@@ -69,7 +76,6 @@ export default function buildDefaultMenu() {
           ? 'Toggle Server Developer Tools'
           : '&Toggle server developer tools',
         click(item: any, focusedWindow: Electron.BrowserWindow) {
-          const server = require('./index').server;
           if (server) {
             server.openDevTools();
           }

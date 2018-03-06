@@ -88,7 +88,6 @@ export default class Initialization extends React.Component<
       initializationState.setStep(4 / 7);
       initializationState.setStatus('Benchmarking...');
       initializationState.bechmarking = true;
-      console.log('I hope youare doing well');
       await initializationState.benchmark();
 
       initializationState.setStep(1);
@@ -186,7 +185,6 @@ export default class Initialization extends React.Component<
     );
   }
   render() {
-    console.log(initializationState.hardware);
     return (
       <React.Fragment>
         <div

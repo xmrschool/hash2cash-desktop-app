@@ -1,7 +1,7 @@
 {
   "name": "hashtocash",
   "productName": "Hash to Cash",
-  "version": "0.11.1",
+  "version": "0.11.4",
   "description": "Hash to cash allows you to mine cryptocurrencies and transform them directly to fiat. Future is here!",
   "main": "app/main/main.js",
   "scripts": {
@@ -181,6 +181,7 @@
   },
   "dependencies": {
     "@types/bluebird": "^3.5.20",
+    "@types/bunyan": "^1.8.4",
     "@types/classnames": "^2.2.3",
     "@types/electron-json-storage": "^4.0.0",
     "@types/fs-extra": "^5.0.0",
@@ -195,11 +196,14 @@
     "@types/socket.io-client": "^1.4.32",
     "@types/systeminformation": "^3.23.0",
     "@types/unzip": "^0.1.0",
+    "@types/winston": "^2.3.8",
     "animated": "^0.2.2",
+    "bunyan": "^1.8.12",
     "classnames": "^2.2.5",
     "decompress-zip": "^0.3.0",
     "electron-debug": "^1.5.0",
     "electron-json-storage": "^4.0.2",
+    "electron-log": "^2.2.14",
     "electron-updater": "^2.20.1",
     "electron-window-state": "^4.1.1",
     "font-awesome": "^4.7.0",
@@ -230,7 +234,9 @@
     "socket.io-client": "^2.0.4",
     "source-map-support": "^0.5.3",
     "systeminformation": "^3.37.4",
-    "unzip": "^0.1.11"
+    "universal-logger": "^1.0.1",
+    "unzip": "^0.1.11",
+    "winston": "^3.0.0-rc1"
   },
   "devEngines": {
     "node": ">=6.x",

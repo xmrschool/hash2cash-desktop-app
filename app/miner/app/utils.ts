@@ -6,6 +6,7 @@ import { Architecture, Downloadable } from '../../renderer/api/Api';
 import workersCache, { WorkersCache } from './workersCache';
 import { algorithmsDefaultDiff } from './constants/algorithms';
 import { Algorithms } from './constants/algorithms';
+const logger = require('debug')('app:miner');
 
 const config = require('../../config.js');
 const debug = require('debug')('app:server:utils');
@@ -64,10 +65,7 @@ export async function updateWorkersInCache(): Promise<void> {
       workersCache.set(instance.workerName, instance);
     });
 
-    console.log('cache is :', workersCache);
-
-    for (const [key, value] of workersCache) {
-      console.log('key is', key);
+    for (const [_, value] of workersCache) {
       await value.init();
     }
   } catch (e) {
@@ -112,4 +110,11 @@ export function getDifficulty(algorithm: Algorithms): number {
     );
     return fallback;
   }
+}
+
+export function wrapError(ctx: any, err: string) {
+  logger('[%s]: ', ctx.path, err);
+
+  ctx.status = 400;
+  ctx.body = { success: false, error: err };
 }

@@ -8,11 +8,13 @@ import {
   getWorkers,
   RuntimeError,
   updateWorkersInCache,
+  wrapError,
 } from './utils';
-import writeLog from './eventLog';
 import workersCache from './workersCache';
 
 updateWorkersInCache();
+
+const logger = require('debug')('app:miner:server');
 const koa = new Koa();
 const router = new Router();
 
@@ -48,6 +50,8 @@ router.get('/workers', async ctx => {
   const cacheShouldBeUpdated = ctx.query.updateCache === true;
   const asArray = ctx.query.asArray;
 
+  logger('Does cache gonna be updated? %s', cacheShouldBeUpdated);
+
   const obj: any = asArray ? [] : {};
 
   for (const [key, worker] of await getWorkers(cacheShouldBeUpdated)) {
@@ -60,22 +64,14 @@ router.get('/workers', async ctx => {
 
 router.get('/workers/:action(start|stop|reload)', async ctx => {
   const reloaded = [];
-  for (const [key, worker] of await getWorkers()) {
+  for (const [_, worker] of await getWorkers()) {
     try {
       if (worker.running) {
         await worker[ctx.params.action as 'start' | 'stop' | 'reload']();
         reloaded.push(worker.workerName);
       }
     } catch (e) {
-      writeLog(
-        'error',
-        'workers.restart',
-        'Failed to apply action to worker: ',
-        {
-          error: e,
-          key,
-        }
-      );
+      logger('Failed to apply action %s for worker\n%O', ctx.params.action, e);
     }
   }
 
@@ -91,22 +87,19 @@ router.get('/workers/:id/:action(start|stop|reload)', async ctx => {
     const worker = workersCache.get(id);
 
     if (!worker) {
-      ctx.body = { success: false, error: 'Worker not found' };
+      wrapError(ctx, 'Worker not found');
 
       return;
     }
 
     if (action === 'start' && worker.running) {
-      ctx.body = { success: false, error: 'Worker already running' };
+      wrapError(ctx, 'Worker already running');
 
       return;
     }
 
     if (action === 'stop' && !worker.running) {
-      ctx.body = {
-        success: false,
-        error: "Worker not runned, so you can't stop it",
-      };
+      wrapError(ctx, 'Worker not running, so you cant stop it');
 
       return;
     }
@@ -114,7 +107,7 @@ router.get('/workers/:id/:action(start|stop|reload)', async ctx => {
     await worker[action]();
     ctx.body = { success: true, message: 'Action performed' };
   } catch (e) {
-    console.error(e);
+    logger(e);
     throw new RuntimeError("Can't perform action", e);
   }
 });
@@ -198,6 +191,8 @@ ipcRenderer.on('quit', async () => {
 getPort(8024).then(port => {
   koa.listen(port as any, 'localhost', 34, () => {
     ipcRenderer.send('miner-server-port', port);
-    console.log(`Successfully listening on ${port} port`);
+    logger('Listening on %d port', port);
   });
 });
+
+(window as any).logger = logger;

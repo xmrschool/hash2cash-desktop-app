@@ -122,9 +122,7 @@ export abstract class BaseWorker<P extends string> extends EventEmitter
   }
 
   async init() {
-    console.log('init is called');
     try {
-      console.log(config.MINERS_PATH, this.requiredModules[0]);
       this.path = path.join(config.MINERS_PATH, this.requiredModules[0]);
       const possibleJson = await localStorage.getItem(this.workerKey);
 

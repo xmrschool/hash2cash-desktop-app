@@ -67,21 +67,28 @@ if (isDuplicateInstance) {
 }
 
 app.on('ready', () => {
-  const startMinimized = (process.argv || []).indexOf('--hidden') !== -1 || app.getLoginItemSettings().openAsHidden;
-
-  console.log('if we gonna start minimized: ', startMinimized);
-  if (isDuplicateInstance) {
-    return;
-  }
-
-  enableUpdates();
-  buildTray();
   // Auto start on OS startup
   app.setLoginItemSettings({
     openAtLogin: true,
     openAsHidden: true,
     args: ['--hidden'], // openAsHidden supported on OS X, but arguments are supported on Windows
   });
+
+  const startMinimized =
+    (process.argv || []).indexOf('--hidden') !== -1 ||
+    app.getLoginItemSettings().wasOpenedAsHidden;
+
+  if (startMinimized) {
+    console.log(
+     "Seems that app was runned on auto start, so we don't start renderer"
+    );
+  }
+  if (isDuplicateInstance) {
+    return;
+  }
+
+  enableUpdates();
+  buildTray();
 
   readyTime = now() - launchTime;
 
@@ -136,7 +143,7 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
   app.quit();
-})
+});
 /*
 
 app.on('before-quit', event => {

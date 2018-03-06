@@ -98,7 +98,9 @@ export class AppWindow {
         __DEV__
       );
       if (__DEV__) {
-        this.window.webContents.openDevTools();
+        this.window.webContents.openDevTools({
+          mode: 'detach',
+        });
       }
 
       this._loadTime = now() - startLoad;
@@ -113,7 +115,9 @@ export class AppWindow {
     });
 
     this.window.webContents.on('did-fail-load', (e, th) => {
-      this.window.webContents.openDevTools();
+      this.window.webContents.openDevTools({
+        mode: 'detach',
+      });
       this.window.show();
     });
 

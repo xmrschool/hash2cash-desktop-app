@@ -161,8 +161,9 @@ export class WorkerView extends React.Component<
 
         return;
       case 'stop':
-        await worker.stop();
+        // Stop observing first to prevent any errors
         minerObserver.stopObserving(worker);
+        await worker.stop();
 
         return;
       case 'waiting':
