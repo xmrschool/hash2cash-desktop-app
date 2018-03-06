@@ -19,7 +19,7 @@ let readyTime: number | null = null;
 export let server: Server | null = null;
 const quitting = false;
 
-type OnDidLoadFn = (window: AppWindow) => void;
+type OnDidLoadFn = (window: AppWindow | null) => void;
 /** See the `onDidLoad` function. */
 let onDidLoadFns: Array<OnDidLoadFn> | null = [];
 
@@ -76,11 +76,12 @@ app.on('ready', () => {
 
   const startMinimized =
     (process.argv || []).indexOf('--hidden') !== -1 ||
-    app.getLoginItemSettings().wasOpenedAsHidden;
+    app.getLoginItemSettings().wasOpenedAsHidden ||
+    process.env.RUN_AS_HIDDEN; // Env could be used as test
 
   if (startMinimized) {
     console.log(
-     "Seems that app was runned on auto start, so we don't start renderer"
+      "Seems that app was runned on auto start, so we don't start renderer",
     );
   }
   if (isDuplicateInstance) {
@@ -112,6 +113,7 @@ app.on('ready', () => {
   if (!startMinimized) {
     createWindow();
   } else if (onDidLoadFns) {
+    console.log('onDidLoadFns: ', onDidLoadFns);
     onDidLoadFns = null;
   }
 
@@ -122,22 +124,22 @@ app.on('ready', () => {
 });
 
 export function openMainWindow() {
-  onDidLoad(window => {
-    if (quitting) return;
+  if (quitting) return;
 
-    if (window.destroyed()) {
-      createWindow();
-    } else {
-      onDidLoad(() => {
-        try {
-          !window.isVisible() && mainWindow!.show();
-          mainWindow!.focus();
-        } catch (e) {}
-      });
-    }
-  });
+  if (!mainWindow || mainWindow.destroyed()) {
+    console.log('Creating window...');
+    createWindow();
+  } else {
+    onDidLoad(() => {
+      try {
+        mainWindow!.isVisible() && mainWindow!.show();
+        mainWindow!.focus();
+      } catch (e) {}
+    });
+  }
 }
 app.on('activate', () => {
+  console.log('App activated');
   openMainWindow();
 });
 
@@ -217,8 +219,6 @@ function onDidLoad(fn: OnDidLoadFn) {
   if (onDidLoadFns) {
     onDidLoadFns.push(fn);
   } else {
-    if (mainWindow) {
-      fn(mainWindow);
-    }
+    fn(mainWindow);
   }
 }

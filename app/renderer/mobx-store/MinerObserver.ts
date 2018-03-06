@@ -29,16 +29,20 @@ export class InternalObserver extends EventEmitter {
   async updateWorkerData() {
     if (!this._data.running) return;
 
-    const stats = await this._data.getStats();
+    try {
+      const stats = await this._data.getStats();
 
-    if (stats === null) return;
-    const speed = stats.hashrate.total;
+      if (stats === null) return;
+      const speed = stats.hashrate.total;
 
-    this.emit('speed', speed);
-    // Do not emit if not a number
-    if (speed[0]) this.latestSpeed = speed[0];
-    if (speed[1]) this.speedPerMinute = speed[1];
-    this.hashesSubmitted = stats.results.hashes_total;
+      this.emit('speed', speed);
+      // Do not emit if not a number
+      if (speed[0] && speed[0] > 0) this.latestSpeed = speed[0];
+      if (speed[1] && speed[1] > 0) this.speedPerMinute = speed[1];
+      this.hashesSubmitted = stats.results.hashes_total;
+    } catch (e) {
+      console.error('Failed to get worker stats\n', e);
+    }
   }
 
   @action

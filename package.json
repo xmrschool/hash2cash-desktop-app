@@ -1,7 +1,7 @@
 {
   "name": "hashtocash",
   "productName": "Hash to Cash",
-  "version": "0.11.4",
+  "version": "0.11.5",
   "description": "Hash to cash allows you to mine cryptocurrencies and transform them directly to fiat. Future is here!",
   "main": "app/main/main.js",
   "scripts": {
@@ -38,8 +38,6 @@
       "app/main/dist/",
       "app/renderer/app.html",
       "app/main/trayIcon.png",
-      "app/compiledUtils/darwin",
-      "app/compiledUtils/win32",
       "app/miner/app/index.html",
       "app/main/main.js",
       "node_modules/",
@@ -48,6 +46,11 @@
     "asarUnpack": [
       "**/app/compiledUtils/**/*"
     ],
+    "mac": {
+      "files": [
+        "app/compiledUtils/darwin"
+      ]
+    },
     "dmg": {
       "contents": [
         {
@@ -63,6 +66,9 @@
       ]
     },
     "win": {
+      "files": [
+        "app/compiledUtils/win32"
+      ],
       "target": [
         "nsis"
       ]
@@ -234,9 +240,7 @@
     "socket.io-client": "^2.0.4",
     "source-map-support": "^0.5.3",
     "systeminformation": "^3.37.4",
-    "universal-logger": "^1.0.1",
-    "unzip": "^0.1.11",
-    "winston": "^3.0.0-rc1"
+    "unzip": "^0.1.11"
   },
   "devEngines": {
     "node": ">=6.x",
