@@ -1,5 +1,6 @@
 import { spawn } from 'child_process';
 import { ipcRenderer } from 'electron';
+import * as os from "os";
 export type CudaDevice = {
   name: string;
   index: number;
@@ -31,6 +32,12 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 export default async function cudaDeviceQuery(): Promise<CollectorResponse> {
+  if (os.arch() === 'x32') {
+    return Promise.resolve({
+      totalCount: 0,
+      devices: [],
+    });
+  }
   const extension = __WIN32__ ? '.exe' : '';
   const file = (await new Promise(resolve => {
     ipcRenderer.once('resolveUtil', (event: any, arg: string) => resolve(arg));
