@@ -33,11 +33,13 @@ export default async function collectHardware(): Promise<Architecture> {
   const collectedCpu = await cpu();
   const uuid = (await system()).uuid.toLowerCase();
 
+  const detectedArch = arch();
+
   const report: Architecture = {
     devices: [],
     warnings: [],
     uuid,
-    cpuArch: arch() as 'x32' | 'x64',
+    cpuArch: (detectedArch === 'ia32' ? 'x32' : arch()) as 'x32' | 'x64',
   };
   if (['win32', 'darwin', 'linux'].includes(process.platform)) {
     report.platform = process.platform as any;

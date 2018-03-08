@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 export default async function cudaDeviceQuery(): Promise<CollectorResponse> {
-  if (os.arch() === 'x32') {
+  if (os.arch() === 'x32' || os.arch() === 'ia32') {
     return Promise.resolve({
       totalCount: 0,
       devices: [],
