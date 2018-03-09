@@ -1,3 +1,11 @@
+@keyframes fadeIn {
+  0% {
+    transform: scale(0.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 .modal {
   position: absolute;
   top: 0;
@@ -8,8 +16,11 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.7);
   padding: 16px;
+  transform: scale(0.7);
+  animation-delay: 0.1s;
+  animation: fadeIn var(--animation-delay) var(--animation-type) forwards;
 
   & h2 {
     font-size: 2rem;
@@ -18,4 +29,8 @@
   & > * {
     text-align: center;
   }
+}
+.inner {
+  max-width: 100%;
+  word-wrap: break-word;
 }

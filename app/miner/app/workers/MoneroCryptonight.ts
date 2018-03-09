@@ -1,5 +1,6 @@
 import { ChildProcess, spawn } from 'child_process';
 import * as path from 'path';
+
 import { BaseWorker, Parameter, ParameterMap, Pick } from './BaseWorker';
 import { getLogin, RuntimeError } from '../utils';
 import { getPort } from '../../../shared/utils';
@@ -19,6 +20,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   };
   daemon?: ChildProcess;
   running: boolean = false;
+  willQuit: boolean = true;
   daemonPort?: number;
 
   get requiredModules() {
@@ -153,9 +155,11 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
 
       this.parameters[id] = value;
       this.commit();
+
+      this.emit({ parameters: this.parameters });
       return;
     } catch (e) {
-      console.error('failed to set prop')
+      console.error('failed to set prop');
       throw new RuntimeError('Cannot set a custom property', e);
     }
   }
@@ -192,10 +196,9 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   async start(): Promise<boolean> {
     if (this.running) throw new Error('Miner already running');
 
-    console.log('path is: ', this.path);
     const args = await this.getAppArgs();
 
-    console.log('args: ', args);
+    this.willQuit = false;
     this.daemon = spawn(
       path.join(this.path, __WIN32__ ? 'xmrig.exe' : 'xmrig'),
       args,
@@ -205,9 +208,10 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       console.log(`stdout: ${data}`);
     });
 
-    this.daemon.on('close', data => {
-      this.running = false;
-    });
+    this.emit({ running: true });
+
+    this.daemon.on('close', err => this.handleTermination(err, true));
+    this.daemon.on('error', err => this.handleTermination(err));
 
     this.running = true;
     this.commit();
@@ -218,8 +222,11 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   async stop(commit: boolean = true): Promise<boolean> {
     if (!this.running) throw new Error('Miner not running');
 
-    this.daemon!.kill();
     this.running = false;
+    this.emit({ running: false });
+
+    this.willQuit = true;
+    this.daemon!.kill();
 
     if (commit) this.commit();
     return true;

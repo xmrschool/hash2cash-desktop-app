@@ -1,21 +1,24 @@
+import { remote } from 'electron';
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import * as cx from 'classnames';
-import minerApi, { Worker } from '../../api/MinerApi';
-import minerObserver, {
-  InternalObserver,
-} from '../../mobx-store/MinerObserver';
+
+import minerApi, { Worker } from 'api/MinerApi';
+import minerObserver, { InternalObserver } from 'mobx-store/MinerObserver';
 import currenciesService, {
   CurrencyNumber,
-} from '../../mobx-store/CurrenciesService';
-import globalState from '../../mobx-store/GlobalState';
-import User from '../../mobx-store/User';
-import toMonero from '../../utils/toMonero';
+} from 'mobx-store/CurrenciesService';
+import globalState from 'mobx-store/GlobalState';
+import userOptions from 'mobx-store/UserOptions';
+
+import User from 'mobx-store/User';
+
+import toMonero from 'utils/toMonero';
+
 import Preloader from '../Preloader';
-import { remote } from 'electron';
 import buildMenu from '../Settings';
-import userOptions from '../../mobx-store/UserOptions';
+import RuntimeErrorNotifier from '../RuntimeErrorNotifier';
 
 const settings = require('../../../shared/icon/settings.svg');
 const ws = require('scenes/Initialization/Worker.css');
@@ -27,7 +30,7 @@ export const StatsView = observer(() => {
     User.balance && User.balance > 0 ? toMonero(User.balance) : 0;
   const localBalance = currenciesService.toLocalCurrency(
     'XMR',
-    balanceInMonero
+    balanceInMonero,
   );
 
   const instance = currenciesService.ticker[userOptions.get('currency')];
@@ -41,6 +44,7 @@ export const StatsView = observer(() => {
     .filter(d => d._data.running)
     .map(queue => queue.hashesSubmitted)
     .reduce((d, prev) => prev + d, 0);
+
   const doneAmount = new CurrencyNumber(total, instance);
 
   return (
@@ -156,8 +160,12 @@ export class WorkerView extends React.Component<
 
     switch (action) {
       case 'start':
-        await worker.start();
-        this.setState({ observer: minerObserver.observe(worker) });
+        try {
+          await worker.start();
+          this.setState({ observer: minerObserver.observe(worker) });
+        } catch (e) {
+          // Everything is happen in the minerApi code
+        }
 
         return;
       case 'stop':
@@ -290,7 +298,7 @@ export default class InnerDashboard extends React.Component<
 
   openMenu({ x, y }: any) {
     buildMenu(this.props as RouteComponentProps<any>).popup(
-      remote.getCurrentWindow()
+      remote.getCurrentWindow(),
     );
   }
 
@@ -353,10 +361,11 @@ export default class InnerDashboard extends React.Component<
           />
           <div>Run most profitable coins!</div>
         </div>
-        {workers.gpu && <h3 className={s.header}>GPU</h3> }
+        {workers.gpu && <h3 className={s.header}>GPU</h3>}
         {workers.gpu && <WorkersView workers={workers.gpu} />}
         <h3 className={s.header}>CPU</h3>
         {workers.cpu && <WorkersView workers={workers.cpu} />}
+        <RuntimeErrorNotifier />
       </div>
     );
   }

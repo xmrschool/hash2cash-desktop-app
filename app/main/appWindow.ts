@@ -146,6 +146,12 @@ export class AppWindow {
 
       Menu.buildFromTemplate([
         {
+          role: 'copy',
+        },
+        {
+          role: 'paste',
+        },
+        {
           label: 'Inspect element',
           click: () => {
             this.window.webContents.inspectElement(x, y);
@@ -214,6 +220,7 @@ export class AppWindow {
 
   /** Send the app launch timing stats to the renderer. */
   public sendMinerPort(port: number) {
+    console.log('sending port: ', port);
     this.onDidLoad(() =>
       this.window.webContents.send('miner-server-port', port)
     );
@@ -245,6 +252,10 @@ export class AppWindow {
 
   public destroy() {
     this.window.destroy();
+  }
+
+  public resetBenchmark() {
+    this.window.webContents.emit('resetBenchmark', 'can you please?');
   }
 
   public hide() {

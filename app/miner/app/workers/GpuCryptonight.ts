@@ -15,6 +15,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
   static usesHardware = ['gpu'];
   static usesAccount = 'XMR';
 
+  willQuit: boolean = false;
   workerName: string = 'GpuCryptonight';
 
   path: string = '';
@@ -44,10 +45,10 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
 
   get maps() {
     return {
-      full: __WIN32__ ? [6, 25, 1] : [0, 0, 1],
-      middle: [7, 60, 0.8],
-      optimized: [8, 110, 0.6],
-      ultraOptimized: [10, 150, 0.4],
+      full: __WIN32__ ? [8, 100, 1] : [0, 0, 1],
+      middle: [8, 100, 0.8],
+      optimized: [8, 110, 0.7],
+      ultraOptimized: [9, 150, 0.5],
     } as any;
   }
 
@@ -94,16 +95,18 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
         const props = device.collectedInfo as CudaDevice;
         const [bfactor, bsleep, threads] = this.getArgsFor(props.index);
 
-        outer.push(`{ "index" : ${props.index},
-    "threads" : ${(props.deviceThreads * threads).toFixed()}, "blocks" : ${props.deviceBlocks},
+        outer.push(`//${props.name} ${props.memory}MB\n{ "index" : ${props.index},
+    "threads" : ${(props.deviceThreads * threads).toFixed()}, "blocks" : ${
+          props.deviceBlocks
+        },
     "bfactor" : ${bfactor}, "bsleep" : ${bsleep},
-    "affine_to_cpu" : true, "sync_mode" : 3,
-  },`);
+    "affine_to_cpu" : false, "sync_mode" : 3,
+  }`);
       });
       const template = `
 "gpu_threads_conf" :
 [
-${outer.join()}
+${outer.join(',\n')}
 ],
       `;
 
@@ -131,7 +134,7 @@ ${outer.join()}
 "pool_list" :
 [
 	{"pool_address" : ${s(this.getPool('cryptonight'))}, "wallet_address" : ${s(
-      getLogin('GpuCryptonight')
+      getLogin('GpuCryptonight'),
     )}, "rig_id" : "oh_hello", "pool_password" : "", "use_nicehash" : true, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
 ],
 "currency" : "monero",
@@ -155,7 +158,7 @@ ${outer.join()}
 
     console.log(
       'Saving config to directory: ',
-      path.join(this.path, 'config.txt')
+      path.join(this.path, 'config.txt'),
     );
     await fs.outputFile(path.join(this.path, 'config.txt'), template);
   }
@@ -182,6 +185,8 @@ ${outer.join()}
       this.parameters[id] = value;
       await this.buildConfigs();
       this.commit();
+
+      this.emit({ worker: this.workerName, parameters: this.parameters });
       return;
     } catch (e) {
       console.error('failed to set prop');
@@ -236,22 +241,24 @@ ${outer.join()}
       await this.buildConfigs();
     }
 
+    this.willQuit = false;
+
     this.daemon = spawn(
       path.join(this.path, this.executableName),
       ['-i', (await this.getDaemonPort()).toString()],
       {
         cwd: this.path,
-      }
+      },
     );
+
+    this.emit({ running: true });
 
     this.daemon.stdout.on('data', data => {
       console.log(`stdout: ${data}`);
     });
 
-    this.daemon.on('close', data => {
-      console.error('unexpected closed: ', data);
-      this.running = false;
-    });
+    this.daemon.on('close', err => this.handleTermination(err, true));
+    this.daemon.on('error', err => this.handleTermination(err));
 
     this.running = true;
     this.commit();
@@ -263,7 +270,10 @@ ${outer.join()}
   async stop(commit: boolean = true): Promise<boolean> {
     if (!this.running) throw new Error('Miner not running');
 
-    this.daemon!.kill();
+    this.emit({ running: false });
+
+    this.willQuit = true;
+    this.daemon!.kill('SIGTERM'); // shutdown a process gratefully
     this.running = false;
 
     if (commit) this.commit();

@@ -1,5 +1,5 @@
 .root {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 125px);
   transition: var(--animation-delay) opacity var(--animation-type),
   var(--animation-delay) transform var(--animation-type);
   opacity: 0;

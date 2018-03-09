@@ -1,3 +1,4 @@
+import { remote } from 'electron';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import * as cx from 'classnames';
@@ -31,6 +32,7 @@ export default class Settings extends React.Component<
 
     this.escFunction = this.escFunction.bind(this);
     this.updateParameter = this.updateParameter.bind(this);
+    this.updateStartupSettings = this.updateStartupSettings.bind(this);
     this.benchmark = this.benchmark.bind(this);
   }
 
@@ -69,6 +71,29 @@ export default class Settings extends React.Component<
     this.props.history.push('/init');
   }
 
+  updateStartupSettings(event: any) {
+    const shoulda = event.target.value === 'yes';
+
+    if (shoulda) {
+      remote.app.setLoginItemSettings({
+        openAtLogin: true,
+        openAsHidden: true,
+        args: ['--hidden'], // openAsHidden supported on OS X, but arguments are supported on Windows
+      });
+    } else
+      remote.app.setLoginItemSettings({
+        openAtLogin: false,
+      });
+
+    this.forceUpdate();
+  }
+
+  get runnedAtStartup() {
+    const shouldOpen = remote.app.getLoginItemSettings().openAtLogin;
+
+    return shouldOpen ? 'yes' : 'no';
+  }
+
   render() {
     return (
       <div className={cx(s.root, this.state.animating && s.animating)}>
@@ -97,6 +122,7 @@ export default class Settings extends React.Component<
             </select>
           </div>
         </div>
+
         <div className={s.pick}>
           <div className={s.question}>
             <h4 className={s.questionText}>Currency</h4>
@@ -109,6 +135,22 @@ export default class Settings extends React.Component<
             >
               <option value="USD">U.S. Dollar</option>
               <option value="RUB">Ruble</option>
+            </select>
+          </div>
+        </div>
+
+        <div className={s.pick}>
+          <div className={s.question}>
+            <h4 className={s.questionText}>Startup</h4>
+            <p>Run Hash to cash and mining along with OS startup</p>
+          </div>
+          <div className={s.answer}>
+            <select
+              onChange={this.updateStartupSettings}
+              value={this.runnedAtStartup}
+            >
+              <option value="yes">Yes, sure!</option>
+              <option value="no">No</option>
             </select>
           </div>
         </div>

@@ -11,7 +11,7 @@ export class User {
   @observable email?: string;
   @observable balance?: number;
   @observable createdAt?: Date;
-  @observable authenticated?: boolean = false;
+  @observable authenticated?: boolean = !!localStorage.userId;
 
   @observable accounts?: Account[] = [];
   @observable profile?: Profile = {};
@@ -81,7 +81,9 @@ export class User {
 
     debug('Authentication result:', resp);
     if (!resp.success && resp.error) {
+      localStorage.removeItem('userId');
       this.attachError = resp.error;
+      this.authenticated = false;
       return false;
     }
 

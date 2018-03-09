@@ -1,19 +1,66 @@
 import * as queryString from 'querystring';
 import { groupBy, sortBy } from 'lodash';
+import { EventEmitter } from 'events';
+import { action, observable } from 'mobx';
 
-import globalState from '../mobx-store/GlobalState';
+import globalState, { default as GlobalState } from 'mobx-store/GlobalState';
 import { OuterJSON } from '../../miner/app/workers/BaseWorker';
 import accountService from '../mobx-store/CurrenciesService';
-import { action, observable } from 'mobx';
+import { connectionPromise, onceMinerReady } from '../socket';
+import RuntimeError from '../mobx-store/RuntimeError';
+
+const debug = require('debug');
 
 export type Workers = OuterJSON<any>;
 
-export class Worker {
+export class Worker extends EventEmitter {
   @observable data: Workers;
   @observable httpRequest: boolean = false;
+  debug: any;
 
   constructor(json: Workers) {
+    super();
     this.data = json;
+    this.debug = debug('app:worker:' + this.name);
+
+    this.listenForEvents();
+    this.bindEvents();
+  }
+
+  listenForEvents() {
+    onceMinerReady(localSocket => {
+      localSocket.on('state', ({ name, _data, ...params }: any) => {
+        debug('Received new state: ', { name, _data, ...params });
+
+        if (name === this.name) {
+          this.data = Object.assign(this.data, params);
+
+          this.emit('state', this);
+
+          if (_data) {
+            console.error(
+              'There is error happened switching inside state: \n',
+              _data,
+            );
+
+            this.emit('runtimeError', _data);
+          }
+        }
+      });
+    });
+  }
+
+  bindEvents() {
+    this.on('runtimeError', err => {
+      if (err.grateful) {
+        GlobalState.setToast({
+          message: err.message,
+          type: 'danger',
+          timeout: 5000,
+          closable: true,
+        });
+      } else RuntimeError.handleError(err);
+    });
   }
 
   get name() {
@@ -48,19 +95,35 @@ export class Worker {
   // Daemon management
   async start() {
     this.httpRequest = true;
-    const resp = await minerApi.fetch(`/workers/${this.data.name}/start`);
-    this.httpRequest = false;
-    this.data.running = true;
-    return resp;
+    try {
+      const resp = await minerApi.fetch(`/workers/${this.data.name}/start`);
+      this.httpRequest = false;
+
+      return resp;
+    } catch (e) {
+      RuntimeError.handleError(e);
+      this.httpRequest = false;
+
+      throw e;
+    }
   }
 
   @action
   async stop() {
-    this.httpRequest = true;
-    const resp = await minerApi.fetch(`/workers/${this.data.name}/stop`);
-    this.httpRequest = false;
-    this.data.running = false;
-    return resp;
+    // Feel free to ignore errors happening in there
+    try {
+      if (!this.data.running) {
+        return;
+      }
+      this.httpRequest = true;
+      const resp = await minerApi.fetch(`/workers/${this.data.name}/stop`);
+      this.httpRequest = false;
+      return resp;
+    } catch (e) {
+      console.error('Failed to stop miner!', e);
+
+      return;
+    }
   }
 
   @action
@@ -133,6 +196,7 @@ export class Api {
   ): Promise<any> {
     const querified = queryString.stringify(query);
 
+    await connectionPromise;
     const resp = await fetch(
       `${this.host}${resource}${querified.length > 0 ? `?${querified}` : ''}`,
     );

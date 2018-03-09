@@ -1,8 +1,8 @@
-import * as net from 'net';
+import { createServer } from 'http';
 
 export function getPort(startingAt: number): Promise<number> {
   function getNextAvailablePort(currentPort: number, cb: Function) {
-    const server = net.createServer();
+    const server = createServer();
     server.listen(currentPort, () => {
       server.once('close', () => {
         cb(currentPort);

@@ -2,6 +2,11 @@ import * as io from 'socket.io-client';
 import CurrenciesService from './mobx-store/CurrenciesService';
 const config = require('../config.js'); // tslint:disable-line
 
+export type MinerReadyCallback = (_socket: SocketIOClient.Socket) => any;
+
+let localSocket: SocketIOClient.Socket | null;
+const socketLoadFns: MinerReadyCallback[] = [];
+
 const socket = io(config.SOCKET_URL, { path: '/websocket_desktop' });
 
 // First time we have to manually ask for appInfo
@@ -24,3 +29,30 @@ socket.on('appInfo', (response: any) => {
 (self.window as any).socket = socket;
 
 export default socket;
+
+export function onceMinerReady(callback: MinerReadyCallback) {
+  if (localSocket) {
+    callback(localSocket);
+  } else {
+    socketLoadFns.push(callback);
+  }
+}
+
+export function connectToLocalMiner(port: number) {
+  console.log('Getting socket up on ', port, ' port');
+  if (localSocket && !localSocket.connected) {
+    // If already exists, don't do almost anything
+    io.connect(`http://localhost:${port}`);
+
+    return;
+  }
+
+  localSocket = io(`http://localhost:${port}`);
+
+  socketLoadFns.map(d => d(localSocket!));
+  socketLoadFns.slice(0);
+}
+
+export const connectionPromise = new Promise(resolve => onceMinerReady(resolve));
+
+export { localSocket };

@@ -103,7 +103,7 @@ export class InitializationState {
     }
 
     this.benchmarkQueue = workers.map(worker =>
-      minerObserver.observe(worker, false)
+      minerObserver.observe(worker, false),
     );
     this.benchmarkSecsLeft = TOTAL_BENCHMARK_TIME * workers.length;
 
@@ -127,44 +127,89 @@ export class InitializationState {
 
   @action
   async nextMiner(): Promise<any> {
-    if (this.benchmarkQueue.length <= this.benchmarkQueueIndex) {
-      // element doesnt exist
-      debug('No miners anymore');
-      return;
+    try {
+      if (this.benchmarkQueue.length <= this.benchmarkQueueIndex) {
+        // element doesnt exist
+        debug('No miners anymore');
+        return;
+      }
+      const miner = this.benchmarkQueue[this.benchmarkQueueIndex];
+
+      miner._data.start();
+      miner.start();
+
+      let stateListener: any;
+      let speedListener: any;
+      let errorListener: any;
+
+      const promise = new Promise(resolve => {
+        let latestSpeed: (number | null)[] = [null, null, null];
+        // We listen for every speed and once minute speed was received we resolve promise
+        speedListener = (speed: number[]) => {
+          // We store latestSpeed to make timeout error
+          latestSpeed = speed;
+          // What we do here? If current speed is 0, we do nothing
+          // But in case we have second speed we could ignore that behaviour
+          // We only need average minute speed
+          if (speed[1] > 0) {
+            return resolve(speed[1]);
+          }
+
+          if (!speed[0] || speed[0] === 0) return;
+
+          // Once miner is on and benchmark is down we start benchmark
+          if (!this.benchmarkCountDown) {
+            this.startBenchmarkCountDown();
+          }
+        };
+
+        // Miner has been stopped so we also stop benchmark
+        stateListener = () => {
+          console.log('Something has changed!', miner._data);
+          if (!miner._data.running) {
+            resolve(0);
+          }
+        };
+
+        errorListener = () => {
+          resolve(0);
+        };
+
+        // ToDo show notify if miner was stopped or when timeout error
+        miner.on('speed', speedListener);
+        miner._data.on('state', stateListener);
+        miner._data.on('runtimeError', errorListener);
+
+        // If speed hasn't been ever emitted, we skip miner
+        sleep(20000).then(d => {
+          if (latestSpeed[0] === null && latestSpeed[1] === null) {
+            resolve(0);
+          }
+        });
+      }); // wait til events are done
+
+      await promise;
+
+      console.log('Promise is done');
+      miner.removeListener('speed', speedListener);
+      miner._data.removeListener('state', stateListener);
+      miner._data.removeListener('runtimeError', errorListener);
+
+      // Once benchmark is done we shut down each things
+      minerObserver.stopObserving(miner, false);
+      clearInterval(this.benchmarkCountDown);
+      this.benchmarkCountDown = false;
+
+      await miner._data.stop();
+
+      this.benchmarkQueueIndex = this.benchmarkQueueIndex + 1;
+
+      return this.nextMiner();
+    } catch (e) {
+      console.error('Failed to benchmark miner! ', e);
+      // If something has broken (like antivirus shut down our miner we just continue and warn there's an error
+      return this.nextMiner();
     }
-    const miner = this.benchmarkQueue[this.benchmarkQueueIndex];
-
-    await miner._data.start();
-    miner.start();
-
-    const promise = new Promise(resolve => {
-      const speedListener = (speed: number[]) => {
-        // What we do here? If current speed is 0, we do nothing
-        if (!speed[0] || speed[0] === 0) return;
-        // We only need average minute speed
-        if (speed[1] > 0) {
-          resolve(speed[1]);
-        }
-
-        // Once miner is on and benchmark is down we start benchmark
-        if (!this.benchmarkCountDown) {
-          this.startBenchmarkCountDown();
-        }
-      };
-      miner.on('speed', speedListener);
-    }); // wait til events are done
-
-    await promise;
-    // Once benchmark is done we shut down each things
-    minerObserver.stopObserving(miner, false);
-    clearInterval(this.benchmarkCountDown);
-    this.benchmarkCountDown = false;
-
-    await miner._data.stop();
-
-    this.benchmarkQueueIndex = this.benchmarkQueueIndex + 1;
-
-    return this.nextMiner();
   }
 
   // Actions to manage seconds left in benchmark
@@ -172,7 +217,7 @@ export class InitializationState {
   startBenchmarkCountDown() {
     this.benchmarkCountDown = setInterval(
       () => this.countDownBenchmark(),
-      1000
+      1000,
     );
   }
 
@@ -192,7 +237,7 @@ export class InitializationState {
     this.setText(
       `${this.formatPercents(1 - percents)}%, ${
         this.benchmarkSecsLeft
-      } secs left`
+      } secs left`,
     );
   }
 
@@ -214,10 +259,10 @@ export class InitializationState {
 
       this.setText(
         `${this.formatPercents(3 / 7 + percents)}%, ${this.formatBytes(
-          downloaded || 0
+          downloaded || 0,
         )} / ${this.formatBytes(totalSize || 0)} @ ${this.formatBytes(
-          speed || 0
-        )}/s`
+          speed || 0,
+        )}/s`,
       );
       this.setStep(3 / 7 + percents);
 
@@ -229,7 +274,7 @@ export class InitializationState {
       localStorage.manifest = JSON.stringify(this.manifest);
       await fs.outputFile(
         path.join(config.MINERS_PATH, 'manifest.json'),
-        JSON.stringify(this.manifest.downloadable)
+        JSON.stringify(this.manifest.downloadable),
       );
     } catch (e) {
       console.error('Failed to download binaries: ', e);

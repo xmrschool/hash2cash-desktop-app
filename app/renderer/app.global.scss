@@ -13,6 +13,16 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
   background: transparent;
 }
 
+code {
+  user-select: auto;
+  word-wrap: break-word;
+  display: block;
+  font-size: 16px;
+  font-family: inherit;
+  opacity: 0.7;
+  margin: 10px 0;
+}
+
 body {
   position: relative;
   color: white;

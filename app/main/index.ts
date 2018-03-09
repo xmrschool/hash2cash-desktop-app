@@ -1,5 +1,5 @@
 import { app, ipcMain, Menu } from 'electron';
-
+import * as fs from 'fs-extra';
 import { AppWindow } from './appWindow';
 import { now } from './now';
 import buildDefaultMenu from './menu';
@@ -35,6 +35,26 @@ function handleUncaughtException(error: Error) {
   console.log('Error is: ', error, isLaunchError);
 }
 
+async function runInitialSetupIfNeeded(cb: any) {
+  const file = path.join(app.getPath('userData'), 'initial');
+  const exists = await fs.pathExists(file);
+
+  if (!exists) {
+    cb();
+    await fs.writeFile(file, '');
+  }
+}
+
+async function onceAppUpdated(cb: any) {
+  const file = path.join(app.getPath('userData'), 'update.lock');
+  const exists = await fs.pathExists(file);
+
+  if (exists) {
+    cb();
+    await fs.remove(file);
+  }
+}
+
 async function quit() {
   app.quit();
 }
@@ -49,7 +69,7 @@ let isDuplicateInstance = false;
 // once it's done.
 isDuplicateInstance = app.makeSingleInstance((args, workingDirectory) => {
   // Someone tried to run a second instance, we should focus our window.
-  if (mainWindow) {
+  if (mainWindow && !mainWindow.destroyed()) {
     if (mainWindow.isMinimized()) {
       mainWindow.restore();
     }
@@ -59,7 +79,7 @@ isDuplicateInstance = app.makeSingleInstance((args, workingDirectory) => {
     }
 
     mainWindow.focus();
-  }
+  } else createWindow();
 });
 
 if (isDuplicateInstance) {
@@ -67,11 +87,13 @@ if (isDuplicateInstance) {
 }
 
 app.on('ready', () => {
-  // Auto start on OS startup
-  app.setLoginItemSettings({
-    openAtLogin: true,
-    openAsHidden: true,
-    args: ['--hidden'], // openAsHidden supported on OS X, but arguments are supported on Windows
+  runInitialSetupIfNeeded(() => {
+    //  Auto start on OS startup
+    app.setLoginItemSettings({
+      openAtLogin: true,
+      openAsHidden: true,
+      args: ['--hidden'], // openAsHidden supported on OS X, but arguments are supported on Windows
+    });
   });
 
   const startMinimized =
@@ -84,6 +106,13 @@ app.on('ready', () => {
       "Seems that app was runned on auto start, so we don't start renderer",
     );
   }
+
+  if (!startMinimized) onceAppUpdated(() => {
+    onDidLoad(window => {
+      window && window.resetBenchmark();
+    });
+  });
+
   if (isDuplicateInstance) {
     return;
   }
@@ -103,9 +132,9 @@ app.on('ready', () => {
       // Base path must refer to app folder
       return event.sender.send(
         'resolveUtil',
-        path.join(basePath, 'compiledUtils', message)
+        path.join(basePath, 'compiledUtils', message),
       );
-    }
+    },
   );
 
   ipcMain.on('quit', quit);

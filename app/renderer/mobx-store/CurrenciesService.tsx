@@ -84,6 +84,7 @@ const defaultOptions = {
 };
 
 export class CurrencyInstance {
+  // Seems ESLint don't understand ! in property name
   /* eslint-disable */
   @observable name!: string;
   @observable type!: AllowedTypes;
@@ -117,6 +118,7 @@ export type Ticker = {
   [key: string]: CurrencyInstance;
 };
 
+// Every amount number must be instance of currency number
 export class CurrencyNumber {
   private readonly amount: number;
   private readonly instance: CurrencyInstance;

@@ -39,7 +39,7 @@ export default class Toast extends React.Component<
         {toast &&
           toast.closable && (
             <div onClick={GlobalState.closeToast}>
-              <img src={close} />
+              <img className={s.close} src={close} />
             </div>
           )}
       </div>

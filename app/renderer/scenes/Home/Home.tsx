@@ -7,7 +7,6 @@ import socketConnect from 'utils/socket';
 import globalState from 'mobx-store/GlobalState';
 import userState from 'mobx-store/User';
 
-
 const s = require('./Home.css');
 
 export const ANIMATION_TIME = 200;
@@ -35,8 +34,18 @@ export class HomePage extends React.Component<
   }
 
   async onEntered() {
-    await globalState.connectionPromise;
-    await userState.attemptToLogin();
+    // We don't care about server if user already connected at least once
+    if (!localStorage.appInfo && userState.authenticated) {
+      await globalState.connectionPromise;
+      await userState.attemptToLogin();
+    } else { // We wait til user logined but auth him, and if it fails we redirect from dashboard to login
+      userState.attemptToLogin().then(d => {
+        if (!userState.authenticated) {
+          this.props.history.push('/login');
+        }
+      });
+    }
+
     await this.disappear();
 
     this.props.history.push(userState.authenticated ? '/dashboard' : '/login');

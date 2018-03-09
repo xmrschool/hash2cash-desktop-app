@@ -21,6 +21,7 @@ import {
   CurrencyNumber,
 } from '../../mobx-store/CurrenciesService';
 import userOptions from '../../mobx-store/UserOptions';
+import RuntimeErrorNotifier from "../../components/RuntimeErrorNotifier/RuntimeErrorNotifier";
 
 const s = require('./Initialization.scss');
 const warning = require('./warning.svg');
@@ -262,6 +263,7 @@ export default class Initialization extends React.Component<
             </Button>
           </Modal>
         )}
+        <RuntimeErrorNotifier />
       </React.Fragment>
     );
   }

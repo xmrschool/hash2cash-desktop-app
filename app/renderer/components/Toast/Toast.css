@@ -9,6 +9,10 @@
   z-index: 1;
   transition: var(--animation-delay) bottom var(--animation-type);
   background: #da4141;
+
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
 }
 
 .message {
@@ -21,4 +25,10 @@
 
 .show {
   bottom: 0;
+}
+
+.close {
+  max-width: 15px;
+  padding-right: 11px;
+  cursor: pointer;
 }

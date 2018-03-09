@@ -5,6 +5,7 @@ import initializationState, {
   InitializationState,
 } from './InitializationState';
 import currenciesService, { CurrenciesService } from './CurrenciesService';
+import runtimeError, { RuntimeError } from './RuntimeError';
 
 export type MobxState = {
   loginState: LoginState;
@@ -12,6 +13,7 @@ export type MobxState = {
   globalState: GlobalState;
   initializationState: InitializationState;
   currenciesService: CurrenciesService;
+  runtimeError: RuntimeError;
 };
 
 const stores = {
@@ -20,6 +22,7 @@ const stores = {
   globalState,
   initializationState,
   currenciesService,
+  runtimeError,
 };
 
 export default stores;

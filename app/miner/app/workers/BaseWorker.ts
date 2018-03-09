@@ -1,5 +1,6 @@
-import { EventEmitter } from 'events';
 import * as path from 'path';
+import * as fs from 'fs-extra';
+import socket from '../socket';
 
 const config = require('../../../config.js');
 
@@ -43,8 +44,7 @@ export interface IWorker<P> {
  *
  * @extends {EventEmitter}
  */
-export abstract class BaseWorker<P extends string> extends EventEmitter
-  implements IWorker<P> {
+export abstract class BaseWorker<P extends string> implements IWorker<P> {
   static requiredModules: string[];
   static usesHardware: string[];
   static usesAccount: string;
@@ -63,12 +63,41 @@ export abstract class BaseWorker<P extends string> extends EventEmitter
   abstract daemonPort?: number;
   // Worker name (used as /workers/{workerName})
   abstract workerName: string;
+  // To prevent handling error events
+  abstract willQuit: boolean;
 
   abstract getCustomParameters(): Parameter<P>[];
   abstract setCustomParameter(id: P, value: any): Promise<void>;
 
-  constructor() {
-    super();
+  // Used to emit any state changes
+  emit(value: any) {
+    socket.emit('state', Object.assign({ name: this.workerName }, value));
+  }
+
+  pathTo(configName: string) {
+    return path.join(this.path, configName);
+  }
+
+  // In case miner has been stopped unexpectedly
+  handleTermination(data: any, isClose: boolean = false) {
+    console.log('If gonna close: ', this.willQuit);
+    if (this.willQuit) return;
+
+    const errorMessage = `Worker ${
+      this.workerName
+    } has been stopped with code ${data}`;
+
+    if (data.code === 'ENOENT') {
+      // If miner has been deleted we remove each things
+      fs.remove(this.pathTo('unpacked'));
+    }
+    console.error(errorMessage);
+    this.emit({
+      running: false,
+      _data: { grateful: isClose, message: errorMessage, raw: data },
+    });
+
+    this.running = false;
   }
 
   getValue(id: string, value: any): Pick {
@@ -117,7 +146,7 @@ export abstract class BaseWorker<P extends string> extends EventEmitter
       JSON.stringify({
         parameters: this.parameters,
         running: this.running,
-      })
+      }),
     );
   }
 

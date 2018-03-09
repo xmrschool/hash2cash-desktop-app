@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import { ipcRenderer } from 'electron';
-import socket from 'socket';
+import socket, { connectToLocalMiner } from 'socket';
 
 const debug = require('debug')('app:mobx:globalState');
 export const DEFAULT_TOAST_TIMEOUT = 4000;
@@ -27,7 +27,7 @@ export class GlobalState {
   connectionPromise?: Promise<void>;
   connectionResolve?: () => void;
 
-  @observable minerPort?: number = 8024;
+  @observable minerPort?: number;
   @observable socketConnected: boolean = false;
   @observable socketCantConnect: boolean = false;
   @observable userShare: number = 0.7;
@@ -39,6 +39,7 @@ export class GlobalState {
     this.waitTilSocket();
     this.waitForPort();
     this.setBenchmark();
+    this.bindEvents();
   }
 
   @action
@@ -48,9 +49,16 @@ export class GlobalState {
     });
   }
 
+  bindEvents() {
+    ipcRenderer.on('resetBenchmark', () => {
+      this.benchmark = undefined;
+      localStorage.removeItem('benchmark');
+    });
+  }
+
   @action
   setBenchmark(
-    benchmark: string | undefined | object = localStorage.benchmark
+    benchmark: string | undefined | object = localStorage.benchmark,
   ) {
     if (typeof benchmark === 'undefined') return;
 
@@ -93,14 +101,19 @@ export class GlobalState {
 
         this.setSocketState(false);
         this.connectionPromise = new Promise(
-          resolve => (this.connectionResolve = resolve)
+          resolve => (this.connectionResolve = resolve),
         );
       });
     });
   }
 
+  @action
   setMinerPort(port: number) {
+    console.log(`Current miner port: ${this.minerPort}\nOffered port: ${port}`)
+    if (this.minerPort === port) return;
     this.minerPort = port;
+
+    connectToLocalMiner(this.minerPort);
   }
 
   @action
@@ -114,7 +127,7 @@ export class GlobalState {
     } else {
       this.connectionTimeout = setTimeout(
         () => this.unableToConnect(),
-        5000
+        5000,
       ) as any;
     }
   }
@@ -136,7 +149,7 @@ export class GlobalState {
     if (toast.timeout !== Infinity)
       setTimeout(
         () => (this.toast = undefined),
-        toast.timeout || DEFAULT_TOAST_TIMEOUT
+        toast.timeout || DEFAULT_TOAST_TIMEOUT,
       );
   }
 

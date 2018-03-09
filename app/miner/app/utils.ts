@@ -100,7 +100,12 @@ export function getDifficulty(algorithm: Algorithms): number {
   try {
     const benchmark = JSON.parse(localStorage.benchmark).data;
 
-    return benchmark.find((d: any) => d.name === algorithm)!.speed * 30;
+    const find = benchmark.find((d: any) => d.name === algorithm);
+
+    if (find && find.speed) {
+      return find.speed * 30; // Time enough to submit shares each 30 seconds
+    }
+    throw new Error('Benchmark record doesnt exist');
   } catch (e) {
     const fallback = algorithmsDefaultDiff[algorithm];
 

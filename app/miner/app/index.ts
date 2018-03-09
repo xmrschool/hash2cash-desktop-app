@@ -2,6 +2,7 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import { ipcRenderer, remote } from 'electron';
+import { createServer } from 'http';
 import { getPort } from '../../shared/utils';
 import {
   getManifest,
@@ -11,6 +12,8 @@ import {
   wrapError,
 } from './utils';
 import workersCache from './workersCache';
+import socket from './socket';
+import { sleep } from '../../renderer/utils/sleep';
 
 updateWorkersInCache();
 
@@ -188,11 +191,31 @@ ipcRenderer.on('quit', async () => {
   remote.getCurrentWindow().destroy();
 });
 
-getPort(8024).then(port => {
-  koa.listen(port as any, 'localhost', 34, () => {
-    ipcRenderer.send('miner-server-port', port);
+const server = createServer(koa.callback());
+socket.attach(server);
+
+let lastPort: number;
+const ensureStillOn = (port: number) => {
+  sleep(500).then(d => {
+    if (lastPort === port) ipcRenderer.send('miner-server-port', port);
+  });
+};
+// One more thing to ensure if port is free
+const listen = (port: number) => {
+  server.listen(port as any, 'localhost', 34);
+  server.on('listening', () => {
+    lastPort = port;
+    ensureStillOn(port);
     logger('Listening on %d port', port);
   });
+
+  server.on('error', err => {
+    console.error('failed to listen: ', (err as any).code);
+    listen(port + 1);
+  });
+};
+getPort(8024).then(port => {
+  listen(port);
 });
 
 (window as any).logger = logger;
