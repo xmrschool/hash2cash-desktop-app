@@ -16,6 +16,7 @@ module.exports = merge(baseConfig, {
   entry: ['./app/renderer/index.tsx'],
 
   output: {
+    filename: '[name].bundle.js',
     path: path.join(__dirname, 'app/main/dist'),
     publicPath: '../main/dist/',
   },
@@ -166,6 +167,15 @@ module.exports = merge(baseConfig, {
     }),
   ],
 
+  externals: [
+    'cuda-detector',
+    'opencl-detector',
+    'fs-extra',
+    'systeminformation',
+    'request',
+    'request-progress',
+    'p-queue',
+  ],
   node: {
     __dirname: false,
     __filename: false,

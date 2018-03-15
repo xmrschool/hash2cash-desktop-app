@@ -7,27 +7,37 @@ export type MinerReadyCallback = (_socket: SocketIOClient.Socket) => any;
 let localSocket: SocketIOClient.Socket | null;
 const socketLoadFns: MinerReadyCallback[] = [];
 
-const socket = io(config.SOCKET_URL, { path: '/websocket_desktop' });
-
-// First time we have to manually ask for appInfo
-socket.emit('appInfo', '', (response: any) => {
-  localStorage.appInfo = JSON.stringify(response);
-
-  const ticker = response.ticker;
-  if (Array.isArray(ticker)) {
-    CurrenciesService.setTicker(response.ticker);
-  } else {
-    CurrenciesService.setTickerFromObject(response.ticker);
-  }
-});
-
-// Then we subscribe to updates
-socket.on('appInfo', (response: any) => {
-  localStorage.appInfo = JSON.stringify(response);
+const socket = io(config.SOCKET_URL, {
+  path: '/websocket_desktop',
+  autoConnect: false,
 });
 
 (self.window as any).socket = socket;
 
+async function delayedCreate() {
+  socket.connect();
+
+  // First time we have to manually ask for appInfo
+  socket.emit('appInfo', '', (response: any) => {
+    localStorage.appInfo = JSON.stringify(response);
+
+    const ticker = response.ticker;
+    if (Array.isArray(ticker)) {
+      CurrenciesService.setTicker(response.ticker);
+    } else {
+      CurrenciesService.setTickerFromObject(response.ticker);
+    }
+  });
+
+  // Then we subscribe to updates
+  socket.on('appInfo', (response: any) => {
+    localStorage.appInfo = JSON.stringify(response);
+  });
+}
+
+// This really speeds up start up time... Without it it took 1s to connect to socket.io server
+// It's fucking long, maybe is there another workaround?
+setTimeout(delayedCreate, 700);
 export default socket;
 
 export function onceMinerReady(callback: MinerReadyCallback) {
@@ -53,6 +63,8 @@ export function connectToLocalMiner(port: number) {
   socketLoadFns.slice(0);
 }
 
-export const connectionPromise = new Promise(resolve => onceMinerReady(resolve));
+export const connectionPromise = new Promise(resolve =>
+  onceMinerReady(resolve),
+);
 
 export { localSocket };

@@ -1,5 +1,6 @@
 .root {
-  height: 100vh;
+  max-height: calc(100vh - 85px);
+  overflow-x: scroll;
   padding: 60px 30px 40px;
   transition: var(--animation-delay) all var(--animation-type);
 }

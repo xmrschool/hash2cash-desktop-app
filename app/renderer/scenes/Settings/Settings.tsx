@@ -1,4 +1,5 @@
-import { remote } from 'electron';
+import { ipcRenderer, remote } from 'electron';
+import * as fs from 'fs-extra';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import * as cx from 'classnames';
@@ -8,9 +9,11 @@ import userOptions from '../../mobx-store/UserOptions';
 import { observer } from 'mobx-react';
 import GlobalState from '../../mobx-store/GlobalState';
 import MinerObserver from '../../mobx-store/MinerObserver';
+import minerApi from '../../api/MinerApi';
 
 const leftArrow = require('../../../shared/icon/left-arrow.svg');
 const s = require('./Settings.css');
+const librariesPath = require('../../../config.js').MINERS_PATH;
 
 export const ANIMATION_TIME = 200;
 
@@ -34,6 +37,7 @@ export default class Settings extends React.Component<
     this.updateParameter = this.updateParameter.bind(this);
     this.updateStartupSettings = this.updateStartupSettings.bind(this);
     this.benchmark = this.benchmark.bind(this);
+    this.removeThings = this.removeThings.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +67,27 @@ export default class Settings extends React.Component<
     };
   }
   async onEntered() {}
+
+  async removeThings() {
+    const response = remote.dialog.showMessageBox({
+      type: 'warning',
+      buttons: ['Yes', 'No'],
+      defaultId: 0,
+      title: 'Are you sure you want to delete ALL data?',
+      message: 'Are you sure you want to delete ALL data?',
+      detail: 'You data will be lost.',
+    });
+
+    if (response === 0) {
+      await minerApi.workers.map(work => work.stop());
+      MinerObserver.clearAll();
+      localStorage.clear();
+      await fs.remove(librariesPath);
+
+      ipcRenderer.send('quit');
+    }
+  }
+
   async benchmark() {
     localStorage.removeItem('benchmark');
     GlobalState.benchmark = undefined;
@@ -165,6 +190,19 @@ export default class Settings extends React.Component<
           </div>
           <div className={s.answer}>
             <Button onClick={this.benchmark}>Benchmark</Button>
+          </div>
+        </div>
+
+        <div className={s.pick}>
+          <div className={s.question}>
+            <h4 className={s.questionText}>Remove all</h4>
+            <p>
+              Everything (libraries, local storage (auth data, manifest)) will
+              be removed. Use if you want to fully uninstall the app.
+            </p>
+          </div>
+          <div className={s.answer}>
+            <Button onClick={this.removeThings}>Remove</Button>
           </div>
         </div>
       </div>

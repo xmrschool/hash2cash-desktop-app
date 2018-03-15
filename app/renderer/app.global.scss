@@ -38,7 +38,7 @@ body {
   --accent-color: hsla(210, 16%, 11%, 1);
   --navigating-transition-negative: -8%;
 
-  &:after {
+  &[candrag]:after {
     content: '';
     position: absolute;
     z-index: 1;
@@ -78,4 +78,19 @@ a:hover {
   opacity: 1;
   text-decoration: none;
   cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: 0.3s all;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 255, 255, 0);
+
 }

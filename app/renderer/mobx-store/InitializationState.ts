@@ -5,7 +5,6 @@ import {
   Manifest,
   Downloadable,
 } from '../api/Api';
-import * as fs from 'fs-extra';
 import * as path from 'path';
 const config = require('../../config.js');
 import FileDownloader, { DownloadError } from '../utils/FileDownloader';
@@ -223,7 +222,18 @@ export class InitializationState {
 
   @action
   countDownBenchmark() {
-    this.benchmarkSecsLeft = this.benchmarkSecsLeft - 1;
+    // Shows how many minutes left at real
+    const minimalTreshold =
+      (this.benchmarkQueue.length -
+      this.benchmarkQueueIndex) * TOTAL_BENCHMARK_TIME;
+
+    // If left more than really left (e.g. when current speed hasn't been emitted)
+    if (this.benchmarkSecsLeft > minimalTreshold) {
+      this.benchmarkSecsLeft = minimalTreshold;
+    } else {
+      this.benchmarkSecsLeft = this.benchmarkSecsLeft - 1;
+    }
+
     if (this.benchmarkSecsLeft <= 0) {
       clearInterval(this.benchmarkCountDown);
       return;
@@ -272,7 +282,7 @@ export class InitializationState {
     try {
       await uploader.fetch();
       localStorage.manifest = JSON.stringify(this.manifest);
-      await fs.outputFile(
+      await require('fs-extra').outputFile(
         path.join(config.MINERS_PATH, 'manifest.json'),
         JSON.stringify(this.manifest.downloadable),
       );

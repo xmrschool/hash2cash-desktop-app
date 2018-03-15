@@ -23,8 +23,8 @@
     const script = document.createElement('script');
     const port = process.env.PORT || 3000;
     script.src = (process.env.HOT)
-      ? 'http://localhost:' + port + '/dist/bundle.js'
-      : '../main/dist/bundle.js';
+      ? 'http://localhost:' + port + '/dist/main.bundle.js'
+      : '../main/dist/main.bundle.js';
     // HACK: Writing the script path should be done with webpack
     document.body.appendChild(script);
   }

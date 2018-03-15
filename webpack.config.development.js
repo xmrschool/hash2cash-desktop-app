@@ -21,6 +21,7 @@ module.exports = merge(baseConfig, {
   ],
 
   output: {
+    filename: '[name].bundle.js',
     publicPath: `http://localhost:${port}/dist/`,
   },
 
@@ -167,10 +168,19 @@ module.exports = merge(baseConfig, {
     }),
   ],
 
+  externals: [
+    'cuda-detector',
+    'opencl-detector',
+    'fs-extra',
+    'systeminformation',
+    'request',
+    'request-progress',
+    'p-queue',
+  ],
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
   target: 'electron-renderer',
   node: {
     __dirname: false,
-    __filename: false
+    __filename: false,
   },
 });
