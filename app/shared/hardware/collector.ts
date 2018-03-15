@@ -1,6 +1,7 @@
-import { graphics, cpu, system } from 'systeminformation';
+import getCudaDevices from 'cuda-detector';
+import getOpenCLDevices from 'opencl-detector';
+import { cpu, system } from 'systeminformation';
 import { arch } from 'os';
-import cudaDeviceQuery from '../../compiledUtils/cudaDeviceQuery';
 
 import { Architecture } from '../../renderer/api/Api';
 import trackError from '../raven';
@@ -8,7 +9,7 @@ import trackError from '../raven';
 function checkVendor(
   vendor: string,
   type: 'gpu' | 'cpu',
-  model: string
+  model: string,
 ): string | false {
   const lowerCased = vendor.toLowerCase();
   const lowerCasedModel = model.toLowerCase();
@@ -23,15 +24,25 @@ function checkVendor(
     return 'intel';
   else
     throw new Error(
-      `Your ${type.toUpperCase()} vendor (${vendor}) is unsupported. If you think that is mistake, try to update your drivers`
+      `Your ${type.toUpperCase()} vendor (${vendor}) is unsupported. If you think that is mistake, try to update your drivers`,
     );
 }
 
 export default async function collectHardware(): Promise<Architecture> {
   console.time('hardwareCollecting');
-  const { controllers } = await graphics();
   const collectedCpu = await cpu();
   const uuid = (await system()).uuid.toLowerCase();
+
+  console.log('getter is: ', getOpenCLDevices);
+  const openCl = await getOpenCLDevices();
+
+  let cuda;
+  let cudaFailReason: string | undefined;
+  try {
+    cuda = await getCudaDevices();
+  } catch (e) {
+    cudaFailReason = e.message;
+  }
 
   const detectedArch = arch();
 
@@ -47,67 +58,59 @@ export default async function collectHardware(): Promise<Architecture> {
     const error = new Error(
       `Your platform (OS) is unsupported [${
         process.platform
-      }]. It's strange, we will try to investigate your problem.`
+      }]. It's strange, we will try to investigate your problem.`,
     );
 
     trackError(error);
     throw error;
   }
 
-  controllers.forEach((gpu, index) => {
-    try {
-      const platform = checkVendor(gpu.vendor, 'gpu', gpu.model) as any;
+  console.log('Collected cuda devices: ', cuda, '\nOpenCL: ', openCl);
 
-      if (platform === false) return; // Do not emit nvidia gpu's, let deviceCollector do that thing
+  cuda &&
+    cuda.devices.forEach(device => {
       report.devices.push({
         type: 'gpu',
-        platform,
-        deviceID: report.devices.length.toString(),
-        model: gpu.model,
-        collectedInfo: gpu,
+        platform: 'cuda',
+        deviceID: device.pciDeviceID ? device.pciDeviceID.toString() : '',
+        model: device.name,
+        collectedInfo: device,
       });
-    } catch (e) {
-      trackError(new Error('unsupported gpu'), { extra: { gpu }});
+    });
+
+  openCl.devices
+    .filter(d => !d.deviceVersion.includes('CUDA'))
+    .forEach(device => {
       report.devices.push({
         type: 'gpu',
-        platform: gpu.vendor as any,
-        deviceID: report.devices.length.toString(),
-        model: gpu.model,
-        unavailableReason: e.message,
-        collectedInfo: gpu,
+        platform: 'opencl',
+        deviceID: device.index ? `opencl-${device.index}` : '',
+        model: device.name,
+        collectedInfo: device,
       });
+    });
 
-      report.warnings.push(e.message);
-    }
-  });
-
-  try {
-    const cudaGpus = await cudaDeviceQuery();
-
-    // We dont care about systeminformation gpu's, instead we collect from our build library
-    if (cudaGpus.error) {
-      console.error('Failed to get any cuda devices: ', cudaGpus.error);
-    } else {
-      cudaGpus.devices.forEach(device =>
+  if (cudaFailReason) {
+    // If cuda has been failed, we emit messages about it
+    openCl.devices
+      .filter(d => d.deviceVersion.includes('CUDA'))
+      .forEach(device => {
         report.devices.push({
           type: 'gpu',
-          deviceID: report.devices.length.toString(),
-          platform: 'nvidia',
+          platform: 'opencl',
+          deviceID: device.index ? `opencl-${device.index}` : '',
           model: device.name,
           collectedInfo: device,
-        })
-      );
-    }
-  } catch (e) {
-    trackError(e);
-    console.error('failed to get cuda devices: ', e);
+          unavailableReason: cudaFailReason,
+        });
+      });
   }
 
   try {
     const cpuVendor = checkVendor(
       collectedCpu.vendor,
       'cpu',
-      collectedCpu.model
+      collectedCpu.model,
     ) as any;
 
     report.devices.push({
@@ -123,6 +126,10 @@ export default async function collectHardware(): Promise<Architecture> {
   }
 
   localStorage.collectedReport = JSON.stringify(report);
+  localStorage._rawCollectedReport = JSON.stringify({
+    openCl,
+    cuda,
+  });
 
   console.timeEnd('hardwareCollecting');
 

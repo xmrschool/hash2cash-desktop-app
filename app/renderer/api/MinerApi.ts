@@ -8,6 +8,7 @@ import { OuterJSON } from '../../miner/app/workers/BaseWorker';
 import accountService from '../mobx-store/CurrenciesService';
 import { connectionPromise, onceMinerReady } from '../socket';
 import RuntimeError from '../mobx-store/RuntimeError';
+import { sleep } from '../utils/sleep';
 
 const debug = require('debug');
 
@@ -173,13 +174,19 @@ export class Api {
 
   @action
   async getWorkers(updateCache: boolean = false): Promise<Worker[]> {
-    const response = (await this.fetch(
-      '/workers?asArray=true&updateCache=' + updateCache,
-    )) as Workers[];
+    try {
+      const response = (await this.fetch(
+        '/workers?asArray=true&updateCache=' + updateCache,
+      )) as Workers[];
 
-    this.workers = response.map(d => new Worker(d));
+      this.workers = response.map(d => new Worker(d));
 
-    return this.workers;
+      return this.workers;
+    } catch (e) {
+      // Repeat request if it has been failed
+      await sleep(700);
+      return this.getWorkers(updateCache);
+    }
   }
 
   workerByName(name: string): Worker | undefined {

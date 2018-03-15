@@ -1,6 +1,7 @@
 import socket from 'socket';
 import { Systeminformation } from 'systeminformation';
-import { CudaDevice } from '../../compiledUtils/cudaDeviceQuery';
+import { CudaCollectedDevice } from 'cuda-detector';
+import { OpenCLCollectedDevice } from 'opencl-detector';
 
 const debug = require('debug')('app:socket');
 
@@ -56,7 +57,7 @@ export type AuthAttachResponse = {
 
 export type GpuDevice = {
   type: 'gpu';
-  platform: 'amd' | false;
+  platform: 'cuda' | 'opencl';
   deviceID: string;
   model: string;
   unavailableReason?: string;
@@ -64,14 +65,24 @@ export type GpuDevice = {
   collectedInfo: Systeminformation.GraphicsControllerInfo;
 };
 
-export type GpuCudaDevice = {
+export type _CudaDevice = {
   type: 'gpu';
-  platform: 'nvidia';
+  platform: 'cuda';
   deviceID: string;
   model: string;
   unavailableReason?: string;
   driverVersion?: string | null;
-  collectedInfo: CudaDevice;
+  collectedInfo: CudaCollectedDevice;
+};
+
+export type _OpenCLDevice = {
+  type: 'gpu';
+  platform: 'opencl';
+  deviceID: string;
+  model: string;
+  unavailableReason?: string;
+  driverVersion?: string | null;
+  collectedInfo: OpenCLCollectedDevice;
 };
 
 export type CpuDevice = {
@@ -83,7 +94,7 @@ export type CpuDevice = {
   collectedInfo: Systeminformation.CpuData;
 };
 
-export type Device = CpuDevice | GpuDevice | GpuCudaDevice;
+export type Device = CpuDevice | _CudaDevice | _OpenCLDevice;
 export type Architecture = {
   uuid: string;
   platform?: 'darwin' | 'win32' | 'linux';
@@ -120,7 +131,7 @@ export function builder<T, D>(method: string) {
     return new Promise((resolve, reject) => {
       debug(`[${method}] =>`, data);
 
-      setTimeout(() => reject('Timeout error'), 4000);
+      setTimeout(() => reject('Timeout error'), 8000);
       socket.emit(method, data, (response: any) => {
         debug(`[${method}] <=`, response);
         resolve(response);
