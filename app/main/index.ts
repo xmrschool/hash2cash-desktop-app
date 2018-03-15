@@ -44,17 +44,6 @@ async function runInitialSetupIfNeeded(cb: any) {
     await fs.writeFile(file, '');
   }
 }
-
-async function onceAppUpdated(cb: any) {
-  const file = path.join(app.getPath('userData'), 'update.lock');
-  const exists = await fs.pathExists(file);
-
-  if (exists) {
-    cb();
-    await fs.remove(file);
-  }
-}
-
 async function quit() {
   app.quit();
 }
@@ -107,12 +96,6 @@ app.on('ready', () => {
     );
   }
 
-  if (!startMinimized) onceAppUpdated(() => {
-    onDidLoad(window => {
-      window && window.resetBenchmark();
-    });
-  });
-
   if (isDuplicateInstance) {
     return;
   }
@@ -142,21 +125,16 @@ app.on('ready', () => {
   if (!startMinimized) {
     createWindow();
   } else if (onDidLoadFns) {
-    console.log('onDidLoadFns: ', onDidLoadFns);
     onDidLoadFns = null;
   }
 
   createServer();
-
-  const menu = buildDefaultMenu();
-  Menu.setApplicationMenu(menu);
 });
 
 export function openMainWindow() {
   if (quitting) return;
 
   if (!mainWindow || mainWindow.destroyed()) {
-    console.log('Creating window...');
     createWindow();
   } else {
     onDidLoad(() => {
@@ -168,7 +146,6 @@ export function openMainWindow() {
   }
 }
 app.on('activate', () => {
-  console.log('App activated');
   openMainWindow();
 });
 
@@ -199,7 +176,6 @@ function createWindow() {
     onDidLoadFns = [];
   }
 
-  console.log('Is dev?', __DEV__);
   if (__DEV__) {
     const installer = require('electron-devtools-installer');
     require('electron-debug')({ showDevTools: true });
@@ -238,6 +214,8 @@ function createWindow() {
   window.load();
 
   mainWindow = window;
+  const menu = buildDefaultMenu();
+  Menu.setApplicationMenu(menu);
 }
 
 /**

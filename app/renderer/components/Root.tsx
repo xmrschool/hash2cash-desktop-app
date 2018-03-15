@@ -10,6 +10,7 @@ import stores from 'mobx-store';
 import SocketProvider from './SocketProvider';
 import DevTools from 'mobx-react-devtools';
 import Toast from './Toast';
+import Navigator from './Navigator';
 
 let hot: any;
 
@@ -26,6 +27,7 @@ function Root({ store, history, socket }: IRootType) {
   const Fragment = (React as any).Fragment;
   return (
     <>
+      <Navigator />
       <MobxProvider {...stores}>
         <Provider store={store}>
           <SocketProvider socket={socket}>
@@ -38,7 +40,7 @@ function Root({ store, history, socket }: IRootType) {
           </SocketProvider>
         </Provider>
       </MobxProvider>
-      {process.env.NODE_ENV === 'development' && <DevTools />}
+      {process.env.NODE_ENV === 'development' && false && <DevTools />}
     </>
   );
 }

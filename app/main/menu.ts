@@ -75,6 +75,7 @@ export default function buildDefaultMenu() {
         label: __DARWIN__
           ? 'Toggle Server Developer Tools'
           : '&Toggle server developer tools',
+        accelerator: __DARWIN__ ? 'Alt+Command+O' : 'Ctrl+Shift+O',
         click(item: any, focusedWindow: Electron.BrowserWindow) {
           if (server) {
             server.openDevTools();

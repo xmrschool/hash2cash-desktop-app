@@ -63,7 +63,11 @@ export default class Dashboard extends React.Component<
   render() {
     return (
       <div className={cx(s.root, this.state.appeared && s.appeared)}>
-        {globalState.benchmark ? <InnerDashboard {...this.props} /> : this.renderInitialScene()}
+        {globalState.benchmark ? (
+          <InnerDashboard {...this.props} />
+        ) : (
+          this.renderInitialScene()
+        )}
       </div>
     );
   }

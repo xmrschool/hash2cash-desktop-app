@@ -41,10 +41,11 @@ export class AppWindow {
       resizable: false,
       darkTheme: true,
       title: 'Hash to Cash',
-      titleBarStyle: __DARWIN__ ? 'hiddenInset' : 'default',
+      titleBarStyle: 'hidden-inset',
       webPreferences: {
         backgroundThrottling: false,
       },
+      frame: false,
     };
     this.window = new BrowserWindow(windowOptions);
     savedWindowState.manage(this.window);
@@ -91,12 +92,6 @@ export class AppWindow {
     });
 
     this.window.webContents.once('did-finish-load', () => {
-      console.log(
-        'process.env.NODE_ENV is ',
-        process.env.NODE_ENV,
-        ' so __DEV__ is ',
-        __DEV__
-      );
       if (__DEV__) {
         this.window.webContents.openDevTools({
           mode: 'detach',
@@ -104,12 +99,10 @@ export class AppWindow {
       }
 
       this._loadTime = now() - startLoad;
-
-      this.maybeEmitDidLoad();
     });
 
     this.window.webContents.on('did-finish-load', () => {
-      console.log('Load is finished');
+      console.log('did-finish-load');
       this.window.webContents.setVisualZoomLevelLimits(1, 1);
       this.maybeEmitDidLoad();
     });
@@ -127,7 +120,7 @@ export class AppWindow {
         this._rendererReadyTime = readyTime;
 
         this.maybeEmitDidLoad();
-      }
+      },
     );
 
     this.window.on('focus', () => this.window.webContents.send('focus'));
@@ -135,7 +128,7 @@ export class AppWindow {
 
     RENDERER_PATH = `file://${path.join(__dirname, '../renderer/app.html')}`;
     this.window.loadURL(
-      `file://${path.join(__dirname, '../renderer/app.html')}`
+      `file://${path.join(__dirname, '../renderer/app.html')}`,
     );
   }
 
@@ -202,7 +195,6 @@ export class AppWindow {
     } catch (e) {
       return false;
     }
-
   }
 
   public restore() {
@@ -220,10 +212,26 @@ export class AppWindow {
 
   /** Send the app launch timing stats to the renderer. */
   public sendMinerPort(port: number) {
-    console.log('sending port: ', port);
-    this.onDidLoad(() =>
-      this.window.webContents.send('miner-server-port', port)
-    );
+    console.log('gonna send port: ', port);
+
+    this.onDidLoad(() => {
+      console.log('sending port repeatedly: ', port);
+      this.window.webContents.send('miner-server-port', port);
+    });
+
+    if (this.window.isDestroyed()) {
+      return;
+    }
+
+    this.window.webContents.send('miner-server-port', port);
+    setTimeout(
+      () => this.window.webContents.send('miner-server-port', port),
+      200,
+    ); // Send immediately and after 200ms
+    setTimeout(
+      () => this.window.webContents.send('miner-server-port', port),
+      1000,
+    ); // And after sec
   }
 
   /** Send the app launch timing stats to the renderer. */
