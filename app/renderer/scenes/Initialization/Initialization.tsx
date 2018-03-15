@@ -104,9 +104,7 @@ export default class Initialization extends React.Component<
     try {
       const vram =
         device.type === 'gpu'
-          ? device.platform === 'nvidia'
-            ? device.collectedInfo.memory
-            : device.collectedInfo.vram
+          ? device.collectedInfo.memory
           : 0;
 
       return device.type === 'cpu'
@@ -177,7 +175,7 @@ export default class Initialization extends React.Component<
       >
         <div className={s.doneInner}>
           <span className={s.doneAmount}>
-            <span>{doneAmount.formatted()}</span>
+            <span>{doneAmount.reactFormatted()}</span>
             <span className={s.donePerMonth}>you can mine per month</span>
           </span>
           <Button onClick={this.navigateToDashboard}>Continue</Button>

@@ -189,21 +189,6 @@
   text-align: center;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  transition: 0.3s all;
-}
-::-webkit-scrollbar-thumb:window-inactive {
-  background: rgba(255, 255, 255, 0);
-
-}
-
 @keyframes doneIn {
   0% {
     transform: translateY(140px);

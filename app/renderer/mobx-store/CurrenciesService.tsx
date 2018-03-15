@@ -1,4 +1,5 @@
 /* eslint-disable no-use-before-define */
+import * as os from 'os';
 import * as React from 'react';
 import * as EventEmitter from 'events';
 import { observable, computed, action } from 'mobx';
@@ -6,6 +7,7 @@ import socket from '../socket';
 import userOptions from './UserOptions';
 
 const debug = require('debug')('app:services:currencies');
+const rubleSymbol = require('../assets/ruble-currency-sign.svg');
 
 export enum AllowedCurrenciesEnum {
   'USD',
@@ -39,6 +41,7 @@ export type Currency = {
   priceBtc?: number;
   priceRub?: number;
 
+  svgSymbol?: string;
   allowedExchangeDirections: any[]; // second argument is fee
   exchangeFee: number;
   precision: number;
@@ -69,6 +72,7 @@ const defaultOptions = {
   RUB: {
     ...fiatCurrency,
     name: 'Ruble',
+    svgSymbol: rubleSymbol,
     unicodeSymbol: '₽',
   },
   BTC: cryptoCurrency({ name: 'Bitcoin' }),
@@ -89,7 +93,8 @@ export class CurrencyInstance {
   @observable name!: string;
   @observable type!: AllowedTypes;
   @observable symbol!: AllowedCurrencies;
-  @observable unicodeSymbol: string = '';
+  @observable unicodeSymbol?: string;
+  @observable svgSymbol?: string;
 
   @observable blockReward!: number;
   @observable difficulty!: number;
@@ -132,6 +137,19 @@ export class CurrencyNumber {
     return this.instance;
   }
 
+  // ToDo not a best solution but it works
+  private couldUseUnicode() {
+    if (!__WIN32__) {
+      return true;
+    }
+
+    // Determine if windows is 10, then we could use unicode
+    const release = os.release().split('.');
+    const major = parseInt(release[0]);
+
+    return major > 7;
+  }
+
   public float() {
     return this.amount;
   }
@@ -144,6 +162,7 @@ export class CurrencyNumber {
 
   public reactFormatted() {
     const fixedAmount = +this.amount.toFixed(this.instance.precision);
+    const useUnicode = !this.instance.svgSymbol || this.couldUseUnicode();
 
     return (
       <span>
@@ -152,7 +171,11 @@ export class CurrencyNumber {
           className="currencySymbol"
           style={{ fontSize: '80%', opacity: 0.5, marginLeft: 5 }}
         >
-          {this.instance.unicodeSymbol}
+          {useUnicode ? (
+            this.instance.unicodeSymbol
+          ) : (
+            <img src={this.instance.svgSymbol} width={14} height={14} />
+          )}
         </span>
       </span>
     );
@@ -192,7 +215,7 @@ export class CurrenciesService extends EventEmitter {
 
     return keys.reduce<CurrencyInstance[]>(
       (left: any, right) => left.push(this.ticker[right]),
-      []
+      [],
     );
   }
 
@@ -216,14 +239,14 @@ export class CurrenciesService extends EventEmitter {
     return this.exchange(
       from,
       userOptions.get('currency') as AllowedCurrencies,
-      amount
+      amount,
     );
   }
 
   exchange(
     from: AllowedCurrencies,
     to: AllowedCurrencies,
-    amount: number
+    amount: number,
   ): CurrencyNumber {
     // Amount means from
     if (!this.ticker) throw new Error('ticker.unavailable');
@@ -235,9 +258,9 @@ export class CurrenciesService extends EventEmitter {
 
     return new CurrencyNumber(
       +(+(amount * currencyFrom.priceUsd / currencyTo.priceUsd).toFixed(
-        currencyTo.precision
+        currencyTo.precision,
       )),
-      currencyTo
+      currencyTo,
     );
   }
 
@@ -258,7 +281,7 @@ export class CurrenciesService extends EventEmitter {
       const assigned = Object.assign(
         {},
         defaultOptions[currency.symbol],
-        currency
+        currency,
       );
 
       this.ticker[currency.symbol] = new CurrencyInstance(assigned);
@@ -275,7 +298,7 @@ export class CurrenciesService extends EventEmitter {
       const assigned = Object.assign(
         {},
         defaultOptions[value.symbol],
-        ticker[key]
+        ticker[key],
       );
 
       this.ticker[key] = new CurrencyInstance(assigned);
