@@ -1,9 +1,5 @@
-import * as PQueue from 'p-queue';
-import * as request from 'request';
-import * as progress from 'request-progress';
 import * as electron from 'electron';
 import * as path from 'path';
-import * as fs from 'fs-extra';
 
 import { EventEmitter } from 'events';
 import { Downloadable } from '../api/Api';
@@ -44,7 +40,7 @@ export class DownloadError extends Error {
 
 export default class FileDownloader extends EventEmitter {
   downloadable: Downloadable[];
-  queue: PQueue;
+  queue: any;
   totalSize: number = 0;
   speed: number = 0;
   downloaded: number = 0;
@@ -54,6 +50,7 @@ export default class FileDownloader extends EventEmitter {
   constructor(downloadable: Downloadable[]) {
     super();
 
+    const PQueue = require('p-queue');
     this.downloadable = downloadable;
     this.queue = new PQueue({ concurrency: 1 });
   }
@@ -61,7 +58,7 @@ export default class FileDownloader extends EventEmitter {
   async getDirectory(miner: Downloadable) {
     const dir = path.join(librariesPath, miner.name);
 
-    await fs.ensureDir(dir);
+    await require('fs-extra').ensureDir(dir);
 
     return dir;
   }
@@ -108,8 +105,14 @@ export default class FileDownloader extends EventEmitter {
     }
   }
 
+  // We don't want request along with main bundle because it's too big
   async fetch(): Promise<any> {
-    const exists = (fs.exists as any);
+    // This modules are take long to load... so we requrie it lazily
+    const fs = require('fs-extra');
+    const request = require('request');
+    const progress = require('request-progress');
+
+    const exists = fs.exists as any;
     return new Promise((globalResolve, globalReject) => {
       // We have global scope here because we need to catch that errors
       this.totalSize = this.downloadable.reduce((left: any, right) => {
@@ -132,7 +135,7 @@ export default class FileDownloader extends EventEmitter {
                     debug(
                       'If path exists?',
                       await exists(futurePathToFile),
-                      futurePathToFile
+                      futurePathToFile,
                     );
                     if (await exists(futurePathToFile)) {
                       // We have to check if hash is valid, if so, skip downloading
@@ -156,17 +159,17 @@ export default class FileDownloader extends EventEmitter {
                       'Fetching up miner: ',
                       miner,
                       ' to directory ',
-                      outputDir
+                      outputDir,
                     );
 
                     const downloader = progress(
                       request.get(miner.downloadUrl),
                       {
                         throttle: 500,
-                      }
+                      },
                     );
 
-                    downloader.on('progress', stats => {
+                    downloader.on('progress', (stats: any) => {
                       debug('Download progress: ', stats);
                       this.speed = stats.speed;
                       this.downloaded =
@@ -178,13 +181,13 @@ export default class FileDownloader extends EventEmitter {
                       this.emitAll();
                     });
 
-                    downloader.on('error', data => {
+                    downloader.on('error', (data: any) => {
                       debug('Failed to download miner: ', data);
                       reject(data);
                       this.stopBroadcasting();
                     });
 
-                    downloader.on('end', async data => {
+                    downloader.on('end', async (data: any) => {
                       try {
                         debug('Downloaded', data);
 
@@ -208,9 +211,9 @@ export default class FileDownloader extends EventEmitter {
                   } catch (e) {
                     reject(e);
                   }
-                })
+                }),
             )
-            .catch(error => {
+            .catch((error: any) => {
               if (error instanceof DownloadError) {
                 error.miner = miner;
               } else
@@ -224,8 +227,8 @@ export default class FileDownloader extends EventEmitter {
                 });
 
               globalReject(error);
-            })
-        )
+            }),
+        ),
       ).then(globalResolve);
     });
   }

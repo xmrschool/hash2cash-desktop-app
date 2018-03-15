@@ -109,7 +109,7 @@ export class GlobalState {
 
   @action
   setMinerPort(port: number) {
-    console.log(`Current miner port: ${this.minerPort}\nOffered port: ${port}`)
+    console.log(`Current miner port: ${this.minerPort}\nOffered port: ${port}`);
     if (this.minerPort === port) return;
     this.minerPort = port;
 
