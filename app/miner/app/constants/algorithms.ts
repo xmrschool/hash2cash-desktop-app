@@ -8,8 +8,8 @@ export const algorithmsDefaultDiff = {
 } as { [key in Algorithms]: number };
 
 export const algorithmsMaxDiff = {
-  MoneroCryptonight: 50000,
+  MoneroCryptonight: 19999,
   ether: 10000,
-  GpuCryptonight: 50000,
+  GpuCryptonight: 19999,
   equihash: 10000,
 } as { [key in Algorithms]: number };

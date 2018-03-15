@@ -15,8 +15,6 @@ import workersCache from './workersCache';
 import socket from './socket';
 import { sleep } from '../../renderer/utils/sleep';
 
-updateWorkersInCache();
-
 const logger = require('debug')('app:miner:server');
 const koa = new Koa();
 const router = new Router();
@@ -179,6 +177,7 @@ router.get('/workers/:id', async ctx => {
 koa.use(router.routes());
 
 ipcRenderer.on('quit', async () => {
+  server.close(); // Closing server here will help to shut down faster
   console.log('quit() received, so shutting down...');
   for (const [_, worker] of await getWorkers()) {
     if (worker.running) {
@@ -196,7 +195,7 @@ socket.attach(server);
 
 let lastPort: number;
 const ensureStillOn = (port: number) => {
-  sleep(500).then(d => {
+  sleep(700).then(d => {
     if (lastPort === port) ipcRenderer.send('miner-server-port', port);
   });
 };
@@ -214,8 +213,8 @@ const listen = (port: number) => {
     listen(port + 1);
   });
 };
-getPort(8024).then(port => {
+updateWorkersInCache().then(() => getPort(8024).then(port => {
   listen(port);
-});
+}));
 
 (window as any).logger = logger;

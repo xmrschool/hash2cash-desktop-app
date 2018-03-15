@@ -4,7 +4,7 @@ import { difference } from 'lodash';
 import workers from './workers';
 import { Architecture, Downloadable } from '../../renderer/api/Api';
 import workersCache, { WorkersCache } from './workersCache';
-import { algorithmsDefaultDiff } from './constants/algorithms';
+import { algorithmsDefaultDiff, algorithmsMaxDiff } from './constants/algorithms';
 import { Algorithms } from './constants/algorithms';
 const logger = require('debug')('app:miner');
 
@@ -66,11 +66,10 @@ export async function updateWorkersInCache(): Promise<void> {
     });
 
     for (const [_, value] of workersCache) {
-      await value.init();
+      value.init();
     }
   } catch (e) {
-    if (e instanceof RuntimeError) throw e;
-    throw new RuntimeError('Unexpected error', e);
+    console.warn('Cant init app: \n', e);
   }
 }
 
@@ -103,7 +102,10 @@ export function getDifficulty(algorithm: Algorithms): number {
     const find = benchmark.find((d: any) => d.name === algorithm);
 
     if (find && find.speed) {
-      return find.speed * 30; // Time enough to submit shares each 30 seconds
+      const diff = find.speed * 30; // Time enough to submit shares each 30 seconds
+
+      return Math.min(algorithmsMaxDiff[algorithm], diff); // if more than maximum allowed adjust to needed
+
     }
     throw new Error('Benchmark record doesnt exist');
   } catch (e) {

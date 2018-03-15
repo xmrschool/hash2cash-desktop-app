@@ -150,10 +150,10 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
     );
   }
 
-  async init() {
+  init() {
     try {
       this.path = path.join(config.MINERS_PATH, this.requiredModules[0]);
-      const possibleJson = await localStorage.getItem(this.workerKey);
+      const possibleJson = localStorage.getItem(this.workerKey);
 
       if (possibleJson) {
         const parsed = JSON.parse(possibleJson);
@@ -163,7 +163,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
         }
 
         if (parsed.running) {
-          await this.start();
+          this.start();
         }
       }
     } catch (e) {

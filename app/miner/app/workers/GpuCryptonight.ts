@@ -4,8 +4,7 @@ import * as fs from 'fs-extra';
 import { BaseWorker, Parameter, ParameterMap, Pick } from './BaseWorker';
 import { getCollectedReport, getLogin, RuntimeError } from '../utils';
 import { getPort } from '../../../shared/utils';
-import { Architecture } from '../../../renderer/api/Api';
-import { CudaDevice } from '../../../compiledUtils/cudaDeviceQuery';
+import { _CudaDevice, Architecture } from '../../../renderer/api/Api';
 import { sleep } from '../../../renderer/utils/sleep';
 
 export type Parameteres = 'main' | 'additional';
@@ -86,16 +85,20 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
   }
 
   buildNvidiaConfig(report: Architecture) {
-    const nvidiaGpus = report.devices.filter(d => d.platform === 'nvidia');
+    const nvidiaGpus = report.devices.filter(
+      d => d.platform && d.platform === 'cuda'
+    ) as _CudaDevice[];
 
     if (nvidiaGpus.length > 0) {
       const outer: string[] = [];
 
       nvidiaGpus.forEach(device => {
-        const props = device.collectedInfo as CudaDevice;
+        const props = device.collectedInfo;
         const [bfactor, bsleep, threads] = this.getArgsFor(props.index);
 
-        outer.push(`//${props.name} ${props.memory}MB\n{ "index" : ${props.index},
+        outer.push(`//${props.name} ${props.memory}MB\n{ "index" : ${
+          props.index
+        },
     "threads" : ${(props.deviceThreads * threads).toFixed()}, "blocks" : ${
           props.deviceBlocks
         },
