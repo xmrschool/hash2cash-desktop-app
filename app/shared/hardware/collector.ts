@@ -1,6 +1,6 @@
 import getCudaDevices from 'cuda-detector';
 import getOpenCLDevices from 'opencl-detector';
-import { cpu, system } from 'systeminformation';
+import { cpu, graphics, system } from 'systeminformation';
 import { arch } from 'os';
 
 import { Architecture } from '../../renderer/api/Api';
@@ -33,8 +33,45 @@ export default async function collectHardware(): Promise<Architecture> {
   const collectedCpu = await cpu();
   const uuid = (await system()).uuid.toLowerCase();
 
-  console.log('getter is: ', getOpenCLDevices);
-  const openCl = await getOpenCLDevices();
+  let openCl;
+  try {
+    openCl = await getOpenCLDevices();
+  } catch (e) {
+    // ToDo Shit happens, sometimes can't get openCL devices
+    console.error(
+      'Failed to get OpenCL devices\n',
+      '\nUsing default given as fallback',
+    );
+
+    const { controllers } = await graphics();
+
+    controllers.forEach((gpu, index) => {
+      try {
+        const platform = checkVendor(gpu.vendor, 'gpu', gpu.model) as any;
+
+        if (platform === false) return; // Do not emit nvidia gpu's, let deviceCollector do that thing
+        report.devices.push({
+          type: 'gpu',
+          platform,
+          deviceID: report.devices.length.toString(),
+          model: gpu.model,
+          collectedInfo: gpu as any,
+        });
+      } catch (e) {
+        trackError(new Error('unsupported gpu'), { extra: { gpu } });
+        report.devices.push({
+          type: 'gpu',
+          platform: gpu.vendor as any,
+          deviceID: report.devices.length.toString(),
+          model: gpu.model,
+          unavailableReason: e.message,
+          collectedInfo: gpu as any,
+        });
+
+        report.warnings.push(e.message);
+      }
+    });
+  }
 
   let cuda;
   let cudaFailReason: string | undefined;
@@ -78,19 +115,20 @@ export default async function collectHardware(): Promise<Architecture> {
       });
     });
 
-  openCl.devices
-    .filter(d => !d.deviceVersion.includes('CUDA'))
-    .forEach(device => {
-      report.devices.push({
-        type: 'gpu',
-        platform: 'opencl',
-        deviceID: device.index ? `opencl-${device.index}` : '',
-        model: device.name,
-        collectedInfo: device,
+  openCl &&
+    openCl.devices
+      .filter(d => !d.deviceVersion.includes('CUDA'))
+      .forEach(device => {
+        report.devices.push({
+          type: 'gpu',
+          platform: 'opencl',
+          deviceID: device.index ? `opencl-${device.index}` : '',
+          model: device.name,
+          collectedInfo: device,
+        });
       });
-    });
 
-  if (cudaFailReason) {
+  if (cudaFailReason && openCl) {
     // If cuda has been failed, we emit messages about it
     openCl.devices
       .filter(d => d.deviceVersion.includes('CUDA'))

@@ -1,0 +1,29 @@
+.preloader-1 {
+    display: inline-block;
+}
+
+.preloader-1 > * {
+    width: 2px;
+    height: 12px;
+    background: #fff;
+    margin: 0 1px;
+    display: inline-block;
+    animation: opacity-1 700ms infinite var(--animation-type);
+}
+
+.preloader-1 .line-1 { animation-delay: 800ms; }
+.preloader-1 .line-2 { animation-delay: 600ms; }
+.preloader-1 .line-3 { animation-delay: 400ms; }
+.preloader-1 .line-4 { animation-delay: 200ms; }
+
+@keyframes opacity-1 {
+    0% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 0.6;
+    }
+}

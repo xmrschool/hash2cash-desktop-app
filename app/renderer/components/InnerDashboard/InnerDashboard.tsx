@@ -19,6 +19,7 @@ import toMonero from 'utils/toMonero';
 import Preloader from '../Preloader';
 import buildMenu from '../Settings';
 import RuntimeErrorNotifier from '../RuntimeErrorNotifier';
+import { FallbackLoader } from '../LineLoader/LineLoader';
 
 const settings = require('../../../shared/icon/settings.svg');
 const ws = require('scenes/Initialization/Worker.css');
@@ -54,8 +55,15 @@ export const StatsView = observer(() => {
           <h4 className={s.counterHead}>CURRENT BALANCE</h4>
           <h4 className={s.counterValue}>
             <span className={s.currencySymbol}>HC</span>
-            {User.balance && User.balance.toLocaleString()}{' '}
-            <span className={s.equal}>≈</span> {localBalance.reactFormatted()}
+            <FallbackLoader condition={User.balance}>
+              {User.balance && User.balance.toLocaleString()}
+            </FallbackLoader>{' '}
+            {User.balance && (
+              <span>
+                <span className={s.equal}>≈</span>{' '}
+                {localBalance.reactFormatted()}
+              </span>
+            )}
           </h4>
         </div>
         <div className={s.row}>
@@ -191,6 +199,28 @@ export class WorkerView extends React.Component<
     }
   }
 
+  getSpeed() {
+    const { worker } = this.props;
+
+    const isOn = worker.running;
+
+    const observer = this.state.observer;
+    if (observer && isOn) {
+      return (
+        <FallbackLoader condition={observer.latestSpeed}>
+          {observer.latestSpeed} H/s
+        </FallbackLoader>
+      );
+    } else {
+      const latest = globalState.getBenchmarkHashrate(worker.name);
+
+      if (latest) {
+        return <span>{latest} H/s</span>;
+      }
+    }
+
+    return null;
+  }
   render() {
     const { worker } = this.props;
 
@@ -198,17 +228,16 @@ export class WorkerView extends React.Component<
     const isOn = worker.running;
 
     const observer = this.state.observer;
+    const speed = this.getSpeed();
+
     return (
       <div key={worker.name} className={cx(ws.worker, isOn && ws.highlighted)}>
         <PlayButton state={this.workerState()} onClick={this.clickHandler} />
         <span className={ws.name}>
           {currenciesService.getCurrencyName(miner.usesAccount)}
           <p className={ws.badge}>
-            {miner.usesHardware![0].toUpperCase()} -{' '}
-            {observer && worker.running
-              ? observer.latestSpeed
-              : globalState.getBenchmarkHashrate(worker.name)}
-            H/s
+            {miner.usesHardware![0].toUpperCase()}
+            {speed ? <span> - {speed}</span> : null}
           </p>
         </span>
         <div className={s.switcher}>
