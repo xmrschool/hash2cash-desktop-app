@@ -27,7 +27,7 @@ function Root({ store, history, socket }: IRootType) {
   const Fragment = (React as any).Fragment;
   return (
     <>
-      <Navigator />
+      { __WIN32__ && <Navigator /> }
       <MobxProvider {...stores}>
         <Provider store={store}>
           <SocketProvider socket={socket}>

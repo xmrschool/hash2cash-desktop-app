@@ -79,7 +79,7 @@ export default async function collectHardware(): Promise<Architecture> {
     });
 
   openCl.devices
-    .filter(d => !d.deviceVersion.includes('CUDA'))
+    .filter(d => !d.deviceVersion.includes('CUDA') && d.vendor.toLowerCase() !== 'nvidia')
     .forEach(device => {
       report.devices.push({
         type: 'gpu',

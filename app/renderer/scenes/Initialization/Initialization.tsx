@@ -104,7 +104,7 @@ export default class Initialization extends React.Component<
     try {
       const vram =
         device.type === 'gpu'
-          ? device.collectedInfo.memory
+          ? device.collectedInfo.memory.toFixed()
           : 0;
 
       return device.type === 'cpu'

@@ -105,10 +105,20 @@ export default class Settings extends React.Component<
         openAsHidden: true,
         args: ['--hidden'], // openAsHidden supported on OS X, but arguments are supported on Windows
       });
-    } else
+      // Actually issue with electron https://github.com/electron/electron/issues/10880
+    } else {
       remote.app.setLoginItemSettings({
         openAtLogin: false,
       });
+
+      if (__DARWIN__) {
+        try {
+          // There is no another approach...
+          require('child_process').exec(`osascript -e 'tell application "System Events" to delete login item "Hash to Cash"'`);
+        } catch (e) {}
+      }
+    }
+
 
     this.forceUpdate();
   }
