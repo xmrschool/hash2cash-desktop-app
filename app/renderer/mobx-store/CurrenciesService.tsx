@@ -160,17 +160,19 @@ export class CurrencyNumber {
     return fixedAmount.toLocaleString() + this.instance.unicodeSymbol;
   }
 
-  public reactFormatted() {
+  public reactFormatted(styles = {}) {
+    const formatted = Object.assign(
+      {},
+      { fontSize: '80%', opacity: 0.5, marginLeft: 5 },
+      styles,
+    );
     const fixedAmount = +this.amount.toFixed(this.instance.precision);
     const useUnicode = !this.instance.svgSymbol || this.couldUseUnicode();
 
     return (
       <span>
         {fixedAmount.toLocaleString()}
-        <span
-          className="currencySymbol"
-          style={{ fontSize: '80%', opacity: 0.5, marginLeft: 5 }}
-        >
+        <span className="currencySymbol" style={formatted}>
           {useUnicode ? (
             this.instance.unicodeSymbol
           ) : (

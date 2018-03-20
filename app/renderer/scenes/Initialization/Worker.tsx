@@ -6,6 +6,7 @@ import currenciesService, {
   AllowedCurrencies,
   currencies,
 } from 'mobx-store/CurrenciesService';
+import { FallbackLoader } from '../../components/LineLoader/LineLoader';
 
 const s = require('./Worker.css');
 
@@ -40,27 +41,48 @@ export default class Worker extends React.Component<PropTypes> {
     return symbol;
   }
 
+  getSpeed(monthly = true) {
+    const { worker } = this.props;
+
+    return (
+      <FallbackLoader condition={worker.getSpeed() > 0}>
+        {monthly
+          ? worker.monthlyProfit().reactFormatted({ marginLeft: 1 })
+          : worker.dailyProfit().reactFormatted({ marginLeft: 1 })}
+      </FallbackLoader>
+    );
+  }
+
+  getHashrate() {
+    const { worker } = this.props;
+    const isOn = worker._data.running;
+
+    if (!isOn && worker.getSpeed() < 0.1) return null;
+
+    const speed = worker.getSpeed();
+    return <div>&nbsp; —&nbsp; <FallbackLoader condition={speed > 0}>{speed} H/s</FallbackLoader></div>
+  }
+
   render() {
     const { worker } = this.props;
     const miner = worker._data.data;
     const isOn = worker._data.running;
 
+    const hashrate = this.getHashrate();
     return (
       <div key={worker.name} className={cx(s.worker, isOn && s.highlighted)}>
         <span className={s.name}>
           {this.getCurrencyName(miner.usesAccount)}
-          <p className={s.badge}>
-            {miner.usesHardware![0].toUpperCase()} – {worker.latestSpeed} H/s
-          </p>
+          <div className={s.badge}>
+            {miner.usesHardware![0].toUpperCase()}{hashrate}
+          </div>
         </span>
         <span className={s.profits}>
           <span className={s.monthly}>
-            {worker.monthlyProfit().formatted()}{' '}
-            <span className={s.caption}>per month</span>
+            {this.getSpeed()} <span className={s.caption}>per month</span>
           </span>
           <span className={s.daily}>
-            {worker.dailyProfit().formatted()}{' '}
-            <span className={s.caption}>per day</span>
+            {this.getSpeed(false)} <span className={s.caption}>per day</span>
           </span>
         </span>
       </div>

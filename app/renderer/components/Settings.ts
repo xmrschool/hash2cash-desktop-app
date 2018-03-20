@@ -18,7 +18,8 @@ export default function buildMenu(router: RouteComponentProps<any>) {
     },
     separator,
     {
-      role: 'about',
+      label: 'v' + remote.app.getVersion(),
+      enabled: false,
     },
     separator,
     {

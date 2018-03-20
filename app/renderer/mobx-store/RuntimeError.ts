@@ -4,7 +4,8 @@ export type FSError = {
   code: string;
   errno: string;
   syscall: string;
-}
+};
+
 export type ErrorFormat = {
   message: string;
   raw: FSError | any;

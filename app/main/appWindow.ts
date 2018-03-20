@@ -41,7 +41,7 @@ export class AppWindow {
       resizable: false,
       darkTheme: true,
       title: 'Hash to Cash',
-      titleBarStyle: 'hidden-inset',
+      titleBarStyle: 'hiddenInset',
       webPreferences: {
         backgroundThrottling: false,
       },
@@ -150,7 +150,7 @@ export class AppWindow {
             this.window.webContents.inspectElement(x, y);
           },
         },
-      ]).popup(this.window);
+      ]).popup({ window: this.window });
     });
   }
   /**

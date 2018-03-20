@@ -80,11 +80,15 @@ export class InternalObserver extends EventEmitter {
     );
   }
 
+  getSpeed() {
+    return Math.max(this.speedPerMinute || 0, this.latestSpeed || 0);
+  }
+
   monthlyProfit(): CurrencyNumber {
     const currency = this._data.data.usesAccount!;
     const service = CurrenciesService.ticker[currency];
 
-    const speed = Math.max(this.speedPerMinute || 0, this.latestSpeed || 0);
+    const speed = this.getSpeed();
     const hashesPerDay = speed * 60 * 60 * 24 * 30; // speed per day, non-stop of course
 
     // What does formule looks like? (<solved_hashes>/<global_difficulty>) * <block_reward> * 0.7

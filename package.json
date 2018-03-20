@@ -1,7 +1,7 @@
 {
   "name": "hashtocash",
   "productName": "Hash to Cash",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "Hash to cash allows you to mine cryptocurrencies and transform them directly to fiat. Future is here!",
   "main": "app/main/main.js",
   "scripts": {
@@ -41,6 +41,9 @@
       "app/miner/app/index.html",
       "app/main/main.js",
       "node_modules/",
+      "!node_modules/uws/",
+      "!node_modules/(cuda|opencl)-detector/(build|extra|src)/",
+      "!node_modules/raven-js/dist/",
       "package.json"
     ],
     "dmg": {
@@ -132,7 +135,7 @@
     "css-loader": "^0.28.10",
     "css-modules-require-hook": "^4.2.3",
     "devtron": "^1.4.0",
-    "electron": "^1.8.2",
+    "electron": "^2.0.0-beta.4",
     "electron-builder": "^20.2.0",
     "electron-builder-http": "^19.27.5",
     "electron-devtools-installer": "^2.2.3",
@@ -208,7 +211,6 @@
     "electron-log": "^2.2.14",
     "electron-updater": "^2.20.1",
     "electron-window-state": "^4.1.1",
-    "font-awesome": "^4.7.0",
     "fs-extra": "^5.0.0",
     "history": "^4.7.2",
     "koa": "^2.5.0",
@@ -225,7 +227,6 @@
     "raven-js": "^3.23.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-progressbar.js": "^0.2.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -239,7 +240,8 @@
     "socket.io-client": "^2.0.4",
     "source-map-support": "^0.5.3",
     "systeminformation": "^3.37.4",
-    "unzip": "^0.1.11"
+    "unzip": "^0.1.11",
+    "winreg": "^1.2.4"
   },
   "devEngines": {
     "node": ">=6.x",

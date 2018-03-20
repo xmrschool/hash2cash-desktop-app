@@ -164,7 +164,6 @@ export class InitializationState {
 
         // Miner has been stopped so we also stop benchmark
         stateListener = () => {
-          console.log('Something has changed!', miner._data);
           if (!miner._data.running) {
             resolve(0);
           }

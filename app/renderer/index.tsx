@@ -10,9 +10,11 @@ import trackError from '../shared/raven';
 const { configureStore, history } = require('./store/configureStore').default;
 const store = configureStore();
 
-if (!__WIN32__) {
+// simple !__WIN32__ doesnt work...
+if (__WIN32__ === false) {
   document.body.setAttribute('candrag', 'true');
 }
+
 
 window.addEventListener('unhandledrejection', function(event) {
   trackError((event as any).reason);

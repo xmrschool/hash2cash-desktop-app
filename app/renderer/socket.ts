@@ -35,9 +35,9 @@ async function delayedCreate() {
   });
 }
 
-// This really speeds up start up time... Without it it took 1s to connect to socket.io server
+// This really speeds up start up time... Without timeout it took 1s to connect to socket.io server
 // It's fucking long, maybe is there another workaround?
-setTimeout(delayedCreate, 700);
+delayedCreate();
 export default socket;
 
 export function onceMinerReady(callback: MinerReadyCallback) {

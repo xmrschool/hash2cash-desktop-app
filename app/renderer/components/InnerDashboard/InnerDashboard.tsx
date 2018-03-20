@@ -235,10 +235,10 @@ export class WorkerView extends React.Component<
         <PlayButton state={this.workerState()} onClick={this.clickHandler} />
         <span className={ws.name}>
           {currenciesService.getCurrencyName(miner.usesAccount)}
-          <p className={ws.badge}>
+          <div className={ws.badge}>
             {miner.usesHardware![0].toUpperCase()}
-            {speed ? <span> - {speed}</span> : null}
-          </p>
+            {speed ? <span>&nbsp;—&nbsp;{speed}</span> : null}
+          </div>
         </span>
         <div className={s.switcher}>
           <div className={cx(s.switcherIn, isOn && s.minerActive)}>
@@ -265,11 +265,11 @@ export class WorkerView extends React.Component<
               {observer && (
                 <span className={ws.profits}>
                   <span className={ws.monthly}>
-                    {observer.monthlyProfit().formatted()}{' '}
+                    {observer.monthlyProfit().reactFormatted()}{' '}
                     <span className={ws.caption}>per month</span>
                   </span>
                   <span className={ws.daily}>
-                    {observer.dailyProfit().formatted()}{' '}
+                    {observer.dailyProfit().reactFormatted()}{' '}
                     <span className={ws.caption}>per day</span>
                   </span>
                 </span>
@@ -327,7 +327,7 @@ export default class InnerDashboard extends React.Component<
 
   openMenu({ x, y }: any) {
     buildMenu(this.props as RouteComponentProps<any>).popup(
-      remote.getCurrentWindow(),
+      { window: remote.getCurrentWindow() }
     );
   }
 
