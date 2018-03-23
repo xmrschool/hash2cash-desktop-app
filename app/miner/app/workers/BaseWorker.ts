@@ -88,7 +88,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
     } has been stopped with code ${data}`;
 
     if (data.code === 'ENOENT') {
-      // If miner has been deleted we remove each things
+      // If miner has been deleted we remove record that indicates if miner has been unpacked
       fs.remove(this.pathTo('unpacked'));
     }
     console.error(errorMessage);
