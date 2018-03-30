@@ -11,7 +11,7 @@ function socketConnect(Target: ComponentClass<any>): any {
       Target,
       Object.assign({}, props, {
         socket: context.socket,
-      }),
+      })
     );
   }
 

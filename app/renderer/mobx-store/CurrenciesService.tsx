@@ -5,6 +5,7 @@ import * as EventEmitter from 'events';
 import { observable, computed, action } from 'mobx';
 import socket from '../socket';
 import userOptions from './UserOptions';
+import { LocalStorage } from '../utils/LocalStorage';
 
 const debug = require('debug')('app:services:currencies');
 const rubleSymbol = require('../assets/ruble-currency-sign.svg');
@@ -268,17 +269,17 @@ export class CurrenciesService extends EventEmitter {
 
   tryToGetFromStorage() {
     try {
-      if (localStorage.ticker) {
-        this.setTicker(JSON.parse(localStorage.ticker));
+      if (LocalStorage.ticker) {
+        this.setTicker(LocalStorage.ticker);
       }
     } catch (e) {}
   }
 
   @action
   setTicker(ticker: Currency[]) {
-    debug('Recieved ticker: ', ticker);
+    debug('Updating ticker:\n%O', ticker);
 
-    localStorage.ticker = JSON.stringify(ticker);
+    LocalStorage.ticker = ticker;
     ticker.forEach(currency => {
       const assigned = Object.assign(
         {},

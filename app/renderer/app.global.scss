@@ -31,12 +31,18 @@ body {
   font-family: "Proxima Nova", Arial, Helvetica, Helvetica Neue, sans-serif;
   overflow-y: hidden;
   font-size: 18px;
+  transition: var(--animation-delay) background var(--animation-type);
 
+  --more-white-body: #232527 linear-gradient(45deg, #1f1f1f 10%, #373b42);
   --animation-delay: 150ms;
   --animation-type: cubic-bezier(.06,.67,.37,.99);
   --navigating-transition: 8%;
   --accent-color: hsla(210, 16%, 11%, 1);
   --navigating-transition-negative: -8%;
+
+  &.whiter {
+    background: var(--more-white-body);
+  }
 
   &[candrag]:after {
     content: '';

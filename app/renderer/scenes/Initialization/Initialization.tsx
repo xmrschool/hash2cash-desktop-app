@@ -11,7 +11,7 @@ import _initializationState, {
 import minerObserver from 'mobx-store/MinerObserver';
 import { Device } from 'api/Api';
 
-import collectHardware from '../../../shared/hardware/collector';
+import collectHardware from '../../../core/hardware/collector';
 import ProgressBar from '../../components/ProgressBar';
 import Modal from '../../components/Modal/Modal';
 import Button from '../../components/Button/Button';
@@ -21,7 +21,10 @@ import {
   CurrencyNumber,
 } from '../../mobx-store/CurrenciesService';
 import userOptions from '../../mobx-store/UserOptions';
-import RuntimeErrorNotifier from "../../components/RuntimeErrorNotifier/RuntimeErrorNotifier";
+import RuntimeErrorNotifier from '../../components/RuntimeErrorNotifier/RuntimeErrorNotifier';
+import { CpuInfo } from 'cpuid-detector';
+import isCpuIdReport from '../../utils/isCpuIdReport';
+import formatCpuName from '../../utils/formatCpuName';
 
 const s = require('./Initialization.scss');
 const warning = require('./warning.svg');
@@ -103,15 +106,30 @@ export default class Initialization extends React.Component<
   formatPower(device: Device): string {
     try {
       const vram =
-        device.type === 'gpu'
-          ? device.collectedInfo.memory.toFixed()
-          : 0;
+        device.type === 'gpu' ? device.collectedInfo.memory.toFixed() : 0;
+      const isCpuId =
+        device.type === 'cpu' ? isCpuIdReport(device.collectedInfo) : false;
 
-      return device.type === 'cpu'
-        ? `${parseFloat(device.collectedInfo.speed)}GHz * ${
-            device.collectedInfo.cores
-          }`
-        : `${vram}Mb VRAM`;
+      if (device.type === 'cpu') {
+        if (isCpuId) {
+          // Determine if we have speed in brand
+          const cpuInfo = device.collectedInfo as CpuInfo;
+
+          if (cpuInfo.brand.includes('@')) {
+            return cpuInfo.brand.split('@ ')[1];
+          }
+
+          const speed = (cpuInfo.clockSpeed / 1000).toFixed(2);
+
+          return `${speed}GHz * ${cpuInfo.cores.total}`;
+        }
+
+        return `${device.collectedInfo.speed}GHz * ${
+          device.collectedInfo.cores
+        }`;
+      }
+
+      return `${vram}Mb VRAM`;
     } catch (e) {
       return '';
     }
@@ -134,7 +152,13 @@ export default class Initialization extends React.Component<
       );
     }
 
-    return <span className={s.model}>{device.model}</span>;
+    return (
+      <span className={s.model}>
+        {(device.type as any) == 'cpu'
+          ? formatCpuName(device.model)
+          : device.model}
+      </span>
+    );
   }
 
   async reload() {

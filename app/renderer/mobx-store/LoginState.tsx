@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import Api, { EmailInfoResponse } from '../api/Api';
-import { AUTH_TOKEN } from '../../shared/storage/actions';
+import { AUTH_TOKEN } from '../../core/storage/actions';
 import User from './User';
 export type StringOrNull = string | null;
 

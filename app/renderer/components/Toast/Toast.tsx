@@ -9,7 +9,7 @@ import {
 import * as cx from 'classnames';
 
 const s = require('./Toast.css');
-const close = require('../../../shared/icon/close.svg');
+const close = require('../../../core/icon/close.svg');
 
 @inject((state: MobxState) => ({ toast: state.globalState.toast }))
 @observer

@@ -3,6 +3,7 @@ import { merge } from 'lodash';
 import { AUTH_TOKEN } from './storage/actions';
 import * as os from 'os';
 import { CaptureOptions } from 'raven';
+import { LocalStorage } from '../renderer/utils/LocalStorage';
 
 let Raven: any;
 if (_app) {
@@ -42,7 +43,7 @@ const raven = Raven.config(
 export function getUser() {
   if (typeof localStorage !== 'undefined' && localStorage.userId) {
     return {
-      id: localStorage.userId,
+      id: LocalStorage.userId,
     };
   }
 

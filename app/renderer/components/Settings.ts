@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 
 import User from '../mobx-store/User';
 import MinerObserver from '../mobx-store/MinerObserver';
+import globalState from '../mobx-store/GlobalState';
 import minerApi from '../api/MinerApi';
 
 const separator: Electron.MenuItemConstructorOptions = { type: 'separator' };
@@ -13,7 +14,7 @@ export default function buildMenu(router: RouteComponentProps<any>) {
       label: 'Settings',
       accelerator: 'CmdOrCtrl+,',
       click: () => {
-        router.history.push('/settings');
+        globalState.showLayer('settings');
       },
     },
     separator,

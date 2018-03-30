@@ -2,8 +2,46 @@ import socket from 'socket';
 import { Systeminformation } from 'systeminformation';
 import { CudaCollectedDevice } from 'cuda-detector';
 import { OpenCLCollectedDevice } from 'opencl-detector';
+import { CpuInfo } from 'cpuid-detector';
+import { Currency } from '../mobx-store/CurrenciesService';
 
 const debug = require('debug')('app:socket');
+
+export type Pool = {
+  isOk: boolean;
+  url: string;
+  unavialbleReason: string | null;
+  status: 'ok' | 'down';
+};
+
+export enum PossibleArches {
+  'x64',
+  'ia32',
+}
+
+export type Driver = {
+  vendor: 'nvidia';
+  generation: any; // ToDo how to determine generation? By CUDA version?
+  isMobile: boolean;
+  major: number;
+  arch: PossibleArches;
+  version: string; // 1.4.5
+  downloadLink: string;
+};
+
+export type AppInfo = {
+  pools: { [key: string]: Pool };
+  ticker: Currency[];
+  userShare: number;
+  drivers: Driver[];
+  locales: {
+    [locale: string]: {
+      locale: string;
+      id: string;
+      link: string;
+    };
+  };
+};
 
 export type EmailInfoResponse = {
   allowedToContinue: boolean; // If we can show password field
@@ -55,16 +93,7 @@ export type AuthAttachResponse = {
   user?: IUser;
 };
 
-export type GpuDevice = {
-  type: 'gpu';
-  platform: 'cuda' | 'opencl';
-  deviceID: string;
-  model: string;
-  unavailableReason?: string;
-  driverVersion?: string | null;
-  collectedInfo: Systeminformation.GraphicsControllerInfo;
-};
-
+// ToDo We actually have to use enum constans here
 export type _CudaDevice = {
   type: 'gpu';
   platform: 'cuda';
@@ -91,7 +120,7 @@ export type CpuDevice = {
   model: string;
   unavailableReason?: string;
   driverVersion?: string | null;
-  collectedInfo: Systeminformation.CpuData;
+  collectedInfo: Systeminformation.CpuData | CpuInfo;
 };
 
 export type Device = CpuDevice | _CudaDevice | _OpenCLDevice;
@@ -116,6 +145,16 @@ export type Downloadable = {
 export type FailedManifest = {
   success: false;
   errors: string[];
+};
+
+export type DriverOffer = {
+  vendor: 'nvidia';
+  generation: any; // ToDo how to determine generation? By CUDA version?
+  isMobile: boolean;
+  major: number;
+  arch: PossibleArches;
+  version: string; // 1.4.5
+  downloadLink: string;
 };
 
 export type Manifest =

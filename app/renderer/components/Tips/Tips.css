@@ -1,0 +1,77 @@
+.header {
+  margin-bottom: 40px;
+}
+
+.tip {
+  background: rgba(32, 34, 37, 0.83);
+  margin-bottom: 10px;
+  border-color: #202225;
+  padding: 16px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+}
+
+.tipName {
+  font-weight: 400;
+  font-size: 19px;
+  flex-grow: 1;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.button {
+  background-color: #3bb567;
+  transition: var(--animation-delay) background var(--animation-type);
+  padding: 2px 16px;
+  border: none;
+  color: #fff;
+  font-weight: 500;
+  line-height: 16px;
+  font-size: 14px;
+  outline: none;
+  min-height: 32px;
+  min-width: 60px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.button[disabled] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.button:hover {
+  background-color: #2ca756;
+}
+
+.button:active {
+  background-color: #259149;
+}
+
+.button span {
+  cursor: inherit;
+}
+
+.description {
+  font-size: 18px;
+  opacity: 0.8;
+  letter-spacing: inherit;
+}
+
+.status {
+  height: 25px;
+  width: 25px;
+  padding-right: 10px;
+  margin-top: -5px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}

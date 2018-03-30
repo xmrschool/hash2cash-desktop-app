@@ -12,6 +12,7 @@ import minerApi from '../api/MinerApi';
 import minerObserver, { InternalObserver } from './MinerObserver';
 import globalState from './GlobalState';
 import { sleep } from '../utils/sleep';
+import { LocalStorage } from '../utils/LocalStorage';
 
 const debug = require('debug')('app:mobx:initialization');
 
@@ -119,7 +120,7 @@ export class InitializationState {
     };
 
     globalState.setBenchmark(benchmark);
-    localStorage.benchmark = JSON.stringify(benchmark);
+    LocalStorage.benchmark = benchmark;
 
     console.log('Benchmark is done!');
   }
@@ -178,7 +179,7 @@ export class InitializationState {
         miner._data.on('state', stateListener);
         miner._data.on('runtimeError', errorListener);
 
-        // If speed hasn't been ever emitted, we skip miner
+        // If speed hasn't been ever emitted in 20 seconds, we skip miner
         sleep(20000).then(d => {
           if (latestSpeed[0] === null && latestSpeed[1] === null) {
             resolve(0);
@@ -280,7 +281,8 @@ export class InitializationState {
 
     try {
       await uploader.fetch();
-      localStorage.manifest = JSON.stringify(this.manifest);
+      LocalStorage.manifest = this.manifest;
+      // fs-extra is heavy and taking so many time to load it
       await require('fs-extra').outputFile(
         path.join(config.MINERS_PATH, 'manifest.json'),
         JSON.stringify(this.manifest.downloadable),

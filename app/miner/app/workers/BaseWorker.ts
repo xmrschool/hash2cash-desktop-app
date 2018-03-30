@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import socket from '../socket';
+import { LocalStorage } from '../../../renderer/utils/LocalStorage';
 
 const config = require('../../../config.js');
 
@@ -80,7 +81,6 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
 
   // In case miner has been stopped unexpectedly
   handleTermination(data: any, isClose: boolean = false) {
-    console.log('If gonna close: ', this.willQuit);
     if (this.willQuit) return;
 
     const errorMessage = `Worker ${
@@ -112,7 +112,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
 
   getPool(algorithm: string): string | null {
     try {
-      const parsed = JSON.parse(localStorage.appInfo).pools;
+      const parsed = LocalStorage.appInfo!.pools;
 
       return parsed[algorithm].url || null;
     } catch (e) {

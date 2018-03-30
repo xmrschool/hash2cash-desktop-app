@@ -5,11 +5,13 @@ import { arch } from 'os';
 
 import { Architecture } from '../../renderer/api/Api';
 import trackError from '../raven';
+import getDevices from 'cpuid-detector';
+import { LocalStorage } from '../../renderer/utils/LocalStorage';
 
 function checkVendor(
   vendor: string,
   type: 'gpu' | 'cpu',
-  model: string,
+  model: string
 ): string | false {
   const lowerCased = vendor.toLowerCase();
   const lowerCasedModel = model.toLowerCase();
@@ -24,12 +26,19 @@ function checkVendor(
     return 'intel';
   else
     throw new Error(
-      `Your ${type.toUpperCase()} vendor (${vendor}) is unsupported. If you think that is mistake, try to update your drivers`,
+      `Your ${type.toUpperCase()} vendor (${vendor}) is unsupported. If you think that is mistake, try to update your drivers`
     );
 }
 
 export default async function collectHardware(): Promise<Architecture> {
   console.time('hardwareCollecting');
+  let cpuInfo;
+  try {
+    cpuInfo = await getDevices();
+  } catch (e) {
+    console.error('Failed to get CPU through libcpuid!\n', e);
+  }
+
   const collectedCpu = await cpu();
   const uuid = (await system()).uuid.toLowerCase();
 
@@ -40,7 +49,7 @@ export default async function collectHardware(): Promise<Architecture> {
     // ToDo Shit happens, sometimes can't get openCL devices
     console.error(
       'Failed to get OpenCL devices\n',
-      '\nUsing default given as fallback',
+      '\nUsing default given as fallback'
     );
 
     const { controllers } = await graphics();
@@ -95,7 +104,7 @@ export default async function collectHardware(): Promise<Architecture> {
     const error = new Error(
       `Your platform (OS) is unsupported [${
         process.platform
-      }]. It's strange, we will try to investigate your problem.`,
+      }]. It's strange, we will try to investigate your problem.`
     );
 
     trackError(error);
@@ -117,7 +126,11 @@ export default async function collectHardware(): Promise<Architecture> {
 
   openCl &&
     openCl.devices
-      .filter(d => !d.deviceVersion.includes('CUDA'))
+      .filter(
+        d =>
+          !d.deviceVersion.includes('CUDA') &&
+          d.vendor.toLowerCase() !== 'nvidia'
+      )
       .forEach(device => {
         report.devices.push({
           type: 'gpu',
@@ -145,29 +158,40 @@ export default async function collectHardware(): Promise<Architecture> {
   }
 
   try {
-    const cpuVendor = checkVendor(
-      collectedCpu.vendor,
-      'cpu',
-      collectedCpu.model,
-    ) as any;
+    if (cpuInfo) {
+      report.devices.push({
+        type: 'cpu',
+        // Doesn't actually cared about vendor
+        platform: cpuInfo.vendorName as 'amd' | 'intel',
+        model: cpuInfo.brand,
+        driverVersion: null,
+        collectedInfo: cpuInfo,
+      });
+    } else {
+      const cpuVendor = checkVendor(
+        collectedCpu.vendor,
+        'cpu',
+        collectedCpu.model
+      ) as any;
 
-    report.devices.push({
-      type: 'cpu',
-      platform: cpuVendor,
-      model: collectedCpu.brand,
-      driverVersion: null,
-      collectedInfo: collectedCpu,
-    });
+      report.devices.push({
+        type: 'cpu',
+        platform: cpuVendor,
+        model: collectedCpu.brand,
+        driverVersion: null,
+        collectedInfo: collectedCpu,
+      });
+    }
   } catch (e) {
     trackError(e);
     report.warnings.push(e.message);
   }
 
-  localStorage.collectedReport = JSON.stringify(report);
-  localStorage._rawCollectedReport = JSON.stringify({
+  LocalStorage.collectedReport = report;
+  LocalStorage.rawCollectedReport = {
     openCl,
     cuda,
-  });
+  };
 
   console.timeEnd('hardwareCollecting');
 

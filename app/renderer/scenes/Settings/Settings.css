@@ -1,7 +1,5 @@
 .root {
   max-height: calc(100vh - 85px);
-  overflow-x: scroll;
-  padding: 60px 30px 40px;
   transition: var(--animation-delay) all var(--animation-type);
 }
 
@@ -25,7 +23,7 @@
 }
 
 .pick {
-  padding: 16px;
+  padding: 16px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,8 +43,8 @@
 .menu {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  margin-bottom: 40px;
+  justify-content: space-between;
+  margin-bottom: 42px;
 }
 
 @keyframes fadeIn {

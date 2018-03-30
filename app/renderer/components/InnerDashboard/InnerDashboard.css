@@ -62,6 +62,10 @@
   padding: 0;
 }
 
+.playButton[disabled] {
+  opacity: 0.6;
+}
+
 .header {
   opacity: 0.5;
   letter-spacing: .15rem;
@@ -71,7 +75,7 @@
 }
 
 .runAll {
-  padding: 0px 19px;
+  padding: 0 19px;
   margin-top: 14px;
 }
 
@@ -108,7 +112,7 @@
 }
 
 .switcherIn {
-  height: 200%;
+  height: 1000%;
   transform: translateY(0);
   transition: var(--animation-delay) transform var(--animation-type);
 }
@@ -142,4 +146,43 @@ option {
 .period {
   opacity: 0.7;
   font-size: 85%;
+}
+
+.layers {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.layer {
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  transform: scale(1.1);
+  transition: 200ms transform var(--animation-type), 150ms opacity cubic-bezier(0.4,0.0,1,1);
+  will-change: transform, opacity;
+}
+
+.reverse {
+  transform: scale(0.9);
+}
+
+.shown {
+  opacity: 1;
+  z-index: 2;
+  transform: scale(1)  translateY(0);
+  transition: 240ms transform var(--animation-type), 200ms opacity cubic-bezier(0.4,0.0,1,1);
+}
+
+.animationDone {
+  transform: none!important;
 }

@@ -7,7 +7,7 @@ import { Server, serverPort } from './server';
 import * as path from 'path';
 import buildTray from './tray';
 import enableUpdates from './appUpdater';
-import trackError from '../shared/raven';
+import trackError from '../core/raven';
 
 require('source-map-support').install();
 

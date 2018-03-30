@@ -3,7 +3,7 @@ import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import { ipcRenderer, remote } from 'electron';
 import { createServer } from 'http';
-import { getPort } from '../../shared/utils';
+import { getPort } from '../../core/utils';
 import {
   getManifest,
   getWorkers,
@@ -14,6 +14,7 @@ import {
 import workersCache from './workersCache';
 import socket from './socket';
 import { sleep } from '../../renderer/utils/sleep';
+import { LocalStorage } from '../../renderer/utils/LocalStorage';
 
 const logger = require('debug')('app:miner:server');
 const koa = new Koa();
@@ -39,7 +40,7 @@ router.get('/set/userId', async ctx => {
     return;
   }
 
-  localStorage.userId = ctx.query.id;
+  LocalStorage.userId = ctx.query.id;
 
   ctx.body = {
     status: 'success',

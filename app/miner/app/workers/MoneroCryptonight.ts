@@ -3,10 +3,12 @@ import * as path from 'path';
 
 import { BaseWorker, Parameter, ParameterMap, Pick } from './BaseWorker';
 import { getLogin, RuntimeError } from '../utils';
-import { getPort } from '../../../shared/utils';
+import { getPort } from '../../../core/utils';
+import { LocalStorage } from '../../../renderer/utils/LocalStorage';
 
 export type Parameteres = 'power' | 'priority';
 
+const debug = require('debug')('app:workers:moneroCryptonight');
 export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   workerName: string = 'MoneroCryptonight';
   static requiredModules = ['cryptonight'];
@@ -108,7 +110,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       pools: [
         {
           url: this.getPool('cryptonight'),
-          user: localStorage.userId,
+          user: LocalStorage.userId,
           pass: 'x',
           keepalive: true,
           nicehash: false,
@@ -125,12 +127,12 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   async getAppArgs() {
     this.daemonPort = await getPort(25000);
 
-    return `-l ./log.txt --donate-level 1 --api-port ${
+    return `-l ./log.txt --api-port ${
       this.daemonPort
     } --print-time=1000 --max-cpu-usage ${
       this.parameters.power
     } --cpu-priority ${this.parameters.priority} -o ${this.getPool(
-      'cryptonight',
+      'cryptonight'
     )} -u ${getLogin('MoneroCryptonight')} -p x -k`.split(' ');
   }
 
@@ -197,15 +199,26 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     if (this.running) throw new Error('Miner already running');
 
     const args = await this.getAppArgs();
+    const fullyPath = path.join(this.path, __WIN32__ ? 'xmrig.exe' : 'xmrig');
 
     this.willQuit = false;
-    this.daemon = spawn(
-      path.join(this.path, __WIN32__ ? 'xmrig.exe' : 'xmrig'),
-      args,
-    );
+    debug.enabled &&
+      debug(
+        'Running a miner...\n%c%s %s',
+        'color: crimson',
+        fullyPath,
+        args.join(' ')
+      );
+    this.daemon = spawn(fullyPath, args);
 
     this.daemon.stdout.on('data', data => {
-      console.log(`stdout: ${data}`);
+      debug.enabled &&
+        debug(
+          '%c[STDOUT] %c\n%s',
+          'color: dodgerblue',
+          'color: black',
+          data.toString()
+        );
     });
 
     this.emit({ running: true });

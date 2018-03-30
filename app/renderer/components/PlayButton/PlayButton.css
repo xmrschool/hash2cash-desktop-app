@@ -1,0 +1,19 @@
+.btn {
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+  opacity: .9;
+  transition: opacity .1s cubic-bezier(0.4,0.0,1,1);
+  border: none;
+  height: var(--button-size, 50);
+  width: var(--button-size, 50);
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+.btn svg {
+  fill: #fff;
+  cursor: inherit;
+}

@@ -1,7 +1,8 @@
 import { observable, action } from 'mobx';
-import { AUTH_TOKEN } from '../../shared/storage/actions';
+import { AUTH_TOKEN } from '../../core/storage/actions';
 import Api, { Profile, Account, IUser } from '../api/Api';
 import socket from '../socket';
+import { LocalStorage } from '../utils/LocalStorage';
 
 const debug = require('debug')('app:mobx:user');
 
@@ -11,7 +12,7 @@ export class User {
   @observable email?: string;
   @observable balance?: number;
   @observable createdAt?: Date;
-  @observable authenticated?: boolean = !!localStorage.userId;
+  @observable authenticated?: boolean = !!LocalStorage.userId;
 
   @observable accounts?: Account[] = [];
   @observable profile?: Profile = {};
@@ -51,7 +52,7 @@ export class User {
   setUser(user: IUser) {
     debug('Setting user: ', user);
 
-    localStorage.userId = user.id;
+    LocalStorage.userId = user.id;
     Object.assign(this, user);
   }
 

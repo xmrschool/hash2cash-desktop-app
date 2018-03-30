@@ -5,7 +5,7 @@ import { AppContainer } from 'react-hot-loader';
 import Root from 'components/Root';
 import socket from './socket';
 import './app.global.scss';
-import trackError from '../shared/raven';
+import trackError from '../core/raven';
 
 const { configureStore, history } = require('./store/configureStore').default;
 const store = configureStore();

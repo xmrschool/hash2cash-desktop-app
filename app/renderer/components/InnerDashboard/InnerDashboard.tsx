@@ -1,6 +1,6 @@
 import { remote } from 'electron';
 import * as React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import * as cx from 'classnames';
 
@@ -16,12 +16,14 @@ import User from 'mobx-store/User';
 
 import toMonero from 'utils/toMonero';
 
-import Preloader from '../Preloader';
 import buildMenu from '../Settings';
 import RuntimeErrorNotifier from '../RuntimeErrorNotifier';
 import { FallbackLoader } from '../LineLoader/LineLoader';
+import ActionBar from '../ActionBar';
+import Settings from '../../scenes/Settings/Settings';
+import Tips from '../Tips/Tips';
 
-const settings = require('../../../shared/icon/settings.svg');
+const settings = require('../../../core/icon/settings.svg');
 const ws = require('scenes/Initialization/Worker.css');
 const s = require('./InnerDashboard.css');
 
@@ -31,7 +33,7 @@ export const StatsView = observer(() => {
     User.balance && User.balance > 0 ? toMonero(User.balance) : 0;
   const localBalance = currenciesService.toLocalCurrency(
     'XMR',
-    balanceInMonero,
+    balanceInMonero
   );
 
   const instance = currenciesService.ticker[userOptions.get('currency')];
@@ -88,10 +90,15 @@ export const StatsView = observer(() => {
   );
 });
 
+// ToDo use svg icons instead and add YT like animation
 export const playSwitches = {
   start: <button className={s.playButton}>▶</button>,
   stop: <button className={s.playButton}>◼</button>,
-  waiting: <Preloader size={25} />,
+  waiting: (
+    <button disabled className={s.playButton}>
+      ▶
+    </button>
+  ),
 };
 
 export type PossibleSwitches = keyof typeof playSwitches;
@@ -282,6 +289,55 @@ export class WorkerView extends React.Component<
   }
 }
 
+export const layers = {
+  settings: (props: any) => <Settings {...props} />,
+  tips: (props: any) => <Tips />,
+};
+
+// ToDo Probably wrapper around layer would be much better (to implement mobx & shouldComponentUpdate)
+@inject(state => ({
+  layer: (state as any).globalState.openedLayer,
+  layerOpened: (state as any).globalState.layerOpened,
+  layerAnimating: (state as any).globalState.layerAnimating,
+}))
+@observer
+export default class Layer extends React.Component<
+  {
+    layer?: 'settings' | 'tips' | null;
+    layerOpened?: boolean;
+    layerAnimating?: boolean;
+  } & RouteComponentProps<any>,
+  { animationDone: boolean }
+> {
+  render() {
+    const { layer, layerOpened, layerAnimating, ...props } = this.props;
+
+    return (
+      <div className={s.layers}>
+        <div
+          className={cx(
+            s.layer,
+            s.reverse,
+            (!layer || !layerOpened) && s.shown,
+            !layerAnimating && s.animationDone
+          )}
+        >
+          <InnerDashboard {...props} />
+        </div>
+        <div
+          className={cx(
+            s.layer,
+            layer && layerOpened && s.shown,
+            layer && !layerAnimating && s.animationDone
+          )}
+        >
+          {layer && layers[layer](props)}
+        </div>
+      </div>
+    );
+  }
+}
+
 @observer
 export class WorkersView extends React.Component<{ workers: Worker[] }, any> {
   render() {
@@ -293,9 +349,7 @@ export class WorkersView extends React.Component<{ workers: Worker[] }, any> {
 
 @(withRouter as any)
 @observer
-export default class InnerDashboard extends React.Component<
-  RouteComponentProps<any>
-> {
+export class InnerDashboard extends React.Component<any> {
   state = {
     appeared: false,
   };
@@ -326,9 +380,9 @@ export default class InnerDashboard extends React.Component<
   }
 
   openMenu({ x, y }: any) {
-    buildMenu(this.props as RouteComponentProps<any>).popup(
-      { window: remote.getCurrentWindow() }
-    );
+    buildMenu(this.props as RouteComponentProps<any>).popup({
+      window: remote.getCurrentWindow(),
+    });
   }
 
   runEverything() {
@@ -383,17 +437,12 @@ export default class InnerDashboard extends React.Component<
           </div>
         </div>
         <StatsView />
-        <div className={cx(ws.worker, s.runAll)}>
-          <PlayButton
-            state={this.getGlobalPlayState(workers)}
-            onClick={this.runEverything}
-          />
-          <div>Run most profitable coins!</div>
-        </div>
+        <ActionBar workers={workers} />
         {workers.gpu && <h3 className={s.header}>GPU</h3>}
         {workers.gpu && <WorkersView workers={workers.gpu} />}
         <h3 className={s.header}>CPU</h3>
         {workers.cpu && <WorkersView workers={workers.cpu} />}
+
         <RuntimeErrorNotifier />
       </div>
     );

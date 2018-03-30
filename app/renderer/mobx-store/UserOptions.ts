@@ -1,8 +1,10 @@
-import parseJSON from '../utils/safeParse';
 import { action, observable } from 'mobx';
+import { LocalStorage } from '../utils/LocalStorage';
+
+export type SettingsStore = { [key: string]: string };
 
 export class UserOptions {
-  @observable store: { [key: string]: string } = this.getDefaults();
+  @observable store: SettingsStore = this.getDefaults();
 
   public constructor() {
     this.getFromLocalStorage();
@@ -28,13 +30,13 @@ export class UserOptions {
   }
 
   commit() {
-    localStorage.settings = JSON.stringify(this.store);
+    LocalStorage.settings = this.store;
   }
 
   @action
   getFromLocalStorage() {
     const defaults = this.getDefaults();
-    const savedSettings = parseJSON(localStorage.settings, defaults);
+    const savedSettings = LocalStorage.settings || defaults;
 
     const outerSettings = Object.assign({}, defaults, savedSettings);
 

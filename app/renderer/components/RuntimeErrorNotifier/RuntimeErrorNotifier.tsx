@@ -5,7 +5,7 @@ import Modal from '../Modal/Modal';
 import { librariesPath } from '../../utils/FileDownloader';
 import Button from "../Button/Button";
 
-const close = require('../../../shared/icon/close.svg');
+const close = require('../../../core/icon/close.svg');
 // Use this class along with RuntimeError class to handle miner startup errors
 @observer
 export default class RuntimeErrorNotifier extends React.Component {

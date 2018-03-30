@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx';
 import { ipcRenderer } from 'electron';
 import socket, { connectToLocalMiner } from 'socket';
+import { LocaleWithData } from '../intl';
+import { LocalStorage } from '../utils/LocalStorage';
 
 const debug = require('debug')('app:mobx:globalState');
 export const DEFAULT_TOAST_TIMEOUT = 4000;
@@ -27,6 +29,7 @@ export class GlobalState {
   connectionPromise?: Promise<void>;
   connectionResolve?: () => void;
 
+  @observable currentLocale: LocaleWithData | null = LocalStorage.currentLocale;
   @observable minerPort?: number;
   @observable socketConnected: boolean = false;
   @observable socketCantConnect: boolean = false;
@@ -34,12 +37,43 @@ export class GlobalState {
   @observable benchmark?: Benchmark;
 
   @observable toast?: Toast;
+  @observable openedLayer: 'settings' | 'tips' | null = null;
+  @observable layerOpened: boolean = false;
+  @observable layerAnimating: boolean = false;
 
   public constructor() {
     this.waitTilSocket();
     this.waitForPort();
     this.setBenchmark();
     this.bindEvents();
+  }
+
+  @action
+  requestFrame(callback: any) {
+    setTimeout(() => {
+      const id = window.requestAnimationFrame(callback);
+      setTimeout(() => {
+        window.cancelAnimationFrame(id);
+        this.layerAnimating = false;
+      }, 1100);
+    }, this.layerAnimating ? 0 : 10);
+    this.layerAnimating = true;
+  }
+
+  @action
+  showLayer(layer: 'settings' | 'tips') {
+    this.requestFrame(() => {
+      this.openedLayer = layer;
+      this.layerOpened = true;
+    });
+  }
+
+  @action
+  hideLayer() {
+    this.requestFrame(() => {
+      this.layerOpened = false;
+      setTimeout(() => (this.openedLayer = null), 130);
+    });
   }
 
   @action
@@ -58,7 +92,7 @@ export class GlobalState {
 
   @action
   setBenchmark(
-    benchmark: string | undefined | object = localStorage.benchmark,
+    benchmark: string | undefined | object = localStorage.benchmark
   ) {
     if (typeof benchmark === 'undefined') return;
 
@@ -101,7 +135,7 @@ export class GlobalState {
 
         this.setSocketState(false);
         this.connectionPromise = new Promise(
-          resolve => (this.connectionResolve = resolve),
+          resolve => (this.connectionResolve = resolve)
         );
       });
     });
@@ -109,6 +143,7 @@ export class GlobalState {
 
   @action
   setMinerPort(port: number) {
+    // ToDo ports are being emitted more than once if reloaded
     console.log(`Current miner port: ${this.minerPort}\nOffered port: ${port}`);
     if (this.minerPort === port) return;
     this.minerPort = port;
@@ -127,7 +162,7 @@ export class GlobalState {
     } else {
       this.connectionTimeout = setTimeout(
         () => this.unableToConnect(),
-        5000,
+        5000
       ) as any;
     }
   }
@@ -149,7 +184,7 @@ export class GlobalState {
     if (toast.timeout !== Infinity)
       setTimeout(
         () => (this.toast = undefined),
-        toast.timeout || DEFAULT_TOAST_TIMEOUT,
+        toast.timeout || DEFAULT_TOAST_TIMEOUT
       );
   }
 

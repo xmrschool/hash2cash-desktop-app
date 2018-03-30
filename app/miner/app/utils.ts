@@ -2,10 +2,11 @@ import { readJson } from 'fs-extra';
 import * as path from 'path';
 import { difference } from 'lodash';
 import workers from './workers';
-import { Architecture, Downloadable } from '../../renderer/api/Api';
+import { Downloadable } from '../../renderer/api/Api';
 import workersCache, { WorkersCache } from './workersCache';
 import { algorithmsDefaultDiff, algorithmsMaxDiff } from './constants/algorithms';
 import { Algorithms } from './constants/algorithms';
+import { LocalStorage } from '../../renderer/utils/LocalStorage';
 const logger = require('debug')('app:miner');
 
 const config = require('../../config.js');
@@ -87,17 +88,13 @@ export async function getWorkers(updateCache = false): Promise<WorkersCache> {
   return workersCache;
 }
 
-export function getCollectedReport(): Promise<Architecture> {
-  return JSON.parse(localStorage.collectedReport);
-}
-
 export function getLogin(algorithm: Algorithms): string {
-  return `${localStorage.userId}+${getDifficulty(algorithm)}`;
+  return `${LocalStorage.userId}+${getDifficulty(algorithm)}`;
 }
 
 export function getDifficulty(algorithm: Algorithms): number {
   try {
-    const benchmark = JSON.parse(localStorage.benchmark).data;
+    const benchmark = LocalStorage.benchmark!.data;
 
     const find = benchmark.find((d: any) => d.name === algorithm);
 

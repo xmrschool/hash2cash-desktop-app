@@ -40,6 +40,7 @@ app/style.css
 app/style.css.map
 dist
 main.js
+release
 main.js.map
 
 .idea

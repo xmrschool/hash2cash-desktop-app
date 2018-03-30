@@ -2,10 +2,11 @@ import { ChildProcess, spawn } from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { BaseWorker, Parameter, ParameterMap, Pick } from './BaseWorker';
-import { getCollectedReport, getLogin, RuntimeError } from '../utils';
-import { getPort } from '../../../shared/utils';
+import { getLogin, RuntimeError } from '../utils';
+import { getPort } from '../../../core/utils';
 import { _CudaDevice, Architecture } from '../../../renderer/api/Api';
 import { sleep } from '../../../renderer/utils/sleep';
+import { LocalStorage } from '../../../renderer/utils/LocalStorage';
 
 export type Parameteres = 'main' | 'additional';
 
@@ -122,7 +123,13 @@ ${outer.join(',\n')}
   }
 
   async buildConfigs() {
-    const report = await getCollectedReport();
+    const report = LocalStorage.collectedReport;
+
+    if (!report) {
+      console.error('Report is unavailable, try to restart your app');
+
+      return;
+    }
 
     await this.buildConfig();
     await this.buildNvidiaConfig(report);

@@ -1,5 +1,7 @@
 import * as io from 'socket.io-client';
 import CurrenciesService from './mobx-store/CurrenciesService';
+import { LocalStorage } from './utils/LocalStorage';
+import { checkIfTranslateOutdated } from './intl';
 const config = require('../config.js'); // tslint:disable-line
 
 export type MinerReadyCallback = (_socket: SocketIOClient.Socket) => any;
@@ -19,8 +21,9 @@ async function delayedCreate() {
 
   // First time we have to manually ask for appInfo
   socket.emit('appInfo', '', (response: any) => {
-    localStorage.appInfo = JSON.stringify(response);
+    LocalStorage.appInfo = response;
 
+    checkIfTranslateOutdated();
     const ticker = response.ticker;
     if (Array.isArray(ticker)) {
       CurrenciesService.setTicker(response.ticker);
@@ -31,11 +34,12 @@ async function delayedCreate() {
 
   // Then we subscribe to updates
   socket.on('appInfo', (response: any) => {
-    localStorage.appInfo = JSON.stringify(response);
+    LocalStorage.appInfo = response;
+    checkIfTranslateOutdated();
   });
 }
 
-// This really speeds up start up time... Without timeout it took 1s to connect to socket.io server
+// ToDo This really stuck up start up time... Without timeout it took 1s to connect to socket.io server
 // It's fucking long, maybe is there another workaround?
 delayedCreate();
 export default socket;

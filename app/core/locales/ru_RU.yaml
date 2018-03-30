@@ -1,0 +1,30 @@
+id: 3di003d3-d3d21qdj9d32-d33d3d-d3
+locale: ru_RU
+link: https://hashto.cash/
+data:
+  # Tips
+  TIPS_HEADER: Советы по оптимизации
+  TIPS_BUTTON_FIX: Исправить
+
+  # Driver version
+  TIPS_DRIVER_VERSION_POSSIBLY_OLD: |
+    Возможно, у вас используются устаревшие драйвера. Все что нужно - установить новые.
+  TIPS_DRIVER_VERSION_UPDATE_AVAILABLE: |
+    У вас установлена старая версия драйвера ({oldVersion}), лучше установить последнюю ({newVersion}). Загрузка произойдет с сайта NVidia
+  TIPS_DRIVER_VERSION_UPDATE_UNAVAILABLE: |
+    Вы используете самую последнюю версию драйвера ({version}).
+
+  # Large pages
+  TIPS_LARGE_PAGES_WORKAROUND: |
+    Этот фикс включает большие страницы в памяти, необходимо перезапустить программу от имени администратора, прежде чем использовать его.
+  TIPS_LARGE_PAGES_REBOOT_MIGHT_HELP: |
+    Перезагрузка ПК может помочь.
+  TIPS_LARGE_PAGES_REBOOT_MUST_HELP: |
+    Перезагрузите ПК для применения изменений.
+  TIPS_LARGE_PAGES_FAILED: |
+    Не удалось применить фикс ({reason}). Перезагрузка может помочь, или, возможно приложение запущено не от Администратора.
+
+  # AES support
+  TIPS_AES_NAME: Процессор с поддержкой AES
+  TIPS_AES_WORKAROUND: |
+    AES – это аппаратный набор команд шифрования, который присутствует во всех современных процессорах и ускоряет майнинг более чем на 50%.

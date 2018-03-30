@@ -171,6 +171,8 @@ module.exports = merge(baseConfig, {
   externals: [
     'cuda-detector',
     'opencl-detector',
+    'native-utils',
+    'cpuid-detector',
     'fs-extra',
     'systeminformation',
     'request',

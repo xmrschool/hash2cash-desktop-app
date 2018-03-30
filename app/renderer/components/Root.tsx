@@ -11,6 +11,7 @@ import SocketProvider from './SocketProvider';
 import DevTools from 'mobx-react-devtools';
 import Toast from './Toast';
 import Navigator from './Navigator';
+import { LocaleProvider } from '../intl';
 
 let hot: any;
 
@@ -27,19 +28,21 @@ function Root({ store, history, socket }: IRootType) {
   const Fragment = (React as any).Fragment;
   return (
     <>
-      { __WIN32__ && <Navigator /> }
-      <MobxProvider {...stores}>
-        <Provider store={store}>
-          <SocketProvider socket={socket}>
-            <Fragment>
-              <ConnectedRouter history={history} store={store}>
-                <Routes />
-              </ConnectedRouter>
-              <Toast />
-            </Fragment>
-          </SocketProvider>
-        </Provider>
-      </MobxProvider>
+      {__WIN32__ && <Navigator />}
+      <LocaleProvider>
+        <MobxProvider {...stores}>
+          <Provider store={store}>
+            <SocketProvider socket={socket}>
+              <Fragment>
+                <ConnectedRouter history={history} store={store}>
+                  <Routes />
+                </ConnectedRouter>
+                <Toast />
+              </Fragment>
+            </SocketProvider>
+          </Provider>
+        </MobxProvider>
+      </LocaleProvider>
       {process.env.NODE_ENV === 'development' && false && <DevTools />}
     </>
   );
