@@ -38,12 +38,14 @@ export class HomePage extends React.Component<
     if (!localStorage.appInfo && userState.authenticated) {
       await globalState.connectionPromise;
       await userState.attemptToLogin();
-    } else { // We wait til user logined but auth him, and if it fails we redirect from dashboard to login
-      if (userState.authenticated) userState.attemptToLogin().then(d => {
-        if (!userState.authenticated) {
-          this.props.history.push('/login');
-        }
-      });
+    } else {
+      // We wait til user logined but auth him, and if it fails we redirect from dashboard to login
+      if (userState.authenticated)
+        userState.attemptToLogin().then(d => {
+          if (!userState.authenticated) {
+            this.props.history.push('/login');
+          }
+        });
     }
 
     await this.disappear();

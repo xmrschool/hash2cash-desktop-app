@@ -104,6 +104,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
     const findProperty = this.getCustomParameters().find(d => d.id === id);
     if (!findProperty) throw new Error("ID of this param doesn't exist");
 
+    // ToDo we should use ===, but first we need use same types
     const findValue = findProperty.values.find(d => d.value == value);
     if (!findValue) throw new Error("Specified value doesn't exist");
 
@@ -146,7 +147,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
       JSON.stringify({
         parameters: this.parameters,
         running: this.running,
-      }),
+      })
     );
   }
 

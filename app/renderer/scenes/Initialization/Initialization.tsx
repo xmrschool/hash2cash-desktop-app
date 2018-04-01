@@ -159,7 +159,7 @@ export default class Initialization extends React.Component<
 
     return (
       <span className={s.model}>
-        {(device.type as any) == 'cpu'
+        {(device.type as any) === 'cpu'
           ? formatCpuName(device.model)
           : device.model}
       </span>

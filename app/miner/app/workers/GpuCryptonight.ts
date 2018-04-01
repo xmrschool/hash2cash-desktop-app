@@ -144,7 +144,7 @@ ${outer.join(',\n')}
 "pool_list" :
 [
 	{"pool_address" : ${s(this.getPool('cryptonight'))}, "wallet_address" : ${s(
-      getLogin('GpuCryptonight'),
+      getLogin('GpuCryptonight')
     )}, "rig_id" : "oh_hello", "pool_password" : "", "use_nicehash" : true, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
 ],
 "currency" : "monero",
@@ -168,7 +168,7 @@ ${outer.join(',\n')}
 
     console.log(
       'Saving config to directory: ',
-      path.join(this.path, 'config.txt'),
+      path.join(this.path, 'config.txt')
     );
     await fs.outputFile(path.join(this.path, 'config.txt'), template);
   }
@@ -216,9 +216,8 @@ ${outer.join(',\n')}
         throw new Error('Worker is not running');
       }
       const resp = await fetch(`http://127.0.0.1:${this.daemonPort}/api.json`);
-      const json = await resp.json();
 
-      return json;
+      return await resp.json();
     } catch (e) {
       console.error('Failed to get stats', e);
       throw new RuntimeError('Failed to get stats', e);
@@ -258,7 +257,7 @@ ${outer.join(',\n')}
       ['-i', (await this.getDaemonPort()).toString()],
       {
         cwd: this.path,
-      },
+      }
     );
 
     this.emit({ running: true });

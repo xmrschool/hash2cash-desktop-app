@@ -8,6 +8,7 @@ const openExternal = (link: string) => () =>
 
 const separator: Electron.MenuItemConstructorOptions = { type: 'separator' };
 export default function buildDefaultMenu() {
+  // noinspection JSPrimitiveTypeWrapperUsage
   const template = new Array<Electron.MenuItemConstructorOptions>();
 
   template.push({

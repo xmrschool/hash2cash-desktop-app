@@ -11,7 +11,7 @@ export default function LineLoader() {
       <span className={styles['line-4']} />
     </div>
   );
-};
+}
 
 export type FallbackProps = {
   condition: boolean;

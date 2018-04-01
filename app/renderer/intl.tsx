@@ -28,7 +28,9 @@ export class LocaleProvider extends React.Component<any> {
     console.log('used locale is: ', JSON.stringify(usedLocale));
     return (
       <IntlProvider
-        locale={usedLocale && usedLocale.locale ? usedLocale.locale.slice(0, 2) : 'en'}
+        locale={
+          usedLocale && usedLocale.locale ? usedLocale.locale.slice(0, 2) : 'en'
+        }
         messages={usedLocale && usedLocale.data}
       >
         {this.props.children}

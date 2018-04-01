@@ -219,8 +219,10 @@ const listen = (port: number) => {
     listen(port + 1);
   });
 };
-updateWorkersInCache().then(() => getPort(8024).then(port => {
-  listen(port);
-}));
+updateWorkersInCache().then(() =>
+  getPort(8024).then(port => {
+    listen(port);
+  })
+);
 
 (window as any).logger = logger;

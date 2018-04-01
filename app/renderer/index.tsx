@@ -15,7 +15,6 @@ if (__WIN32__ === false) {
   document.body.setAttribute('candrag', 'true');
 }
 
-
 window.addEventListener('unhandledrejection', function(event) {
   trackError((event as any).reason);
 });
@@ -24,7 +23,7 @@ render(
   <AppContainer>
     <Root store={store} history={history} socket={socket} />
   </AppContainer>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
 
 setTimeout(() => ipcRenderer.emit('renderer-ready', null), 200);

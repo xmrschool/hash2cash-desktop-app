@@ -48,6 +48,4 @@ export function configureStore(initialState: Object | void) {
   return store;
 }
 
-export {
-  history
-};
+export { history };

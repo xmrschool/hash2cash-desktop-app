@@ -12,7 +12,7 @@ export type RuntimePayload = {
 
 export default function runtime(
   state: RuntimeState = {},
-  action: IActionWithPayload<RuntimePayload>,
+  action: IActionWithPayload<RuntimePayload>
 ): RuntimeState {
   switch (action.type) {
     case SET_RUNTIME_VARIABLE:

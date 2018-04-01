@@ -29,7 +29,9 @@ export default class LargePagesTip implements ITip {
     this.isOk = enabled;
 
     if (!enabled && __WIN32__ === false) {
-      this.workaround = <FormattedMessage id="TIPS_LARGE_PAGES_REBOOT_MIGHT_HELP" />;
+      this.workaround = (
+        <FormattedMessage id="TIPS_LARGE_PAGES_REBOOT_MIGHT_HELP" />
+      );
     }
   }
 
@@ -38,13 +40,17 @@ export default class LargePagesTip implements ITip {
 
     if (res === 'NEEDA_REBOOT') {
       this.isOk = true;
-      this.workaround = <FormattedMessage id="TIPS_LARGE_PAGES_REBOOT_MUST_HELP" />;
+      this.workaround = (
+        <FormattedMessage id="TIPS_LARGE_PAGES_REBOOT_MUST_HELP" />
+      );
 
       return true;
     }
 
     this.isOk = false;
-    this.workaround = <FormattedMessage id="TIPS_LARGE_PAGES_FAILED" values={{ reason: res }} />;
+    this.workaround = (
+      <FormattedMessage id="TIPS_LARGE_PAGES_FAILED" values={{ reason: res }} />
+    );
 
     return false;
   }

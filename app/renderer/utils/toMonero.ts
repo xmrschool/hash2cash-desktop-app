@@ -5,6 +5,6 @@ export default function toMonero(hashes: number) {
   const service = CurrenciesService.ticker.XMR;
 
   return (
-   (hashes / service.difficulty) * service.blockReward * globalState.userShare
+    hashes / service.difficulty * service.blockReward * globalState.userShare
   );
 }

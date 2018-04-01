@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import tipsHelper from '../../../core/tips';
 import { Worker } from '../../api/MinerApi';
 import minerApi from '../../api/MinerApi';
 import globalState from '../../mobx-store/GlobalState';
@@ -61,11 +60,15 @@ export default class ActionBar extends React.Component<Props> {
     const [mainState, secondary] = this.getGlobalPlayState(this.props.workers);
     const icon = mainState === 'stop' ? stop : start;
     const tipsCount = 1 as any;
-    tipsHelper;
 
     return (
       <div className={s.row}>
-        <button data-tips-count={tipsCount === 0 ? undefined : tipsCount} onClick={() => globalState.showLayer('tips')} className={s.play} aria-label="Tips">
+        <button
+          data-tips-count={tipsCount === 0 ? undefined : tipsCount}
+          onClick={() => globalState.showLayer('tips')}
+          className={s.play}
+          aria-label="Tips"
+        >
           <label className={s.label}>Tips</label>
           <img src={tips} className={s.playButton} />
         </button>
@@ -78,7 +81,11 @@ export default class ActionBar extends React.Component<Props> {
           <label className={s.label}>{mainState}</label>
           <img src={icon} className={s.playButton} />
         </button>
-        <button className={s.play} style={{ pointerEvents: 'none', opacity: 0.6 }} aria-label="Devices">
+        <button
+          className={s.play}
+          style={{ pointerEvents: 'none', opacity: 0.6 }}
+          aria-label="Devices"
+        >
           <label className={s.label}>Devices</label>
           <img src={cards} className={s.playButton} />
         </button>

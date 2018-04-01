@@ -60,7 +60,12 @@ export default class Worker extends React.Component<PropTypes> {
     if (!isOn && worker.getSpeed() < 0.1) return null;
 
     const speed = worker.getSpeed();
-    return <div>&nbsp; —&nbsp; <FallbackLoader condition={speed > 0}>{speed} H/s</FallbackLoader></div>
+    return (
+      <div>
+        &nbsp; —&nbsp;{' '}
+        <FallbackLoader condition={speed > 0}>{speed} H/s</FallbackLoader>
+      </div>
+    );
   }
 
   render() {
@@ -74,7 +79,8 @@ export default class Worker extends React.Component<PropTypes> {
         <span className={s.name}>
           {this.getCurrencyName(miner.usesAccount)}
           <div className={s.badge}>
-            {miner.usesHardware![0].toUpperCase()}{hashrate}
+            {miner.usesHardware![0].toUpperCase()}
+            {hashrate}
           </div>
         </span>
         <span className={s.profits}>

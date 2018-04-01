@@ -1,4 +1,8 @@
-export type Algorithms = 'MoneroCryptonight' | 'ether' | 'equihash' | 'GpuCryptonight';
+export type Algorithms =
+  | 'MoneroCryptonight'
+  | 'ether'
+  | 'equihash'
+  | 'GpuCryptonight';
 
 export const algorithmsDefaultDiff = {
   MoneroCryptonight: 3000,

@@ -18,17 +18,19 @@ export function isFsError(e: FSError | any): e is FSError {
 
 // Error on the miner side, e.g. when blocked by antivirus or some miner / connection issues
 export class RuntimeError {
-  constructor() {
-    this.expandStack = this.expandStack.bind(this);
-  }
-
   @observable error: ErrorFormat | null = null;
   @observable stackExpanded: boolean = false;
+
+  constructor() {
+    this.expandStack = this.expandStack.bind(this);
+    this.closeError = this.closeError.bind(this);
+  }
 
   @action
   closeError() {
     this.error = null;
   }
+
   @action
   handleError(e: ErrorFormat) {
     this.error = e;

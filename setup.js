@@ -22,7 +22,7 @@ module.exports = {
     { file: 'test/components/Counter.spec.tsx' },
     { file: 'test/containers/CounterPage.spec.tsx' },
     { file: 'test/reducers/counter.spec.ts' },
-    { file: 'erb-logo.png' }
+    { file: 'erb-logo.png' },
   ],
   // clean the following files by either clearing them
   // (by specifying {clear: true}) or by removing lines
@@ -30,32 +30,32 @@ module.exports = {
   clean: [
     {
       file: 'app/reducers/index.ts',
-      pattern: /counter/
+      pattern: /counter/,
     },
     {
       file: 'app/store/configureStore.development.ts',
-      pattern: /counterActions/
+      pattern: /counterActions/,
     },
     {
       file: 'app/app.global.scss',
-      clear: true
+      clear: true,
     },
     {
       file: 'app/routes.tsx',
-      pattern: /CounterPage/
+      pattern: /CounterPage/,
     },
     {
       file: 'test/e2e.ts',
-      clear: true
+      clear: true,
     },
     {
       file: 'README.md',
-      clear: true
+      clear: true,
     },
     {
       file: 'app/components/Home.tsx',
-      pattern: /(h2|Link)/
-    }
+      pattern: /(h2|Link)/,
+    },
   ],
   // add the following files to the project, mostly
   // related to .gitkeep for version control
@@ -64,6 +64,6 @@ module.exports = {
     { file: 'test/actions/.gitkeep' },
     { file: 'test/components/.gitkeep' },
     { file: 'test/containers/.gitkeep' },
-    { file: 'test/reducers/.gitkeep' }
-  ]
+    { file: 'test/reducers/.gitkeep' },
+  ],
 };

@@ -49,4 +49,3 @@ export class UserOptions {
 const userOptions = new UserOptions();
 
 export default userOptions;
-

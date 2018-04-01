@@ -108,7 +108,7 @@ export default class DriverVersionTip implements ITip {
       return;
     }
 
-    debug.enabled &&
+    if (debug.enabled)
       debug(
         'Determined driver for %j is \n%O',
         { isMobile, major, arch },

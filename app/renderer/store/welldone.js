@@ -1,1 +1,1 @@
-export default "SOME STRING";
+export default 'SOME STRING';

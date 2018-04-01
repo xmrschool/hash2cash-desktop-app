@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import RuntimeError, { isFsError } from '../../mobx-store/RuntimeError';
 import Modal from '../Modal/Modal';
 import { librariesPath } from '../../utils/FileDownloader';
-import Button from "../Button/Button";
+import Button from '../Button/Button';
 
 const close = require('../../../core/icon/close.svg');
 // Use this class along with RuntimeError class to handle miner startup errors
@@ -54,7 +54,8 @@ export default class RuntimeErrorNotifier extends React.Component {
             <p style={styles}>
               Нет доступа к файлу. Возможно, его заблокировал антивирус или вы
               используете x32 версию для 64-разрядной системы. Если у вас стоит
-              антивирус - добавьте папку {this.renderPath()} в список исключений и перезапустите бенчмарк
+              антивирус - добавьте папку {this.renderPath()} в список исключений
+              и перезапустите бенчмарк
             </p>
           );
         default:
@@ -67,9 +68,7 @@ export default class RuntimeErrorNotifier extends React.Component {
     }
 
     // ToDo Add other cases to handle errors?
-    return (
-      <p style={styles}>{message}</p>
-    );
+    return <p style={styles}>{message}</p>;
   }
 
   renderError() {
@@ -93,7 +92,9 @@ export default class RuntimeErrorNotifier extends React.Component {
             <code>{stack}</code>
           </>
         )}
-        <Button style={{ marginTop: 40 }} onClick={() => RuntimeError.closeError()}>Закрыть</Button>
+        <Button style={{ marginTop: 40 }} onClick={RuntimeError.closeError}>
+          Закрыть
+        </Button>
       </Modal>
     );
   }

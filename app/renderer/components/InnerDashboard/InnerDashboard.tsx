@@ -16,11 +16,11 @@ import User from 'mobx-store/User';
 
 import toMonero from 'utils/toMonero';
 
+import Settings from 'scenes/Settings';
 import buildMenu from '../Settings';
 import RuntimeErrorNotifier from '../RuntimeErrorNotifier';
 import { FallbackLoader } from '../LineLoader/LineLoader';
 import ActionBar from '../ActionBar';
-import Settings from '../../scenes/Settings/Settings';
 import Tips from '../Tips/Tips';
 import Reloader from "../Reloader/Reloader";
 
@@ -131,6 +131,14 @@ export class WorkerView extends React.Component<
     this.clickHandler = this.clickHandler.bind(this);
   }
 
+  get worker() {
+    return this.props.worker;
+  }
+
+  get name() {
+    return this.props.worker.name;
+  }
+
   onOptionChange(name: string) {
     return (e: any) => {
       this.props.worker.setCustomParameter(name, e.target.value);
@@ -152,14 +160,6 @@ export class WorkerView extends React.Component<
 
   observe() {
     this.setState({ observer: minerObserver.observe(this.props.worker) });
-  }
-
-  get worker() {
-    return this.props.worker;
-  }
-
-  get name() {
-    return this.props.worker.name;
   }
 
   workerState(): 'stop' | 'waiting' | 'start' {
@@ -229,6 +229,7 @@ export class WorkerView extends React.Component<
 
     return null;
   }
+
   render() {
     const { worker } = this.props;
 

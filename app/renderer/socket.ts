@@ -68,7 +68,7 @@ export function connectToLocalMiner(port: number) {
 }
 
 export const connectionPromise = new Promise(resolve =>
-  onceMinerReady(resolve),
+  onceMinerReady(resolve)
 );
 
 export { localSocket };

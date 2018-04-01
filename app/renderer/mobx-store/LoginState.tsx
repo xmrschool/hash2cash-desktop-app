@@ -54,7 +54,7 @@ export class LoginState {
       this.submitting = true;
       if (this.password.length < 5)
         return this.dispatchPasswordError(
-          'length of password must be at most 5',
+          'length of password must be at most 5'
         );
 
       const response = await Api.auth.attempt({

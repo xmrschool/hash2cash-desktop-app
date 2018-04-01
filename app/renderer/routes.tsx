@@ -36,14 +36,14 @@ const Routes = () => {
         exact
         path="/login"
         component={asyncComponent(() =>
-          import(/* webpackChunkName: "login" */ 'scenes/LoginContainer'),
+          import(/* webpackChunkName: "login" */ 'scenes/LoginContainer')
         )}
       />
       <Route
         exact
         path="/dashboard"
         component={asyncComponent(() =>
-          import(/* webpackChunkName: "dashboard" */ 'scenes/Dashboard'),
+          import(/* webpackChunkName: "dashboard" */ 'scenes/Dashboard')
         )}
       />
       <Route
@@ -57,7 +57,7 @@ const Routes = () => {
         exact
         path="/init"
         component={asyncComponent(() =>
-          import(/* webpackChunkName: "init" */ 'scenes/Initialization'),
+          import(/* webpackChunkName: "init" */ 'scenes/Initialization')
         )}
       />
       <Route exact path="/" component={HomePage} />

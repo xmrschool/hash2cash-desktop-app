@@ -157,7 +157,7 @@ export class MinerObserver extends EventEmitter {
     const internalObserver = findWorker || new InternalObserver(worker);
     if (instantRun) internalObserver.start();
 
-    !findWorker && this.workers.push(internalObserver);
+    if (!findWorker) this.workers.push(internalObserver);
     return internalObserver;
   }
 }

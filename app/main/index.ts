@@ -89,7 +89,7 @@ app.on('ready', () => {
 
   if (startMinimized) {
     console.log(
-      "Seems that app was runned on auto start, so we don't start renderer",
+      "Seems that app was runned on auto start, so we don't start renderer"
     );
   }
 
@@ -112,9 +112,9 @@ app.on('ready', () => {
       // Base path must refer to app folder
       return event.sender.send(
         'resolveUtil',
-        path.join(basePath, 'compiledUtils', message),
+        path.join(basePath, 'compiledUtils', message)
       );
-    },
+    }
   );
 
   ipcMain.on('quit', quit);
@@ -136,7 +136,7 @@ export function openMainWindow() {
   } else {
     onDidLoad(() => {
       try {
-        mainWindow!.isVisible() && mainWindow!.show();
+        if (mainWindow!.isVisible()) mainWindow!.show();
         mainWindow!.focus();
       } catch (e) {}
     });

@@ -165,7 +165,7 @@ export class CurrencyNumber {
     const formatted = Object.assign(
       {},
       { fontSize: '80%', opacity: 0.5, marginLeft: 5 },
-      styles,
+      styles
     );
     const fixedAmount = +this.amount.toFixed(this.instance.precision);
     const useUnicode = !this.instance.svgSymbol || this.couldUseUnicode();
@@ -218,7 +218,7 @@ export class CurrenciesService extends EventEmitter {
 
     return keys.reduce<CurrencyInstance[]>(
       (left: any, right) => left.push(this.ticker[right]),
-      [],
+      []
     );
   }
 
@@ -242,14 +242,14 @@ export class CurrenciesService extends EventEmitter {
     return this.exchange(
       from,
       userOptions.get('currency') as AllowedCurrencies,
-      amount,
+      amount
     );
   }
 
   exchange(
     from: AllowedCurrencies,
     to: AllowedCurrencies,
-    amount: number,
+    amount: number
   ): CurrencyNumber {
     // Amount means from
     if (!this.ticker) throw new Error('ticker.unavailable');
@@ -261,9 +261,9 @@ export class CurrenciesService extends EventEmitter {
 
     return new CurrencyNumber(
       +(+(amount * currencyFrom.priceUsd / currencyTo.priceUsd).toFixed(
-        currencyTo.precision,
+        currencyTo.precision
       )),
-      currencyTo,
+      currencyTo
     );
   }
 
@@ -284,7 +284,7 @@ export class CurrenciesService extends EventEmitter {
       const assigned = Object.assign(
         {},
         defaultOptions[currency.symbol],
-        currency,
+        currency
       );
 
       this.ticker[currency.symbol] = new CurrencyInstance(assigned);
@@ -301,7 +301,7 @@ export class CurrenciesService extends EventEmitter {
       const assigned = Object.assign(
         {},
         defaultOptions[value.symbol],
-        ticker[key],
+        ticker[key]
       );
 
       this.ticker[key] = new CurrencyInstance(assigned);

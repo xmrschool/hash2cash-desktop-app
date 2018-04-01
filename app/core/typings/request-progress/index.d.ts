@@ -1,7 +1,6 @@
 declare module 'request-progress' {
   import * as request from 'request';
 
-  import EventEmitter = NodeJS.EventEmitter;
   import { WriteStream } from 'fs';
 
   class RequestEmitter {
@@ -11,7 +10,6 @@ declare module 'request-progress' {
     on(event: 'end', callback: (data: any) => void): void;
     on(event: string, callback: (response: any) => void): void;
   }
-
 
   const progress: (request: request.Request, options: any) => RequestEmitter;
 

@@ -113,7 +113,7 @@ export default async function collectHardware(): Promise<Architecture> {
 
   console.log('Collected cuda devices: ', cuda, '\nOpenCL: ', openCl);
 
-  cuda &&
+  if (cuda)
     cuda.devices.forEach(device => {
       report.devices.push({
         type: 'gpu',
@@ -124,7 +124,7 @@ export default async function collectHardware(): Promise<Architecture> {
       });
     });
 
-  openCl &&
+  if (openCl)
     openCl.devices
       .filter(
         d =>

@@ -24,7 +24,7 @@ export default class Close extends React.Component<{ [key: string]: any }> {
 
   render() {
     return (
-      <div className={s.root} {...this.props} >
+      <div className={s.root} {...this.props}>
         <div className={s.button}>
           <svg viewBox="0 0 12 12" name="Close" width="18" height="18">
             <g fill="none" fillRule="evenodd">

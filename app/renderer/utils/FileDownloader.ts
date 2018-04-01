@@ -135,7 +135,7 @@ export default class FileDownloader extends EventEmitter {
                     debug(
                       'If path exists?',
                       await exists(futurePathToFile),
-                      futurePathToFile,
+                      futurePathToFile
                     );
                     if (await exists(futurePathToFile)) {
                       // We have to check if hash is valid, if so, skip downloading
@@ -159,14 +159,14 @@ export default class FileDownloader extends EventEmitter {
                       'Fetching up miner: ',
                       miner,
                       ' to directory ',
-                      outputDir,
+                      outputDir
                     );
 
                     const downloader = progress(
                       request.get(miner.downloadUrl),
                       {
                         throttle: 500,
-                      },
+                      }
                     );
 
                     downloader.on('progress', (stats: any) => {
@@ -211,7 +211,7 @@ export default class FileDownloader extends EventEmitter {
                   } catch (e) {
                     reject(e);
                   }
-                }),
+                })
             )
             .catch((error: any) => {
               if (error instanceof DownloadError) {
@@ -227,8 +227,8 @@ export default class FileDownloader extends EventEmitter {
                 });
 
               globalReject(error);
-            }),
-        ),
+            })
+        )
       ).then(globalResolve);
     });
   }

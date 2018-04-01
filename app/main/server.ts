@@ -47,7 +47,7 @@ export class Server extends EventEmitter {
     });
     ipcMain.on('miner-server-port', (e: any, port: number) => {
       console.log('received port: ', port);
-      appWindow && appWindow.sendMinerPort(port);
+      if (appWindow) appWindow.sendMinerPort(port);
       serverPort = port;
     });
   }

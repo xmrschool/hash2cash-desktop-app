@@ -10,10 +10,11 @@ export type Parameteres = 'power' | 'priority';
 
 const debug = require('debug')('app:workers:moneroCryptonight');
 export default class MoneroCryptonight extends BaseWorker<Parameteres> {
-  workerName: string = 'MoneroCryptonight';
   static requiredModules = ['cryptonight'];
   static usesHardware = ['cpu'];
   static usesAccount = 'XMR';
+
+  workerName: string = 'MoneroCryptonight';
 
   path: string = '';
   parameters: ParameterMap<Parameteres> = {
@@ -172,9 +173,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
         throw new Error('Worker is not running');
       }
       const resp = await fetch(`http://127.0.0.1:${this.daemonPort}`);
-      const json = await resp.json();
-
-      return json;
+      return await resp.json();
     } catch (e) {
       throw new RuntimeError('Failed to get stats', e);
     }
@@ -202,7 +201,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     const fullyPath = path.join(this.path, __WIN32__ ? 'xmrig.exe' : 'xmrig');
 
     this.willQuit = false;
-    debug.enabled &&
+    if (debug.enabled)
       debug(
         'Running a miner...\n%c%s %s',
         'color: crimson',
@@ -212,7 +211,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     this.daemon = spawn(fullyPath, args);
 
     this.daemon.stdout.on('data', data => {
-      debug.enabled &&
+      if (debug.enabled)
         debug(
           '%c[STDOUT] %c\n%s',
           'color: dodgerblue',

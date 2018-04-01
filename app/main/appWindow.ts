@@ -7,7 +7,7 @@ let windowStateKeeper: any | null = null;
 
 export let RENDERER_PATH: string;
 export class AppWindow {
-  private window: Electron.BrowserWindow;
+  private readonly window: Electron.BrowserWindow;
   private emitter = new EventEmitter();
 
   private _loadTime: number | null = null;
@@ -120,7 +120,7 @@ export class AppWindow {
         this._rendererReadyTime = readyTime;
 
         this.maybeEmitDidLoad();
-      },
+      }
     );
 
     this.window.on('focus', () => this.window.webContents.send('focus'));
@@ -128,7 +128,7 @@ export class AppWindow {
 
     RENDERER_PATH = `file://${path.join(__dirname, '../renderer/app.html')}`;
     this.window.loadURL(
-      `file://${path.join(__dirname, '../renderer/app.html')}`,
+      `file://${path.join(__dirname, '../renderer/app.html')}`
     );
   }
 
@@ -226,11 +226,11 @@ export class AppWindow {
     this.window.webContents.send('miner-server-port', port);
     setTimeout(
       () => this.window.webContents.send('miner-server-port', port),
-      200,
+      200
     ); // Send immediately and after 200ms
     setTimeout(
       () => this.window.webContents.send('miner-server-port', port),
-      1000,
+      1000
     ); // And after sec
   }
 

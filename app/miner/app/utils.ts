@@ -4,7 +4,10 @@ import { difference } from 'lodash';
 import workers from './workers';
 import { Downloadable } from '../../renderer/api/Api';
 import workersCache, { WorkersCache } from './workersCache';
-import { algorithmsDefaultDiff, algorithmsMaxDiff } from './constants/algorithms';
+import {
+  algorithmsDefaultDiff,
+  algorithmsMaxDiff,
+} from './constants/algorithms';
 import { Algorithms } from './constants/algorithms';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
 const logger = require('debug')('app:miner');
@@ -102,7 +105,6 @@ export function getDifficulty(algorithm: Algorithms): number {
       const diff = find.speed * 30; // Time enough to submit shares each 30 seconds
 
       return Math.min(algorithmsMaxDiff[algorithm], diff); // if more than maximum allowed adjust to needed
-
     }
     throw new Error('Benchmark record doesnt exist');
   } catch (e) {
