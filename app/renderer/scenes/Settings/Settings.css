@@ -14,7 +14,9 @@
 
 .root p {
   font-size: 15px;
-  opacity: 0.9;
+  opacity: 0.8;
+  letter-spacing: 0.7px;
+  font-weight: 400;
 }
 
 .animating {
@@ -31,13 +33,12 @@
 
 .questionText {
   letter-spacing: 1px;
-  font-weight: 400;
-  opacity: 0.6;
+  font-weight: 500;
 }
 
 .question {
   flex-grow: 1;
-  max-width: 50%;
+  margin-right: 10px;
 }
 
 .menu {

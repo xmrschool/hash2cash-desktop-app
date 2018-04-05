@@ -33,6 +33,9 @@ body {
   font-size: 18px;
   transition: var(--animation-delay) background var(--animation-type);
 
+  --primary-color: #3c5ede;
+  --primary-color-1: #3657c2;
+  --primary-color-2: #3250a1;
   --more-white-body: #232527 linear-gradient(45deg, #1f1f1f 10%, #373b42);
   --animation-delay: 150ms;
   --animation-type: cubic-bezier(.06,.67,.37,.99);

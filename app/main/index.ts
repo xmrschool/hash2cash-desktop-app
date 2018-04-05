@@ -8,6 +8,7 @@ import * as path from 'path';
 import buildTray from './tray';
 import enableUpdates from './appUpdater';
 import trackError from '../core/raven';
+import { enable } from "../renderer/utils/startup";
 
 require('source-map-support').install();
 
@@ -78,11 +79,7 @@ if (isDuplicateInstance) {
 app.on('ready', () => {
   runInitialSetupIfNeeded(() => {
     //  Auto start on OS startup
-    app.setLoginItemSettings({
-      openAtLogin: true,
-      openAsHidden: true,
-      args: ['--hidden'], // openAsHidden supported on OS X, but arguments are supported on Windows
-    });
+    enable();
   });
 
   const startMinimized =

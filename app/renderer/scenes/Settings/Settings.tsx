@@ -1,14 +1,17 @@
 import { ipcRenderer, remote } from 'electron';
 import * as React from 'react';
+import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router';
 import Button from 'components/Button';
 import userOptions from 'mobx-store/UserOptions';
 import globalState from 'mobx-store/GlobalState';
 
-import { observer } from 'mobx-react';
+import { isEnabled, enable, disable } from "utils/startup";
+
 import MinerObserver from '../../mobx-store/MinerObserver';
 import minerApi from '../../api/MinerApi';
 import Close from '../../components/Close/Close';
+import Switch from "../../components/Switch/Switch";
 
 const s = require('./Settings.css');
 const librariesPath = require('../../../config.js').MINERS_PATH;
@@ -17,6 +20,7 @@ export const ANIMATION_TIME = 200;
 
 export type State = {
   animating: boolean;
+  openingAtStartup: boolean;
 };
 
 @observer
@@ -26,6 +30,7 @@ export default class Settings extends React.Component<
 > {
   state = {
     animating: false,
+    openingAtStartup: false,
   };
 
   constructor(props: any) {
@@ -40,6 +45,18 @@ export default class Settings extends React.Component<
 
   goBack() {
     globalState.hideLayer();
+  }
+
+  async componentDidMount() {
+    this.setState({
+      openingAtStartup: await isEnabled(),
+    });
+
+    document.body.classList.toggle('whiter');
+  }
+
+  componentWillUnmount() {
+    document.body.classList.toggle('whiter');
   }
 
   updateParameter(name: string) {
@@ -77,20 +94,20 @@ export default class Settings extends React.Component<
     this.props.history.push('/init');
   }
 
-  updateStartupSettings(event: any) {
-    const shoulda = event.target.value === 'yes';
-
+  updateStartupSettings(shoulda: any) {
     if (shoulda) {
-      remote.app.setLoginItemSettings({
-        openAtLogin: true,
-        openAsHidden: true,
-        args: ['--hidden'], // openAsHidden supported on OS X, but arguments are supported on Windows
+      this.setState({
+        openingAtStartup: true,
       });
+
+      enable();
       // Actually issue with electron https://github.com/electron/electron/issues/10880
     } else {
-      remote.app.setLoginItemSettings({
-        openAtLogin: false,
+      this.setState({
+        openingAtStartup: false,
       });
+
+      disable()
 
       if (__DARWIN__) {
         try {
@@ -106,7 +123,7 @@ export default class Settings extends React.Component<
   }
 
   get runnedAtStartup() {
-    const shouldOpen = remote.app.getLoginItemSettings().openAtLogin;
+    const shouldOpen = this.state.openingAtStartup;
 
     return shouldOpen ? 'yes' : 'no';
   }
@@ -161,13 +178,14 @@ export default class Settings extends React.Component<
               <p>Run Hash to cash and mining along with OS startup</p>
             </div>
             <div className={s.answer}>
-              <select
+              <Switch checked={this.state.openingAtStartup} onChange={this.updateStartupSettings} />
+              {/*<select
                 onChange={this.updateStartupSettings}
                 value={this.runnedAtStartup}
               >
                 <option value="yes">Yes, sure!</option>
                 <option value="no">No</option>
-              </select>
+              </select>*/}
             </div>
           </div>
 
@@ -180,7 +198,7 @@ export default class Settings extends React.Component<
               </p>
             </div>
             <div className={s.answer}>
-              <Button onClick={this.benchmark}>Benchmark</Button>
+              <Button simple onClick={this.benchmark}>Benchmark</Button>
             </div>
           </div>
 
@@ -193,20 +211,7 @@ export default class Settings extends React.Component<
               </p>
             </div>
             <div className={s.answer}>
-              <Button onClick={this.removeThings}>Remove</Button>
-            </div>
-          </div>
-
-          <div className={s.pick}>
-            <div className={s.question}>
-              <h4 className={s.questionText}>Remove all</h4>
-              <p>
-                Everything (libraries, local storage (auth data, manifest)) will
-                be removed. Use if you want to fully uninstall the app.
-              </p>
-            </div>
-            <div className={s.answer}>
-              <Button onClick={this.removeThings}>Remove</Button>
+              <Button simple onClick={this.removeThings}>Remove</Button>
             </div>
           </div>
         </div>
