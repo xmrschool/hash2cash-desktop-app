@@ -5,17 +5,20 @@
 .tip {
   background: rgba(32, 34, 37, 0.83);
   margin-bottom: 10px;
-  border-color: #202225;
   padding: 16px;
-  border-style: solid;
-  border-width: 1px;
+  border: 1px solid #202225;
   border-radius: 3px;
+}
+
+.tip * {
+  user-select: auto;
 }
 
 .tipName {
   font-weight: 400;
-  font-size: 19px;
+  font-size: 1.1rem;
   flex-grow: 1;
+  user-select: text;
 }
 
 .actions {
@@ -33,12 +36,17 @@
   color: #fff;
   font-weight: 500;
   line-height: 16px;
-  font-size: 14px;
+  font-size: 15px;
+  font-family: inherit;
   outline: none;
   min-height: 32px;
   min-width: 60px;
   cursor: pointer;
   border-radius: 3px;
+}
+
+.button span {
+  user-select: none;
 }
 
 .button[disabled] {
@@ -59,8 +67,10 @@
 }
 
 .description {
-  font-size: 18px;
+  font-size: 1.1rem;
   opacity: 0.8;
+  line-height: 1.4;
+  text-rendering: optimizeLegibility;
   letter-spacing: inherit;
 }
 

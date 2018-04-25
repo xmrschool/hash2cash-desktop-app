@@ -179,13 +179,6 @@ export default class Settings extends React.Component<
             </div>
             <div className={s.answer}>
               <Switch checked={this.state.openingAtStartup} onChange={this.updateStartupSettings} />
-              {/*<select
-                onChange={this.updateStartupSettings}
-                value={this.runnedAtStartup}
-              >
-                <option value="yes">Yes, sure!</option>
-                <option value="no">No</option>
-              </select>*/}
             </div>
           </div>
 

@@ -1,5 +1,9 @@
 .root {
   --worker-opacity: 1;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: calc(100vh - 105px);
 }
 
 .padded {
@@ -39,8 +43,7 @@
 }
 
 .playArea {
-  padding: 18px;
-  padding-left: 0;
+  padding: 18px 18px 18px 0;
   cursor: pointer;
 }
 

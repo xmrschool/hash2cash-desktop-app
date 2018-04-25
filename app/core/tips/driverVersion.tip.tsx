@@ -31,7 +31,7 @@ export default class DriverVersionTip implements ITip {
 
     const parsedReport = JSON.parse(localStorage._rawCollectedReport);
     const compatibleDevice = (parsedReport.openCl as Response).devices.find(
-      d => d.vendor === 'NVIDIA'
+      d => d.vendor.startsWith('NVIDIA')
     );
 
     if (!compatibleDevice) {
@@ -83,6 +83,18 @@ export default class DriverVersionTip implements ITip {
       return;
     }
 
+    if (!drivers) {
+      this.workaround = (
+        <FormattedMessage
+          id="TIPS_DRIVER_VERSION_UPDATE_UNAVAILABLE"
+          values={{
+            version: compatibleDevice.driverVersion,
+          }}
+        />
+      );
+
+      return;
+    }
     const driver = drivers.find(
       d =>
         d.isMobile === isMobile &&

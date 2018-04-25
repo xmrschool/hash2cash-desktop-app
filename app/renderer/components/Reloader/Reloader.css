@@ -1,0 +1,56 @@
+.icon {
+  max-width: 22px;
+  opacity: 0.8;
+}
+
+.spinner {
+  animation: spinner 3s var(--animation-type) infinite;
+}
+
+.reload {
+  display: flex;
+  cursor: pointer;
+}
+
+.text {
+  margin-left: 10px;
+  opacity: 0.8;
+}
+
+.switcher {
+  height: 200%;
+  transform: translateY(-50%);
+}
+
+.switcher > * {
+  height: 26px;
+}
+
+.switcherWrapper {
+  max-height: 26px;
+  margin-left: 7px;
+  opacity: 0.8;
+  overflow: hidden;
+}
+
+.switch {
+  transform: translateY(0%);
+  animation: animateDown var(--animation-delay) var(--animation-type) forwards;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes animateDown {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}

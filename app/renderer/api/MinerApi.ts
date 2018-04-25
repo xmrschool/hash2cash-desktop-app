@@ -94,10 +94,10 @@ export class Worker extends EventEmitter {
 
   @action
   // Daemon management
-  async start() {
+  async start(commit = true) {
     this.httpRequest = true;
     try {
-      const resp = await minerApi.fetch(`/workers/${this.data.name}/start`);
+      const resp = await minerApi.fetch(`/workers/${this.data.name}/start${minerApi.getQuery(commit)}`);
       this.httpRequest = false;
 
       return resp;
@@ -110,14 +110,14 @@ export class Worker extends EventEmitter {
   }
 
   @action
-  async stop() {
+  async stop(commit = true) {
     // Feel free to ignore errors happening in there
     try {
       if (!this.data.running) {
         return;
       }
       this.httpRequest = true;
-      const resp = await minerApi.fetch(`/workers/${this.data.name}/stop`);
+      const resp = await minerApi.fetch(`/workers/${this.data.name}/stop${minerApi.getQuery(commit)}`);
       this.httpRequest = false;
       return resp;
     } catch (e) {
@@ -193,8 +193,12 @@ export class Api {
     return this.workers.find(d => d.name === name);
   }
 
-  async stopAll() {
-    return await this.fetch('/workers/stop');
+  getQuery(commit = true) {
+    return commit ? '' : '?dontCommit=true'
+  }
+
+  async stopAll(commit = true) {
+    return await this.fetch(`/workers/stop${this.getQuery(commit)}`);
   }
 
   async fetch(

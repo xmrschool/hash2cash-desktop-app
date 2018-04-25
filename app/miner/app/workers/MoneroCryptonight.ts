@@ -227,12 +227,11 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     this.daemon.on('error', err => this.handleTermination(err));
 
     this.running = true;
-    this.commit();
 
     return true;
   }
 
-  async stop(commit: boolean = true): Promise<boolean> {
+  async stop(): Promise<boolean> {
     if (!this.running) throw new Error('Miner not running');
 
     this.running = false;
@@ -241,7 +240,6 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     this.willQuit = true;
     this.daemon!.kill();
 
-    if (commit) this.commit();
     return true;
   }
 

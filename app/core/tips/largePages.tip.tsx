@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
   getLargePageState,
   attemptToEnableLargePages,
-  AddResponses,
 } from 'native-utils';
 import { FormattedMessage } from 'react-intl';
 import { observable } from 'mobx';
@@ -24,6 +23,8 @@ export default class LargePagesTip implements ITip {
       require('os').cpus().length
     );
 
+    console.log('Large page state: ', available, enabled);
+
     this.couldBeFixed = available && __WIN32__;
     this.isOk = enabled;
 
@@ -33,9 +34,9 @@ export default class LargePagesTip implements ITip {
   }
 
   async fixIt() {
-    const res = attemptToEnableLargePages();
+    const res = attemptToEnableLargePages() as any;
 
-    if (res === AddResponses.NEEDA_REBOOT) {
+    if (res === 'NEEDA_REBOOT') {
       this.isOk = true;
       this.workaround = <FormattedMessage id="TIPS_LARGE_PAGES_REBOOT_MUST_HELP" />;
 

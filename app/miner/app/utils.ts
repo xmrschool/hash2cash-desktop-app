@@ -108,8 +108,8 @@ export function getDifficulty(algorithm: Algorithms): number {
   } catch (e) {
     const fallback = algorithmsDefaultDiff[algorithm];
 
-    console.error(
-      `Failed to get benchmark... Using ${fallback} as fallback`,
+    console.warn(
+      `Failed to get difficulty of benchmark... Using ${fallback} as fallback`,
       e
     );
     return fallback;

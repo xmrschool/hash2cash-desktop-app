@@ -129,7 +129,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
   abstract getStats(): Promise<any>;
 
   abstract start(): Promise<boolean>;
-  abstract stop(commit?: boolean): Promise<boolean>;
+  abstract stop(): Promise<boolean>;
 
   async reload() {
     await this.stop();

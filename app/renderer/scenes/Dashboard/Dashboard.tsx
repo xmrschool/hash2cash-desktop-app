@@ -6,6 +6,7 @@ import { RouteComponentProps } from 'react-router';
 import Button from 'components/Button';
 import globalState from 'mobx-store/GlobalState';
 import InnerDashboard from 'components/InnerDashboard';
+import minerApi from "api/MinerApi";
 
 const s = require('./Dashboard.css');
 export default class Dashboard extends React.Component<
@@ -18,6 +19,9 @@ export default class Dashboard extends React.Component<
 
   componentDidMount() {
     setTimeout(() => this.setState({ appeared: true }), 10);
+    if (!globalState.benchmark) {
+      minerApi.stopAll();
+    }
   }
 
   componentWillUnmount() {

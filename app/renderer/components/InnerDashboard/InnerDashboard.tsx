@@ -22,6 +22,7 @@ import { FallbackLoader } from '../LineLoader/LineLoader';
 import ActionBar from '../ActionBar';
 import Settings from '../../scenes/Settings/Settings';
 import Tips from '../Tips/Tips';
+import Reloader from "../Reloader/Reloader";
 
 const settings = require('../../../core/icon/settings.svg');
 const ws = require('scenes/Initialization/Worker.css');
@@ -443,6 +444,8 @@ export class InnerDashboard extends React.Component<any> {
         <h3 className={s.header}>CPU</h3>
         {workers.cpu && <WorkersView workers={workers.cpu} />}
 
+        <div style={{ flexGrow: 1 }} />
+        <Reloader/>
         <RuntimeErrorNotifier />
       </div>
     );

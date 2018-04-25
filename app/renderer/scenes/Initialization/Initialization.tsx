@@ -77,7 +77,12 @@ export default class Initialization extends React.Component<
 
       initializationState.setHardware(hardware);
       initializationState.setStep(1 / 7);
+
+      initializationState.setStatus('Checking if required libraries are installed...');
       debug('1/7, hardware collected: ', hardware);
+
+      await initializationState.checkIfVcredistInstalled();
+
 
       initializationState.setStep(2 / 7);
       initializationState.setStatus('Fetching download manifest...');

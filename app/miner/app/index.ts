@@ -66,10 +66,13 @@ router.get('/workers', async ctx => {
 
 router.get('/workers/:action(start|stop|reload)', async ctx => {
   const reloaded = [];
+  const mustCommit = !ctx.query.dontCommit;
+
   for (const [_, worker] of await getWorkers()) {
     try {
       if (worker.running) {
         await worker[ctx.params.action as 'start' | 'stop' | 'reload']();
+        if (mustCommit) worker.commit();
         reloaded.push(worker.workerName);
       }
     } catch (e) {
@@ -86,6 +89,7 @@ router.get('/workers/:id/:action(start|stop|reload)', async ctx => {
     action,
   }: { id: string; action: 'start' | 'stop' | 'reload' } = ctx.params;
   try {
+    const mustCommit = !ctx.query.dontCommit;
     const worker = workersCache.get(id);
 
     if (!worker) {
@@ -107,6 +111,7 @@ router.get('/workers/:id/:action(start|stop|reload)', async ctx => {
     }
 
     await worker[action]();
+    if (mustCommit) worker.commit();
     ctx.body = { success: true, message: 'Action performed' };
   } catch (e) {
     logger(e);
@@ -183,7 +188,7 @@ ipcRenderer.on('quit', async () => {
   for (const [_, worker] of await getWorkers()) {
     if (worker.running) {
       // We check if worker running and close without commiting
-      await worker.stop(false);
+      await worker.stop();
     }
   }
 

@@ -1,3 +1,4 @@
+import * as electron from 'electron';
 import { observable, action } from 'mobx';
 import {
   default as Api,
@@ -6,6 +7,7 @@ import {
   Downloadable,
 } from '../api/Api';
 import * as path from 'path';
+const app = electron.app || electron.remote.app;
 const config = require('../../config.js');
 import FileDownloader, { DownloadError } from '../utils/FileDownloader';
 import minerApi from '../api/MinerApi';
@@ -13,6 +15,7 @@ import minerObserver, { InternalObserver } from './MinerObserver';
 import globalState from './GlobalState';
 import { sleep } from '../utils/sleep';
 import { LocalStorage } from '../utils/LocalStorage';
+import { downloadAndInstall, isOk } from "../../core/reload/vcRedistDetector";
 
 const debug = require('debug')('app:mobx:initialization');
 
@@ -76,7 +79,7 @@ export class InitializationState {
     return Math.round(relative * 100);
   }
 
-  formatBytes(bytes: number, decimals: number = 2) {
+  static formatBytes(bytes: number, decimals: number = 2) {
     if (bytes === 0) return '0';
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
@@ -86,6 +89,24 @@ export class InitializationState {
     );
   }
 
+  @action
+  async checkIfVcredistInstalled() {
+    if (__WIN32__ === false) return; // VCRedist only on Win
+
+    try {
+      const installed = await isOk();
+      if (!installed) {
+        this.setStatus('Downloading VCRedist 2017... ');
+
+        await downloadAndInstall((stats: any) => {
+          this.setStatus(`Downloading VCRedist 2017... ${this.formatStats(stats)}`)
+        }, path.join(app.getPath('userData'), 'tmp', 'vcredist.exe'));
+      }
+    } catch (e) {
+      this.setStatus('Something went wrong due installing VCRedist. You can install it later');
+      await sleep(500);
+    }
+  }
   // We set up a countdown for 60 seconds since speed is emitted
   @action
   async benchmark() {
@@ -135,7 +156,7 @@ export class InitializationState {
       }
       const miner = this.benchmarkQueue[this.benchmarkQueueIndex];
 
-      miner._data.start();
+      await miner._data.start(false);
       miner.start();
 
       let stateListener: any;
@@ -251,6 +272,16 @@ export class InitializationState {
     );
   }
 
+  formatStats(stats: any): string {
+    const { size: { total, transferred }, speed } = stats;
+
+    return `${InitializationState.formatBytes(
+      transferred || 0,
+    )} / ${InitializationState.formatBytes(total || 0)} @ ${InitializationState.formatBytes(
+      speed || 0,
+    )}/s`;
+  }
+
   @action
   async downloadBinaries() {
     if (!this.manifest || this.manifest.success === false)
@@ -268,9 +299,9 @@ export class InitializationState {
       const percents = difference * (downloaded / totalSize);
 
       this.setText(
-        `${this.formatPercents(3 / 7 + percents)}%, ${this.formatBytes(
+        `${this.formatPercents(3 / 7 + percents)}%, ${InitializationState.formatBytes(
           downloaded || 0,
-        )} / ${this.formatBytes(totalSize || 0)} @ ${this.formatBytes(
+        )} / ${InitializationState.formatBytes(totalSize || 0)} @ ${InitializationState.formatBytes(
           speed || 0,
         )}/s`,
       );

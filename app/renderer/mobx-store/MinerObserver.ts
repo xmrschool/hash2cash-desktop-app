@@ -46,11 +46,11 @@ export class InternalObserver extends EventEmitter {
   }
 
   @action
-  async stop() {
+  stop() {
     if (this._interval) clearInterval(this._interval);
   }
 
-  async start() {
+  start() {
     if (!this._interval) {
       this._interval = setInterval(
         () => this.updateWorkerData(),
@@ -142,7 +142,7 @@ export class MinerObserver extends EventEmitter {
 
   @action
   clearAll() {
-    this.workers.forEach(work => work.stop().catch(console.error));
+    this.workers.forEach(work => work.stop());
     this.workers.splice(0);
   }
 

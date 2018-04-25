@@ -271,13 +271,12 @@ ${outer.join(',\n')}
     this.daemon.on('error', err => this.handleTermination(err));
 
     this.running = true;
-    this.commit();
     await sleep(1000); // wait til miner is on
 
     return true;
   }
 
-  async stop(commit: boolean = true): Promise<boolean> {
+  async stop(): Promise<boolean> {
     if (!this.running) throw new Error('Miner not running');
 
     this.emit({ running: false });
@@ -285,8 +284,6 @@ ${outer.join(',\n')}
     this.willQuit = true;
     this.daemon!.kill('SIGTERM'); // shutdown a process gratefully
     this.running = false;
-
-    if (commit) this.commit();
 
     await sleep(1000);
     return true;

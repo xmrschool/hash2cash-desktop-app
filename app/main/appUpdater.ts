@@ -14,3 +14,5 @@ autoUpdater.on('update-available', () => {
 export default function enableUpdates() {
   autoUpdater.checkForUpdatesAndNotify();
 }
+
+export { autoUpdater };
