@@ -19,6 +19,12 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
+            options: {
+              plugins: [
+                '@babel/plugin-proposal-object-rest-spread',
+                '@babel/plugin-syntax-dynamic-import',
+              ],
+            },
           },
           {
             loader: 'ts-loader',
