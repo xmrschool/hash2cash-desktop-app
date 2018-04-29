@@ -128,13 +128,25 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   async getAppArgs() {
     this.daemonPort = await getPort(25000);
 
-    return `-l ./log.txt --api-port ${
-      this.daemonPort
-    } --print-time=1000 --max-cpu-usage ${
-      this.parameters.power
-    } --cpu-priority ${this.parameters.priority} -o ${this.getPool(
-      'cryptonight'
-    )} -u ${getLogin('MoneroCryptonight')} -p x -k`.split(' ');
+    const args: any = {
+      '-l': './log.txt',
+      '--api-port': this.daemonPort,
+      '--print-time': 1000,
+      '--max-cpu-usage': this.parameters.power,
+      '--cpu-priority': this.parameters.priority,
+      '-o': this.getPool('cryptonight'),
+      '-u': getLogin('MoneroCryptonight'),
+      '-p': 'x',
+    };
+
+    const outer: string[] = [];
+    Object.keys(args).forEach(d => {
+      outer.push(d);
+      outer.push(args[d]);
+    });
+    outer.push('--no-color', '-k');
+
+    return outer;
   }
 
   getCustomParameters(): Parameter<Parameteres>[] {
@@ -203,7 +215,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     this.willQuit = false;
     if (debug.enabled)
       debug(
-        'Running a miner...\n%c%s %s',
+        'Running a miner...\n%c"%s" %s',
         'color: crimson',
         fullyPath,
         args.join(' ')

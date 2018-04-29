@@ -59,7 +59,7 @@ export default class ActionBar extends React.Component<Props> {
   render() {
     const [mainState, secondary] = this.getGlobalPlayState(this.props.workers);
     const icon = mainState === 'stop' ? stop : start;
-    const tipsCount = 1 as any;
+    const tipsCount = 0;
 
     return (
       <div className={s.row}>

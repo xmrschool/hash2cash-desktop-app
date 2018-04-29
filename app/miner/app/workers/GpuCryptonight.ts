@@ -140,14 +140,18 @@ ${outer.join(',\n')}
     const s = (q: any) => JSON.stringify(q);
 
     if (!this.running) this.daemonPort = await getPort(25001);
-    const template = `
-"pool_list" :
+    const pools = `
+    "pool_list" :
 [
 	{"pool_address" : ${s(this.getPool('cryptonight'))}, "wallet_address" : ${s(
       getLogin('GpuCryptonight')
-    )}, "rig_id" : "oh_hello", "pool_password" : "", "use_nicehash" : true, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
+    )}, "rig_id" : ${s(
+      localStorage.rigName || ''
+    )}, "pool_password" : "", "use_nicehash" : true, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
 ],
-"currency" : "monero",
+"currency" : "monero7",
+`;
+    const template = `
 "call_timeout" : 10,
 "retry_time" : 30,
 "giveup_limit" : 0,
@@ -171,6 +175,7 @@ ${outer.join(',\n')}
       path.join(this.path, 'config.txt')
     );
     await fs.outputFile(path.join(this.path, 'config.txt'), template);
+    await fs.outputFile(path.join(this.path, 'pools.txt'), pools);
   }
 
   getCustomParameters(): Parameter<Parameteres>[] {
@@ -242,13 +247,10 @@ ${outer.join(',\n')}
   async start(): Promise<boolean> {
     if (this.running) throw new Error('Miner already running');
 
-    const isPathExists = await fs.pathExists(this.pathTo('config.txt'));
+    const isPathExists = await fs.pathExists(this.pathTo('preserve.txt'));
 
-    console.log('is path exists: ', isPathExists, this.pathTo('config.txt'));
     // If no config exists, build it
-    if (!isPathExists) {
-      await this.buildConfigs();
-    }
+    if (!isPathExists) await this.buildConfigs();
 
     this.willQuit = false;
 

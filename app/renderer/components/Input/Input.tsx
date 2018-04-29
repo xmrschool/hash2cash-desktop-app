@@ -5,6 +5,7 @@ const s = require('./Input.css');
 
 export interface IProps {
   label?: string;
+  onLabelClick?: Function;
   placeholder?: string;
   className?: string;
   error?: string | null;
@@ -35,15 +36,15 @@ export default class Input extends React.Component<
   }
 
   render() {
-    const { label, placeholder, className, error, ...inputProps } = this.props;
+    const { label, placeholder, className, error, onLabelClick, ...inputProps } = this.props;
     const shouldShake = this.state.shaking;
 
     return (
-      <div className={s.root}>
-        <span className={s.label}>{label || placeholder}</span>
+      <div className={cx(s.root, className)}>
+        <span className={s.label} onClick={onLabelClick as any}>{label || placeholder}</span>
         <div className={s.inputContainer}>
           <input
-            className={cx(s.input, className, shouldShake && s.shaking)}
+            className={cx(s.input, shouldShake && s.shaking)}
             {...inputProps}
           />
           {!!error && <div className={s.error}>{error}</div>}

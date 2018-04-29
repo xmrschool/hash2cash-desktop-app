@@ -1,6 +1,7 @@
 .icon {
-  max-width: 22px;
+  max-width: 19px;
   opacity: 0.8;
+  cursor: pointer;
 }
 
 .spinner {
@@ -20,6 +21,7 @@
 .switcher {
   height: 200%;
   transform: translateY(-50%);
+  font-size: 90%;
 }
 
 .switcher > * {

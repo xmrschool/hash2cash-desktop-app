@@ -1,4 +1,4 @@
-import { Context, ExpectedReturn } from "./reloader";
+import { Context, ExpectedReturn } from './reloader';
 import { autoUpdater } from 'electron-updater';
 
 export function formatBytes(bytes: number, decimals: number = 2) {
@@ -11,7 +11,10 @@ export function formatBytes(bytes: number, decimals: number = 2) {
   );
 }
 
-export default async function checkAppUpdates(ctx: Context): Promise<ExpectedReturn> {
+export default async function checkAppUpdates(
+  ctx: Context
+): Promise<ExpectedReturn> {
+  if (__DEV__) return { skipped: true };
   ctx.setStatus('Checking for app updates...');
 
   const update = await autoUpdater.checkForUpdates();
@@ -19,10 +22,20 @@ export default async function checkAppUpdates(ctx: Context): Promise<ExpectedRet
   // Then update available
   // ToDo is it better to use downloadPromise?
   if (update.downloadPromise) {
-    ctx.setStatusWithoutAnimation(`Available new verison of app (${update.updateInfo.version}). Downloading...`);
+    ctx.setStatusWithoutAnimation(
+      `Available new verison of app (${
+        update.updateInfo.version
+      }). Downloading...`
+    );
 
     autoUpdater.on('download-progress', stats => {
-      ctx.setStatusWithoutAnimation(`Downloading ${update.updateInfo.version} ${formatBytes(stats.transferred || 0)} / ${formatBytes(stats.total || 0)} @ ${formatBytes(stats.bytesPerSecond || 0)}/s`)
+      ctx.setStatusWithoutAnimation(
+        `Downloading ${update.updateInfo.version} ${formatBytes(
+          stats.transferred || 0
+        )} / ${formatBytes(stats.total || 0)} @ ${formatBytes(
+          stats.bytesPerSecond || 0
+        )}/s`
+      );
     });
 
     autoUpdater.on('update-downloaded', () => {
@@ -38,7 +51,7 @@ export default async function checkAppUpdates(ctx: Context): Promise<ExpectedRet
         clearInterval(interval);
 
         autoUpdater.quitAndInstall();
-      })
+      });
     });
 
     return { dontContinue: true, blockUpdater: true };

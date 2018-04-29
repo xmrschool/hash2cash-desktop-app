@@ -22,7 +22,9 @@ import RuntimeErrorNotifier from '../RuntimeErrorNotifier';
 import { FallbackLoader } from '../LineLoader/LineLoader';
 import ActionBar from '../ActionBar';
 import Tips from '../Tips/Tips';
-import Reloader from "../Reloader/Reloader";
+import Reloader from '../Reloader/Reloader';
+import RignameEditor from '../RignameEditor/RignameEditor';
+import PrettyNumber from '../PrettyNumber/PrettyNumber';
 
 const settings = require('../../../core/icon/settings.svg');
 const ws = require('scenes/Initialization/Worker.css');
@@ -54,14 +56,14 @@ export const StatsView = observer(() => {
   return (
     <div className={s.padded}>
       <div>
+        <RignameEditor />
         <div className={s.counter}>
           <h4 className={s.counterHead}>CURRENT BALANCE</h4>
           <h4 className={s.counterValue}>
-            <span className={s.currencySymbol}>HC</span>
-            <FallbackLoader condition={User.balance}>
-              {User.balance && User.balance.toLocaleString()}
+            <FallbackLoader condition={typeof User.balance !== 'undefined'}>
+              <PrettyNumber unit="XMR" num={balanceInMonero} fixedLevel={5} />
             </FallbackLoader>{' '}
-            {User.balance && (
+            {typeof User.balance !== 'undefined' && (
               <span>
                 <span className={s.equal}>≈</span>{' '}
                 {localBalance.reactFormatted()}
@@ -82,7 +84,7 @@ export const StatsView = observer(() => {
             <h4 className={s.counterHead}>EARNED PER SESSION</h4>
             <h4 className={s.counterValue}>
               {totalHashes.toLocaleString()}{' '}
-              <span className={s.currencySymbol}>HC</span>
+              <span className={s.currencySymbol}>H</span>
             </h4>
           </div>
         </div>
@@ -446,7 +448,7 @@ export class InnerDashboard extends React.Component<any> {
         {workers.cpu && <WorkersView workers={workers.cpu} />}
 
         <div style={{ flexGrow: 1 }} />
-        <Reloader/>
+        <Reloader />
         <RuntimeErrorNotifier />
       </div>
     );

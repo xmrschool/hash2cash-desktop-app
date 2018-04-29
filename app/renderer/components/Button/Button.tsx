@@ -3,11 +3,14 @@ import * as cx from 'classnames';
 const s = require('./Button.css');
 
 const Button = (props: any) => {
-  const className = props.className
-    ? cx(s.button, props.disabled && s.disabled, props.className)
-    : cx(s.button, props.disabled && s.disabled);
+  const { className, simple, warning, disabled, ...rest } = props || ({} as any);
 
-  return <button className={className} {...props} />;
+  const warn = warning ? s.warning : '';
+  const buttonType = simple ? s.simple : s.button;
+
+  const _className = className ? cx(buttonType, warn, disabled && s.disabled, className) : cx(buttonType, warn, disabled && s.disabled);
+
+  return <button className={_className} {...rest} />;
 };
 
 export default Button;

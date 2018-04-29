@@ -134,6 +134,7 @@ export type Architecture = {
 
 export type Downloadable = {
   name: string;
+  tag: string;
   size: number; // in kbytes
   format: 'zip'; // only zip is supported
   id: string; // and id to file (saved to manifest/${id}
@@ -157,13 +158,15 @@ export type DriverOffer = {
   downloadLink: string;
 };
 
+export type SuccessManifest = {
+  success: true;
+  warnings?: string[];
+  downloadable: Downloadable[];
+};
+
 export type Manifest =
   | FailedManifest
-  | {
-      success: true;
-      warnings?: string[];
-      downloadable: Downloadable[];
-    };
+  | SuccessManifest;
 
 export function builder<T, D>(method: string) {
   return function query(data: T): Promise<D> {

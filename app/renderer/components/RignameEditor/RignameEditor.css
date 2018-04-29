@@ -1,0 +1,12 @@
+.root {
+  margin-bottom: 20px;
+}
+
+.input {
+  justify-content: flex-start;
+}
+
+.input > span {
+  flex-grow: inherit;
+  min-width: 0;
+}

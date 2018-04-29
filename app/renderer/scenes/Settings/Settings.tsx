@@ -6,12 +6,13 @@ import Button from 'components/Button';
 import userOptions from 'mobx-store/UserOptions';
 import globalState from 'mobx-store/GlobalState';
 
-import { isEnabled, enable, disable } from "utils/startup";
+import { isEnabled, enable, disable } from 'utils/startup';
 
 import MinerObserver from '../../mobx-store/MinerObserver';
 import minerApi from '../../api/MinerApi';
 import Close from '../../components/Close/Close';
-import Switch from "../../components/Switch/Switch";
+import Switch from '../../components/Switch/Switch';
+import { checkIfTranslateOutdated } from '../../intl';
 
 const s = require('./Settings.css');
 const librariesPath = require('../../../config.js').MINERS_PATH;
@@ -62,6 +63,12 @@ export default class Settings extends React.Component<
   updateParameter(name: string) {
     return (event: any) => {
       userOptions.set(name, event.target.value);
+
+      // Update locale globally
+      if (name === 'locale') {
+        localStorage.removeItem('currentLocale');
+        checkIfTranslateOutdated();
+      }
     };
   }
   async onEntered() {}
@@ -107,7 +114,7 @@ export default class Settings extends React.Component<
         openingAtStartup: false,
       });
 
-      disable()
+      disable();
 
       if (__DARWIN__) {
         try {
@@ -178,7 +185,10 @@ export default class Settings extends React.Component<
               <p>Run Hash to cash and mining along with OS startup</p>
             </div>
             <div className={s.answer}>
-              <Switch checked={this.state.openingAtStartup} onChange={this.updateStartupSettings} />
+              <Switch
+                checked={this.state.openingAtStartup}
+                onChange={this.updateStartupSettings}
+              />
             </div>
           </div>
 
@@ -191,7 +201,9 @@ export default class Settings extends React.Component<
               </p>
             </div>
             <div className={s.answer}>
-              <Button simple onClick={this.benchmark}>Benchmark</Button>
+              <Button simple onClick={this.benchmark}>
+                Benchmark
+              </Button>
             </div>
           </div>
 
@@ -204,7 +216,9 @@ export default class Settings extends React.Component<
               </p>
             </div>
             <div className={s.answer}>
-              <Button simple onClick={this.removeThings}>Remove</Button>
+              <Button simple onClick={this.removeThings}>
+                Remove
+              </Button>
             </div>
           </div>
         </div>

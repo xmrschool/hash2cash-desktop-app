@@ -15,7 +15,7 @@ import minerObserver, { InternalObserver } from './MinerObserver';
 import globalState from './GlobalState';
 import { sleep } from '../utils/sleep';
 import { LocalStorage } from '../utils/LocalStorage';
-import { downloadAndInstall, isOk } from "../../core/reload/vcRedistDetector";
+import { downloadAndInstall, isOk } from '../../core/reload/vcRedistDetector';
 
 const debug = require('debug')('app:mobx:initialization');
 
@@ -99,11 +99,15 @@ export class InitializationState {
         this.setStatus('Downloading VCRedist 2017... ');
 
         await downloadAndInstall((stats: any) => {
-          this.setStatus(`Downloading VCRedist 2017... ${this.formatStats(stats)}`)
+          this.setStatus(
+            `Downloading VCRedist 2017... ${this.formatStats(stats)}`
+          );
         }, path.join(app.getPath('userData'), 'tmp', 'vcredist.exe'));
       }
     } catch (e) {
-      this.setStatus('Something went wrong due installing VCRedist. You can install it later');
+      this.setStatus(
+        'Something went wrong due installing VCRedist. You can install it later'
+      );
       await sleep(500);
     }
   }
@@ -124,7 +128,7 @@ export class InitializationState {
     }
 
     this.benchmarkQueue = workers.map(worker =>
-      minerObserver.observe(worker, false),
+      minerObserver.observe(worker, false)
     );
     this.benchmarkSecsLeft = TOTAL_BENCHMARK_TIME * workers.length;
 
@@ -237,7 +241,7 @@ export class InitializationState {
   startBenchmarkCountDown() {
     this.benchmarkCountDown = setInterval(
       () => this.countDownBenchmark(),
-      1000,
+      1000
     );
   }
 
@@ -245,8 +249,8 @@ export class InitializationState {
   countDownBenchmark() {
     // Shows how many minutes left at real
     const minimalTreshold =
-      (this.benchmarkQueue.length -
-      this.benchmarkQueueIndex) * TOTAL_BENCHMARK_TIME;
+      (this.benchmarkQueue.length - this.benchmarkQueueIndex) *
+      TOTAL_BENCHMARK_TIME;
 
     // If left more than really left (e.g. when current speed hasn't been emitted)
     if (this.benchmarkSecsLeft > minimalTreshold) {
@@ -268,18 +272,21 @@ export class InitializationState {
     this.setText(
       `${this.formatPercents(1 - percents)}%, ${
         this.benchmarkSecsLeft
-      } secs left`,
+      } secs left`
     );
   }
 
   formatStats(stats: any): string {
-    const { size: { total, transferred }, speed } = stats;
+    const {
+      size: { total, transferred },
+      speed,
+    } = stats;
 
     return `${InitializationState.formatBytes(
-      transferred || 0,
-    )} / ${InitializationState.formatBytes(total || 0)} @ ${InitializationState.formatBytes(
-      speed || 0,
-    )}/s`;
+      transferred || 0
+    )} / ${InitializationState.formatBytes(
+      total || 0
+    )} @ ${InitializationState.formatBytes(speed || 0)}/s`;
   }
 
   @action
@@ -299,11 +306,13 @@ export class InitializationState {
       const percents = difference * (downloaded / totalSize);
 
       this.setText(
-        `${this.formatPercents(3 / 7 + percents)}%, ${InitializationState.formatBytes(
-          downloaded || 0,
-        )} / ${InitializationState.formatBytes(totalSize || 0)} @ ${InitializationState.formatBytes(
-          speed || 0,
-        )}/s`,
+        `${this.formatPercents(
+          3 / 7 + percents
+        )}%, ${InitializationState.formatBytes(
+          downloaded || 0
+        )} / ${InitializationState.formatBytes(
+          totalSize || 0
+        )} @ ${InitializationState.formatBytes(speed || 0)}/s`
       );
       this.setStep(3 / 7 + percents);
 
@@ -316,7 +325,7 @@ export class InitializationState {
       // fs-extra is heavy and taking so many time to load it
       await require('fs-extra').outputFile(
         path.join(config.MINERS_PATH, 'manifest.json'),
-        JSON.stringify(this.manifest.downloadable),
+        JSON.stringify(this.manifest.downloadable)
       );
     } catch (e) {
       console.error('Failed to download binaries: ', e);

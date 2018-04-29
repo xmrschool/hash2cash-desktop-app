@@ -99,6 +99,7 @@ export class CurrencyInstance {
 
   @observable blockReward!: number;
   @observable difficulty!: number;
+  @observable modifier!: number;
   @observable profitability!: number;
 
   @observable priceUsd!: number;

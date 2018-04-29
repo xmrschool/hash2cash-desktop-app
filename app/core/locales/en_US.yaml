@@ -2,4 +2,76 @@ id: 3di003d3-d3d21qdj9d32-d33d3d-d3d3d
 locale: en_US
 link: https://hashto.cash/
 data:
-  hello: you
+  DASHBOARD_LABEL: Dashboard
+  # Stats on the dashboard
+  DASHBOARD_CURRENT_BALANCE: Current balance
+  DASHBOARD_PERFORMANCE_LABEL: Total performance
+  DASHBOARD_PERFORMANCE_CAPTION: per month
+  DASHBOARD_EARNED_LABEL: Hashes submitted
+
+  # A refresher, little helper on the downside. It does a big job, btw.
+  DASHBOARD_REFRESHER_REFRESH: Refresh
+
+  # Menu on dashboard
+  DASHBOARD_MENU_START: Start
+  DASHBOARD_MENU_TIPS: Tips
+  DASHBOARD_MENU_DEVICES: Devices
+
+  GPU_MAIN_POWER: Main GPU
+  GPU_SECONDARY_POWER: Additional GPU
+
+  CPU_POWER: Power
+  CPU_PRIORITY: CPU priority
+
+  POWER_LEVEL_LOWEST: Lowest possible
+  POWER_LEVEL_LOW: Low
+  POWER_LEVEL_MIDDLE: Middle
+  POWER_LEVEL_HIGH: 🔥 High
+  POWER_LEVEL_ULTRA: 🔥 Ultra 🔥
+  # Tips
+  TIPS_HEADER: Советы по оптимизации
+  TIPS_BUTTON_FIX: Исправить
+
+  # Driver version
+  TIPS_DRIVER_VERSION_POSSIBLY_OLD: |
+    You might be using old driver' version. You should try to install new
+  TIPS_DRIVER_VERSION_UPDATE_AVAILABLE: |
+    Seems you're using old version of GPU drivers, you have {oldVersion}, new is {newVersion}. It downloaded from Nvidia
+  TIPS_DRIVER_VERSION_UPDATE_UNAVAILABLE: |
+    You're using the latest possible driver ({version}).
+
+  # Large pages
+  TIPS_LARGE_PAGES_WORKAROUND: |
+    This fix turns on Large Pages, if you're not on Windows 10, you must restart app with admin rules to use it.
+  TIPS_LARGE_PAGES_REBOOT_MIGHT_HELP: |
+    Reboot might help.
+  TIPS_LARGE_PAGES_REBOOT_MUST_HELP: |
+    Reboot PC to apply changes.
+  TIPS_LARGE_PAGES_FAILED: |
+    Failed to apply fix ({reason}). PC reboot might help, or, maybe you're running app not as administrator
+
+  # AES support
+  TIPS_AES_NAME: Hardware AES supported CPU
+  TIPS_AES_WORKAROUND: |
+    AES is encryption specification, which speeds up mining more than to 50%.
+
+  SETTINGS_HEADER: Settings
+
+  SETTINGS_LANGUAGE: Language
+  SETTINGS_LANGUAGE_DESC: Everything will be displayed at specified language
+
+  SETTINGS_CURRENCY: Currency
+  SETTINGS_CURRENCY_DESC: For the sake of convenience, XMR will be converted to that currency
+
+  SETTINGS_STARTUP: Startup
+  SETTINGS_STARTUP_DESC: Run Hash to cash and mining along with OS startup
+
+  SETTINGS_BENCHMARK: Benchmark again
+  SETTINGS_BENCHMARK_DESC: Use this option in case your hardware was changed or you want to repeat test
+  SETTINGS_BENCHMARK_BTN: Benchmark
+
+  SETTINGS_FORGET: Forget all
+  SETTINGS_FORGET_DESC: "Everything you got locally will be removed: auth data, miners. Use if you want to uninstall app"
+  SETTINGS_FORGET_BTN: Remove
+
+

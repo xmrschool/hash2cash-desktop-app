@@ -92,7 +92,8 @@ export async function getWorkers(updateCache = false): Promise<WorkersCache> {
 }
 
 export function getLogin(algorithm: Algorithms): string {
-  return `${LocalStorage.userId}+${getDifficulty(algorithm)}`;
+  const rigName = localStorage.rigName ? `.${localStorage.rigName}` : '';
+  return `app/${LocalStorage.userId}${rigName}+${getDifficulty(algorithm)}`;
 }
 
 export function getDifficulty(algorithm: Algorithms): number {
@@ -102,9 +103,9 @@ export function getDifficulty(algorithm: Algorithms): number {
     const find = benchmark.find((d: any) => d.name === algorithm);
 
     if (find && find.speed) {
-      const diff = find.speed * 30; // Time enough to submit shares each 30 seconds
+      const diff = find.speed * 15; // Time enough to submit shares each 15 seconds
 
-      return Math.min(algorithmsMaxDiff[algorithm], diff); // if more than maximum allowed adjust to needed
+      return Math.round(Math.min(algorithmsMaxDiff[algorithm], diff)); // if more than maximum allowed adjust to needed
     }
     throw new Error('Benchmark record doesnt exist');
   } catch (e) {

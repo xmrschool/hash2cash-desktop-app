@@ -9,6 +9,7 @@ import { LocalStorage } from './utils/LocalStorage';
 import globalState from './mobx-store/GlobalState';
 import userOptions from './mobx-store/UserOptions';
 
+const debug = require('debug')('app:intl');
 export type Locale = {
   locale: string;
   id: string;
@@ -25,7 +26,6 @@ export class LocaleProvider extends React.Component<any> {
 
   render() {
     const usedLocale = globalState.currentLocale;
-    console.log('used locale is: ', JSON.stringify(usedLocale));
     return (
       <IntlProvider
         locale={
@@ -48,7 +48,7 @@ export class LocaleProvider extends React.Component<any> {
 export async function fetchAndUseLocale(locale: Locale) {
   try {
     // If development, retrieve it locally
-    if (__DEV__) {
+    if (true) {
       const file = require('../core/locales/' + locale.locale + '.yaml');
 
       LocalStorage.currentLocale = file;
@@ -57,26 +57,27 @@ export async function fetchAndUseLocale(locale: Locale) {
       return;
     }
 
-    const resp = await fetch(locale.link);
+    /*const resp = await fetch(locale.link);
     const json = await resp.json();
 
     LocalStorage.currentLocale = json;
-    globalState.currentLocale = json;
+    globalState.currentLocale = json;*/
   } catch (e) {}
 }
 
 export function checkIfTranslateOutdated() {
-  const locales = LocalStorage.appInfo!.locales;
+  // const locales = LocalStorage.appInfo!.locales;
   const usedLocale = LocalStorage.currentLocale || {
     locale: userOptions.get('locale'),
     id: 'none',
   };
 
   let remoteLocale;
-  if (__DEV__) {
+  if (true) {
     remoteLocale = require('../core/locales/' + usedLocale.locale + '.yaml');
-  } else remoteLocale = locales[usedLocale.locale];
+  } /*else remoteLocale = locales[usedLocale.locale];*/
 
+  debug('Comparing locale %s and %s', remoteLocale.id, usedLocale.id);
   if (remoteLocale.id !== usedLocale.id) {
     fetchAndUseLocale(remoteLocale);
   }

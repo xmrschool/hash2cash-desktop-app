@@ -7,7 +7,20 @@
 }
 
 .padded {
-  margin-top: 50px;
+  margin-top: 30px;
+}
+
+.inputContainer {
+  margin-bottom: 20px;
+}
+
+.input {
+  justify-content: flex-start;
+}
+
+.input > span {
+  flex-grow: inherit;
+  min-width: 0;
 }
 
 .counterHead {
@@ -21,12 +34,21 @@
   margin-top: .6rem;
   font-weight: 400;
   font-size: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.counterValue > div:first-child {
+  font-size: 70%;
+  margin-right: 5px;
 }
 
 .currencySymbol {
   font-size: 80%;
   color: #A8A8A8;
   margin-right: 5px;
+  margin-left: 5px;
 }
 
 .equal {
@@ -149,6 +171,7 @@ option {
 .period {
   opacity: 0.7;
   font-size: 85%;
+  margin-left: 5px;
 }
 
 .layers {

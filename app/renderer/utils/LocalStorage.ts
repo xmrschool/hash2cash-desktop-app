@@ -3,7 +3,7 @@ import { Response as OpenCLResponse } from 'opencl-detector';
 import { Response as CudaResponse } from 'cuda-detector';
 
 import { AUTH_TOKEN } from '../../core/storage/actions';
-import { AppInfo, Architecture, Manifest } from '../api/Api';
+import { AppInfo, Architecture, SuccessManifest } from '../api/Api';
 import { Currency } from '../mobx-store/CurrenciesService';
 import { SettingsStore } from '../mobx-store/UserOptions';
 import { LocaleWithData } from '../intl';
@@ -36,6 +36,14 @@ export class LocalStorage extends EventEmitter {
 
   static set authToken(val: string | null) {
     localStorage[AUTH_TOKEN] = val;
+  }
+
+  static get rigName(): string | null {
+    return localStorage.rigName;
+  }
+
+  static set rigName(val: string | null) {
+    localStorage.rigName = val;
   }
 
   static get appInfo(): AppInfo | null {
@@ -78,11 +86,11 @@ export class LocalStorage extends EventEmitter {
     localStorage.collectedReport = JSON.stringify(val);
   }
 
-  static get manifest(): Manifest | null {
+  static get manifest(): SuccessManifest | null {
     return safeParse(localStorage.manifest);
   }
 
-  static set manifest(val: Manifest | null) {
+  static set manifest(val: SuccessManifest | null) {
     localStorage.manifest = JSON.stringify(val);
   }
 

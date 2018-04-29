@@ -72,7 +72,8 @@ export class InternalObserver extends EventEmitter {
       hashesPerDay /
       service.difficulty *
       service.blockReward *
-      globalState.userShare;
+      globalState.userShare *
+      service.modifier;
 
     return CurrenciesService.toLocalCurrency(
       currency as AllowedCurrencies,
@@ -96,7 +97,8 @@ export class InternalObserver extends EventEmitter {
       hashesPerDay /
       service.difficulty *
       service.blockReward *
-      globalState.userShare;
+      globalState.userShare *
+      service.modifier;
 
     return CurrenciesService.toLocalCurrency(
       currency as AllowedCurrencies,
