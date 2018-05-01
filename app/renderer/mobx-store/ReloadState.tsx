@@ -6,6 +6,7 @@ export class ReloadState {
   @observable currentStatus: string = 'Refresh';
   @observable oldStatus?: string;
   @observable switching = false;
+  timeout?: number;
 
   constructor() {
     this.run = this.run.bind(this);
@@ -17,6 +18,7 @@ export class ReloadState {
   async run() {
     if (this.running) return;
 
+    clearTimeout(this.timeout);
     this.running = true;
     const block = await startReload({
       setStatus: this.setNewStatus,
@@ -26,8 +28,13 @@ export class ReloadState {
     if (block) {
       this.setNewStatus('Update');
       this.running = false;
+      this.setUpTimeout();
     }
+  }
 
+  @action
+  setUpTimeout() {
+    this.timeout = setTimeout(() => this.run(), 1000 * 60 * 3) as any;
   }
 
   @action

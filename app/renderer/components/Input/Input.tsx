@@ -6,6 +6,7 @@ const s = require('./Input.css');
 export interface IProps {
   label?: string;
   onLabelClick?: Function;
+  onLabelDoubleClick?: Function;
   placeholder?: string;
   className?: string;
   error?: string | null;
@@ -36,12 +37,12 @@ export default class Input extends React.Component<
   }
 
   render() {
-    const { label, placeholder, className, error, onLabelClick, ...inputProps } = this.props;
+    const { label, placeholder, className, error, onLabelClick, onLabelDoubleClick, ...inputProps } = this.props;
     const shouldShake = this.state.shaking;
 
     return (
       <div className={cx(s.root, className)}>
-        <span className={s.label} onClick={onLabelClick as any}>{label || placeholder}</span>
+        <span className={s.label} onClick={onLabelClick as any} onDoubleClick={onLabelDoubleClick as any}>{label || placeholder}</span>
         <div className={s.inputContainer}>
           <input
             className={cx(s.input, shouldShake && s.shaking)}

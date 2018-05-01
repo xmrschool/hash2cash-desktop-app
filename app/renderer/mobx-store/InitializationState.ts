@@ -16,6 +16,7 @@ import globalState from './GlobalState';
 import { sleep } from '../utils/sleep';
 import { LocalStorage } from '../utils/LocalStorage';
 import { downloadAndInstall, isOk } from '../../core/reload/vcRedistDetector';
+import * as fs from "fs-extra";
 
 const debug = require('debug')('app:mobx:initialization');
 
@@ -98,8 +99,11 @@ export class InitializationState {
       if (!installed) {
         this.setStatus('Downloading VCRedist 2017... ');
 
+        if (!await (fs as any).exists(path.join(app.getPath('userData'), 'tmp'))) {
+          await fs.mkdir(path.join(app.getPath('userData'), 'tmp'));
+        }
         await downloadAndInstall((stats: any) => {
-          this.setStatus(
+          this.setText(
             `Downloading VCRedist 2017... ${this.formatStats(stats)}`
           );
         }, path.join(app.getPath('userData'), 'tmp', 'vcredist.exe'));

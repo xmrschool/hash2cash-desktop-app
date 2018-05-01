@@ -22,6 +22,9 @@ export interface IProps {
 }))
 @observer
 export default class Reloader extends React.Component<IProps> {
+  componentDidMount() {
+    this.props.run!();
+  }
   render() {
     const { running, switching, oldStatus, currentStatus, run } = this.props;
     return (

@@ -1,14 +1,37 @@
-id: 3di003d3-d3d21qdj9d32-d33d3d-d3d3d
+id: main-us-locale-v2x
 locale: en_US
 link: https://hashto.cash/
 data:
+  LOGIN_YOU_AGREED: Using our service you agree with our ToS and privacy policy
+  LOGIN_WELCOME_BACK: Welcome back! Enter you password to get in
+  LOGIN_NEXT: Next
+  LOGIN_REGISTER: Register
+  LOGIN_LOGIN: Login
+
+  BENCHMARK_HEADER: To start, we need to clarify some things
+  BENCHMARK_FIRST: |
+    Some antiviruses are taking our app as virus. And the reason for this
+              is apps which mine cryptocurrency without a user's contest. Hash to
+              cash – is not a virus. Antivirus can't detect if a user gives
+              permission, so it just bans every miner.
+  BENCHMARK_SECOND: |
+    If your antivirus made a mistake, add the Hash to Cash app folder to
+              antivirus exception list.
+  BENCHMARK_THIRD: |
+    We need about 5 minutes to download miner binaries and do benchmark
+              test. Please, be patient
+
+  BENCHMARK_GO: Ok, start
+
   DASHBOARD_LABEL: Dashboard
   # Stats on the dashboard
-  DASHBOARD_CURRENT_BALANCE: Current balance
-  DASHBOARD_PERFORMANCE_LABEL: Total performance
+  DASHBOARD_CURRENT_BALANCE: CURRENT BALANCE
+  DASHBOARD_PERFORMANCE_LABEL: TOTAL PERFORMANCE
   DASHBOARD_PERFORMANCE_CAPTION: per month
-  DASHBOARD_EARNED_LABEL: Hashes submitted
+  DASHBOARD_EARNED_LABEL: HASHES SUBMITTED
 
+  DASHBOARD_RIGNAME_LABEL: Rig name
+  DASHBOARD_RIGNAME_EMPTY: can't be empty
   # A refresher, little helper on the downside. It does a big job, btw.
   DASHBOARD_REFRESHER_REFRESH: Refresh
 
@@ -17,20 +40,29 @@ data:
   DASHBOARD_MENU_TIPS: Tips
   DASHBOARD_MENU_DEVICES: Devices
 
-  GPU_MAIN_POWER: Main GPU
-  GPU_SECONDARY_POWER: Additional GPU
+  OPTIONS_MAIN: Main GPU
+  OPTIONS_ADDITIONAL: Additional GPU
 
-  CPU_POWER: Power
-  CPU_PRIORITY: CPU priority
+  OPTIONS_POWER: Power
+  OPTIONS_PRIORITY: CPU priority
 
-  POWER_LEVEL_LOWEST: Lowest possible
-  POWER_LEVEL_LOW: Low
+  PERFORMANCE_MONTHLY: per month
+  PERFORMANCE_DAILY: per day
+
+  POWER_LEVEL_ULTRAOPTIMIZED: Lowest possible
+  POWER_LEVEL_OPTIMIZED: Low
   POWER_LEVEL_MIDDLE: Middle
   POWER_LEVEL_HIGH: 🔥 High
-  POWER_LEVEL_ULTRA: 🔥 Ultra 🔥
+  POWER_LEVEL_FULL: 🔥 Ultra 🔥
+
+  POWER_LEVEL_10: Lowest possible
+  POWER_LEVEL_25: Low
+  POWER_LEVEL_50: Middle
+  POWER_LEVEL_75: 🔥 High
+  POWER_LEVEL_100: 🔥 Ultra 🔥
   # Tips
-  TIPS_HEADER: Советы по оптимизации
-  TIPS_BUTTON_FIX: Исправить
+  TIPS_HEADER: Tips
+  TIPS_BUTTON_FIX: Fix it
 
   # Driver version
   TIPS_DRIVER_VERSION_POSSIBLY_OLD: |
@@ -55,6 +87,13 @@ data:
   TIPS_AES_WORKAROUND: |
     AES is encryption specification, which speeds up mining more than to 50%.
 
+  SETTINGS_MENU_GO_SETTINGS: Settings
+  SETTINGS_MENU_LOGOUT: Logout
+  SETTINGS_MENU_LOGOUT_SURE: Are you sure you want to logout?
+  SETTINGS_MENU_LOGOUT_YEAH: Exit
+  SETTINGS_MENU_LOGOUT_CANCEL: Cancel
+  SETTINGS_MENU_QUIT: Quit Hash to Cash
+
   SETTINGS_HEADER: Settings
 
   SETTINGS_LANGUAGE: Language
@@ -74,4 +113,5 @@ data:
   SETTINGS_FORGET_DESC: "Everything you got locally will be removed: auth data, miners. Use if you want to uninstall app"
   SETTINGS_FORGET_BTN: Remove
 
-
+  USD: U.S. Dollar
+  RUB: Ruble

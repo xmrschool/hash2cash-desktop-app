@@ -1,4 +1,5 @@
 import { remote } from 'electron';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -58,7 +59,7 @@ export const StatsView = observer(() => {
       <div>
         <RignameEditor />
         <div className={s.counter}>
-          <h4 className={s.counterHead}>CURRENT BALANCE</h4>
+          <h4 className={s.counterHead}><FormattedMessage id="DASHBOARD_CURRENT_BALANCE" /></h4>
           <h4 className={s.counterValue}>
             <FallbackLoader condition={typeof User.balance !== 'undefined'}>
               <PrettyNumber unit="XMR" num={balanceInMonero} fixedLevel={5} />
@@ -73,15 +74,15 @@ export const StatsView = observer(() => {
         </div>
         <div className={s.row}>
           <div className={s.counter}>
-            <h4 className={s.counterHead}>TOTAL PERFORMANCE</h4>
+            <h4 className={s.counterHead}><FormattedMessage id="DASHBOARD_PERFORMANCE_LABEL" /></h4>
             <h4 className={s.counterValue}>
               {doneAmount.reactFormatted()}
-              <span className={s.period}> per month</span>
+              <span className={s.period}> <FormattedMessage id="DASHBOARD_PERFORMANCE_CAPTION" /></span>
             </h4>
           </div>
 
           <div className={s.counter}>
-            <h4 className={s.counterHead}>EARNED PER SESSION</h4>
+            <h4 className={s.counterHead}> <FormattedMessage id="DASHBOARD_EARNED_LABEL" /></h4>
             <h4 className={s.counterValue}>
               {totalHashes.toLocaleString()}{' '}
               <span className={s.currencySymbol}>H</span>
@@ -244,29 +245,29 @@ export class WorkerView extends React.Component<
     return (
       <div key={worker.name} className={cx(ws.worker, isOn && ws.highlighted)}>
         <PlayButton state={this.workerState()} onClick={this.clickHandler} />
-        <span className={ws.name}>
+        <div className={ws.name}>
           {currenciesService.getCurrencyName(miner.usesAccount)}
           <div className={ws.badge}>
             {miner.usesHardware![0].toUpperCase()}
             {speed ? <span>&nbsp;—&nbsp;{speed}</span> : null}
           </div>
-        </span>
+        </div>
         <div className={s.switcher}>
           <div className={cx(s.switcherIn, isOn && s.minerActive)}>
             <div className={s.picks}>
               {worker.customParameters &&
                 worker.customParameters.map(option => (
                   <div key={option.id} className={s.pick}>
-                    <label className={s.label}>{option.name}</label>
+                    <label className={s.label}><FormattedMessage id={`OPTIONS_${option.id}`.toUpperCase()} defaultMessage={option.name} /></label>
                     <select
                       className={s.select}
                       value={worker.parameters![option.id]}
                       onChange={this.onOptionChange(option.id)}
                     >
                       {option.values.map(value => (
-                        <option key={value.value} value={value.value}>
-                          {value.name}
-                        </option>
+                        <FormattedMessage key={value.value} id={`POWER_LEVEL_${value.value}`.toUpperCase()} defaultMessage={value.name} >
+                          {(message: any) => <option value={value.value}>{message}</option>}
+                        </FormattedMessage>
                       ))}
                     </select>
                   </div>
@@ -277,11 +278,11 @@ export class WorkerView extends React.Component<
                 <span className={ws.profits}>
                   <span className={ws.monthly}>
                     {observer.monthlyProfit().reactFormatted()}{' '}
-                    <span className={ws.caption}>per month</span>
+                    <span className={ws.caption}><FormattedMessage id="PERFORMANCE_MONTHLY" /></span>
                   </span>
                   <span className={ws.daily}>
                     {observer.dailyProfit().reactFormatted()}{' '}
-                    <span className={ws.caption}>per day</span>
+                    <span className={ws.caption}><FormattedMessage id="PERFORMANCE_DAILY" /></span>
                   </span>
                 </span>
               )}
@@ -351,6 +352,7 @@ export class WorkersView extends React.Component<{ workers: Worker[] }, any> {
   }
 }
 
+@(injectIntl as any)
 @(withRouter as any)
 @observer
 export class InnerDashboard extends React.Component<any> {
@@ -384,7 +386,7 @@ export class InnerDashboard extends React.Component<any> {
   }
 
   openMenu({ x, y }: any) {
-    buildMenu(this.props as RouteComponentProps<any>).popup({
+    buildMenu(this.props as RouteComponentProps<any>, this.props.intl).popup({
       window: remote.getCurrentWindow(),
     });
   }
@@ -433,7 +435,7 @@ export class InnerDashboard extends React.Component<any> {
     return (
       <div className={s.root}>
         <div className={s.menu}>
-          <h2>Dashboard</h2>
+          <h2><FormattedMessage id="DASHBOARD_LABEL" /></h2>
           <div>
             <span>
               <img src={settings} className={s.icon} onClick={this.openMenu} />
