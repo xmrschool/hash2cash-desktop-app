@@ -1,7 +1,7 @@
 {
   "name": "hashtocash",
   "productName": "Hash to Cash",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "Hash to cash allows you to mine cryptocurrencies and transform them directly to fiat. Future is here!",
   "main": "app/main/main.js",
   "scripts": {
