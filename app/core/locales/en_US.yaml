@@ -1,12 +1,16 @@
-id: main-us-locale-v2x
+id: main-us-locale-v3
 locale: en_US
 link: https://hashto.cash/
 data:
   LOGIN_YOU_AGREED: Using our service you agree with our ToS and privacy policy
   LOGIN_WELCOME_BACK: Welcome back! Enter you password to get in
+  LOGIN_EMAIL: your email
+  LOGIN_PASSWORD: password
+
   LOGIN_NEXT: Next
   LOGIN_REGISTER: Register
   LOGIN_LOGIN: Login
+  LOGIN_THROUGH_SITE: Sign in through site
 
   BENCHMARK_HEADER: To start, we need to clarify some things
   BENCHMARK_FIRST: |
@@ -37,6 +41,8 @@ data:
 
   # Menu on dashboard
   DASHBOARD_MENU_START: Start
+  DASHBOARD_MENU_STOP: Stop
+
   DASHBOARD_MENU_TIPS: Tips
   DASHBOARD_MENU_DEVICES: Devices
 
@@ -60,6 +66,15 @@ data:
   POWER_LEVEL_50: Middle
   POWER_LEVEL_75: 🔥 High
   POWER_LEVEL_100: 🔥 Ultra 🔥
+
+
+  POWER_LEVEL_0: Low
+  POWER_LEVEL_1: Above normal
+  POWER_LEVEL_2: Middle
+  POWER_LEVEL_3: Above middle
+  POWER_LEVEL_4: High
+  POWER_LEVEL_5: 🔥 Realtime (not recommend) 🔥
+
   # Tips
   TIPS_HEADER: Tips
   TIPS_BUTTON_FIX: Fix it

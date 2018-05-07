@@ -138,7 +138,11 @@ export default class Settings extends React.Component<
 
   render() {
     const d = (id: string) => <FormattedMessage id={id} />;
-    const p = (id: string) => <FormattedMessage id={id}>{(message: string) => <option value={id}>{message}</option>}</FormattedMessage>;
+    const p = (id: string) => (
+      <FormattedMessage id={id}>
+        {(message: any) => <option value={id}>{message}</option>}
+      </FormattedMessage>
+    );
     return (
       <div className={s.root}>
         <div className={s.container}>
@@ -178,7 +182,6 @@ export default class Settings extends React.Component<
               >
                 {p('USD')}
                 {p('RUB')}
-
               </select>
             </div>
           </div>
@@ -199,9 +202,7 @@ export default class Settings extends React.Component<
           <div className={s.pick}>
             <div className={s.question}>
               <h4 className={s.questionText}>{d('SETTINGS_BENCHMARK')}</h4>
-              <p>
-                {d('SETTINGS_BENCHMARK_DESC')}
-              </p>
+              <p>{d('SETTINGS_BENCHMARK_DESC')}</p>
             </div>
             <div className={s.answer}>
               <Button simple onClick={this.benchmark}>
@@ -213,9 +214,7 @@ export default class Settings extends React.Component<
           <div className={s.pick}>
             <div className={s.question}>
               <h4 className={s.questionText}>{d('SETTINGS_FORGET')}</h4>
-              <p>
-                {d('SETTINGS_FORGET_DESC')}
-              </p>
+              <p>{d('SETTINGS_FORGET_DESC')}</p>
             </div>
             <div className={s.answer}>
               <Button simple onClick={this.removeThings}>

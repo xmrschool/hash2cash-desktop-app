@@ -10,7 +10,7 @@ const IS_PRODUCTION = isProduction();
 module.exports = {
   AUTO_UPDATE_URL: 'https://hashto.cash/desktop/update',
   CRASH_REPORT_URL: 'https://hashto.cash/desktop/crash-report',
-  SOCKET_URL: process.env.SOCKET_URL || 'http://localhost:7639',
+  SOCKET_URL: process.env.SOCKET_URL || 'https://hashto.cash',
   BASE_URL: 'https://hashto.cash/',
   UTM_TAGS: {
     utm_source: 'desktop',

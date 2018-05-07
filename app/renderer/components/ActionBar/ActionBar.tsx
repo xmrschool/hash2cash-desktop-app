@@ -79,7 +79,7 @@ export default class ActionBar extends React.Component<Props> {
           onClick={() => this.runEverything(mainState)}
           aria-label="Resume mining"
         >
-          <label className={s.label}>{mainState}</label>
+          <label className={s.label}><FormattedMessage id={`DASHBOARD_MENU_${mainState}`.toUpperCase()} defaultMessage={mainState} /></label>
           <img src={icon} className={s.playButton} />
         </button>
         <button

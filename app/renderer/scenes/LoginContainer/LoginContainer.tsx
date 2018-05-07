@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { injectIntl, InjectedIntl } from 'react-intl';
 import { FormattedMessage } from 'react-intl';
 import * as cx from 'classnames';
 import { observer } from 'mobx-react';
@@ -22,6 +23,7 @@ export type State = {
   appeared: boolean;
 };
 
+@(injectIntl as any)
 @socketConnect
 @observer
 export default class LoginContainer extends React.Component<
@@ -46,7 +48,9 @@ export default class LoginContainer extends React.Component<
   }
 
   renderSecondView() {
+    const intl = (this.props as any).intl as InjectedIntl;
     const hasAccount = loginState.emailInfo.hasAccount;
+
 
     return (
       <div className={s.secondView}>
@@ -54,7 +58,7 @@ export default class LoginContainer extends React.Component<
           value={loginState.password}
           onChange={event => loginState.setPassword(event.target.value)}
           type="password"
-          label="password"
+          label={intl.formatMessage({ id: 'LOGIN_PASSWORD' })}
           autoFocus
           placeholder="your@mail.com"
           error={loginState.passwordError}
@@ -102,6 +106,7 @@ export default class LoginContainer extends React.Component<
 
   render() {
     const { allowedToContinue, hasAccount } = loginState.emailInfo;
+    const intl = (this.props as any).intl as InjectedIntl;
 
     return (
       <form onSubmit={event => this.submit(event)}>
@@ -113,7 +118,7 @@ export default class LoginContainer extends React.Component<
             <Input
               value={loginState.email}
               onChange={event => loginState.setEmail(event.target.value)}
-              label="your email"
+              label={intl.formatMessage({ id: 'LOGIN_EMAIL' })}
               autoFocus
               placeholder="your@mail.com"
               error={loginState.error}
@@ -132,7 +137,7 @@ export default class LoginContainer extends React.Component<
                 onClick={() => this.throughSite()}
                 type="submit"
               >
-                Войти через сайт
+                <FormattedMessage id="LOGIN_THROUGH_SITE" />
               </Button>
             </div>
           </div>

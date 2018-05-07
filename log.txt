@@ -1,4 +1,7 @@
-[2018-04-29 12:36:09] [01;32mREADY (CPU)[0m threads [01;36m3(3)[0m huge pages [01;31m0/3 0%[0m memory [01;36m6.0 MB
+[2018-05-07 18:36:57] no active pools, stop mining
+ms)
+:80 diff 911
+0m huge pages [01;31m0/3 0%[0m memory [01;36m6.0 MB
 
 
 e
