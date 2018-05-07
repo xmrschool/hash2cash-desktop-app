@@ -8,7 +8,7 @@ import * as path from 'path';
 import buildTray from './tray';
 import enableUpdates from './appUpdater';
 import trackError from '../core/raven';
-import { enable } from "../renderer/utils/startup";
+import { enable } from '../renderer/utils/startup';
 
 require('source-map-support').install();
 

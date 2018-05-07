@@ -2,8 +2,9 @@ function s(text) {
   return JSON.stringify(text);
 }
 
-function getReplacements() {
+function getReplacements(version) {
   return {
+    __RELEASE__: s(version),
     __DARWIN__: "process.platform === 'darwin'",
     __WIN32__: "process.platform === 'win32'",
     __LINUX__: "process.platform === 'linux'",

@@ -15,6 +15,7 @@ import workersCache from './workersCache';
 import socket from './socket';
 import { sleep } from '../../renderer/utils/sleep';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
+import '../../core/raven';
 
 const logger = require('debug')('app:miner:server');
 const koa = new Koa();

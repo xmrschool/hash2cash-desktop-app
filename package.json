@@ -112,6 +112,7 @@
   "private": true,
   "homepage": "https://hashto.cash/?utm_source=extension&utm_medium=pkg",
   "dependencies": {
+    "@sentry/electron": "^0.5.4",
     "animated": "^0.2.2",
     "auto-launch": "^5.0.5",
     "bunyan": "^1.8.12",

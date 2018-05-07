@@ -2,13 +2,23 @@
  * Base webpack config used across other specific configs
  */
 const webpack = require('webpack');
-const SentryCliPlugin = require('@sentry/webpack-plugin');
+const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+const SentryCli = require('@sentry/cli');
 const path = require('path');
 const getReplacements = require('./app/app-info').getReplacements;
 const { dependencies: externals } = require('./app/renderer/package.json');
 
 const isDebug = process.env.NODE_ENV !== 'production';
 
+function proposeVersion() {
+  const cli = new SentryCli('./sentry.properties');
+
+  const hash = require('crypto').randomBytes(30).toString('hex');
+
+  return `${require('./package').version}-${hash}`;
+}
+
+const version = proposeVersion();
 module.exports = {
   mode: isDebug ? 'development' : 'production',
   module: {
@@ -55,5 +65,14 @@ module.exports = {
     __dirname: false,
     __filename: false,
   },
-  plugins: [new webpack.DefinePlugin(getReplacements())],
+  plugins: [
+    new webpack.DefinePlugin(getReplacements(version)),
+    new SentryWebpackPlugin({
+      release: version,
+      include: './',
+      ignoreFile: '.sentrycliignore',
+      ignore: ['node_modules', 'webpack.config.js', 'release', 'resources', 'test', '.vscode', 'server.js', 'setup.js'],
+      configFile: './sentry.properties'
+    }),
+  ],
 };

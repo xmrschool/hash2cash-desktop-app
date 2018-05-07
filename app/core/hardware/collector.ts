@@ -68,7 +68,7 @@ export default async function collectHardware(): Promise<Architecture> {
           collectedInfo: gpu as any,
         });
       } catch (e) {
-        trackError(new Error('unsupported gpu'), { extra: { gpu } });
+        trackError(new Error('Unsupported gpu'), { gpu });
         report.devices.push({
           type: 'gpu',
           platform: gpu.vendor as any,

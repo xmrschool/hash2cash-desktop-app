@@ -1,16 +1,8 @@
 import { app as _app, remote } from 'electron';
-import { merge } from 'lodash';
 import { AUTH_TOKEN } from './storage/actions';
 import * as os from 'os';
-import { CaptureOptions } from 'raven';
+import * as Sentry from '@sentry/electron';
 import { LocalStorage } from '../renderer/utils/LocalStorage';
-
-let Raven: any;
-if (_app) {
-  Raven = require('raven');
-} else {
-  Raven = require('raven-js');
-}
 
 const app = _app || remote.app;
 export function clearLocalStorage() {
@@ -21,47 +13,45 @@ export function clearLocalStorage() {
   return storage;
 }
 
-const raven = Raven.config(
-  'https://3bcaab9b12b240638f55b4121bb61982@sentry.io/297915',
-  {
-    environment: process.env.NODE_ENV,
-    release: app.getVersion(),
-    tags: {
-      process: process.type || 'main',
-      electron: process.versions.electron,
-      chrome: process.versions.chrome,
-      platform: os.platform(),
-      platform_release: os.release(),
-      app_version: app.getVersion(),
-    },
-    extra: {
-      localStorage: clearLocalStorage(),
-    },
-  }
-).install();
+Sentry.init({
+  dsn: 'https://bedadacb4ea44fd6828a1003d009e5b6@sentry.io/1202578',
+  environment: process.env.NODE_ENV,
+  release: __RELEASE__,
+  captureUnhandledRejections: true,
+});
 
-export function getUser() {
+Sentry.setTagsContext({
+  process: process.type || 'main',
+  electron: process.versions.electron,
+  chrome: process.versions.chrome,
+  platform: os.platform(),
+  platform_release: os.release(),
+  app_version: app.getVersion(),
+});
+
+Sentry.setExtraContext({
+  localStorage: clearLocalStorage(),
+});
+
+export function getUser(): { id: string } | undefined {
   if (typeof localStorage !== 'undefined' && localStorage.userId) {
     return {
-      id: LocalStorage.userId,
+      id: LocalStorage.userId!,
     };
   }
 
   return undefined;
 }
 
-export default function trackError(e: Error, options?: CaptureOptions) {
-  if (!__DEV__)
-    raven.captureException(
-      e,
-      merge(
-        {
-          extra: {
-            localStorage: clearLocalStorage(),
-          },
-          user: getUser(),
-        },
-        options
-      )
-    );
+export default function trackError(e: Error, extra?: any) {
+  if (__DEV__) return;
+
+  const user = getUser();
+  if (user && user.id) Sentry.setUserContext(user);
+  Sentry.setExtraContext({
+    localStorage: clearLocalStorage(),
+    extra: JSON.stringify(extra || {}),
+  });
+
+  Sentry.captureException(e);
 }

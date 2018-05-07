@@ -4,5 +4,6 @@ interface Global {
 
 declare var __DARWIN__: boolean;
 declare var __WIN32__: boolean;
+declare var __RELEASE__: string;
 declare var __LINUX__: boolean;
 declare var __DEV__: boolean;
