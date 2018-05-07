@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { observer } from 'mobx-react';
 import { Worker } from '../../api/MinerApi';
 import minerApi from '../../api/MinerApi';
@@ -69,7 +70,7 @@ export default class ActionBar extends React.Component<Props> {
           className={s.play}
           aria-label="Tips"
         >
-          <label className={s.label}>Tips</label>
+          <label className={s.label}><FormattedMessage id="DASHBOARD_MENU_TIPS" /></label>
           <img src={tips} className={s.playButton} />
         </button>
         <button
@@ -86,7 +87,7 @@ export default class ActionBar extends React.Component<Props> {
           style={{ pointerEvents: 'none', opacity: 0.6 }}
           aria-label="Devices"
         >
-          <label className={s.label}>Devices</label>
+          <label className={s.label}><FormattedMessage id="DASHBOARD_MENU_DEVICES" /></label>
           <img src={cards} className={s.playButton} />
         </button>
       </div>

@@ -1,4 +1,5 @@
 import { ipcRenderer, remote } from 'electron';
+import { FormattedMessage } from 'react-intl';
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router';
@@ -136,11 +137,13 @@ export default class Settings extends React.Component<
   }
 
   render() {
+    const d = (id: string) => <FormattedMessage id={id} />;
+    const p = (id: string) => <FormattedMessage id={id}>{(message: string) => <option value={id}>{message}</option>}</FormattedMessage>;
     return (
       <div className={s.root}>
         <div className={s.container}>
           <div className={s.menu}>
-            <h2>Settings</h2>
+            <h2>{d('SETTINGS_HEADER')}</h2>
             <Close
               onClick={this.goBack}
               onMouseOver={() => (globalState.layerAnimating = true)}
@@ -149,8 +152,8 @@ export default class Settings extends React.Component<
           </div>
           <div className={s.pick}>
             <div className={s.question}>
-              <h4 className={s.questionText}>Language</h4>
-              <p>Everything will be displayed at specified language.</p>
+              <h4 className={s.questionText}>{d('SETTINGS_LANGUAGE')}</h4>
+              <p>{d('SETTINGS_LANGUAGE_DESC')}</p>
             </div>
             <div className={s.answer}>
               <select
@@ -165,24 +168,25 @@ export default class Settings extends React.Component<
 
           <div className={s.pick}>
             <div className={s.question}>
-              <h4 className={s.questionText}>Currency</h4>
-              <p>Hashrates will be converted to currency you specified</p>
+              <h4 className={s.questionText}>{d('SETTINGS_CURRENCY')}</h4>
+              <p>{d('SETTINGS_CURRENCY_DESC')}</p>
             </div>
             <div className={s.answer}>
               <select
                 onChange={this.updateParameter('currency')}
                 value={userOptions.store.currency}
               >
-                <option value="USD">U.S. Dollar</option>
-                <option value="RUB">Ruble</option>
+                {p('USD')}
+                {p('RUB')}
+
               </select>
             </div>
           </div>
 
           <div className={s.pick}>
             <div className={s.question}>
-              <h4 className={s.questionText}>Startup</h4>
-              <p>Run Hash to cash and mining along with OS startup</p>
+              <h4 className={s.questionText}>{d('SETTINGS_STARTUP')}</h4>
+              <p>{d('SETTINGS_STARTUP_DESC')}</p>
             </div>
             <div className={s.answer}>
               <Switch
@@ -194,30 +198,28 @@ export default class Settings extends React.Component<
 
           <div className={s.pick}>
             <div className={s.question}>
-              <h4 className={s.questionText}>Benchmark again</h4>
+              <h4 className={s.questionText}>{d('SETTINGS_BENCHMARK')}</h4>
               <p>
-                Use this option in case your hardware was changed or you want to
-                repeat test
+                {d('SETTINGS_BENCHMARK_DESC')}
               </p>
             </div>
             <div className={s.answer}>
               <Button simple onClick={this.benchmark}>
-                Benchmark
+                {d('SETTINGS_BENCHMARK_BTN')}
               </Button>
             </div>
           </div>
 
           <div className={s.pick}>
             <div className={s.question}>
-              <h4 className={s.questionText}>Remove all</h4>
+              <h4 className={s.questionText}>{d('SETTINGS_FORGET')}</h4>
               <p>
-                Everything (libraries, local storage (auth data, manifest)) will
-                be removed. Use if you want to fully uninstall the app.
+                {d('SETTINGS_FORGET_DESC')}
               </p>
             </div>
             <div className={s.answer}>
               <Button simple onClick={this.removeThings}>
-                Remove
+                {d('SETTINGS_FORGET_BTN')}
               </Button>
             </div>
           </div>

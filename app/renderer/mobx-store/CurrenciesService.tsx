@@ -201,7 +201,7 @@ export class CurrencyNumber {
 }
 
 export class CurrenciesService extends EventEmitter {
-  @observable ticker: Ticker = {};
+  @observable ticker: Ticker = defaultOptions as any;
 
   constructor() {
     super();
@@ -236,6 +236,7 @@ export class CurrenciesService extends EventEmitter {
   }
 
   possibleToExchange(from: AllowedCurrencies, to: AllowedCurrencies) {
+    if (!this.ticker || !this.ticker[from]) return false;
     return this.ticker[from].allowedExchangeDirections.includes(to);
   }
 

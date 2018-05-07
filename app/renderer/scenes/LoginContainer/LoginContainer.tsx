@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import * as cx from 'classnames';
 import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router';
@@ -60,11 +61,9 @@ export default class LoginContainer extends React.Component<
         />
         <p className={s.warn}>
           {hasAccount ? (
-            'Welcome back! Enter you password to get in'
+            <FormattedMessage id="LOGIN_WELCOME_BACK" />
           ) : (
-            <span>
-              Using our service you agree with our ToS and privacy policy
-            </span>
+            <FormattedMessage id="LOGIN_YOU_AGREED" />
           )}
         </p>
       </div>
@@ -123,10 +122,8 @@ export default class LoginContainer extends React.Component<
             <div className={s.loginContainer}>
               <Button disabled={loginState.submitting} type="submit">
                 {allowedToContinue
-                  ? hasAccount
-                    ? 'Login'
-                    : 'Register'
-                  : 'Next'}
+                  ? hasAccount ? <FormattedMessage id="LOGIN_LOGIN" /> : <FormattedMessage id="LOGIN_REGISTER" />
+                  : <FormattedMessage id="LOGIN_NEXT" />}
               </Button>
             </div>
             <div style={{ marginTop: 20 }}>

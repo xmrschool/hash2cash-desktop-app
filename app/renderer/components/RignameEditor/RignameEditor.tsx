@@ -1,13 +1,19 @@
 // @flow
 import * as React from 'react';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
+const translitCyrillic = require('cyrillic-to-translit-js');
 
 const s = require('./RignameEditor.css');
 import Input from '../Input/Input';
 import { LocalStorage } from '../../utils/LocalStorage';
+import generateName from "./nameGenerator";
 
-export type RignameEditorProps = {};
+const rigNameRegex = /^[a-zA-Z0-9\-_\.]+$/;
+export type RignameEditorProps = InjectedIntlProps;
+
+@(injectIntl as any)
 export default class RignameEditor extends React.Component<
-  RignameEditorProps,
+  {},
   { rigName: string | null; valid: boolean }
 > {
   constructor(props: RignameEditorProps) {
@@ -20,13 +26,19 @@ export default class RignameEditor extends React.Component<
     this.changeName = this.changeName.bind(this);
   }
 
+  generateScienceName() {
+    const outerName = generateName();
+    LocalStorage.rigName = outerName;
+    this.setState({ rigName: outerName });
+  }
+
   generateRigname() {
     let outerName = '';
 
     if (__DARWIN__) {
-      outerName += '  OS X';
+      outerName += ' OS X';
     } else if (__WIN32__) {
-      outerName += '  Win ' + require('os').arch();
+      outerName += ' Win ' + require('os').arch();
     }
 
     if (LocalStorage.collectedReport) {
@@ -45,9 +57,14 @@ export default class RignameEditor extends React.Component<
     // Count how long it could be
     outerName = require('os').hostname().slice(0, 30 - outerName.length) + outerName;
 
-    outerName = outerName.slice(0, 30);
+    outerName = outerName.replace(/ /g, '-').replace(/\+/g, '').slice(0, 30);
+    outerName = new translitCyrillic().transform(outerName);
+
+    if (!rigNameRegex.test(outerName)) {
+      outerName = generateName();
+    }
     LocalStorage.rigName = outerName;
-    this.setState({ rigName: outerName.replace(/ /g, '-').replace(/\+/g, '') });
+    this.setState({ rigName: outerName });
   }
 
   componentDidMount() {
@@ -65,21 +82,25 @@ export default class RignameEditor extends React.Component<
       return;
     }
 
-    const formatted = value.replace(/ /g, '-').replace(/\+/g, '');
+    const formatted = new translitCyrillic().transform(value.replace(/ /g, '-').replace(/\+/g, ''));
     LocalStorage.rigName = formatted;
     this.setState({ rigName: formatted, valid: true });
   }
   render() {
+    const intl = (this.props as InjectedIntlProps).intl;
+    const errMessage = intl.formatMessage({ id: 'DASHBOARD_RIGNAME_EMPTY' });
+
     return (
       <div className={s.root}>
         <Input
           className={s.input}
-          label="Rig name"
+          label={intl.formatMessage({ id: 'DASHBOARD_RIGNAME_LABEL' })}
           placeholder="my-pc"
           maxLength={29}
           onLabelClick={() => this.generateRigname()}
+          onLabelDoubleClick={() => this.generateScienceName()}
           value={this.state.rigName || ''}
-          error={!this.state.valid ? "can't be empty" : null}
+          error={!this.state.valid ? errMessage : null}
           onChange={this.changeName}
         />
       </div>

@@ -49,7 +49,8 @@ export default async function collectHardware(): Promise<Architecture> {
     // ToDo Shit happens, sometimes can't get openCL devices
     console.error(
       'Failed to get OpenCL devices\n',
-      '\nUsing default given as fallback'
+      '\nUsing default given as fallback',
+      e,
     );
 
     const { controllers } = await graphics();

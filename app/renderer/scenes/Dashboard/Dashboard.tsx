@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import * as cx from 'classnames';
 import { ANIMATION_TIME } from 'scenes/Home/Home';
 import { sleep } from 'utils/sleep';
@@ -40,25 +41,21 @@ export default class Dashboard extends React.Component<
   }
 
   renderInitialScene() {
+    const d = (str: string) => <FormattedMessage id={str} />
     return (
       <>
-        <h2>To start, we need to clarify some things</h2>
+        <h2>{d('BENCHMARK_HEADER')}</h2>
         <p className={s.hey}>
-          Some antiviruses are taking our app as virus. And the reason for this
-          is apps which mine cryptocurrency without a user's contest. Hash to
-          cash – is not a virus. Antivirus can't detect if a user gives
-          permission, so it just bans every miner.
+          {d('BENCHMARK_FIRST')}
         </p>
         <p>
-          If your antivirus made a mistake, add the Hash to Cash app folder to
-          antivirus exception list.
+          {d('BENCHMARK_SECOND')}
         </p>
         <p className={s.time}>
-          We need about 7 minutes to download miner binaries and do benchmark
-          test. Please, be patient
+          {d('BENCHMARK_THIRD')}
         </p>
         <div className={s.button}>
-          <Button onClick={() => this.navigate()}>Ok, start</Button>
+          <Button onClick={() => this.navigate()}>{d('BENCHMARK_GO')}</Button>
         </div>
       </>
     );

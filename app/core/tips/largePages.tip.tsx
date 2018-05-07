@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  getLargePageState,
   attemptToEnableLargePages,
 } from 'native-utils';
 import { FormattedMessage } from 'react-intl';
@@ -13,13 +12,13 @@ export default class LargePagesTip implements ITip {
   workaround = <FormattedMessage id="TIPS_LARGE_PAGES_WORKAROUND" />;
   @observable couldBeFixed = true;
   @observable isOk = true;
-  defined = true;
+  defined = false;
   @observable level = 3;
   @observable buttonDisabled = false;
   @observable fixError = '';
 
   async checkOut() {
-    const { available, enabled } = getLargePageState(
+    /*const { available, enabled } = getLargePageState(
       require('os').cpus().length
     );
 
@@ -32,7 +31,7 @@ export default class LargePagesTip implements ITip {
       this.workaround = (
         <FormattedMessage id="TIPS_LARGE_PAGES_REBOOT_MIGHT_HELP" />
       );
-    }
+    }*/
   }
 
   async fixIt() {
