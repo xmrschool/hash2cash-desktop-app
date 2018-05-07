@@ -93,6 +93,11 @@ export type AuthAttachResponse = {
   user?: IUser;
 };
 
+export type AuthThroughSite = {
+  token?: string;
+  error?: string;
+};
+
 // ToDo We actually have to use enum constans here
 export type _CudaDevice = {
   type: 'gpu';
@@ -164,9 +169,7 @@ export type SuccessManifest = {
   downloadable: Downloadable[];
 };
 
-export type Manifest =
-  | FailedManifest
-  | SuccessManifest;
+export type Manifest = FailedManifest | SuccessManifest;
 
 export function builder<T, D>(method: string) {
   return function query(data: T): Promise<D> {
@@ -187,6 +190,9 @@ export default {
     emailInfo: builder<string, EmailInfoResponse>('auth.emailInfo'),
     attempt: builder<AuthAttempt, AuthAttemptResponse>('auth.attempt'),
     attach: builder<string, AuthAttachResponse>('auth.attach'),
+    loginThroughWebsite: builder<undefined, AuthThroughSite>(
+      'auth.loginThroughWebsite'
+    ),
   },
   mining: {
     manifest: builder<Architecture, Manifest>('mining.manifest'),

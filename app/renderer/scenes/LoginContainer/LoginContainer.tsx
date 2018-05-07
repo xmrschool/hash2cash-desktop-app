@@ -10,6 +10,10 @@ import loginState from 'mobx-store/LoginState';
 import userState from 'mobx-store/User';
 import { ANIMATION_TIME } from '../Home/Home';
 import { sleep } from '../../utils/sleep';
+import Api from '../../api/Api';
+import socket from '../../socket';
+import { AUTH_TOKEN } from '../../../core/storage/actions';
+import User from '../../mobx-store/User';
 
 const s = require('./Login.css');
 
@@ -77,6 +81,26 @@ export default class LoginContainer extends React.Component<
     }
   }
 
+  async throughSite() {
+    const promise = Api.auth.loginThroughWebsite(undefined);
+    socket.once('auth.redirectUri', (url: string) => {
+      require('electron').shell.openExternal(url);
+    });
+
+    const result = await promise;
+
+    if (result.error) {
+      loginState.dispatchError(result.error);
+    } else {
+      localStorage[AUTH_TOKEN] = result.token;
+      User.setToken(result.token!);
+      userState.jwtToken = result.token;
+      await userState.attemptToLogin();
+      await this.disappear();
+      this.props.history.push('/dashboard');
+    }
+  }
+
   render() {
     const { allowedToContinue, hasAccount } = loginState.emailInfo;
 
@@ -99,8 +123,19 @@ export default class LoginContainer extends React.Component<
             <div className={s.loginContainer}>
               <Button disabled={loginState.submitting} type="submit">
                 {allowedToContinue
-                  ? hasAccount ? 'Login' : 'Register'
+                  ? hasAccount
+                    ? 'Login'
+                    : 'Register'
                   : 'Next'}
+              </Button>
+            </div>
+            <div style={{ marginTop: 20 }}>
+              <Button
+                disabled={loginState.submitting}
+                onClick={() => this.throughSite()}
+                type="submit"
+              >
+                Войти через сайт
               </Button>
             </div>
           </div>
