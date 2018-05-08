@@ -1,4 +1,4 @@
-id: main-russian-locale-v3
+id: main-russian-locale-v4
 locale: ru_RU
 link: https://hashto.cash/
 data:
@@ -127,3 +127,12 @@ data:
 
   USD: Американский доллар
   RUB: Российский рубль
+
+  DRIVERS_ISSUE_HEADER: Что-то пошло не так с видеокартой
+  DRIVER_ISSUE_ABOUT: |
+    Похоже, что мы не можем определить, какие OpenCL (AMD) устройства вы используете. Это может быть из-за устаревшего драйвера видеокарты. Вы можете переключиться на другой метод (который не так точен как основной), но он работает везде.
+  DRIVER_ISSUE_APPLY_CHANGES: Переключиться на другой метод
+  DRIVER_ISSUE_DONT_APPLY: Попробовать снова (так же)
+
+  DISABLE_OPENCL: Отключить определение устройств OpenCL (AMD)
+  DISABLE_OPENCL_DESC: Не рекомендуется. Используйте, если у вас старые драйвера и программа падает

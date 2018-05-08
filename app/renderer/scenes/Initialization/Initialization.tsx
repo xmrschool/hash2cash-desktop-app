@@ -25,6 +25,7 @@ import RuntimeErrorNotifier from '../../components/RuntimeErrorNotifier/RuntimeE
 import { CpuInfo } from 'cpuid-detector';
 import isCpuIdReport from '../../utils/isCpuIdReport';
 import formatCpuName from '../../utils/formatCpuName';
+import trackError from "../../../core/raven";
 
 const s = require('./Initialization.scss');
 const warning = require('./warning.svg');
@@ -73,6 +74,8 @@ export default class Initialization extends React.Component<
 
   async action() {
     try {
+      await initializationState.checkIfVcredistInstalled();
+
       const hardware = await collectHardware();
 
       initializationState.setHardware(hardware);
@@ -80,9 +83,6 @@ export default class Initialization extends React.Component<
 
       initializationState.setStatus('Checking if required libraries are installed...');
       debug('1/7, hardware collected: ', hardware);
-
-      await initializationState.checkIfVcredistInstalled();
-
 
       initializationState.setStep(2 / 7);
       initializationState.setStatus('Fetching download manifest...');
@@ -104,6 +104,7 @@ export default class Initialization extends React.Component<
       initializationState.everythingDone = true;
     } catch (e) {
       console.error('Main action failed: ', e);
+      trackError(e, { message: initializationState.status });
       initializationState.setUnexpectedError(e);
     }
   }

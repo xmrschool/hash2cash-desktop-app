@@ -23,6 +23,7 @@ export const ANIMATION_TIME = 200;
 export type State = {
   animating: boolean;
   openingAtStartup: boolean;
+  openclDisabled: boolean;
 };
 
 @observer
@@ -33,6 +34,7 @@ export default class Settings extends React.Component<
   state = {
     animating: false,
     openingAtStartup: false,
+    openclDisabled: localStorage.skipOpenCl
   };
 
   constructor(props: any) {
@@ -43,6 +45,7 @@ export default class Settings extends React.Component<
     this.updateStartupSettings = this.updateStartupSettings.bind(this);
     this.benchmark = this.benchmark.bind(this);
     this.removeThings = this.removeThings.bind(this);
+    this.toggleOpenCl = this.toggleOpenCl.bind(this);
   }
 
   goBack() {
@@ -72,6 +75,17 @@ export default class Settings extends React.Component<
       }
     };
   }
+
+  toggleOpenCl() {
+    if (localStorage.skipOpenCl) {
+      localStorage.removeItem('skipOpenCl');
+      this.setState({ openclDisabled: false });
+    } else {
+      localStorage.skipOpenCl = 'true';
+      this.setState({ openclDisabled: true });
+    }
+  }
+
   async onEntered() {}
 
   async removeThings() {
@@ -195,6 +209,19 @@ export default class Settings extends React.Component<
               <Switch
                 checked={this.state.openingAtStartup}
                 onChange={this.updateStartupSettings}
+              />
+            </div>
+          </div>
+
+          <div className={s.pick}>
+            <div className={s.question}>
+              <h4 className={s.questionText}>{d('DISABLE_OPENCL')}</h4>
+              <p>{d('DISABLE_OPENCL_DESC')}</p>
+            </div>
+            <div className={s.answer}>
+              <Switch
+                checked={this.state.openclDisabled}
+                onChange={this.toggleOpenCl}
               />
             </div>
           </div>

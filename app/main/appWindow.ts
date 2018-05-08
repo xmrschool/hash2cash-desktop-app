@@ -76,7 +76,7 @@ export class AppWindow {
     this.window.setMenu(null);
   }
 
-  public load() {
+  public load(suffix: string = '') {
     let startLoad = 0;
     // We only listen for the first of the loading events to avoid a bug in
     // Electron/Chromium where they can sometimes fire more than once. See
@@ -104,6 +104,7 @@ export class AppWindow {
     this.window.webContents.on('did-finish-load', () => {
       console.log('did-finish-load');
       this.window.webContents.setVisualZoomLevelLimits(1, 1);
+      this.bindCrash();
       this.maybeEmitDidLoad();
     });
 
@@ -128,7 +129,7 @@ export class AppWindow {
 
     RENDERER_PATH = `file://${path.join(__dirname, '../renderer/app.html')}`;
     this.window.loadURL(
-      `file://${path.join(__dirname, '../renderer/app.html')}`
+      `file://${path.join(__dirname, '../renderer/app.html' + suffix)}`
     );
   }
 
@@ -232,6 +233,14 @@ export class AppWindow {
       () => this.window.webContents.send('miner-server-port', port),
       1000
     ); // And after sec
+  }
+
+  public bindCrash() {
+    this.window.webContents.once('crashed', evt => {
+      console.log('Renderer has crashed: ', evt);
+
+      this.load('#/crashed');
+    })
   }
 
   /** Send the app launch timing stats to the renderer. */

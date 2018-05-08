@@ -254,9 +254,10 @@ ${outer.join(',\n')}
 
     this.willQuit = false;
 
+    const uac = __WIN32__ ? ['--noUAC'] : [];
     this.daemon = spawn(
       path.join(this.path, this.executableName),
-      ['-i', (await this.getDaemonPort()).toString()],
+      ['-i', (await this.getDaemonPort()).toString(), ...uac],
       {
         cwd: this.path,
       }

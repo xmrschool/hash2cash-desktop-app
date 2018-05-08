@@ -67,12 +67,12 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin(getReplacements(version)),
-    new SentryWebpackPlugin({
+    ...(isDebug ? [] : [new SentryWebpackPlugin({
       release: version,
       include: './',
       ignoreFile: '.sentrycliignore',
-      ignore: ['node_modules', 'webpack.config.js', 'release', 'resources', 'test', '.vscode', 'server.js', 'setup.js'],
+      ignore: ['node_modules', 'webpack.config.js', 'release', 'resources', 'test', '.vscode', 'server.js', 'setup.js', 'node_modules1'],
       configFile: './sentry.properties'
-    }),
+    })])
   ],
 };

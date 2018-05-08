@@ -1,0 +1,36 @@
+.root {
+  height: 100%;
+  transition: var(--animation-delay) opacity var(--animation-type),
+  var(--animation-delay) transform var(--animation-type);
+  opacity: 0;
+  transform: translateY(var(--navigating-transition));
+
+  display: flex;
+  padding: 60px 30px 40px;
+  flex-direction: column;
+}
+
+h2 {
+  font-size: 160%;
+}
+
+.appeared {
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+.hey {
+  margin-top: 40px;
+}
+
+.time {
+  color: #fff;
+  letter-spacing: 1.5px;
+  margin-top: 40px;
+}
+
+.button {
+  text-align: center;
+  flex-grow: 1;
+  margin-top: 70px;
+}

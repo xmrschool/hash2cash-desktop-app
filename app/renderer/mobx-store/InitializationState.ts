@@ -95,6 +95,7 @@ export class InitializationState {
     if (__WIN32__ === false) return; // VCRedist only on Win
 
     try {
+      this.setStatus('Checking if VCRedist installed');
       const installed = await isOk();
       if (!installed) {
         this.setStatus('Downloading VCRedist 2017... ');

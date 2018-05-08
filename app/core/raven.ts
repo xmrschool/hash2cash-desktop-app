@@ -17,7 +17,6 @@ Sentry.init({
   dsn: 'https://bedadacb4ea44fd6828a1003d009e5b6@sentry.io/1202578',
   environment: process.env.NODE_ENV,
   release: __RELEASE__,
-  captureUnhandledRejections: true,
 });
 
 Sentry.setTagsContext({

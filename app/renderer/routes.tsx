@@ -55,6 +55,13 @@ const Routes = () => {
       />
       <Route
         exact
+        path="/crashed"
+        component={asyncComponent(() =>
+          import(/* webpackChunkName: "crashed" */ 'scenes/YouCrashed')
+        )}
+      />
+      <Route
+        exact
         path="/init"
         component={asyncComponent(() =>
           import(/* webpackChunkName: "init" */ 'scenes/Initialization')

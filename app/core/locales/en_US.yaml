@@ -1,4 +1,4 @@
-id: main-us-locale-v3
+id: main-us-locale-v4
 locale: en_US
 link: https://hashto.cash/
 data:
@@ -130,3 +130,12 @@ data:
 
   USD: U.S. Dollar
   RUB: Ruble
+
+  DRIVERS_ISSUE_HEADER: Something went wrong with GPU
+  DRIVER_ISSUE_ABOUT: |
+    It seems like we can't detect which OpenCL (AMD) devices you're using. A process may fall due to old GPU driver. You can switch to another detection method (which is not so precise as original), but it should work everywhere.
+  DRIVER_ISSUE_APPLY_CHANGES: Switch to fallback
+  DRIVER_ISSUE_DONT_APPLY: Retry again
+
+  DISABLE_OPENCL: Disable OpenCL Device Detection
+  DISABLE_OPENCL_DESC: Not recommend. But use if Hash to Cash getting crashed.

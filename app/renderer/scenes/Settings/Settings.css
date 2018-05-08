@@ -3,6 +3,11 @@
   transition: var(--animation-delay) all var(--animation-type);
 }
 
+.container {
+  height: calc(100vh - 80px);
+  overflow-y: scroll;
+}
+
 .root select {
   width: 200px;
   background: transparent;
