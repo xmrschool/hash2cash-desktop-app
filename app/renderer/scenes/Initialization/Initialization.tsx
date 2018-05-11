@@ -26,6 +26,7 @@ import { CpuInfo } from 'cpuid-detector';
 import isCpuIdReport from '../../utils/isCpuIdReport';
 import formatCpuName from '../../utils/formatCpuName';
 import trackError from "../../../core/raven";
+import minerApi from "../../api/MinerApi";
 
 const s = require('./Initialization.scss');
 const warning = require('./warning.svg');
@@ -74,6 +75,7 @@ export default class Initialization extends React.Component<
 
   async action() {
     try {
+      await minerApi.stopAll();
       await initializationState.checkIfVcredistInstalled();
 
       const hardware = await collectHardware();

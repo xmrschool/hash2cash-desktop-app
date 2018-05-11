@@ -110,6 +110,7 @@ export class InitializationState {
         }, path.join(app.getPath('userData'), 'tmp', 'vcredist.exe'));
       }
     } catch (e) {
+      console.error('Failed to install VCRedist: ', e);
       this.setStatus(
         'Something went wrong due installing VCRedist. You can install it later'
       );

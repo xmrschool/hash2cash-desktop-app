@@ -52,7 +52,7 @@ export function downloadAndInstall(speedReceiver: Function, outerPath: string) {
       speedReceiver(stats);
     });
     downloader.on('end', async () => {
-      // Execute through cmd (so, it will wait
+      // Execute through cmd (so, it will wait)
       const descriptor = child_process.spawn('cmd', [
         '/S',
         '/C',
