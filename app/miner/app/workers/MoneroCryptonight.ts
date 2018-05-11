@@ -5,6 +5,7 @@ import { BaseWorker, Parameter, ParameterMap, Pick } from './BaseWorker';
 import { getLogin, RuntimeError } from '../utils';
 import { getPort } from '../../../core/utils';
 import { LocalStorage } from '../../../renderer/utils/LocalStorage';
+import { addRunningPid } from "../RunningPids";
 
 export type Parameteres = 'power' | 'priority';
 
@@ -25,6 +26,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   running: boolean = false;
   willQuit: boolean = true;
   daemonPort?: number;
+  pid?: number;
 
   get requiredModules() {
     return MoneroCryptonight.requiredModules;
@@ -221,6 +223,9 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
         args.join(' ')
       );
     this.daemon = spawn(fullyPath, args);
+    this.pid = this.daemon.pid;
+
+    addRunningPid(this.pid);
 
     this.daemon.stdout.on('data', data => {
       if (debug.enabled)

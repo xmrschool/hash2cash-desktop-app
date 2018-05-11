@@ -16,6 +16,7 @@ import socket from './socket';
 import { sleep } from '../../renderer/utils/sleep';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
 import '../../core/raven';
+import { clearPids, getRunningPids } from "./RunningPids";
 
 const logger = require('debug')('app:miner:server');
 const koa = new Koa();
@@ -220,7 +221,28 @@ const listen = (port: number) => {
     listen(port + 1);
   });
 };
-updateWorkersInCache().then(() =>
+
+async function killUnkilledProccesses() {
+  if (localStorage.runningPids) {
+    try {
+      const pids = getRunningPids();
+
+      pids.forEach((pid: number) => {
+        try {
+          process.kill(pid, 'SIGKILL');
+        } catch (e) {
+          console.warn('Failed to terminate one of still runned pids: ', pid, e);
+        }
+      })
+    } catch (e) {
+
+    }
+
+    clearPids();
+  }
+}
+
+killUnkilledProccesses().then(() => updateWorkersInCache()).then(() =>
   getPort(8024).then(port => {
     listen(port);
   })

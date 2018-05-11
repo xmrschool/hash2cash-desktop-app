@@ -7,6 +7,7 @@ import { getPort } from '../../../core/utils';
 import { _CudaDevice, Architecture } from '../../../renderer/api/Api';
 import { sleep } from '../../../renderer/utils/sleep';
 import { LocalStorage } from '../../../renderer/utils/LocalStorage';
+import { addRunningPid } from "../RunningPids";
 
 export type Parameteres = 'main' | 'additional';
 
@@ -26,6 +27,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
   daemon?: ChildProcess;
   running: boolean = false;
   daemonPort?: number;
+  pid?: number;
 
   get requiredModules() {
     return GpuCryptonight.requiredModules;
@@ -262,6 +264,9 @@ ${outer.join(',\n')}
         cwd: this.path,
       }
     );
+    this.pid = this.daemon.pid;
+
+    addRunningPid(this.pid);
 
     this.emit({ running: true });
 

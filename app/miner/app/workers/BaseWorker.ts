@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import socket from '../socket';
 import { LocalStorage } from '../../../renderer/utils/LocalStorage';
+import { shiftRunningPid } from "../RunningPids";
 
 const config = require('../../../config.js');
 
@@ -66,6 +67,8 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
   abstract workerName: string;
   // To prevent handling error events
   abstract willQuit: boolean;
+  // A process number, which we use to kill proccess in case they unterminated
+  abstract pid?: number;
 
   abstract getCustomParameters(): Parameter<P>[];
   abstract setCustomParameter(id: P, value: any): Promise<void>;
@@ -81,6 +84,9 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
 
   // In case miner has been stopped unexpectedly
   handleTermination(data: any, isClose: boolean = false) {
+    if (this.pid) {
+      shiftRunningPid(this.pid);
+    }
     if (this.willQuit) return;
 
     const errorMessage = `Worker ${
