@@ -56,8 +56,12 @@
   color: #A8A8A8;
 }
 
+.counter {
+  flex: 2;
+}
 .counter + .counter {
   margin-left: 40px;
+  flex: 3;
 }
 .row {
   margin-top: 25px;

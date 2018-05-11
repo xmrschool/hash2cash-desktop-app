@@ -42,5 +42,6 @@ dist
 main.js
 release
 main.js.map
+log.txt
 
 .idea
