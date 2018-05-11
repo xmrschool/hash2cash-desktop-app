@@ -12,6 +12,7 @@ export interface IProps {
   currentStatus?: string;
   switching?: boolean;
   run?: Function;
+  refreshTrigger: () => void;
 }
 @inject((state: MobxState) => ({
   running: state.reloadState.running,
@@ -23,7 +24,7 @@ export interface IProps {
 @observer
 export default class Reloader extends React.Component<IProps> {
   componentDidMount() {
-    this.props.run!();
+    this.props.run!({ refreshTrigger: this.props.refreshTrigger });
   }
   render() {
     const { running, switching, oldStatus, currentStatus, run } = this.props;

@@ -90,6 +90,9 @@ export default async function updateMiners(
   if (uptoDate) {
     ctx.setStatus('Everything is up-to-date!');
     await sleep(1000);
+  } else {
+    await minerApi.getWorkers(true);
+    ctx.refreshTrigger();
   }
   return {};
 }

@@ -430,6 +430,10 @@ export class InnerDashboard extends React.Component<any> {
     return 'start';
   }
 
+  refreshTrigger() {
+    this.forceUpdate();
+  }
+
   render() {
     const workers = minerApi.findMostProfitableWorkers();
     return (
@@ -450,7 +454,7 @@ export class InnerDashboard extends React.Component<any> {
         {workers.cpu && <WorkersView workers={workers.cpu} />}
 
         <div style={{ flexGrow: 1 }} />
-        <Reloader />
+        <Reloader refreshTrigger={() => this.refreshTrigger()} />
         <RuntimeErrorNotifier />
       </div>
     );

@@ -15,7 +15,7 @@ export class ReloadState {
   }
 
   @action
-  async run() {
+  async run(context: any) {
     if (this.running) return;
 
     clearTimeout(this.timeout);
@@ -24,17 +24,18 @@ export class ReloadState {
       setStatus: this.setNewStatus,
       setStatusWithoutAnimation: this.setNewStatusWithoutAnimation,
       state: {},
+      ...context,
     });
     if (block) {
       this.setNewStatus('Update');
       this.running = false;
-      this.setUpTimeout();
+      this.setUpTimeout(context);
     }
   }
 
   @action
-  setUpTimeout() {
-    this.timeout = setTimeout(() => this.run(), 1000 * 60 * 3) as any;
+  setUpTimeout(context: any) {
+    this.timeout = setTimeout(() => this.run(context), 1000 * 60 * 3) as any;
   }
 
   @action

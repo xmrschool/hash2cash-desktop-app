@@ -6,6 +6,7 @@ export type Context = {
   setStatus: Function;
   setStatusWithoutAnimation: Function;
   state: any;
+  refreshTrigger: () => void;
 };
 
 export type ExpectedReturn = {
