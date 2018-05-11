@@ -129,7 +129,7 @@ export class AppWindow {
 
     RENDERER_PATH = `file://${path.join(__dirname, '../renderer/app.html')}`;
     this.window.loadURL(
-      `file://${path.join(__dirname, '../renderer/app.html' + suffix)}`
+      `file://${path.join(__dirname, '../renderer/app.html') + suffix}`
     );
   }
 

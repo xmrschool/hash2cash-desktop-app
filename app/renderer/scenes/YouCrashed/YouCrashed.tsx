@@ -15,6 +15,10 @@ export default class YouCrashed extends React.Component<
     appeared: false,
   };
 
+  componentDidMount() {
+    setTimeout(() => this.setState({ appeared: true }), 10);
+  }
+
   componentWillUnmount() {
     this.disappear();
   }
@@ -43,6 +47,7 @@ export default class YouCrashed extends React.Component<
         </p>
         <div className={s.button}>
           <Button onClick={() => this.navigate(true)}>{d('DRIVER_ISSUE_APPLY_CHANGES')}</Button>
+          <div style={{ marginTop: 20 }} />
           <Button onClick={() => this.navigate(false)}>{d('DRIVER_ISSUE_DONT_APPLY')}</Button>
         </div>
       </>

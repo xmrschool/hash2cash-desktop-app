@@ -1,3 +1,4 @@
+import { remote } from 'electron';
 import { Context, ExpectedReturn } from './reloader';
 import { autoUpdater } from 'electron-updater';
 
@@ -17,7 +18,10 @@ export default async function checkAppUpdates(
   if (__DEV__) return { skipped: true };
   ctx.setStatus('Checking for app updates...');
 
+  (autoUpdater as any).app = remote.app;
   const update = await autoUpdater.checkForUpdates();
+
+  console.log('What\'s up?', update);
 
   // Then update available
   // ToDo is it better to use downloadPromise?

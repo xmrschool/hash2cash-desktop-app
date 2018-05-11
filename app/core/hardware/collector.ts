@@ -71,6 +71,31 @@ export default async function collectHardware(): Promise<Architecture> {
     cpuArch: (detectedArch === 'ia32' ? 'x32' : arch()) as 'x32' | 'x64',
   };
 
+  if (cpuInfo) {
+    report.devices.push({
+      type: 'cpu',
+      // Doesn't actually cared about vendor
+      platform: cpuInfo.vendorName as 'amd' | 'intel',
+      model: cpuInfo.brand,
+      driverVersion: null,
+      collectedInfo: cpuInfo,
+    });
+  } else if (collectedCpu) {
+    const cpuVendor = checkVendor(
+      collectedCpu.vendor,
+      'cpu',
+      collectedCpu.model
+    ) as any;
+
+    report.devices.push({
+      type: 'cpu',
+      platform: cpuVendor,
+      model: collectedCpu.brand,
+      driverVersion: null,
+      collectedInfo: collectedCpu,
+    });
+  }
+
   /** An openCL and cuda devices.
    * ToDo Works almost fine, but fails somewhere. So, we should provide ability to disable this.
    * I dunno how to fix it, maybe, include OpenCL.dll somehow?
@@ -181,66 +206,6 @@ export default async function collectHardware(): Promise<Architecture> {
 
     trackError(error);
     throw error;
-  }
-
-  console.log('Collected cuda devices: ', cuda, '\nOpenCL: ', openCl);
-
-  if (openCl)
-    openCl.devices
-      .filter(
-        d =>
-          !d.deviceVersion.includes('CUDA') &&
-          d.vendor.toLowerCase() !== 'nvidia'
-      )
-      .forEach(device => {
-        report.devices.push({
-          type: 'gpu',
-          platform: 'opencl',
-          deviceID: device.index ? `opencl-${device.index}` : '',
-          model: device.name,
-          collectedInfo: device,
-        });
-      });
-
-  if (cudaFailReason && openCl) {
-    // If cuda has been failed, we emit messages about it
-    openCl.devices
-      .filter(d => d.deviceVersion.includes('CUDA'))
-      .forEach(device => {
-        report.devices.push({
-          type: 'gpu',
-          platform: 'opencl',
-          deviceID: device.index ? `opencl-${device.index}` : '',
-          model: device.name,
-          collectedInfo: device,
-          unavailableReason: cudaFailReason,
-        });
-      });
-  }
-
-  if (cpuInfo) {
-    report.devices.push({
-      type: 'cpu',
-      // Doesn't actually cared about vendor
-      platform: cpuInfo.vendorName as 'amd' | 'intel',
-      model: cpuInfo.brand,
-      driverVersion: null,
-      collectedInfo: cpuInfo,
-    });
-  } else if (collectedCpu) {
-    const cpuVendor = checkVendor(
-      collectedCpu.vendor,
-      'cpu',
-      collectedCpu.model
-    ) as any;
-
-    report.devices.push({
-      type: 'cpu',
-      platform: cpuVendor,
-      model: collectedCpu.brand,
-      driverVersion: null,
-      collectedInfo: collectedCpu,
-    });
   }
 
   LocalStorage.collectedReport = report;
