@@ -1,16 +1,37 @@
 import * as path from 'path';
+import { defineMessages } from "react-intl";
 import { Context, ExpectedReturn } from './reloader';
 import { default as Api, Downloadable } from '../../renderer/api/Api';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
 import minerApi from '../../renderer/api/MinerApi';
 import FileDownloaderAlone from '../../renderer/utils/FileDownloaderAlone';
 import { sleep } from '../../renderer/utils/sleep';
+import { intl } from "../../renderer/intl";
 const config = require('../../config.js');
+
+const messages = defineMessages({
+  collecting: {
+    id: 'core.reload.minerUpdater.checking',
+    defaultMessage: 'Checking for available miner updates...',
+  },
+  newVersion: {
+    id: 'core.reload.minerUpdater.newVersion',
+    defaultMessage: 'New version of {name} available {oldVersion} → {newVersion}',
+  },
+  failed: {
+    id: 'core.reload.minerUpdater.failed',
+    defaultMessage: 'Failed to download miner {name}, rolling back',
+  },
+  upToDate: {
+    id: 'core.reload.minerUpdater.uptodate',
+    defaultMessage: 'Everything is up-to-date!'
+  }
+});
 
 export default async function updateMiners(
   ctx: Context
 ): Promise<ExpectedReturn> {
-  ctx.setStatus('Checking if miners need to be updated...');
+  ctx.setStatus(intl.formatMessage(messages.collecting));
 
   const manifest = await Api.mining.manifest(ctx.state.collectedReport);
   const oldManifest = LocalStorage.manifest;
@@ -28,11 +49,13 @@ export default async function updateMiners(
 
     if (!local || local.md5 !== downloadable.md5) {
       uptoDate = false;
-      ctx.setStatus(
-        `New version of miner ${downloadable.name} (${
-          local ? local.version : ''
-        } → ${downloadable.version})`
-      );
+      const message = intl.formatMessage(messages.newVersion, {
+        name: downloadable.name,
+        oldVersion: local ? local.version : 0,
+        newVersion: downloadable.version,
+      });
+
+      ctx.setStatus(message);
       // We stop workers which using that miner, because on Windows we can't replace file otherwise
       const runningWorkers = minerApi.workers.filter(
         d => d.data.requiredModules!.includes(downloadable.tag) && d.running
@@ -47,9 +70,7 @@ export default async function updateMiners(
         const { downloaded, totalSize } = stats;
 
         ctx.setStatusWithoutAnimation(
-          `New version of miner ${downloadable.name} (${
-            local ? local.version : ''
-          } → ${downloadable.version}) @ ${Math.round(
+          `${message} @ ${Math.round(
             downloaded / totalSize * 100
           )}%`
         );
@@ -58,9 +79,9 @@ export default async function updateMiners(
       try {
         await downloader.fetch();
       } catch (e) {
-        ctx.setStatusWithoutAnimation(
-          `Failed to download miner ${downloadable.name}, rolling back`
-        );
+        const message = intl.formatMessage(messages.failed, { name: downloadable.name });
+
+        ctx.setStatusWithoutAnimation(message);
         failed.push(downloadable.tag);
 
         await sleep(500);
@@ -88,7 +109,7 @@ export default async function updateMiners(
   );
 
   if (uptoDate) {
-    ctx.setStatus('Everything is up-to-date!');
+    ctx.setStatus(intl.formatMessage(messages.upToDate));
     await sleep(1000);
   } else {
     await minerApi.getWorkers(true);

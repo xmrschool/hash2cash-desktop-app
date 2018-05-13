@@ -91,7 +91,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
 
     const errorMessage = `Worker ${
       this.workerName
-    } has been stopped with code ${data}`;
+    } crashed with code ${data}`;
 
     if (data.code === 'ENOENT') {
       // If miner has been deleted we remove record that indicates if miner has been unpacked

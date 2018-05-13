@@ -21,7 +21,7 @@ export default function buildMenu(router: RouteComponentProps<any>, intl: Inject
     },
     separator,
     {
-      label: 'v' + remote.app.getVersion(),
+      label: 'v' + remote.app.getVersion() + '-prerelease',
       enabled: false,
     },
     separator,

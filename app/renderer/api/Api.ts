@@ -133,6 +133,7 @@ export type Architecture = {
   uuid: string;
   platform?: 'darwin' | 'win32' | 'linux';
   cpuArch: 'x32' | 'x64';
+  reportVersion?: number;
   warnings: string[];
   devices: Device[];
 };

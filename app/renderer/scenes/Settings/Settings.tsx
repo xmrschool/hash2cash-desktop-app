@@ -178,8 +178,9 @@ export default class Settings extends React.Component<
                 onChange={this.updateParameter('locale')}
                 value={userOptions.store.locale}
               >
-                <option value="en_US">English</option>
-                <option value="ru_RU">Русский</option>
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+                <option value="uk">Український</option>
               </select>
             </div>
           </div>

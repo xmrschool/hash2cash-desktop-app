@@ -10,10 +10,18 @@ export class UserOptions {
     this.getFromLocalStorage();
   }
 
+  getLocale() {
+    const allowed = ['en', 'ru', 'uk'];
+
+    const outerLocale = navigator.language.slice(0, 2);
+
+    return allowed.includes(outerLocale) ? outerLocale : 'en';
+  }
+
   getDefaults() {
     return {
       currency: navigator.language === 'ru' ? 'RUB' : 'USD',
-      locale: navigator.language === 'ru' ? 'ru_RU' : 'en_US',
+      locale: this.getLocale(),
     };
   }
 

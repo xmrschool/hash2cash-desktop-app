@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as cx from 'classnames';
+import { FormattedMessage } from 'react-intl';
 import { observer } from 'mobx-react';
 import { InternalObserver } from 'mobx-store/MinerObserver';
+import { defineMessages } from 'react-intl';
+
 import currenciesService, {
   AllowedCurrencies,
   currencies,
@@ -12,6 +15,16 @@ const s = require('./Worker.css');
 
 export type PropTypes = { worker: InternalObserver };
 
+const messages = defineMessages({
+  daily: {
+    id: 'scenes.init.worker.dailyProfit',
+    defaultMessage: 'per day',
+  },
+  monthly: {
+    id: 'scenes.init.worker.monthlyProfit',
+    defaultMessage: 'per month',
+  },
+})
 @observer
 export default class Worker extends React.Component<PropTypes> {
   shouldComponentUpdate(nextProps: PropTypes) {
@@ -85,10 +98,10 @@ export default class Worker extends React.Component<PropTypes> {
         </span>
         <span className={s.profits}>
           <span className={s.monthly}>
-            {this.getSpeed()} <span className={s.caption}>per month</span>
+            {this.getSpeed()} <span className={s.caption}><FormattedMessage {...messages.monthly} /></span>
           </span>
           <span className={s.daily}>
-            {this.getSpeed(false)} <span className={s.caption}>per day</span>
+            {this.getSpeed(false)} <span className={s.caption}><FormattedMessage {...messages.daily} /></span>
           </span>
         </span>
       </div>

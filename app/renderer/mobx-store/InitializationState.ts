@@ -1,24 +1,47 @@
 import * as electron from 'electron';
+import * as path from 'path';
+import * as fs from "fs-extra";
 import { observable, action } from 'mobx';
+import { defineMessages } from 'react-intl';
+
 import {
   default as Api,
   Architecture,
   Manifest,
   Downloadable,
 } from '../api/Api';
-import * as path from 'path';
-const app = electron.app || electron.remote.app;
-const config = require('../../config.js');
-import FileDownloader, { DownloadError } from '../utils/FileDownloader';
 import minerApi from '../api/MinerApi';
+import FileDownloader, { DownloadError } from '../utils/FileDownloader';
 import minerObserver, { InternalObserver } from './MinerObserver';
 import globalState from './GlobalState';
 import { sleep } from '../utils/sleep';
 import { LocalStorage } from '../utils/LocalStorage';
 import { downloadAndInstall, isOk } from '../../core/reload/vcRedistDetector';
-import * as fs from "fs-extra";
+import { intl } from "../intl";
+
+const app = electron.app || electron.remote.app;
+const config = require('../../config.js');
 
 const debug = require('debug')('app:mobx:initialization');
+
+const messages = defineMessages({
+  hardwareCollecting: {
+    id: 'mobx.init.status.collecting',
+    defaultMessage: 'Collecting hardware information...',
+  },
+  vcRedistChecking: {
+    id: 'mobx.init.status.vcredist.checking',
+    defaultMessage: 'Checking if VCRedist installed',
+  },
+  vcRedistDownloading: {
+    id: 'mobx.init.status.vcredist.downloading',
+    defaultMessage: 'Downloading VCRedist... {status}',
+  },
+  vcRedistFailed: {
+    id: 'mobx.init.status.vcredist.failed',
+    defaultMessage: 'Failed to install VCRedist 2017. You can do it yourself, because it\'s required by GPU miner.',
+  }
+});
 
 export const TOTAL_BENCHMARK_TIME = 60; // Seconds, default set to 60
 
@@ -26,7 +49,7 @@ export class InitializationState {
   @observable hardware?: Architecture;
   @observable manifest?: Manifest;
   @observable unexpectedError?: string | null;
-  @observable status: string = 'Collecting hardware information...';
+  @observable status: string = 'Collecting hardware';
   @observable step: number = 0; // A progress bar step
   @observable progressText?: string;
   @observable downloadError?: DownloadError & { miner: Downloadable };
@@ -95,25 +118,21 @@ export class InitializationState {
     if (__WIN32__ === false) return; // VCRedist only on Win
 
     try {
-      this.setStatus('Checking if VCRedist installed');
+      this.setStatus(intl.formatMessage(messages.vcRedistChecking));
       const installed = await isOk();
       if (!installed) {
-        this.setStatus('Downloading VCRedist 2017... ');
+        this.setStatus(intl.formatMessage(messages.vcRedistDownloading));
 
         if (!await (fs as any).exists(path.join(app.getPath('userData'), 'tmp'))) {
           await fs.mkdir(path.join(app.getPath('userData'), 'tmp'));
         }
         await downloadAndInstall((stats: any) => {
-          this.setText(
-            `Downloading VCRedist 2017... ${this.formatStats(stats)}`
-          );
+          this.setStatus(intl.formatMessage(messages.vcRedistDownloading, { status: this.formatStats(stats) }));
         }, path.join(app.getPath('userData'), 'tmp', 'vcredist.exe'));
       }
     } catch (e) {
       console.error('Failed to install VCRedist: ', e);
-      this.setStatus(
-        'Something went wrong due installing VCRedist. You can install it later'
-      );
+      this.setStatus(intl.formatMessage(messages.vcRedistFailed));
       await sleep(500);
     }
   }

@@ -1,23 +1,44 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { addLocaleData, IntlProvider } from 'react-intl';
+import { addLocaleData, IntlProvider, injectIntl, InjectedIntl } from 'react-intl';
 import * as en from 'react-intl/locale-data/en';
 import * as ru from 'react-intl/locale-data/ru';
+import * as uk from 'react-intl/locale-data/uk';
 
-addLocaleData([...en, ...ru]);
+addLocaleData([...en, ...ru, ...uk]);
 import { LocalStorage } from './utils/LocalStorage';
 import globalState from './mobx-store/GlobalState';
 import userOptions from './mobx-store/UserOptions';
 
-const debug = require('debug')('app:intl');
 export type Locale = {
   locale: string;
   id: string;
   link: string;
+  data: string;
 };
 
+export let intl: InjectedIntl;
+let resolver: Function;
+let promise: Promise<void> = new Promise(resolve => {
+  resolver = resolve;
+});
+
+export async function getIntl(): Promise<InjectedIntl> {
+  await promise;
+
+  return intl
+}
 export type LocaleWithData = Locale & { data: any };
 
+@injectIntl
+export class IntlLocale extends React.Component<any> {
+  render() {
+    intl = this.props.intl;
+    resolver();
+
+    return this.props.children;
+  }
+}
 @observer
 export class LocaleProvider extends React.Component<any> {
   componentWillReceiveProps() {
@@ -33,7 +54,9 @@ export class LocaleProvider extends React.Component<any> {
         }
         messages={usedLocale && usedLocale.data}
       >
-        {this.props.children}
+        <IntlLocale>
+          {this.props.children}
+        </IntlLocale>
       </IntlProvider>
     );
   }
@@ -47,15 +70,10 @@ export class LocaleProvider extends React.Component<any> {
 
 export async function fetchAndUseLocale(locale: Locale) {
   try {
-    // If development, retrieve it locally
-    if (true) {
-      const file = require('../core/locales/' + locale.locale + '.yaml');
+    LocalStorage.currentLocale = locale;
+    globalState.currentLocale = locale;
 
-      LocalStorage.currentLocale = file;
-      globalState.currentLocale = file;
-
-      return;
-    }
+    return;
 
     /*const resp = await fetch(locale.link);
     const json = await resp.json();
@@ -72,15 +90,10 @@ export function checkIfTranslateOutdated() {
     id: 'none',
   };
 
-  let remoteLocale;
-  if (true) {
-    remoteLocale = require('../core/locales/' + usedLocale.locale + '.yaml');
-  } /*else remoteLocale = locales[usedLocale.locale];*/
+  const remoteLocale = require('../core/locales/' + usedLocale.locale.slice(0, 2) + '.yaml');
 
-  debug('Comparing locale %s and %s', remoteLocale.id, usedLocale.id);
-  if (remoteLocale.id !== usedLocale.id) {
-    fetchAndUseLocale(remoteLocale);
-  }
+  console.log('remote locale: ', remoteLocale);
+  fetchAndUseLocale({ data: remoteLocale, locale: usedLocale.locale, id: usedLocale.locale, link: '' });
 }
 
 const hot = (module as any).hot;

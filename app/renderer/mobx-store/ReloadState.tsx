@@ -1,9 +1,19 @@
+import { defineMessages } from 'react-intl';
 import startReload from '../../core/reload/reloader';
 import { action, observable } from 'mobx';
+import { intl } from "../intl";
+
+const messages = defineMessages({
+  update: {
+    id: 'mobx.reload.update',
+    description: 'A main button to update',
+    defaultMessage: 'Update',
+  }
+});
 
 export class ReloadState {
   @observable running = false;
-  @observable currentStatus: string = 'Refresh';
+  @observable currentStatus: string = 'Reload';
   @observable oldStatus?: string;
   @observable switching = false;
   timeout?: number;
@@ -27,7 +37,7 @@ export class ReloadState {
       ...context,
     });
     if (block) {
-      this.setNewStatus('Update');
+      this.setNewStatus(intl.formatMessage(messages.update));
       this.running = false;
       this.setUpTimeout(context);
     }

@@ -222,7 +222,7 @@ export default class FileDownloader extends EventEmitter {
                   context: 'unexpected',
                   details: error,
                   miner,
-                  formattedMessage: `Sorry, seems that unexpected error happened: ${
+                  formattedMessage: `Unexpected error happened: ${
                     error.message
                   }`,
                 });

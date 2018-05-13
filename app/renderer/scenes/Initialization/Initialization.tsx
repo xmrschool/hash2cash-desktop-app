@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import * as cx from 'classnames';
 import { RouteComponentProps } from 'react-router';
+import { injectIntl, defineMessages, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { ANIMATION_TIME } from 'scenes/Home/Home';
 import { sleep } from 'utils/sleep';
@@ -33,11 +34,64 @@ const warning = require('./warning.svg');
 
 const debug = require('debug')('app:init');
 
+const messages = defineMessages({
+  fetchingManifest: {
+    id: 'scenes.init.status.fetchingManifest',
+    defaultMessage: 'Fetching download manifest...',
+  },
+  checkingDependencies: {
+    id: 'scenes.init.status.checkingDeps',
+    defaultMessage: 'Checking if required dependencies are installed...',
+  },
+  downloadingBinaries: {
+    id: 'scenes.init.status.downloadingBinaries',
+    defaultMessage: 'Downloading required miners...',
+  },
+  benchmarking: {
+    id: 'scenes.init.status.benchmarking',
+    defaultMessage: 'Doing some tests...',
+  },
+  hardware: {
+    id: 'scenes.init.hardwares',
+    defaultMessage: 'Your hardware',
+  },
+  internalError: {
+    id: 'scenes.init.internalError',
+    defaultMessage: 'Oops! Something went wrong on our side.',
+  },
+  justError: {
+    id: 'scenes.init.justError',
+    defaultMessage: 'Oops! We can\'t download miner.',
+  },
+  errorWhatNext: {
+    id: 'scenes.init.whatAfterError',
+    defaultMessage: 'Try again or contact us if you think that problem on our side',
+  },
+  tryAgain: {
+    id: 'scenes.init.tryAgain',
+    defaultMessage: 'Try again',
+  },
+  downsidePerMonth: {
+    id: 'scenes.init.downsidePerMonth',
+    defaultMessage: 'you can mine per month'
+  },
+  startMine: {
+    id: 'scenes.init.startMine',
+    defaultMessage: 'Start to mine!'
+  },
+  algorithms: {
+    id: 'scenes.init.algorithms',
+    defaultMessage: 'Algorithms'
+  },
+});
+
 let initializationState = _initializationState;
+
+@(injectIntl as any)
 @inject((state: any) => state.initializationState)
 @observer
 export default class Initialization extends React.Component<
-  RouteComponentProps<any>,
+  RouteComponentProps<any> & InjectedIntlProps,
   { appeared: boolean }
 > {
   bar: any;
@@ -75,6 +129,8 @@ export default class Initialization extends React.Component<
 
   async action() {
     try {
+      const { formatMessage } = this.props.intl;
+
       await minerApi.stopAll();
       await initializationState.checkIfVcredistInstalled();
 
@@ -83,21 +139,21 @@ export default class Initialization extends React.Component<
       initializationState.setHardware(hardware);
       initializationState.setStep(1 / 7);
 
-      initializationState.setStatus('Checking if required libraries are installed...');
+      initializationState.setStatus(formatMessage(messages.checkingDependencies));
       debug('1/7, hardware collected: ', hardware);
 
       initializationState.setStep(2 / 7);
-      initializationState.setStatus('Fetching download manifest...');
+      initializationState.setStatus(formatMessage(messages.fetchingManifest));
       const manifest = await initializationState.fetchManifest();
       debug('2/7, fetched manifest: ', manifest);
 
       initializationState.setStep(3 / 7);
-      initializationState.setStatus('Downloading binaries...');
+      initializationState.setStatus(formatMessage(messages.downloadingBinaries));
       await initializationState.downloadBinaries();
 
       debug('4/7 benchmarking');
       initializationState.setStep(4 / 7);
-      initializationState.setStatus('Benchmarking...');
+      initializationState.setStatus(formatMessage(messages.benchmarking));
       initializationState.bechmarking = true;
       await initializationState.benchmark();
 
@@ -180,7 +236,7 @@ export default class Initialization extends React.Component<
   renderBenchmarkDetails(initializationState: any) {
     return (
       <>
-        <h2 className={s.header}>Algorithms</h2>
+        <h2 className={s.header}><FormattedMessage {...messages.algorithms} /></h2>
         <div className={s.benchmarks}>
           {minerObserver.workers.map(worker => (
             <Worker worker={worker} key={worker.name} />
@@ -208,9 +264,9 @@ export default class Initialization extends React.Component<
         <div className={s.doneInner}>
           <span className={s.doneAmount}>
             <span>{doneAmount.reactFormatted()}</span>
-            <span className={s.donePerMonth}>you can mine per month</span>
+            <span className={s.donePerMonth}><FormattedMessage {...messages.downsidePerMonth} /></span>
           </span>
-          <Button onClick={this.navigateToDashboard}>Continue</Button>
+          <Button onClick={this.navigateToDashboard}><FormattedMessage {...messages.startMine} /></Button>
         </div>
       </div>
     );
@@ -235,7 +291,7 @@ export default class Initialization extends React.Component<
           />
           <div className={s.scrollable}>
             <div className={s.hardwares}>
-              <h2 className={s.header}>Hardware</h2>
+              <h2 className={s.header}><FormattedMessage {...messages.hardware} /></h2>
               {initializationState.hardware &&
                 initializationState.hardware.devices.map(device => (
                   <div
@@ -262,34 +318,31 @@ export default class Initialization extends React.Component<
           this.renderResults()}
         {initializationState.unexpectedError && (
           <Modal>
-            <h2>It seems that internal error happened</h2>
+            <h2><FormattedMessage {...messages.internalError} /></h2>
             <p style={{ opacity: 0.6 }}>
               {(initializationState.unexpectedError as any).message}
             </p>
             <p>
-              You can try again, or if you think that problem is on our side,
-              get us in touch
+              <FormattedMessage {...messages.errorWhatNext} />
             </p>
             <Button onClick={this.reload} style={{ marginTop: 40 }}>
-              Try again
+              <FormattedMessage {...messages.tryAgain} />
             </Button>
           </Modal>
         )}
         {initializationState.downloadError && (
           <Modal>
-            <h2>It seems that error happened</h2>
+            <h2><FormattedMessage {...messages.justError} /></h2>
             <p style={{ opacity: 0.6 }}>
-              Failed to download miner{' '}
               {initializationState.downloadError.miner.name} ({
                 initializationState.downloadError.message
               })
             </p>
             <p>
-              You can try again, or if you think that problem is on our side,
-              get us in touch
+              <FormattedMessage {...messages.errorWhatNext} />
             </p>
             <Button onClick={this.reload} style={{ marginTop: 40 }}>
-              Try again
+              <FormattedMessage {...messages.tryAgain} />
             </Button>
           </Modal>
         )}

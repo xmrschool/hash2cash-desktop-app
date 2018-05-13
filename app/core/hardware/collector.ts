@@ -1,3 +1,4 @@
+import { defineMessages } from 'react-intl';
 import getCudaDevices from 'cuda-detector';
 import getOpenCLDevices from 'opencl-detector';
 import { cpu, graphics, system } from 'systeminformation';
@@ -7,9 +8,24 @@ import { Architecture } from '../../renderer/api/Api';
 import trackError from '../raven';
 import getDevices from 'cpuid-detector';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
+import { intl } from "../../renderer/intl";
 
 const debug = require('debug')('app:detector');
 
+const messages = defineMessages({
+  unsupported: {
+    id: 'core.hardwareCollector.unsupported',
+    defaultMessage: 'Your GPU vendor ({vendor}) is unsupported. Contact us if you think that is mistake, or update your drivers'
+  },
+  cudaFailed: {
+    id: 'core.hardwareCollector.cudaFailed',
+    defaultMessage: 'Driver for GPU is outdated, download new from nvidia.com'
+  },
+  cudaArchTooLow: {
+    id: 'core.hardwareCollector.archTooLow',
+    defaultMessage: 'GPU architecture is too low, minimal required is sm_20, got sm_{major}{minor}'
+  }
+})
 function checkVendor(
   vendor: string,
   type: 'gpu' | 'cpu',
@@ -27,10 +43,11 @@ function checkVendor(
   else if (type === 'cpu' && lowerCased.includes('intel'))
     // nvidia have only gpu
     return 'intel';
-  else
-    throw new Error(
-      `Your ${type.toUpperCase()} vendor (${vendor}) is unsupported. If you think that is mistake, try to update your drivers`
-    );
+  else {
+    const messsage = intl.formatMessage(messages.unsupported, { vendor });
+    throw new Error(messsage);
+  }
+
 }
 
 // What this function do? In case exception throwed, it reports and returns null
@@ -68,6 +85,7 @@ export default async function collectHardware(): Promise<Architecture> {
     devices: [],
     warnings: [],
     uuid,
+    reportVersion: 2,
     cpuArch: (detectedArch === 'ia32' ? 'x32' : arch()) as 'x32' | 'x64',
   };
 
@@ -105,6 +123,9 @@ export default async function collectHardware(): Promise<Architecture> {
   let cudaFailReason: string | undefined;
   const cuda = await safeGetter(getCudaDevices, 'cuda', err => (cudaFailReason = err.message));
 
+  if (cudaFailReason) {
+    console.warn('Failed to get CUDA devices through native extension: ', cudaFailReason);
+  }
   // This is a fallback for opencl getter.
   if (!openCl) {
     const graphicsResult = await graphics();
@@ -116,7 +137,7 @@ export default async function collectHardware(): Promise<Architecture> {
           const platform = checkVendor(gpu.vendor, 'gpu', gpu.model, cuda === null) as any;
 
           if (platform === false) return; // Do not emit nvidia gpu's, let deviceCollector do that thing
-          const merge = cuda === null ? { unavailableReason: cudaFailReason } : {};
+          const merge = cuda === null ? { unavailableReason: intl.formatMessage(messages.cudaFailed) } : {};
 
           report.devices.push({
             type: 'gpu',
@@ -183,9 +204,20 @@ export default async function collectHardware(): Promise<Architecture> {
   }
 
   // Then emit cuda devices
-  if (cuda)
+  if (cuda) {
     cuda.devices.forEach(device => {
-      report.devices.push({
+      if (device.major < 2) {
+        return report.devices.push({
+          type: 'gpu',
+          platform: 'cuda',
+          deviceID: device.pciDeviceID ? device.pciDeviceID.toString() : '',
+          model: device.name,
+          collectedInfo: device,
+          unavailableReason: intl.formatMessage(messages.cudaArchTooLow, { major: device.major, minor: device.minor }),
+        });
+      }
+
+      return report.devices.push({
         type: 'gpu',
         platform: 'cuda',
         deviceID: device.pciDeviceID ? device.pciDeviceID.toString() : '',
@@ -193,6 +225,8 @@ export default async function collectHardware(): Promise<Architecture> {
         collectedInfo: device,
       });
     });
+  }
+
 
 
   if (['win32', 'darwin', 'linux'].includes(process.platform)) {

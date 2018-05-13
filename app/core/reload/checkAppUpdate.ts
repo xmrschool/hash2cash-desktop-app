@@ -1,6 +1,8 @@
 import { remote } from 'electron';
-import { Context, ExpectedReturn } from './reloader';
+import { defineMessages } from 'react-intl';
 import { autoUpdater } from 'electron-updater';
+import { Context, ExpectedReturn } from './reloader';
+import { intl } from "../../renderer/intl";
 
 export function formatBytes(bytes: number, decimals: number = 2) {
   if (bytes === 0) return '0';
@@ -11,6 +13,21 @@ export function formatBytes(bytes: number, decimals: number = 2) {
     parseFloat((bytes / Math.pow(1024, i)).toFixed(decimals)) + ' ' + sizes[i]
   );
 }
+
+const messages = defineMessages({
+  checking: {
+    id: 'core.reload.updates.checking',
+    defaultMessage: 'Checking app updates...',
+  },
+  newAvailable: {
+    id: 'core.reload.updates.newAvailable',
+    defaultMessage: 'Available new version of app {version}, downloading...',
+  },
+  getReady: {
+    id: 'core.reload.updates.installingAfter',
+    defaultMessage: `Installing update after {secs, number} {unreadCount, plural, one {second} other {seconds}}`,
+  }
+});
 
 export default async function checkAppUpdates(
   ctx: Context
@@ -26,15 +43,12 @@ export default async function checkAppUpdates(
   // Then update available
   // ToDo is it better to use downloadPromise?
   if (update.downloadPromise) {
-    ctx.setStatusWithoutAnimation(
-      `Available new verison of app (${
-        update.updateInfo.version
-      }). Downloading...`
-    );
+    const message = intl.formatMessage(messages.newAvailable, { version: update.updateInfo.version });
+    ctx.setStatusWithoutAnimation(message);
 
     autoUpdater.on('download-progress', stats => {
       ctx.setStatusWithoutAnimation(
-        `Downloading ${update.updateInfo.version} ${formatBytes(
+        `${update.updateInfo.version} ${formatBytes(
           stats.transferred || 0
         )} / ${formatBytes(stats.total || 0)} @ ${formatBytes(
           stats.bytesPerSecond || 0
@@ -45,10 +59,12 @@ export default async function checkAppUpdates(
     autoUpdater.on('update-downloaded', () => {
       let secondsLeftBeforeQuit = 5;
 
-      ctx.setStatus(`Installing app after ${secondsLeftBeforeQuit} seconds`);
+      const message = intl.formatMessage(messages.getReady, { secs: secondsLeftBeforeQuit });
+      ctx.setStatus(message);
       const interval = setInterval(() => {
         secondsLeftBeforeQuit--;
-        ctx.setStatus(`Installing app after ${secondsLeftBeforeQuit} seconds`);
+        const message = intl.formatMessage(messages.getReady, { secs: secondsLeftBeforeQuit });
+        ctx.setStatus(message);
       }, 1000);
 
       setTimeout(() => {

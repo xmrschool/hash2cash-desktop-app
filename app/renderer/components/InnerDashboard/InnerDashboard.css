@@ -57,7 +57,7 @@
 }
 
 .counter {
-  flex: 2;
+  flex: 3;
 }
 .counter + .counter {
   margin-left: 40px;
