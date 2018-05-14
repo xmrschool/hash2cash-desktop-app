@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { addLocaleData, IntlProvider, injectIntl, InjectedIntl } from 'react-intl';
+import {
+  addLocaleData,
+  IntlProvider,
+  injectIntl,
+  InjectedIntl,
+} from 'react-intl';
 import * as en from 'react-intl/locale-data/en';
 import * as ru from 'react-intl/locale-data/ru';
 import * as uk from 'react-intl/locale-data/uk';
@@ -19,14 +24,14 @@ export type Locale = {
 
 export let intl: InjectedIntl;
 let resolver: Function;
-let promise: Promise<void> = new Promise(resolve => {
+const promise: Promise<void> = new Promise(resolve => {
   resolver = resolve;
 });
 
 export async function getIntl(): Promise<InjectedIntl> {
   await promise;
 
-  return intl
+  return intl;
 }
 export type LocaleWithData = Locale & { data: any };
 
@@ -54,9 +59,7 @@ export class LocaleProvider extends React.Component<any> {
         }
         messages={usedLocale && usedLocale.data}
       >
-        <IntlLocale>
-          {this.props.children}
-        </IntlLocale>
+        <IntlLocale>{this.props.children}</IntlLocale>
       </IntlProvider>
     );
   }
@@ -90,10 +93,17 @@ export function checkIfTranslateOutdated() {
     id: 'none',
   };
 
-  const remoteLocale = require('../core/locales/' + usedLocale.locale.slice(0, 2) + '.yaml');
+  const remoteLocale = require('../core/locales/' +
+    usedLocale.locale.slice(0, 2) +
+    '.yaml');
 
   console.log('remote locale: ', remoteLocale);
-  fetchAndUseLocale({ data: remoteLocale, locale: usedLocale.locale, id: usedLocale.locale, link: '' });
+  fetchAndUseLocale({
+    data: remoteLocale,
+    locale: usedLocale.locale,
+    id: usedLocale.locale,
+    link: '',
+  });
 }
 
 const hot = (module as any).hot;

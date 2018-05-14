@@ -9,7 +9,10 @@ import InjectedIntl = ReactIntl.InjectedIntl;
 
 const separator: Electron.MenuItemConstructorOptions = { type: 'separator' };
 
-export default function buildMenu(router: RouteComponentProps<any>, intl: InjectedIntl) {
+export default function buildMenu(
+  router: RouteComponentProps<any>,
+  intl: InjectedIntl
+) {
   const getMessage = (id: string) => intl.formatMessage({ id });
   return remote.Menu.buildFromTemplate([
     {
@@ -30,7 +33,10 @@ export default function buildMenu(router: RouteComponentProps<any>, intl: Inject
       click: () => {
         const response = remote.dialog.showMessageBox({
           type: 'warning',
-          buttons: [getMessage('SETTINGS_MENU_LOGOUT_YEAH'), getMessage('SETTINGS_MENU_LOGOUT_CANCEL')],
+          buttons: [
+            getMessage('SETTINGS_MENU_LOGOUT_YEAH'),
+            getMessage('SETTINGS_MENU_LOGOUT_CANCEL'),
+          ],
           defaultId: 0,
           title: getMessage('SETTINGS_MENU_LOGOUT_SURE'),
           message: getMessage('SETTINGS_MENU_LOGOUT_SURE'),

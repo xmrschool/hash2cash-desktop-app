@@ -1,6 +1,6 @@
 import * as electron from 'electron';
 import * as path from 'path';
-import * as fs from "fs-extra";
+import * as fs from 'fs-extra';
 import { observable, action } from 'mobx';
 import { defineMessages } from 'react-intl';
 
@@ -17,7 +17,7 @@ import globalState from './GlobalState';
 import { sleep } from '../utils/sleep';
 import { LocalStorage } from '../utils/LocalStorage';
 import { downloadAndInstall, isOk } from '../../core/reload/vcRedistDetector';
-import { intl } from "../intl";
+import { intl } from '../intl';
 
 const app = electron.app || electron.remote.app;
 const config = require('../../config.js');
@@ -39,8 +39,9 @@ const messages = defineMessages({
   },
   vcRedistFailed: {
     id: 'mobx.init.status.vcredist.failed',
-    defaultMessage: 'Failed to install VCRedist 2017. You can do it yourself, because it\'s required by GPU miner.',
-  }
+    defaultMessage:
+      "Failed to install VCRedist 2017. You can do it yourself, because it's required by GPU miner.",
+  },
 });
 
 export const TOTAL_BENCHMARK_TIME = 60; // Seconds, default set to 60
@@ -123,11 +124,17 @@ export class InitializationState {
       if (!installed) {
         this.setStatus(intl.formatMessage(messages.vcRedistDownloading));
 
-        if (!await (fs as any).exists(path.join(app.getPath('userData'), 'tmp'))) {
+        if (
+          !(await (fs as any).exists(path.join(app.getPath('userData'), 'tmp')))
+        ) {
           await fs.mkdir(path.join(app.getPath('userData'), 'tmp'));
         }
         await downloadAndInstall((stats: any) => {
-          this.setStatus(intl.formatMessage(messages.vcRedistDownloading, { status: this.formatStats(stats) }));
+          this.setStatus(
+            intl.formatMessage(messages.vcRedistDownloading, {
+              status: this.formatStats(stats),
+            })
+          );
         }, path.join(app.getPath('userData'), 'tmp', 'vcredist.exe'));
       }
     } catch (e) {

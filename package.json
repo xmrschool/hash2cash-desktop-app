@@ -18,8 +18,8 @@
     "start-hot": "cross-env HOT=1 NODE_ENV=development electron ./app/main/main.js",
     "dev": "npm run build-main && npm run hot-server -- --start-hot",
     "package": "npm run build && which build && build --publish always",
-    "package-win": "cross-env NODE_ENV=production npm run build && build --win --x64",
-    "package-mac": "NODE_ENV=production npm run build && build --mac --publish always",
+    "package-win": "cross-env NODE_ENV=production npm run build && build --win --ia32",
+    "package-mac": "NODE_ENV=production npm run build && build --mac ",
     "package-linux": "npm run build && build --linux",
     "package-all": "NODE_ENV=production npm run build && build -mwl --publish always",
     "cleanup": "mop -v",
@@ -33,8 +33,8 @@
       "provider": "spaces",
       "name": "hash2cash",
       "region": "ams3",
-      "path": "desktopReleases/beta",
-      "channel": "beta"
+      "path": "desktopReleases/beta-x32",
+      "channel": "beta-x32"
     },
     "files": [
       "app/main/dist/",
@@ -48,6 +48,9 @@
       "!node_modules/native-utils/{build,extra,src,json,extra,libcpuid,binding.gyp,.git}",
       "!node_modules/raven-js/dist",
       "package.json"
+    ],
+    "extraFiles": [
+      "windows-utils/"
     ],
     "dmg": {
       "contents": [
@@ -208,7 +211,7 @@
     "css-loader": "^0.28.10",
     "css-modules-require-hook": "^4.2.3",
     "devtron": "^1.4.0",
-    "electron": "^2.0.0-beta.8",
+    "electron": "^2.0.0",
     "electron-builder": "^20.2.0",
     "electron-builder-http": "^19.27.5",
     "electron-devtools-installer": "^2.2.3",

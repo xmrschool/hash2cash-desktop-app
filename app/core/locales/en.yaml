@@ -63,7 +63,7 @@ TIPS_DRIVER_VERSION_UPDATE_AVAILABLE: |
 TIPS_DRIVER_VERSION_UPDATE_UNAVAILABLE: |
   You're using the latest possible driver ({version}).
 TIPS_LARGE_PAGES_WORKAROUND: |
-  This fix turns on Large Pages, if you're not on Windows 10, you must restart app with admin rules to use it.
+  This fix turns on Large Pages. Administrator privelegies are required
 TIPS_LARGE_PAGES_REBOOT_MIGHT_HELP: |
   A reboot might help.
 TIPS_LARGE_PAGES_REBOOT_MUST_HELP: |
@@ -95,6 +95,9 @@ SETTINGS_FORGET_BTN: Remove
 USD: U.S. Dollar
 RUB: Ruble
 DRIVERS_ISSUE_HEADER: Something went wrong with GPU
+TIPS_UPDATE_DRIVER_LABEL: Update GPU driver
+TIPS_VCREDIST_WORKAROUND: It's a required Microsoft library to run GPU miner. You really should install it
+TIPS_VCREDIST_LABEL: Install VCRedist
 DRIVER_ISSUE_ABOUT: |
   We can't detect which OpenCL (AMD) devices you're using. Hash to Cash may fall because of old GPU driver. You can switch to another detection method (which is not so precise as original), but it should work everywhere.
 DRIVER_ISSUE_APPLY_CHANGES: Switch to fallback
@@ -139,3 +142,8 @@ core.reload.minerUpdater.checking: Checking for available miner updates
 core.reload.minerUpdater.newVersion: New version of {name} available {oldVersion} → {newVersion}
 core.reload.minerUpdater.failed: Failed to download miner {name}, rolling back
 core.reload.minerUpdater.uptodate: Everything is up-to-date! You're good to go
+miner.workers.openInShell: Open folder with miner
+miner.workers.preserveConfig: Preserve config
+miner.workers.disableAmd: Disable AMD
+miner.workers.disableNvidia: Disable NVidia
+miner.workers.affineToCpu: Affine to CPU

@@ -92,12 +92,37 @@ export class Worker extends EventEmitter {
     return resp;
   }
 
+  // It calls function, if it just function, or switches value
+  @action
+  async callFunc(id: string, newValue?: boolean) {
+    const find = this.data.menu.find(d => d.id === id);
+
+    if (!find) {
+      throw new Error('Specified menu id not found');
+    }
+
+    if (find.type === 'pick') {
+      if (typeof newValue === 'undefined') {
+        throw new Error('You have to specify newValue');
+      }
+      find.isPicked = newValue;
+    }
+
+    const resp = await minerApi.fetch(`/workers/${this.data.name}/func/${id}`, {
+      value: newValue,
+    });
+
+    return resp;
+  }
+
   @action
   // Daemon management
   async start(commit = true) {
     this.httpRequest = true;
     try {
-      const resp = await minerApi.fetch(`/workers/${this.data.name}/start${minerApi.getQuery(commit)}`);
+      const resp = await minerApi.fetch(
+        `/workers/${this.data.name}/start${minerApi.getQuery(commit)}`
+      );
       this.httpRequest = false;
 
       return resp;
@@ -117,7 +142,9 @@ export class Worker extends EventEmitter {
         return;
       }
       this.httpRequest = true;
-      const resp = await minerApi.fetch(`/workers/${this.data.name}/stop${minerApi.getQuery(commit)}`);
+      const resp = await minerApi.fetch(
+        `/workers/${this.data.name}/stop${minerApi.getQuery(commit)}`
+      );
       this.httpRequest = false;
       return resp;
     } catch (e) {
@@ -194,7 +221,7 @@ export class Api {
   }
 
   getQuery(commit = true) {
-    return commit ? '' : '?dontCommit=true'
+    return commit ? '' : '?dontCommit=true';
   }
 
   async stopAll(commit = true) {

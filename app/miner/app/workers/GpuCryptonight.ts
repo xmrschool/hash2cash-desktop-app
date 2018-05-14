@@ -1,13 +1,19 @@
 import { ChildProcess, spawn } from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { BaseWorker, Parameter, ParameterMap, Pick } from './BaseWorker';
+import {
+  BaseWorker,
+  MenuPicks,
+  Parameter,
+  ParameterMap,
+  Pick,
+} from './BaseWorker';
 import { getLogin, RuntimeError } from '../utils';
 import { getPort } from '../../../core/utils';
 import { _CudaDevice, Architecture } from '../../../renderer/api/Api';
 import { sleep } from '../../../renderer/utils/sleep';
 import { LocalStorage } from '../../../renderer/utils/LocalStorage';
-import { addRunningPid } from "../RunningPids";
+import { addRunningPid } from '../RunningPids';
 
 export type Parameteres = 'main' | 'additional';
 
@@ -20,6 +26,11 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
   workerName: string = 'GpuCryptonight';
 
   path: string = '';
+  state: { [p: string]: any } = {
+    noAMD: false,
+    noNVIDIA: false,
+    affineToCpu: false,
+  };
   parameters: ParameterMap<Parameteres> = {
     main: 'full',
     additional: 'full',
@@ -89,7 +100,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
 
   buildNvidiaConfig(report: Architecture) {
     const nvidiaGpus = report.devices.filter(
-      d => d.platform && d.platform === 'cuda'
+      d => d.platform && d.platform === 'cuda',
     ) as _CudaDevice[];
 
     if (nvidiaGpus.length > 0) {
@@ -146,9 +157,9 @@ ${outer.join(',\n')}
     "pool_list" :
 [
 	{"pool_address" : ${s(this.getPool('cryptonight'))}, "wallet_address" : ${s(
-      getLogin('GpuCryptonight')
+      getLogin('GpuCryptonight'),
     )}, "rig_id" : ${s(
-      localStorage.rigName || ''
+      localStorage.rigName || '',
     )}, "pool_password" : "", "use_nicehash" : true, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
 ],
 "currency" : "monero7",
@@ -161,7 +172,7 @@ ${outer.join(',\n')}
 "print_motd" : true,
 "h_print_time" : 60,
 "aes_override" : null,
-"use_slow_memory" : "warn",
+"use_slow_memory" : "always",
 "tls_secure_algo" : true,
 "daemon_mode" : false,
 "flush_stdout" : false,
@@ -174,7 +185,7 @@ ${outer.join(',\n')}
 
     console.log(
       'Saving config to directory: ',
-      path.join(this.path, 'config.txt')
+      path.join(this.path, 'config.txt'),
     );
     await fs.outputFile(path.join(this.path, 'config.txt'), template);
     await fs.outputFile(path.join(this.path, 'pools.txt'), pools);
@@ -192,6 +203,20 @@ ${outer.join(',\n')}
         name: 'Additional GPU',
         values: this.getSpeeds(),
       },
+    ];
+  }
+
+  getMenuItems(): MenuPicks {
+    return [
+      this.openInExplorer(),
+      this.untouchedConfig(),
+      {
+        type: 'delimiter',
+        id: 'we-re looking for frontend developer, come work to us',
+      },
+      this.togglesState('noAMD', 'miner.workers.disableAmd'),
+      this.togglesState('noNVIDIA', 'miner.workers.disableNvidia'),
+      this.togglesState('affineToCpu', 'miner.workers.affineToCpu'),
     ];
   }
 
@@ -250,6 +275,7 @@ ${outer.join(',\n')}
     if (this.running) throw new Error('Miner already running');
 
     const isPathExists = await fs.pathExists(this.pathTo('preserve.txt'));
+    this.preserveConfig = isPathExists;
 
     // If no config exists, build it
     if (!isPathExists) await this.buildConfigs();
@@ -257,13 +283,19 @@ ${outer.join(',\n')}
     this.willQuit = false;
 
     const uac = __WIN32__ ? ['--noUAC'] : [];
-    this.daemon = spawn(
-      path.join(this.path, this.executableName),
-      ['-i', (await this.getDaemonPort()).toString(), ...uac],
-      {
-        cwd: this.path,
-      }
-    );
+    const args = [
+      '-i',
+      (await this.getDaemonPort()).toString(),
+      '--noCPU',
+      this.state.noAMD && '--noAMD',
+      this.state.noNVIDIA && '--noNVIDIA',
+      ...uac,
+    ].filter(d => !!d); // Exclude false
+
+    console.log('Running GPU miner with args: ', args, this.state);
+    this.daemon = spawn(path.join(this.path, this.executableName), args, {
+      cwd: this.path,
+    });
     this.pid = this.daemon.pid;
 
     addRunningPid(this.pid);
@@ -311,6 +343,7 @@ ${outer.join(',\n')}
       options: this.getCustomParameters(),
       parameters: this.parameters,
       daemonPort: this.daemonPort,
+      menu: this.getMenuItems(),
     };
   }
 }

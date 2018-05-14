@@ -1,9 +1,9 @@
-import { isOk, downloadAndInstall } from "../vcRedistDetector";
-import * as path from "path";
-import * as fs from "fs-extra";
+import { isOk, downloadAndInstall } from '../vcRedistDetector';
+import * as path from 'path';
+import * as fs from 'fs-extra';
 
 const outerPath = path.join(__dirname, 'temp', 'vcredist.exe');
-const isWin = process.platform === "win32";
+const isWin = process.platform === 'win32';
 const run = isWin ? test : test.skip;
 
 jest.setTimeout(15000);

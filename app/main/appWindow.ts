@@ -240,7 +240,7 @@ export class AppWindow {
       console.log('Renderer has crashed: ', evt);
 
       this.load('#/crashed');
-    })
+    });
   }
 
   /** Send the app launch timing stats to the renderer. */

@@ -2,8 +2,8 @@ import { observable, action } from 'mobx';
 import Api, { EmailInfoResponse } from '../api/Api';
 import { AUTH_TOKEN } from '../../core/storage/actions';
 import User from './User';
-import { defineMessages } from "react-intl";
-import { intl } from "../intl";
+import { defineMessages } from 'react-intl';
+import { intl } from '../intl';
 export type StringOrNull = string | null;
 
 const messages = defineMessages({
@@ -17,7 +17,7 @@ const messages = defineMessages({
   },
   unexpectedError: {
     id: 'mobx.login.unexpected',
-    defaultMessage: 'Unexpected error. Try again or contact us'
+    defaultMessage: 'Unexpected error. Try again or contact us',
   },
   vcRedistDownloading: {
     id: 'mobx.init.status.vcredist.downloading',
@@ -25,10 +25,10 @@ const messages = defineMessages({
   },
   vcRedistFailed: {
     id: 'mobx.init.status.vcredist.failed',
-    defaultMessage: 'Failed to install VCRedist 2017. You can do it yourself, because it\'s required by GPU miner.',
-  }
+    defaultMessage:
+      "Failed to install VCRedist 2017. You can do it yourself, because it's required by GPU miner.",
+  },
 });
-
 
 export class LoginState {
   @observable email: string = '';
@@ -79,7 +79,9 @@ export class LoginState {
     try {
       this.submitting = true;
       if (this.password.length < 5)
-        return this.dispatchPasswordError(intl.formatMessage(messages.passwordMisLength));
+        return this.dispatchPasswordError(
+          intl.formatMessage(messages.passwordMisLength)
+        );
 
       const response = await Api.auth.attempt({
         email: this.email,
@@ -88,8 +90,13 @@ export class LoginState {
 
       console.log('resp is: ', response);
       if (!response.success) {
-        if (response.error) return this.dispatchPasswordError(intl.formatMessage({ id: response.error }));
-        return this.dispatchPasswordError(intl.formatMessage(messages.unexpectedError));
+        if (response.error)
+          return this.dispatchPasswordError(
+            intl.formatMessage({ id: response.error })
+          );
+        return this.dispatchPasswordError(
+          intl.formatMessage(messages.unexpectedError)
+        );
       }
 
       localStorage[AUTH_TOKEN] = response.token;
@@ -120,7 +127,9 @@ export class LoginState {
       const response = await Api.auth.emailInfo(this.email);
 
       if (!response.allowedToContinue) {
-        return response.reason ? this.dispatchError(intl.formatMessage({ id: response.reason })) : false;
+        return response.reason
+          ? this.dispatchError(intl.formatMessage({ id: response.reason }))
+          : false;
       }
 
       this.emailInfo = response;

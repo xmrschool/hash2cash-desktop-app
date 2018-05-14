@@ -6,7 +6,7 @@ const translitCyrillic = require('cyrillic-to-translit-js');
 const s = require('./RignameEditor.css');
 import Input from '../Input/Input';
 import { LocalStorage } from '../../utils/LocalStorage';
-import generateName from "./nameGenerator";
+import generateName from './nameGenerator';
 
 const rigNameRegex = /^[a-zA-Z0-9\-_\.]+$/;
 export type RignameEditorProps = InjectedIntlProps;
@@ -55,9 +55,15 @@ export default class RignameEditor extends React.Component<
     }
 
     // Count how long it could be
-    outerName = require('os').hostname().slice(0, 30 - outerName.length) + outerName;
+    outerName =
+      require('os')
+        .hostname()
+        .slice(0, 30 - outerName.length) + outerName;
 
-    outerName = outerName.replace(/ /g, '-').replace(/\+/g, '').slice(0, 30);
+    outerName = outerName
+      .replace(/ /g, '-')
+      .replace(/\+/g, '')
+      .slice(0, 30);
     outerName = new translitCyrillic().transform(outerName);
 
     if (!rigNameRegex.test(outerName)) {
@@ -82,7 +88,9 @@ export default class RignameEditor extends React.Component<
       return;
     }
 
-    const formatted = new translitCyrillic().transform(value.replace(/ /g, '-').replace(/\+/g, ''));
+    const formatted = new translitCyrillic().transform(
+      value.replace(/ /g, '-').replace(/\+/g, '')
+    );
     LocalStorage.rigName = formatted;
     this.setState({ rigName: formatted, valid: true });
   }

@@ -3,7 +3,7 @@ import { ipcRenderer } from 'electron';
 import socket, { connectToLocalMiner } from 'socket';
 import { intl, LocaleWithData } from '../intl';
 import { LocalStorage } from '../utils/LocalStorage';
-import { defineMessages } from "react-intl";
+import { defineMessages } from 'react-intl';
 
 const debug = require('debug')('app:mobx:globalState');
 export const DEFAULT_TOAST_TIMEOUT = 4000;
@@ -12,8 +12,9 @@ const messages = defineMessages({
   connectionFail: {
     id: 'mobx.global.connectionFail',
     description: 'Message emitted when connection failed',
-    defaultMessage: 'Failed to connect to server, probably no internet. Trying again...',
-  }
+    defaultMessage:
+      'Failed to connect to server, probably no internet. Trying again...',
+  },
 });
 
 export type Toast = {

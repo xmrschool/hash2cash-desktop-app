@@ -77,7 +77,8 @@ export default class Tips extends React.Component {
   render() {
     const tipsList = tips.tips.filter(d => d.defined);
 
-    const sorted = sortBy(tipsList, ['couldBeFixed', 'isOk']);
+    const sorted = sortBy(tipsList, ['isOk']);
+    console.log('sorted: ', sorted, tipsList);
     return (
       <div>
         <div className={s.row}>
@@ -90,7 +91,7 @@ export default class Tips extends React.Component {
             onMouseOut={() => (globalState.layerAnimating = false)}
           />
         </div>
-        {sorted.map(tip => <Tip tip={tip} key={tip.name} />)}
+        {sorted.map(tip => <Tip tip={tip} key={tip.id} />)}
       </div>
     );
   }

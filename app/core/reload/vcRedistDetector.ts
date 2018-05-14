@@ -1,4 +1,5 @@
 import * as Winreg from 'winreg';
+import { sleep } from '../../renderer/utils/sleep';
 
 const arch = require('os').arch();
 const dep = arch === 'ia32' ? 'x86' : 'amd64';
@@ -17,7 +18,7 @@ export const vcRedists = {
     'https://download.visualstudio.microsoft.com/download/pr/11100229/78c1e864d806e36f6035d80a0e80399e/VC_redist.x86.exe',
 };
 
-export function isOk() {
+export function isOk(): Promise<boolean> {
   return new Promise(resolve => {
     regKey.get('DisplayName', (err, item) => {
       if (err) {
@@ -52,21 +53,23 @@ export function downloadAndInstall(speedReceiver: Function, outerPath: string) {
       speedReceiver(stats);
     });
     downloader.on('end', async () => {
-      // Execute through cmd (so, it will wait)
-      const descriptor = child_process.spawn('cmd', [
-        '/S',
-        '/C',
-        outerPath,
-        '/install',
-        '/norestart',
-        '/passive',
-      ]);
+      try {
+        await sleep(10); // Hang on til ready
+        // Execute through cmd (so, it will wait)
+        const descriptor = child_process.spawn(outerPath, [
+          '/install',
+          '/norestart',
+          '/passive',
+        ]);
 
-      descriptor.on('exit', async () => {
-        const result = await isOk();
+        descriptor.on('exit', async () => {
+          const result = await isOk();
 
-        result ? resolve(true) : reject('Failed to install VCRedist');
-      });
+          result ? resolve(true) : reject('Failed to install VCRedist');
+        });
+      } catch (e) {
+        reject('Failed to install VCRedist');
+      }
     });
 
     downloader.pipe(fs.createWriteStream(outerPath));

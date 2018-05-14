@@ -24,7 +24,7 @@ const messages = defineMessages({
     id: 'scenes.init.worker.monthlyProfit',
     defaultMessage: 'per month',
   },
-})
+});
 @observer
 export default class Worker extends React.Component<PropTypes> {
   shouldComponentUpdate(nextProps: PropTypes) {
@@ -98,10 +98,16 @@ export default class Worker extends React.Component<PropTypes> {
         </span>
         <span className={s.profits}>
           <span className={s.monthly}>
-            {this.getSpeed()} <span className={s.caption}><FormattedMessage {...messages.monthly} /></span>
+            {this.getSpeed()}{' '}
+            <span className={s.caption}>
+              <FormattedMessage {...messages.monthly} />
+            </span>
           </span>
           <span className={s.daily}>
-            {this.getSpeed(false)} <span className={s.caption}><FormattedMessage {...messages.daily} /></span>
+            {this.getSpeed(false)}{' '}
+            <span className={s.caption}>
+              <FormattedMessage {...messages.daily} />
+            </span>
           </span>
         </span>
       </div>

@@ -1,0 +1,27 @@
+/**
+@preserve
+Credits goes to discord app
+ */
+.root {
+  margin-left: 4px;
+  opacity: .6;
+  cursor: pointer;
+  transform: translate3d(0,3px,0);
+  transition: transform .2s ease;
+}
+
+.root path {
+  stroke-dasharray: 7;
+  stroke-dashoffset: 1;
+  stroke-width: 2px;
+  transition: stroke-dasharray .2s ease
+}
+
+
+.opened {
+  transform: rotate(-90deg);
+}
+
+.opened path {
+  stroke-dasharray: 14;
+}

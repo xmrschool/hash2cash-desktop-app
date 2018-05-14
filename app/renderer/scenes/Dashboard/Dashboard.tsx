@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router';
 import Button from 'components/Button';
 import globalState from 'mobx-store/GlobalState';
 import InnerDashboard from 'components/InnerDashboard';
-import minerApi from "api/MinerApi";
+import minerApi from 'api/MinerApi';
 
 const s = require('./Dashboard.css');
 export default class Dashboard extends React.Component<
@@ -41,19 +41,13 @@ export default class Dashboard extends React.Component<
   }
 
   renderInitialScene() {
-    const d = (str: string) => <FormattedMessage id={str} />
+    const d = (str: string) => <FormattedMessage id={str} />;
     return (
       <>
         <h2>{d('BENCHMARK_HEADER')}</h2>
-        <p className={s.hey}>
-          {d('BENCHMARK_FIRST')}
-        </p>
-        <p>
-          {d('BENCHMARK_SECOND')}
-        </p>
-        <p className={s.time}>
-          {d('BENCHMARK_THIRD')}
-        </p>
+        <p className={s.hey}>{d('BENCHMARK_FIRST')}</p>
+        <p>{d('BENCHMARK_SECOND')}</p>
+        <p className={s.time}>{d('BENCHMARK_THIRD')}</p>
         <div className={s.button}>
           <Button onClick={() => this.navigate()}>{d('BENCHMARK_GO')}</Button>
         </div>

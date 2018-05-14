@@ -3,9 +3,11 @@ import { FormattedMessage } from 'react-intl';
 import { observable } from 'mobx';
 import { ITip } from './';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
+import { intl } from '../../renderer/intl';
 
 export default class AesOkTip implements ITip {
-  name = <FormattedMessage id="TIPS_AES_NAME" />;
+  id = 'aes';
+  name = 'AES-supported CPU';
   @observable workaround = <FormattedMessage id="TIPS_AES_WORKAROUND" />;
   @observable couldBeFixed = false;
   @observable defined = true;
@@ -15,6 +17,8 @@ export default class AesOkTip implements ITip {
   @observable fixError = '';
 
   async checkOut() {
+    this.name = intl.formatMessage({ id: 'TIPS_AES_NAME' });
+
     const cpu = LocalStorage.collectedReport!.devices.find(
       d => d.type === 'cpu'
     );

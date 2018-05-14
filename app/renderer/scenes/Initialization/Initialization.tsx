@@ -2,7 +2,12 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import * as cx from 'classnames';
 import { RouteComponentProps } from 'react-router';
-import { injectIntl, defineMessages, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import {
+  injectIntl,
+  defineMessages,
+  InjectedIntlProps,
+  FormattedMessage,
+} from 'react-intl';
 
 import { ANIMATION_TIME } from 'scenes/Home/Home';
 import { sleep } from 'utils/sleep';
@@ -26,8 +31,8 @@ import RuntimeErrorNotifier from '../../components/RuntimeErrorNotifier/RuntimeE
 import { CpuInfo } from 'cpuid-detector';
 import isCpuIdReport from '../../utils/isCpuIdReport';
 import formatCpuName from '../../utils/formatCpuName';
-import trackError from "../../../core/raven";
-import minerApi from "../../api/MinerApi";
+import trackError from '../../../core/raven';
+import minerApi from '../../api/MinerApi';
 
 const s = require('./Initialization.scss');
 const warning = require('./warning.svg');
@@ -61,11 +66,12 @@ const messages = defineMessages({
   },
   justError: {
     id: 'scenes.init.justError',
-    defaultMessage: 'Oops! We can\'t download miner.',
+    defaultMessage: "Oops! We can't download miner.",
   },
   errorWhatNext: {
     id: 'scenes.init.whatAfterError',
-    defaultMessage: 'Try again or contact us if you think that problem on our side',
+    defaultMessage:
+      'Try again or contact us if you think that problem on our side',
   },
   tryAgain: {
     id: 'scenes.init.tryAgain',
@@ -73,15 +79,15 @@ const messages = defineMessages({
   },
   downsidePerMonth: {
     id: 'scenes.init.downsidePerMonth',
-    defaultMessage: 'you can mine per month'
+    defaultMessage: 'you can mine per month',
   },
   startMine: {
     id: 'scenes.init.startMine',
-    defaultMessage: 'Start to mine!'
+    defaultMessage: 'Start to mine!',
   },
   algorithms: {
     id: 'scenes.init.algorithms',
-    defaultMessage: 'Algorithms'
+    defaultMessage: 'Algorithms',
   },
 });
 
@@ -139,7 +145,9 @@ export default class Initialization extends React.Component<
       initializationState.setHardware(hardware);
       initializationState.setStep(1 / 7);
 
-      initializationState.setStatus(formatMessage(messages.checkingDependencies));
+      initializationState.setStatus(
+        formatMessage(messages.checkingDependencies)
+      );
       debug('1/7, hardware collected: ', hardware);
 
       initializationState.setStep(2 / 7);
@@ -148,7 +156,9 @@ export default class Initialization extends React.Component<
       debug('2/7, fetched manifest: ', manifest);
 
       initializationState.setStep(3 / 7);
-      initializationState.setStatus(formatMessage(messages.downloadingBinaries));
+      initializationState.setStatus(
+        formatMessage(messages.downloadingBinaries)
+      );
       await initializationState.downloadBinaries();
 
       debug('4/7 benchmarking');
@@ -236,7 +246,9 @@ export default class Initialization extends React.Component<
   renderBenchmarkDetails(initializationState: any) {
     return (
       <>
-        <h2 className={s.header}><FormattedMessage {...messages.algorithms} /></h2>
+        <h2 className={s.header}>
+          <FormattedMessage {...messages.algorithms} />
+        </h2>
         <div className={s.benchmarks}>
           {minerObserver.workers.map(worker => (
             <Worker worker={worker} key={worker.name} />
@@ -264,9 +276,13 @@ export default class Initialization extends React.Component<
         <div className={s.doneInner}>
           <span className={s.doneAmount}>
             <span>{doneAmount.reactFormatted()}</span>
-            <span className={s.donePerMonth}><FormattedMessage {...messages.downsidePerMonth} /></span>
+            <span className={s.donePerMonth}>
+              <FormattedMessage {...messages.downsidePerMonth} />
+            </span>
           </span>
-          <Button onClick={this.navigateToDashboard}><FormattedMessage {...messages.startMine} /></Button>
+          <Button onClick={this.navigateToDashboard}>
+            <FormattedMessage {...messages.startMine} />
+          </Button>
         </div>
       </div>
     );
@@ -291,7 +307,9 @@ export default class Initialization extends React.Component<
           />
           <div className={s.scrollable}>
             <div className={s.hardwares}>
-              <h2 className={s.header}><FormattedMessage {...messages.hardware} /></h2>
+              <h2 className={s.header}>
+                <FormattedMessage {...messages.hardware} />
+              </h2>
               {initializationState.hardware &&
                 initializationState.hardware.devices.map(device => (
                   <div
@@ -318,7 +336,9 @@ export default class Initialization extends React.Component<
           this.renderResults()}
         {initializationState.unexpectedError && (
           <Modal>
-            <h2><FormattedMessage {...messages.internalError} /></h2>
+            <h2>
+              <FormattedMessage {...messages.internalError} />
+            </h2>
             <p style={{ opacity: 0.6 }}>
               {(initializationState.unexpectedError as any).message}
             </p>
@@ -332,7 +352,9 @@ export default class Initialization extends React.Component<
         )}
         {initializationState.downloadError && (
           <Modal>
-            <h2><FormattedMessage {...messages.justError} /></h2>
+            <h2>
+              <FormattedMessage {...messages.justError} />
+            </h2>
             <p style={{ opacity: 0.6 }}>
               {initializationState.downloadError.miner.name} ({
                 initializationState.downloadError.message

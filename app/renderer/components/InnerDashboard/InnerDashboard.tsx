@@ -26,6 +26,10 @@ import Tips from '../Tips/Tips';
 import Reloader from '../Reloader/Reloader';
 import RignameEditor from '../RignameEditor/RignameEditor';
 import PrettyNumber from '../PrettyNumber/PrettyNumber';
+import CloseIcon from '../CloseIcon/CloseIcon';
+import Dropdown from '../Dropdown/Dropdown';
+import Switch from '../Switch/Switch';
+import { MenuPick } from '../../../miner/app/workers/BaseWorker';
 
 const settings = require('../../../core/icon/settings.svg');
 const ws = require('scenes/Initialization/Worker.css');
@@ -59,7 +63,9 @@ export const StatsView = observer(() => {
       <div>
         <RignameEditor />
         <div className={s.counter}>
-          <h4 className={s.counterHead}><FormattedMessage id="DASHBOARD_CURRENT_BALANCE" /></h4>
+          <h4 className={s.counterHead}>
+            <FormattedMessage id="DASHBOARD_CURRENT_BALANCE" />
+          </h4>
           <h4 className={s.counterValue}>
             <FallbackLoader condition={typeof User.balance !== 'undefined'}>
               <PrettyNumber unit="XMR" num={balanceInMonero} fixedLevel={5} />
@@ -74,15 +80,23 @@ export const StatsView = observer(() => {
         </div>
         <div className={s.row}>
           <div className={s.counter}>
-            <h4 className={s.counterHead}><FormattedMessage id="DASHBOARD_PERFORMANCE_LABEL" /></h4>
+            <h4 className={s.counterHead}>
+              <FormattedMessage id="DASHBOARD_PERFORMANCE_LABEL" />
+            </h4>
             <h4 className={s.counterValue}>
               {doneAmount.reactFormatted()}
-              <span className={s.period}> <FormattedMessage id="DASHBOARD_PERFORMANCE_CAPTION" /></span>
+              <span className={s.period}>
+                {' '}
+                <FormattedMessage id="DASHBOARD_PERFORMANCE_CAPTION" />
+              </span>
             </h4>
           </div>
 
           <div className={s.counter}>
-            <h4 className={s.counterHead}> <FormattedMessage id="DASHBOARD_EARNED_LABEL" /></h4>
+            <h4 className={s.counterHead}>
+              {' '}
+              <FormattedMessage id="DASHBOARD_EARNED_LABEL" />
+            </h4>
             <h4 className={s.counterValue}>
               {totalHashes.toLocaleString()}{' '}
               <span className={s.currencySymbol}>H</span>
@@ -122,9 +136,10 @@ export const PlayButton = ({ state, ...props }: PlayButtonProps) => {
 @observer
 export class WorkerView extends React.Component<
   { worker: Worker },
-  { observer?: InternalObserver }
+  { observer?: InternalObserver; menuOpened: boolean }
 > {
-  state: { observer?: InternalObserver } = {};
+  state: { observer?: InternalObserver; menuOpened: boolean } = { menuOpened: false };
+  menu: any;
 
   constructor(props: any) {
     super(props);
@@ -132,6 +147,7 @@ export class WorkerView extends React.Component<
     this.onOptionChange = this.onOptionChange.bind(this);
     this.observe = this.observe.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
+    this.openMenu = this.openMenu.bind(this);
   }
 
   get worker() {
@@ -140,6 +156,12 @@ export class WorkerView extends React.Component<
 
   get name() {
     return this.props.worker.name;
+  }
+
+  openMenu() {
+    this.setState({
+      menuOpened: !this.state.menuOpened,
+    });
   }
 
   onOptionChange(name: string) {
@@ -233,6 +255,36 @@ export class WorkerView extends React.Component<
     return null;
   }
 
+  renderMenuChild(menu: MenuPick) {
+    if (menu.type === 'delimiter') {
+      return <div key={menu.id} className={s.delimiter} />;
+    }
+
+    return (
+      <div key={menu.id} className={s.menuPick} onClick={() => menu.type === 'function' && this.props.worker.callFunc(menu.id)}>
+        <FormattedMessage id={menu.localizedName} />
+        {menu.type === 'pick' && (
+          <div>
+            <Switch checked={menu.isPicked} onChange={() => this.props.worker.callFunc(menu.id, !menu.isPicked)}/>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  renderMenu() {
+    return (
+      <div className={s.menu} ref={ref => (this.menu = ref)}>
+        <CloseIcon opened={this.state.menuOpened} onClick={this.openMenu} />
+        <Dropdown isOpened={this.state.menuOpened} childRef={this.menu} onToggled={this.openMenu}>
+          <div>
+            {this.props.worker.data.menu.map(menu => this.renderMenuChild(menu))}
+          </div>
+        </Dropdown>
+      </div>
+    )
+  }
+
   render() {
     const { worker } = this.props;
 
@@ -258,15 +310,26 @@ export class WorkerView extends React.Component<
               {worker.customParameters &&
                 worker.customParameters.map(option => (
                   <div key={option.id} className={s.pick}>
-                    <label className={s.label}><FormattedMessage id={`OPTIONS_${option.id}`.toUpperCase()} defaultMessage={option.name} /></label>
+                    <label className={s.label}>
+                      <FormattedMessage
+                        id={`OPTIONS_${option.id}`.toUpperCase()}
+                        defaultMessage={option.name}
+                      />
+                    </label>
                     <select
                       className={s.select}
                       value={worker.parameters![option.id]}
                       onChange={this.onOptionChange(option.id)}
                     >
                       {option.values.map(value => (
-                        <FormattedMessage key={value.value} id={`POWER_LEVEL_${value.value}`.toUpperCase()} defaultMessage={value.name} >
-                          {(message: any) => <option value={value.value}>{message}</option>}
+                        <FormattedMessage
+                          key={value.value}
+                          id={`POWER_LEVEL_${value.value}`.toUpperCase()}
+                          defaultMessage={value.name}
+                        >
+                          {(message: any) => (
+                            <option value={value.value}>{message}</option>
+                          )}
                         </FormattedMessage>
                       ))}
                     </select>
@@ -278,17 +341,22 @@ export class WorkerView extends React.Component<
                 <span className={ws.profits}>
                   <span className={ws.monthly}>
                     {observer.monthlyProfit().reactFormatted()}{' '}
-                    <span className={ws.caption}><FormattedMessage id="PERFORMANCE_MONTHLY" /></span>
+                    <span className={ws.caption}>
+                      <FormattedMessage id="PERFORMANCE_MONTHLY" />
+                    </span>
                   </span>
                   <span className={ws.daily}>
                     {observer.dailyProfit().reactFormatted()}{' '}
-                    <span className={ws.caption}><FormattedMessage id="PERFORMANCE_DAILY" /></span>
+                    <span className={ws.caption}>
+                      <FormattedMessage id="PERFORMANCE_DAILY" />
+                    </span>
                   </span>
                 </span>
               )}
             </div>
           </div>
         </div>
+        {this.renderMenu()}
       </div>
     );
   }
@@ -439,7 +507,9 @@ export class InnerDashboard extends React.Component<any> {
     return (
       <div className={s.root}>
         <div className={s.menu}>
-          <h2><FormattedMessage id="DASHBOARD_LABEL" /></h2>
+          <h2>
+            <FormattedMessage id="DASHBOARD_LABEL" />
+          </h2>
           <div>
             <span>
               <img src={settings} className={s.icon} onClick={this.openMenu} />

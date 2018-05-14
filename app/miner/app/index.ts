@@ -16,7 +16,7 @@ import socket from './socket';
 import { sleep } from '../../renderer/utils/sleep';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
 import '../../core/raven';
-import { clearPids, getRunningPids } from "./RunningPids";
+import { clearPids, getRunningPids } from './RunningPids';
 
 const logger = require('debug')('app:miner:server');
 const koa = new Koa();
@@ -51,7 +51,7 @@ router.get('/set/userId', async ctx => {
 });
 
 router.get('/workers', async ctx => {
-  const cacheShouldBeUpdated = ctx.query.updateCache === true;
+  const cacheShouldBeUpdated = ctx.query.updateCache === 'true';
   const asArray = ctx.query.asArray;
 
   logger('Does cache gonna be updated? %s', cacheShouldBeUpdated);
@@ -121,6 +121,24 @@ router.get('/workers/:id/:action(start|stop|reload)', async ctx => {
   }
 });
 
+router.get('/workers/:id/func/:func', async ctx => {
+  const { id, func } = ctx.params;
+  const { value } = ctx.query;
+
+  try {
+    const worker = workersCache.get(id);
+
+    if (!worker) {
+      ctx.status = 404;
+      ctx.body = { success: false, error: 'Worker not found' };
+
+      return;
+    }
+    ctx.body = await worker.callFunction(func, typeof value !== 'undefined' ? value === 'true' : undefined);
+  } catch (e) {
+    throw e;
+  }
+});
 router.get('/workers/:id/setCustomParameter', async ctx => {
   const { id } = ctx.params;
   try {
@@ -231,21 +249,25 @@ async function killUnkilledProccesses() {
         try {
           process.kill(pid, 'SIGKILL');
         } catch (e) {
-          console.warn('Failed to terminate one of still runned pids: ', pid, e);
+          console.warn(
+            'Failed to terminate one of still runned pids: ',
+            pid,
+            e
+          );
         }
-      })
-    } catch (e) {
-
-    }
+      });
+    } catch (e) {}
 
     clearPids();
   }
 }
 
-killUnkilledProccesses().then(() => updateWorkersInCache()).then(() =>
-  getPort(8024).then(port => {
-    listen(port);
-  })
-);
+killUnkilledProccesses()
+  .then(() => updateWorkersInCache())
+  .then(() =>
+    getPort(8024).then(port => {
+      listen(port);
+    })
+  );
 
 (window as any).logger = logger;

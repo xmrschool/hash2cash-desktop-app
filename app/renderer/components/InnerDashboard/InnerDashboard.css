@@ -216,3 +216,37 @@ option {
 .animationDone {
   transform: none!important;
 }
+
+.menu {
+  margin-left: 5px;
+  position: relative;
+}
+
+.menuPick {
+  padding: 10px;
+  transition: 0.2s background-color ease;
+  color: #484a55;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 90%;
+}
+
+.menuPick * {
+  cursor: pointer;
+}
+
+.menuPick:hover {
+  background-color: #f2f2f2;
+}
+
+.delimiter {
+  width: 100%;
+  border-bottom: 1px solid  #f2f2f2;
+}
+
+.menuPick + .menuPick {
+  padding-top: 10px;
+}

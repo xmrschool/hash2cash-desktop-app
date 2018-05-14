@@ -10,7 +10,7 @@ const s = require('./YouCrashed.css');
 export default class YouCrashed extends React.Component<
   RouteComponentProps<any>,
   { appeared: boolean }
-  > {
+> {
   state = {
     appeared: false,
   };
@@ -38,17 +38,19 @@ export default class YouCrashed extends React.Component<
   }
 
   renderInitialScene() {
-    const d = (str: string) => <FormattedMessage id={str} />
+    const d = (str: string) => <FormattedMessage id={str} />;
     return (
       <>
         <h2>{d('DRIVERS_ISSUE_HEADER')}</h2>
-        <p className={s.hey}>
-          {d('DRIVER_ISSUE_ABOUT')}
-        </p>
+        <p className={s.hey}>{d('DRIVER_ISSUE_ABOUT')}</p>
         <div className={s.button}>
-          <Button onClick={() => this.navigate(true)}>{d('DRIVER_ISSUE_APPLY_CHANGES')}</Button>
+          <Button onClick={() => this.navigate(true)}>
+            {d('DRIVER_ISSUE_APPLY_CHANGES')}
+          </Button>
           <div style={{ marginTop: 20 }} />
-          <Button onClick={() => this.navigate(false)}>{d('DRIVER_ISSUE_DONT_APPLY')}</Button>
+          <Button onClick={() => this.navigate(false)}>
+            {d('DRIVER_ISSUE_DONT_APPLY')}
+          </Button>
         </div>
       </>
     );

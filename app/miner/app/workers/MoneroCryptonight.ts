@@ -1,11 +1,16 @@
 import { ChildProcess, spawn } from 'child_process';
 import * as path from 'path';
 
-import { BaseWorker, Parameter, ParameterMap, Pick } from './BaseWorker';
+import {
+  BaseWorker,
+  MenuPicks,
+  Parameter,
+  ParameterMap,
+  Pick,
+} from './BaseWorker';
 import { getLogin, RuntimeError } from '../utils';
 import { getPort } from '../../../core/utils';
-import { LocalStorage } from '../../../renderer/utils/LocalStorage';
-import { addRunningPid } from "../RunningPids";
+import { addRunningPid } from '../RunningPids';
 
 export type Parameteres = 'power' | 'priority';
 
@@ -18,6 +23,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   workerName: string = 'MoneroCryptonight';
 
   path: string = '';
+  state: { [p: string]: any } = {};
   parameters: ParameterMap<Parameteres> = {
     power: 100,
     priority: 2,
@@ -65,6 +71,10 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     ];
   }
 
+  getMenuItems(): MenuPicks {
+    return [this.openInExplorer()];
+  }
+
   getPriorities() {
     return [
       {
@@ -94,46 +104,13 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     ];
   }
 
-  buildConfig() {
-    return {
-      algo: 'cryptonight',
-      background: false,
-      colors: false,
-      retries: 5,
-      'retry-pause': 5,
-      'donate-level': 0,
-      syslog: false,
-      'log-file': './log.txt',
-      'print-time': 60,
-      av: 0,
-      safe: false,
-      'max-cpu-usage': 100,
-      'cpu-priority': null,
-      threads: null,
-      pools: [
-        {
-          url: this.getPool('cryptonight'),
-          user: LocalStorage.userId,
-          pass: 'x',
-          keepalive: true,
-          nicehash: false,
-        },
-      ],
-      api: {
-        port: 5913,
-        'access-token': null,
-        'worker-id': 'worker',
-      },
-    };
-  }
-
   async getAppArgs() {
     this.daemonPort = await getPort(25000);
 
     const args: any = {
       '-l': './log.txt',
       '--api-port': this.daemonPort,
-      '--print-time': 1000,
+      '--print-time': 10000,
       '--max-cpu-usage': this.parameters.power,
       '--cpu-priority': this.parameters.priority,
       '-o': this.getPool('cryptonight'),
@@ -187,7 +164,11 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
         throw new Error('Worker is not running');
       }
       const resp = await fetch(`http://127.0.0.1:${this.daemonPort}`);
-      return await resp.json();
+      const json = await resp.json();
+
+      localStorage.largePageState = json.hugepages;
+
+      return json;
     } catch (e) {
       throw new RuntimeError('Failed to get stats', e);
     }
@@ -274,6 +255,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       options: this.getCustomParameters(),
       parameters: this.parameters,
       daemonPort: this.daemonPort,
+      menu: this.getMenuItems(),
     };
   }
 }

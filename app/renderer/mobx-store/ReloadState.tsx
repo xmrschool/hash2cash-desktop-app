@@ -1,14 +1,14 @@
 import { defineMessages } from 'react-intl';
 import startReload from '../../core/reload/reloader';
 import { action, observable } from 'mobx';
-import { intl } from "../intl";
+import { intl } from '../intl';
 
 const messages = defineMessages({
   update: {
     id: 'mobx.reload.update',
     description: 'A main button to update',
     defaultMessage: 'Update',
-  }
+  },
 });
 
 export class ReloadState {
@@ -21,7 +21,9 @@ export class ReloadState {
   constructor() {
     this.run = this.run.bind(this);
     this.setNewStatus = this.setNewStatus.bind(this);
-    this.setNewStatusWithoutAnimation = this.setNewStatusWithoutAnimation.bind(this);
+    this.setNewStatusWithoutAnimation = this.setNewStatusWithoutAnimation.bind(
+      this
+    );
   }
 
   @action

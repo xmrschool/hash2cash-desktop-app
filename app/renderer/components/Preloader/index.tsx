@@ -6,7 +6,9 @@ export type Props = {
 };
 
 const Preloader = ({ size }: Props) => {
-  const elementStyles = (size ? { '--preloader-size': size + 'px' } : undefined) as any;
+  const elementStyles = (size
+    ? { '--preloader-size': size + 'px' }
+    : undefined) as any;
 
   return (
     <div className={styles.ball} style={elementStyles}>

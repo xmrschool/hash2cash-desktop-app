@@ -8,29 +8,31 @@ import { Architecture } from '../../renderer/api/Api';
 import trackError from '../raven';
 import getDevices from 'cpuid-detector';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
-import { intl } from "../../renderer/intl";
+import { intl } from '../../renderer/intl';
 
 const debug = require('debug')('app:detector');
 
 const messages = defineMessages({
   unsupported: {
     id: 'core.hardwareCollector.unsupported',
-    defaultMessage: 'Your GPU vendor ({vendor}) is unsupported. Contact us if you think that is mistake, or update your drivers'
+    defaultMessage:
+      'Your GPU vendor ({vendor}) is unsupported. Contact us if you think that is mistake, or update your drivers',
   },
   cudaFailed: {
     id: 'core.hardwareCollector.cudaFailed',
-    defaultMessage: 'Driver for GPU is outdated, download new from nvidia.com'
+    defaultMessage: 'Driver for GPU is outdated, download new from nvidia.com',
   },
   cudaArchTooLow: {
     id: 'core.hardwareCollector.archTooLow',
-    defaultMessage: 'GPU architecture is too low, minimal required is sm_20, got sm_{major}{minor}'
-  }
-})
+    defaultMessage:
+      'GPU architecture is too low, minimal required is sm_20, got sm_{major}{minor}',
+  },
+});
 function checkVendor(
   vendor: string,
   type: 'gpu' | 'cpu',
   model: string,
-  allowNvidia: boolean = false,
+  allowNvidia: boolean = false
 ): string | false {
   const lowerCased = vendor.toLowerCase();
   const lowerCasedModel = model.toLowerCase();
@@ -47,11 +49,14 @@ function checkVendor(
     const messsage = intl.formatMessage(messages.unsupported, { vendor });
     throw new Error(messsage);
   }
-
 }
 
 // What this function do? In case exception throwed, it reports and returns null
-export async function safeGetter<T>(callback: () => Promise<T>, name: String, errCallback?: (err: Error) => void): Promise<T | null> {
+export async function safeGetter<T>(
+  callback: () => Promise<T>,
+  name: String,
+  errCallback?: (err: Error) => void
+): Promise<T | null> {
   try {
     const result = await callback();
     debug(`safeGetter(${name}): `, result);
@@ -63,7 +68,6 @@ export async function safeGetter<T>(callback: () => Promise<T>, name: String, er
     trackError(e);
     return null;
   }
-
 }
 
 export default async function collectHardware(): Promise<Architecture> {
@@ -77,7 +81,10 @@ export default async function collectHardware(): Promise<Architecture> {
   }
 
   const systemInformation = await system();
-  const uuid = systemInformation && systemInformation.uuid ? systemInformation.uuid.toLowerCase() : '';
+  const uuid =
+    systemInformation && systemInformation.uuid
+      ? systemInformation.uuid.toLowerCase()
+      : '';
 
   const detectedArch = arch();
 
@@ -118,13 +125,22 @@ export default async function collectHardware(): Promise<Architecture> {
    * ToDo Works almost fine, but fails somewhere. So, we should provide ability to disable this.
    * I dunno how to fix it, maybe, include OpenCL.dll somehow?
    */
-  const openCl = !localStorage.skipOpenCl ? await safeGetter(getOpenCLDevices, 'openCl') : null;
+  const openCl = !localStorage.skipOpenCl && process.arch !== 'ia32'
+    ? await safeGetter(getOpenCLDevices, 'openCl')
+    : null;
   // CudaFailReason - is a variable to pass `unavailableReason` later.
   let cudaFailReason: string | undefined;
-  const cuda = await safeGetter(getCudaDevices, 'cuda', err => (cudaFailReason = err.message));
+  const cuda = process.arch !== 'ia32' ? await safeGetter(
+    getCudaDevices,
+    'cuda',
+    err => (cudaFailReason = err.message)
+  ) : null;
 
   if (cudaFailReason) {
-    console.warn('Failed to get CUDA devices through native extension: ', cudaFailReason);
+    console.warn(
+      'Failed to get CUDA devices through native extension: ',
+      cudaFailReason
+    );
   }
   // This is a fallback for opencl getter.
   if (!openCl) {
@@ -134,10 +150,18 @@ export default async function collectHardware(): Promise<Architecture> {
 
       controllers.forEach((gpu, index) => {
         try {
-          const platform = checkVendor(gpu.vendor, 'gpu', gpu.model, cuda === null) as any;
+          const platform = checkVendor(
+            gpu.vendor,
+            'gpu',
+            gpu.model,
+            cuda === null
+          ) as any;
 
           if (platform === false) return; // Do not emit nvidia gpu's, let deviceCollector do that thing
-          const merge = cuda === null ? { unavailableReason: intl.formatMessage(messages.cudaFailed) } : {};
+          const merge =
+            cuda === null
+              ? { unavailableReason: intl.formatMessage(messages.cudaFailed) }
+              : {};
 
           report.devices.push({
             type: 'gpu',
@@ -162,8 +186,14 @@ export default async function collectHardware(): Promise<Architecture> {
         }
       });
     } else {
-      console.error('Failed to even get from system information...', graphicsResult);
-      trackError(new Error('Failed to get from system-information'), { graphicsResult, openCl });
+      console.error(
+        'Failed to even get from system information...',
+        graphicsResult
+      );
+      trackError(new Error('Failed to get from system-information'), {
+        graphicsResult,
+        openCl,
+      });
     }
   } else {
     // We have OpenCL devices available (Ya-hoo!)
@@ -213,7 +243,10 @@ export default async function collectHardware(): Promise<Architecture> {
           deviceID: device.pciDeviceID ? device.pciDeviceID.toString() : '',
           model: device.name,
           collectedInfo: device,
-          unavailableReason: intl.formatMessage(messages.cudaArchTooLow, { major: device.major, minor: device.minor }),
+          unavailableReason: intl.formatMessage(messages.cudaArchTooLow, {
+            major: device.major,
+            minor: device.minor,
+          }),
         });
       }
 
@@ -226,8 +259,6 @@ export default async function collectHardware(): Promise<Architecture> {
       });
     });
   }
-
-
 
   if (['win32', 'darwin', 'linux'].includes(process.platform)) {
     report.platform = process.platform as any;

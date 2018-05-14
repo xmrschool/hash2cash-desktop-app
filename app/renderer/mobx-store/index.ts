@@ -6,7 +6,7 @@ import initializationState, {
 } from './InitializationState';
 import currenciesService, { CurrenciesService } from './CurrenciesService';
 import runtimeError, { RuntimeError } from './RuntimeError';
-import { default as reloadState, ReloadState } from "./ReloadState";
+import { default as reloadState, ReloadState } from './ReloadState';
 
 export type MobxState = {
   loginState: LoginState;

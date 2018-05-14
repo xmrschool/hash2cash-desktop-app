@@ -34,7 +34,7 @@ export default class Settings extends React.Component<
   state = {
     animating: false,
     openingAtStartup: false,
-    openclDisabled: localStorage.skipOpenCl
+    openclDisabled: localStorage.skipOpenCl,
   };
 
   constructor(props: any) {

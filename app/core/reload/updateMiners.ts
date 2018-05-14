@@ -1,12 +1,12 @@
 import * as path from 'path';
-import { defineMessages } from "react-intl";
+import { defineMessages } from 'react-intl';
 import { Context, ExpectedReturn } from './reloader';
 import { default as Api, Downloadable } from '../../renderer/api/Api';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
 import minerApi from '../../renderer/api/MinerApi';
 import FileDownloaderAlone from '../../renderer/utils/FileDownloaderAlone';
 import { sleep } from '../../renderer/utils/sleep';
-import { intl } from "../../renderer/intl";
+import { intl } from '../../renderer/intl';
 const config = require('../../config.js');
 
 const messages = defineMessages({
@@ -16,7 +16,8 @@ const messages = defineMessages({
   },
   newVersion: {
     id: 'core.reload.minerUpdater.newVersion',
-    defaultMessage: 'New version of {name} available {oldVersion} → {newVersion}',
+    defaultMessage:
+      'New version of {name} available {oldVersion} → {newVersion}',
   },
   failed: {
     id: 'core.reload.minerUpdater.failed',
@@ -24,8 +25,8 @@ const messages = defineMessages({
   },
   upToDate: {
     id: 'core.reload.minerUpdater.uptodate',
-    defaultMessage: 'Everything is up-to-date!'
-  }
+    defaultMessage: 'Everything is up-to-date!',
+  },
 });
 
 export default async function updateMiners(
@@ -70,16 +71,16 @@ export default async function updateMiners(
         const { downloaded, totalSize } = stats;
 
         ctx.setStatusWithoutAnimation(
-          `${message} @ ${Math.round(
-            downloaded / totalSize * 100
-          )}%`
+          `${message} @ ${Math.round(downloaded / totalSize * 100)}%`
         );
       });
 
       try {
         await downloader.fetch();
       } catch (e) {
-        const message = intl.formatMessage(messages.failed, { name: downloadable.name });
+        const message = intl.formatMessage(messages.failed, {
+          name: downloadable.name,
+        });
 
         ctx.setStatusWithoutAnimation(message);
         failed.push(downloadable.tag);

@@ -1,10 +1,12 @@
-import { observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 import DriverVersionTip from './driverVersion.tip';
 import AesOkTip from './aesOk.tip';
 import LargePagesTip from './largePages.tip';
+import VcredistTip from './vcredist.tip';
 
 export interface ITip {
+  id: string;
   name: any;
   workaround: any;
   level: number;
@@ -22,18 +24,27 @@ export class Tips {
   @observable tips: ITip[];
 
   constructor() {
-    this.tips = [new LargePagesTip(), new DriverVersionTip(), new AesOkTip()];
+    this.tips = [
+      new LargePagesTip(),
+      new VcredistTip(),
+      new DriverVersionTip(),
+      new AesOkTip(),
+    ];
   }
 
-  findTips(): void {
-    this.tips.forEach(tip =>
-      tip
-        .checkOut()
-        .catch(e => console.error('Failed to check ', tip.name, ' due to', e))
+  @action
+  async findTips(): Promise<any> {
+    return Promise.all(
+      this.tips.map(tip =>
+        tip
+          .checkOut()
+          .catch(e => console.error('Failed to check ', tip.name, ' due to', e))
+      )
     );
   }
 
-  getTipCount(): number {
+  @computed
+  get tipsCount(): number {
     return this.tips.filter(d => !d.isOk && d.couldBeFixed).length;
   }
 }

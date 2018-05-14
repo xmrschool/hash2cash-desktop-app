@@ -7,12 +7,14 @@ import { observable } from 'mobx';
 import { ITip } from './';
 import { Driver, PossibleArches } from '../../renderer/api/Api';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
+import { intl } from '../../renderer/intl';
 
 const compare = require('compare-versions');
 const debug = require('debug')('app:tips:driverVersion');
 
 export default class DriverVersionTip implements ITip {
-  name = 'Обновить драйвер';
+  id = 'driverVersion';
+  name = 'Update GPU drivers';
   @observable
   workaround: any = <FormattedMessage id="TIPS_DRIVER_VERSION_POSSIBLY_OLD" />;
   @observable couldBeFixed = true;
@@ -24,14 +26,18 @@ export default class DriverVersionTip implements ITip {
   @observable fixError = '';
 
   async checkOut() {
-    if (__WIN32__ === false) {
+    if (__WIN32__ === false || process.arch === 'ia32') {
       this.defined = false;
       return;
     }
 
+    this.name = intl.formatMessage({ id: 'TIPS_UPDATE_DRIVER_LABEL' });
+
     const parsedReport = JSON.parse(localStorage._rawCollectedReport);
-    const compatibleDevice = (parsedReport.openCl as Response).devices.find(
-      d => d.vendor.startsWith('NVIDIA')
+
+    if (!parsedReport || !parsedReport.openCl) return;
+    const compatibleDevice = (parsedReport.openCl as Response).devices.find(d =>
+      d.vendor.startsWith('NVIDIA')
     );
 
     if (!compatibleDevice) {

@@ -1,8 +1,4 @@
-import { remote } from 'electron';
-import { defineMessages } from 'react-intl';
-import { autoUpdater } from 'electron-updater';
 import { Context, ExpectedReturn } from './reloader';
-import { intl } from "../../renderer/intl";
 
 export function formatBytes(bytes: number, decimals: number = 2) {
   if (bytes === 0) return '0';
@@ -14,7 +10,7 @@ export function formatBytes(bytes: number, decimals: number = 2) {
   );
 }
 
-const messages = defineMessages({
+/*const messages = defineMessages({
   checking: {
     id: 'core.reload.updates.checking',
     defaultMessage: 'Checking app updates...',
@@ -26,24 +22,26 @@ const messages = defineMessages({
   getReady: {
     id: 'core.reload.updates.installingAfter',
     defaultMessage: `Installing update after {secs, number} {unreadCount, plural, one {second} other {seconds}}`,
-  }
-});
+  },
+});*/
 
 export default async function checkAppUpdates(
   ctx: Context
 ): Promise<ExpectedReturn> {
-  if (__DEV__) return { skipped: true };
-  ctx.setStatus('Checking for app updates...');
+  return { skipped: true };
+  /*ctx.setStatus('Checking for app updates...');
 
   (autoUpdater as any).app = remote.app;
   const update = await autoUpdater.checkForUpdates();
 
-  console.log('What\'s up?', update);
+  console.log("What's up?", update);
 
   // Then update available
   // ToDo is it better to use downloadPromise?
   if (update.downloadPromise) {
-    const message = intl.formatMessage(messages.newAvailable, { version: update.updateInfo.version });
+    const message = intl.formatMessage(messages.newAvailable, {
+      version: update.updateInfo.version,
+    });
     ctx.setStatusWithoutAnimation(message);
 
     autoUpdater.on('download-progress', stats => {
@@ -59,11 +57,15 @@ export default async function checkAppUpdates(
     autoUpdater.on('update-downloaded', () => {
       let secondsLeftBeforeQuit = 5;
 
-      const message = intl.formatMessage(messages.getReady, { secs: secondsLeftBeforeQuit });
+      const message = intl.formatMessage(messages.getReady, {
+        secs: secondsLeftBeforeQuit,
+      });
       ctx.setStatus(message);
       const interval = setInterval(() => {
         secondsLeftBeforeQuit--;
-        const message = intl.formatMessage(messages.getReady, { secs: secondsLeftBeforeQuit });
+        const message = intl.formatMessage(messages.getReady, {
+          secs: secondsLeftBeforeQuit,
+        });
         ctx.setStatus(message);
       }, 1000);
 
@@ -77,5 +79,5 @@ export default async function checkAppUpdates(
     return { dontContinue: true, blockUpdater: true };
   }
 
-  return {};
+  return {};*/
 }

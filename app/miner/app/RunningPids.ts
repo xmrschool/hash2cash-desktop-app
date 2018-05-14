@@ -7,7 +7,7 @@ export function getRunningPids(): number[] {
     }
 
     return [];
-   } catch (e) {
+  } catch (e) {
     return [];
   }
 }

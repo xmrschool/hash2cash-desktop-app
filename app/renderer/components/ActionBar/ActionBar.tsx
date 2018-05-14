@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { observer } from 'mobx-react';
+import tips from '../../../core/tips';
 import { Worker } from '../../api/MinerApi';
 import minerApi from '../../api/MinerApi';
 import globalState from '../../mobx-store/GlobalState';
@@ -12,7 +13,7 @@ export type Props = {
 const s = require('./ActionBar.css');
 const start = require('./play-button.svg');
 const stop = require('./pause-button.svg');
-const tips = require('./bell.svg');
+const tipsIcon = require('./bell.svg');
 const cards = require('./video-card.svg');
 
 @observer
@@ -60,7 +61,7 @@ export default class ActionBar extends React.Component<Props> {
   render() {
     const [mainState, secondary] = this.getGlobalPlayState(this.props.workers);
     const icon = mainState === 'stop' ? stop : start;
-    const tipsCount = 0;
+    const tipsCount = tips.tipsCount;
 
     return (
       <div className={s.row}>
@@ -70,8 +71,10 @@ export default class ActionBar extends React.Component<Props> {
           className={s.play}
           aria-label="Tips"
         >
-          <label className={s.label}><FormattedMessage id="DASHBOARD_MENU_TIPS" /></label>
-          <img src={tips} className={s.playButton} />
+          <label className={s.label}>
+            <FormattedMessage id="DASHBOARD_MENU_TIPS" />
+          </label>
+          <img src={tipsIcon} className={s.playButton} />
         </button>
         <button
           disabled={secondary}
@@ -79,7 +82,12 @@ export default class ActionBar extends React.Component<Props> {
           onClick={() => this.runEverything(mainState)}
           aria-label="Resume mining"
         >
-          <label className={s.label}><FormattedMessage id={`DASHBOARD_MENU_${mainState}`.toUpperCase()} defaultMessage={mainState} /></label>
+          <label className={s.label}>
+            <FormattedMessage
+              id={`DASHBOARD_MENU_${mainState}`.toUpperCase()}
+              defaultMessage={mainState}
+            />
+          </label>
           <img src={icon} className={s.playButton} />
         </button>
         <button
@@ -87,7 +95,9 @@ export default class ActionBar extends React.Component<Props> {
           style={{ pointerEvents: 'none', opacity: 0.6 }}
           aria-label="Devices"
         >
-          <label className={s.label}><FormattedMessage id="DASHBOARD_MENU_DEVICES" /></label>
+          <label className={s.label}>
+            <FormattedMessage id="DASHBOARD_MENU_DEVICES" />
+          </label>
           <img src={cards} className={s.playButton} />
         </button>
       </div>

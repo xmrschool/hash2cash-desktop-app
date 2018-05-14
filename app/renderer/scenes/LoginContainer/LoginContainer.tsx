@@ -51,7 +51,6 @@ export default class LoginContainer extends React.Component<
     const intl = (this.props as any).intl as InjectedIntl;
     const hasAccount = loginState.emailInfo.hasAccount;
 
-
     return (
       <div className={s.secondView}>
         <Input
@@ -126,9 +125,15 @@ export default class LoginContainer extends React.Component<
             {allowedToContinue && this.renderSecondView()}
             <div className={s.loginContainer}>
               <Button disabled={loginState.submitting} type="submit">
-                {allowedToContinue
-                  ? hasAccount ? <FormattedMessage id="LOGIN_LOGIN" /> : <FormattedMessage id="LOGIN_REGISTER" />
-                  : <FormattedMessage id="LOGIN_NEXT" />}
+                {allowedToContinue ? (
+                  hasAccount ? (
+                    <FormattedMessage id="LOGIN_LOGIN" />
+                  ) : (
+                    <FormattedMessage id="LOGIN_REGISTER" />
+                  )
+                ) : (
+                  <FormattedMessage id="LOGIN_NEXT" />
+                )}
               </Button>
             </div>
             <div style={{ marginTop: 20 }}>
