@@ -130,18 +130,15 @@ export default class Settings extends React.Component<
       });
 
       disable();
-
-      if (__DARWIN__) {
-        try {
-          // There is no another approach...
-          require('child_process').exec(
-            `osascript -e 'tell application "System Events" to delete login item "Hash to Cash"'`
-          );
-        } catch (e) {}
-      }
     }
 
     this.forceUpdate();
+  }
+
+  openLink(event: any) {
+    remote.shell.openExternal('https://crowdin.com/project/hash-to-cash-app');
+
+    event.preventDefault();
   }
 
   get runnedAtStartup() {
@@ -181,7 +178,30 @@ export default class Settings extends React.Component<
                 <option value="en">English</option>
                 <option value="ru">Русский</option>
                 <option value="uk">Український</option>
+                <option value="ro">Română (community-driven)</option>
               </select>
+            </div>
+          </div>
+          <div className={s.pick}>
+            <div className={s.communityDriven}>
+              <p>{d('LANGUAGE_COMMUNITY_EFFORT')}</p>
+              <p style={{ marginTop: 15, opacity: 1 }}>
+                <FormattedMessage
+                  id="LANGUAGE_COMMUNITY_APPLY"
+                  values={{
+                    site: (
+                      <a
+                        className={s.link}
+                        href="https://crowdin.com/project/hash-to-cash-app"
+                        target="_blank"
+                        onClick={this.openLink}
+                      >
+                        {d('LANGUAGE_COMMUNITY_LINK')}
+                      </a>
+                    ),
+                  }}
+                />
+              </p>
             </div>
           </div>
 

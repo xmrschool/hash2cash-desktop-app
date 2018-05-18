@@ -22,7 +22,6 @@ export class Server extends EventEmitter {
   }
 
   openDevTools() {
-    console.log('Trying to open server developer tools.. Hang on');
     this.window.webContents.openDevTools({
       mode: 'detach',
     });
@@ -46,7 +45,7 @@ export class Server extends EventEmitter {
       }
     });
     ipcMain.on('miner-server-port', (e: any, port: number) => {
-      console.log('received port: ', port);
+      console.log(`Miner server is listening on ${port} port`)
       if (appWindow) appWindow.sendMinerPort(port);
       serverPort = port;
     });

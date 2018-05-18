@@ -23,7 +23,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   workerName: string = 'MoneroCryptonight';
 
   path: string = '';
-  state: { [p: string]: any } = {};
+  state: { [p: string]: any } = { dynamicDifficulty: false };
   parameters: ParameterMap<Parameteres> = {
     power: 100,
     priority: 2,
@@ -72,7 +72,10 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   }
 
   getMenuItems(): MenuPicks {
-    return [this.openInExplorer()];
+    return [
+      this.openInExplorer(),
+      this.togglesState('dynamicDifficulty', 'miner.workers.dynamicDifficulty'),
+    ];
   }
 
   getPriorities() {
@@ -114,7 +117,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       '--max-cpu-usage': this.parameters.power,
       '--cpu-priority': this.parameters.priority,
       '-o': this.getPool('cryptonight'),
-      '-u': getLogin('MoneroCryptonight'),
+      '-u': getLogin('MoneroCryptonight', this.state.dynamicDifficulty),
       '-p': 'x',
     };
 

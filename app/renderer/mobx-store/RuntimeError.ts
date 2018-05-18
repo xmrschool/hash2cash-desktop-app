@@ -39,7 +39,7 @@ export class RuntimeError {
 
   @action
   expandStack() {
-    this.stackExpanded = true;
+    this.stackExpanded = !this.stackExpanded;
   }
 }
 

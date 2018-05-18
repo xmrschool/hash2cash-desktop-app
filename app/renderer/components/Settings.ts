@@ -6,6 +6,7 @@ import MinerObserver from '../mobx-store/MinerObserver';
 import globalState from '../mobx-store/GlobalState';
 import minerApi from '../api/MinerApi';
 import InjectedIntl = ReactIntl.InjectedIntl;
+import socket from '../socket';
 
 const separator: Electron.MenuItemConstructorOptions = { type: 'separator' };
 
@@ -46,6 +47,10 @@ export default function buildMenu(
           User.clearAll();
           MinerObserver.clearAll();
           minerApi.workers.forEach(work => work.stop());
+          socket.disconnect();
+          setTimeout(() => {
+            socket.connect();
+          }, 500);
 
           router.history.push('/login');
         }

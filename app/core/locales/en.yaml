@@ -147,3 +147,25 @@ miner.workers.preserveConfig: Preserve config
 miner.workers.disableAmd: Disable AMD
 miner.workers.disableNvidia: Disable NVidia
 miner.workers.affineToCpu: Affine to CPU
+miner.workers.dynamicDifficulty: Dynamic difficulty
+
+miner.workers.base.noDevices: No devices found. Try to update your drivers and reload app
+miner.workers.base.noVcredist: Try to install VCRedist 2017 or disable AMD
+miner.workers.base.tooExpensive: Try to reduce power of GPU
+miner.workers.base.stoppedWithNoCode: Miner {workerName} stopped with no exit code
+miner.workers.base.enoent: Miner doesn't exist. Redownload it
+
+runtimeError.workerStopped: Miner stopped
+runtimeError.noFile: It seems that antivirus deleted miner. You have to add {path} path to run it, and then, reload app
+runtimeError.noAccess: No access to miner. It may happen due to your antivirus, feel free to add {path} to exception list, and then, reload app
+runtimeError.undefinedError: Undefined file-system error ({code} – {errno}). Try again later, or, contact us
+runtimeError.close: Close
+
+dashboard.switchArch: Hashrate will be lower and GPU won't work
+dashboard.switchArchDesc: It's all due to invalid app installer. You should download x64 installer instead of x32.
+dashboard.downloadForRightArch: Download x64 installer
+dashboard.skipArchWarning: Skip it
+
+LANGUAGE_COMMUNITY_EFFORT: Hash to Cash localization is partially community-driven. If you want to see Hash to Cash translated into your language, we'd love and reward your help.
+LANGUAGE_COMMUNITY_APPLY: To apply visit our {site}
+LANGUAGE_COMMUNITY_LINK: translation site

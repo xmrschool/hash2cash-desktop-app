@@ -9,6 +9,7 @@ import buildTray from './tray';
 import enableUpdates from './appUpdater';
 import trackError from '../core/raven';
 import { enable } from '../renderer/utils/startup';
+import './updateIpc';
 
 require('source-map-support').install();
 

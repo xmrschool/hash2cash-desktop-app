@@ -54,7 +54,7 @@ export default class FileDownloaderAlone extends EventEmitter {
     this.totalSize = downloadable.size;
   }
 
-  async getDirectory(miner: Downloadable) {
+  static async getDirectory(miner: Downloadable) {
     const dir = path.join(librariesPath, miner.name);
 
     await require('fs-extra').ensureDir(dir);
@@ -116,7 +116,7 @@ export default class FileDownloaderAlone extends EventEmitter {
 
     return new Promise(async (resolve, reject) => {
       try {
-        const outputDir = await this.getDirectory(miner);
+        const outputDir = await FileDownloaderAlone.getDirectory(miner);
         const realFileName = !miner.format
           ? '/downloaded'
           : `/downloaded.${miner.format}`;
@@ -134,8 +134,11 @@ export default class FileDownloaderAlone extends EventEmitter {
 
             if (miner.format === 'zip') {
               // Additional, we should check if file was unpacked properly
-              if (!(await exists(outputDir + '/unpacked')))
+              if (!(await exists(outputDir + '/unpacked'))) {
                 await this.unpackFile(futurePathToFile, outputDir);
+
+                await fs.outputFile(outputDir + '/unpacked', '');
+              }
             }
             return resolve();
           } catch (e) {

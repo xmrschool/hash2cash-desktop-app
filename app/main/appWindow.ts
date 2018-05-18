@@ -102,7 +102,7 @@ export class AppWindow {
     });
 
     this.window.webContents.on('did-finish-load', () => {
-      console.log('did-finish-load');
+      console.log('Renderer has been initialized');
       this.window.webContents.setVisualZoomLevelLimits(1, 1);
       this.bindCrash();
       this.maybeEmitDidLoad();
@@ -213,10 +213,7 @@ export class AppWindow {
 
   /** Send the app launch timing stats to the renderer. */
   public sendMinerPort(port: number) {
-    console.log('gonna send port: ', port);
-
     this.onDidLoad(() => {
-      console.log('sending port repeatedly: ', port);
       this.window.webContents.send('miner-server-port', port);
     });
 

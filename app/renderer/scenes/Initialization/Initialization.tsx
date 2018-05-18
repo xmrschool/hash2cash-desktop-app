@@ -238,6 +238,7 @@ export default class Initialization extends React.Component<
   async reload() {
     initializationState = new InitializationState();
     minerObserver.clearAll();
+    console.log('Calling forceUpdate()');
     this.forceUpdate();
     await sleep(1000);
     this.action();

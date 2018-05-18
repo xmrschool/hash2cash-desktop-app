@@ -5,7 +5,6 @@ import workers from './workers';
 import { Downloadable } from '../../renderer/api/Api';
 import workersCache, { WorkersCache } from './workersCache';
 import {
-  algorithmsDefaultDiff,
   algorithmsMaxDiff,
 } from './constants/algorithms';
 import { Algorithms } from './constants/algorithms';
@@ -91,12 +90,19 @@ export async function getWorkers(updateCache = false): Promise<WorkersCache> {
   return workersCache;
 }
 
-export function getLogin(algorithm: Algorithms): string {
+export function getLogin(
+  algorithm: Algorithms,
+  dynamicDifficulty: boolean = false
+): string {
   const rigName = localStorage.rigName ? `.${localStorage.rigName}` : '';
-  return `app/${LocalStorage.userId}${rigName}+${getDifficulty(algorithm)}`;
+  const diff = getDifficulty(algorithm);
+
+  return `app/${LocalStorage.userId}${rigName}${
+    diff && !dynamicDifficulty ? `+${diff}` : ''
+  }`;
 }
 
-export function getDifficulty(algorithm: Algorithms): number {
+export function getDifficulty(algorithm: Algorithms): number | null {
   try {
     const benchmark = LocalStorage.benchmark!.data;
 
@@ -109,13 +115,7 @@ export function getDifficulty(algorithm: Algorithms): number {
     }
     throw new Error('Benchmark record doesnt exist');
   } catch (e) {
-    const fallback = algorithmsDefaultDiff[algorithm];
-
-    console.warn(
-      `Failed to get difficulty of benchmark... Using ${fallback} as fallback`,
-      e
-    );
-    return fallback;
+    return null;
   }
 }
 

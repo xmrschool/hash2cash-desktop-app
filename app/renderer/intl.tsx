@@ -9,8 +9,9 @@ import {
 import * as en from 'react-intl/locale-data/en';
 import * as ru from 'react-intl/locale-data/ru';
 import * as uk from 'react-intl/locale-data/uk';
+import * as ro from 'react-intl/locale-data/ro';
 
-addLocaleData([...en, ...ru, ...uk]);
+addLocaleData([...en, ...ru, ...uk, ...ro]);
 import { LocalStorage } from './utils/LocalStorage';
 import globalState from './mobx-store/GlobalState';
 import userOptions from './mobx-store/UserOptions';
@@ -47,6 +48,7 @@ export class IntlLocale extends React.Component<any> {
 @observer
 export class LocaleProvider extends React.Component<any> {
   componentWillReceiveProps() {
+    console.log('calling forceUpdate()');
     this.forceUpdate();
   }
 
@@ -107,6 +109,7 @@ export function checkIfTranslateOutdated() {
 }
 
 const hot = (module as any).hot;
+checkIfTranslateOutdated();
 if (hot) {
   hot.accept('../core/locales/', () => {
     checkIfTranslateOutdated();

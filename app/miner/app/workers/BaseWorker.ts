@@ -88,8 +88,8 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
       type: 'function',
       localizedName: 'miner.workers.openInShell',
       onCalled: async () => {
-        console.log('Opening up explorer:');
-        remote.shell.openExternal(this.path);
+        console.log('Opening up explorer:', this.path);
+        remote.shell.openItem(this.path);
 
         return true;
       },
@@ -107,7 +107,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
 
         return true;
       },
-    }
+    };
   }
   untouchedConfig(): MenuPick {
     return {
@@ -142,18 +142,35 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
     if (this.pid) {
       shiftRunningPid(this.pid);
     }
-    if (this.willQuit) return;
+    if (this.willQuit || !this.running) return;
 
-    const errorMessage = `Worker ${this.workerName} crashed with code ${data}`;
+    let errorMessage = `Worker ${this.workerName} stopped with code ${data}`;
 
-    if (data.code === 'ENOENT') {
+    if (data === 1) {
+      errorMessage = 'miner.workers.base.noDevices';
+    } else if (data === 3221225781) {
+      errorMessage = 'miner.workers.base.noVcredist';
+    } else if (data === 3) {
+      errorMessage = 'miner.workers.base.tooExpensive';
+    } else if (data === null) {
+      errorMessage = 'miner.workers.base.stoppedWithNoCode';
+    }
+
+    console.log('Handling termination', data);
+    if ((data && data.code === 'ENOENT') || data === -4058 || data === 4058) {
       // If miner has been deleted we remove record that indicates if miner has been unpacked
       fs.remove(this.pathTo('unpacked'));
+
+      errorMessage = 'miner.workers.base.enoent';
     }
-    console.error(errorMessage);
     this.emit({
       running: false,
-      _data: { grateful: isClose, message: errorMessage, raw: data },
+      _data: {
+        grateful: isClose,
+        message: errorMessage,
+        code: data,
+        raw: data,
+      },
     });
 
     this.running = false;

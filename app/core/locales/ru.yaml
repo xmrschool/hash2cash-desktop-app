@@ -145,3 +145,21 @@ miner.workers.preserveConfig: Не менять конфиг
 miner.workers.disableAmd: Отключить AMD
 miner.workers.disableNvidia: Отключить Nvidia
 miner.workers.affineToCpu: Оптимизировать с CPU
+miner.workers.dynamicDifficulty: Динамическая сложность майнинга
+miner.workers.base.noDevices: Не найдено подходящих устройств. Обновите драйвера и перезапустите приложение
+miner.workers.base.noVcredist: Попробуйте установить VCRedist 2017 или отключить майнинг на AMD
+miner.workers.base.tooExpensive: Попробуйте снизить мощность майнинга на GPU
+miner.workers.base.stoppedWithNoCode: Майнер {workerName} внезапно остановился без кода ошибки
+miner.workers.base.enoent: Майнер не найден. Перезапустите приложение
+runtimeError.workerStopped: Майнер остановился
+runtimeError.noFile: Похоже, что антивирус удалил майнер. Вам нужно добавить путь {path} в исключения антивируса, а затем перезапустить приложение
+runtimeError.noAccess: Нет доступа к майнеру. Возможно его блокирует антивирус, добавьте путь {path} в исключения, а потом, перезапустите приложение
+runtimeError.undefinedError: Неизвестная ошибка файловой системы ({code} - {errno}). Попробуйте снова позже, или, свяжитесь с нами
+runtimeError.close: Закрыть
+dashboard.switchArch: Скорость майнинга будет ниже, а майнинг на GPU не будет работать
+dashboard.switchArchDesc: Дело в неправильно скачанном установщике. Вам нужно перекачать установщик для x64 заново.
+dashboard.downloadForRightArch: Скачать установщик для x64
+dashboard.skipArchWarning: Игнорировать
+LANGUAGE_COMMUNITY_EFFORT: Hash to Cash отчасти переводится такими же людьми как вы. Если вы хотите видеть Hash to Cash на своем языке, мы будем рады вашей помощи и вознаградим ее.
+LANGUAGE_COMMUNITY_APPLY: Чтобы начать, посетите {site}
+LANGUAGE_COMMUNITY_LINK: сайт для перевода

@@ -11,7 +11,7 @@ export class UserOptions {
   }
 
   getLocale() {
-    const allowed = ['en', 'ru', 'uk'];
+    const allowed = ['en', 'ru', 'uk', 'ro'];
 
     const outerLocale = navigator.language.slice(0, 2);
 

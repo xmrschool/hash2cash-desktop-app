@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import { defineMessages } from 'react-intl';
 import { Context, ExpectedReturn } from './reloader';
 import { default as Api, Downloadable } from '../../renderer/api/Api';
@@ -48,7 +49,10 @@ export default async function updateMiners(
       d => d.name === downloadable.name
     );
 
-    if (!local || local.md5 !== downloadable.md5) {
+    const outputDir = await FileDownloaderAlone.getDirectory(downloadable);
+    const unpackedExists = await (fs.exists as any)(outputDir + '/unpacked');
+
+    if (!local || local.md5 !== downloadable.md5 || !unpackedExists) {
       uptoDate = false;
       const message = intl.formatMessage(messages.newVersion, {
         name: downloadable.name,
@@ -114,7 +118,6 @@ export default async function updateMiners(
     await sleep(1000);
   } else {
     await minerApi.getWorkers(true);
-    ctx.refreshTrigger();
   }
   return {};
 }

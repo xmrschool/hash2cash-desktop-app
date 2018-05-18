@@ -30,6 +30,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
     noAMD: false,
     noNVIDIA: false,
     affineToCpu: false,
+    dynamicDifficulty: false,
   };
   parameters: ParameterMap<Parameteres> = {
     main: 'full',
@@ -157,7 +158,7 @@ ${outer.join(',\n')}
     "pool_list" :
 [
 	{"pool_address" : ${s(this.getPool('cryptonight'))}, "wallet_address" : ${s(
-      getLogin('GpuCryptonight'),
+      getLogin('GpuCryptonight', this.state.dynamicDifficulty),
     )}, "rig_id" : ${s(
       localStorage.rigName || '',
     )}, "pool_password" : "", "use_nicehash" : true, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
@@ -217,6 +218,7 @@ ${outer.join(',\n')}
       this.togglesState('noAMD', 'miner.workers.disableAmd'),
       this.togglesState('noNVIDIA', 'miner.workers.disableNvidia'),
       this.togglesState('affineToCpu', 'miner.workers.affineToCpu'),
+      this.togglesState('dynamicDifficulty', 'miner.workers.dynamicDifficulty'),
     ];
   }
 

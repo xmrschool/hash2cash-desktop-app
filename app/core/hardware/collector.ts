@@ -125,16 +125,20 @@ export default async function collectHardware(): Promise<Architecture> {
    * ToDo Works almost fine, but fails somewhere. So, we should provide ability to disable this.
    * I dunno how to fix it, maybe, include OpenCL.dll somehow?
    */
-  const openCl = !localStorage.skipOpenCl && process.arch !== 'ia32'
-    ? await safeGetter(getOpenCLDevices, 'openCl')
-    : null;
+  const openCl =
+    !localStorage.skipOpenCl && process.arch !== 'ia32'
+      ? await safeGetter(getOpenCLDevices, 'openCl')
+      : null;
   // CudaFailReason - is a variable to pass `unavailableReason` later.
   let cudaFailReason: string | undefined;
-  const cuda = process.arch !== 'ia32' ? await safeGetter(
-    getCudaDevices,
-    'cuda',
-    err => (cudaFailReason = err.message)
-  ) : null;
+  const cuda =
+    process.arch !== 'ia32'
+      ? await safeGetter(
+          getCudaDevices,
+          'cuda',
+          err => (cudaFailReason = err.message)
+        )
+      : null;
 
   if (cudaFailReason) {
     console.warn(
@@ -227,7 +231,7 @@ export default async function collectHardware(): Promise<Architecture> {
             deviceID: device.index ? `opencl-${device.index}` : '',
             model: device.name,
             collectedInfo: device,
-            unavailableReason: cudaFailReason,
+            unavailableReason: intl.formatMessage(messages.cudaFailed),
           });
         });
     }
@@ -266,7 +270,7 @@ export default async function collectHardware(): Promise<Architecture> {
     const error = new Error(
       `Your platform (OS) is unsupported [${
         process.platform
-      }]. It's strange, we will try to investigate your problem.`
+      }]. It's strange, we will investigate this error`
     );
 
     trackError(error);

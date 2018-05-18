@@ -436,7 +436,12 @@ export class InnerDashboard extends React.Component<any> {
   }
 
   componentDidMount() {
-    if (minerApi.workers.length === 0) minerApi.getWorkers();
+    if (minerApi.workers.length === 0) {
+      minerApi.getWorkers();
+
+      // Repeat request after WS conencted
+      setTimeout(() => minerApi.getWorkers(), 250);
+    }
 
     User.watchOutForSubmitting();
   }
@@ -499,6 +504,7 @@ export class InnerDashboard extends React.Component<any> {
   }
 
   refreshTrigger() {
+    console.log('Triggering forceUpdate()');
     this.forceUpdate();
   }
 

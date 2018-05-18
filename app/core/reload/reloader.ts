@@ -1,6 +1,7 @@
 import collectDevices from './collectDevices';
 import updateMiners from './updateMiners';
 import checkTips from './checkTips';
+import checkAppUpdates from './checkAppUpdate';
 
 export type Context = {
   setStatus: Function;
@@ -15,7 +16,7 @@ export type ExpectedReturn = {
   blockUpdater?: boolean;
 };
 
-const updaters = [collectDevices, updateMiners, checkTips];
+const updaters = [checkAppUpdates, collectDevices, updateMiners, checkTips];
 
 // Returns if reloader should be called anymore
 export default async function startReload(ctx: Context): Promise<boolean> {

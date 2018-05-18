@@ -1,7 +1,6 @@
 import * as io from 'socket.io-client';
 import CurrenciesService from './mobx-store/CurrenciesService';
 import { LocalStorage } from './utils/LocalStorage';
-import { checkIfTranslateOutdated } from './intl';
 const config = require('../config.js'); // tslint:disable-line
 
 export type MinerReadyCallback = (_socket: SocketIOClient.Socket) => any;
@@ -23,7 +22,6 @@ async function delayedCreate() {
   socket.emit('appInfo', '', (response: any) => {
     LocalStorage.appInfo = response;
 
-    checkIfTranslateOutdated();
     const ticker = response.ticker;
     if (Array.isArray(ticker)) {
       CurrenciesService.setTicker(response.ticker);
@@ -35,7 +33,6 @@ async function delayedCreate() {
   // Then we subscribe to updates
   socket.on('appInfo', (response: any) => {
     LocalStorage.appInfo = response;
-    checkIfTranslateOutdated();
   });
 }
 

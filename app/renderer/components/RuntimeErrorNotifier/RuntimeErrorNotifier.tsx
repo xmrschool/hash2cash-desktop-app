@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import { observer } from 'mobx-react';
 import RuntimeError, { isFsError } from '../../mobx-store/RuntimeError';
 import Modal from '../Modal/Modal';
@@ -6,6 +7,30 @@ import { librariesPath } from '../../utils/FileDownloader';
 import Button from '../Button/Button';
 
 const close = require('../../../core/icon/close.svg');
+
+const messages = defineMessages({
+  stopped: {
+    id: 'runtimeError.workerStopped',
+    defaultMessage: 'Miner stopped',
+  },
+  noFile: {
+    id: 'runtimeError.noFile',
+    defaultMessage: `It seems that antivirus deleted miner. You have to add {path} path to run it, and then, reload app`,
+  },
+  noAccess: {
+    id: 'runtimeError.noAccess',
+    defaultMessage: `No access to miner. It may happen due to your antivirus, feel free to add {path} to exception list, and then, reload app`,
+  },
+  undefinedError: {
+    id: 'runtimeError.undefinedError',
+    defaultMessage: 'Undefined file-system error ({code} – {errno}). Try again later, or, contact us',
+  },
+  close: {
+    id: 'runtimeError.close',
+    defaultMessage: 'Close',
+  },
+});
+
 // Use this class along with RuntimeError class to handle miner startup errors
 @observer
 export default class RuntimeErrorNotifier extends React.Component {
@@ -28,7 +53,7 @@ export default class RuntimeErrorNotifier extends React.Component {
 
     return (
       <code onClick={this.selectCopy} onContextMenu={this.selectCopy}>
-        {librariesPath}
+        {librariesPath.replace(/\//g, prefix)}
         {prefix}
       </code>
     );
@@ -45,23 +70,19 @@ export default class RuntimeErrorNotifier extends React.Component {
         case 'ENOENT':
           return (
             <p style={styles}>
-              Похоже, что файл майнера удалил антивирус. Добавьте папку{' '}
-              {this.renderPath()} в список исключений и перезапустите бенчмарк
+              <FormattedMessage {...messages.noFile} values={{ path: this.renderPath() }} />
             </p>
           );
         case 'EACCESS':
           return (
             <p style={styles}>
-              Нет доступа к файлу. Возможно, его заблокировал антивирус или вы
-              используете x32 версию для 64-разрядной системы. Если у вас стоит
-              антивирус - добавьте папку {this.renderPath()} в список исключений
-              и перезапустите бенчмарк
+              <FormattedMessage {...messages.noAccess} values={{ path: this.renderPath() }} />
             </p>
           );
         default:
           return (
             <p style={styles}>
-              Ошибка файловой системы: {raw.code} - {raw.errno}
+              <FormattedMessage {...messages.undefinedError} values={raw} />
             </p>
           );
       }
@@ -76,16 +97,21 @@ export default class RuntimeErrorNotifier extends React.Component {
       position: 'absolute' as any,
       right: 40,
       top: 40,
-      width: 22,
-      opacity: 0.8,
+      width: 18,
+      opacity: 0.9,
+      cursor: 'pointer',
     };
     const { raw, stack } = RuntimeError.error!;
     return (
       <Modal>
-        <img src={close} style={closeStyles} />
-        <h2>Worker has been stopped</h2>
+        <img
+          src={close}
+          style={closeStyles}
+          onClick={RuntimeError.closeError}
+        />
+        <h2><FormattedMessage {...messages.stopped} /></h2>
         {this.renderPossibleFix()}
-        <p onClick={RuntimeError.expandStack}>Stack trace:</p>
+        <p onClick={RuntimeError.expandStack}>{RuntimeError.stackExpanded ? 'Hide' : 'Show'} error details</p>
         {RuntimeError.stackExpanded && (
           <>
             {raw && <code>{JSON.stringify(raw, null, 2)}</code>}
@@ -93,7 +119,7 @@ export default class RuntimeErrorNotifier extends React.Component {
           </>
         )}
         <Button style={{ marginTop: 40 }} onClick={RuntimeError.closeError}>
-          Закрыть
+          <FormattedMessage {...messages.close} />
         </Button>
       </Modal>
     );
