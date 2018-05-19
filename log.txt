@@ -1,1353 +1,933 @@
-[2018-05-07 18:36:57] no active pools, stop mining
-ms)
-:80 diff 911
-0m huge pages [01;31m0/3 0%[0m memory [01;36m6.0 MB
-
-
-e
- * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:22:52]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:22:52]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:22:52]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:22:52]  * API PORT:     25000
-[2018-03-05 10:22:52]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:22:52]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:22:52]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:22:53] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:22:53] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:22:58] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:23:02] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:23:43]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:23:43]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:23:43]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:23:43]  * API PORT:     25000
-[2018-03-05 10:23:43]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:23:43]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:23:43]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:23:43]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:23:43] HTTP Daemon failed to start.
-[2018-03-05 10:23:43] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:23:43] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:24:02] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:24:11] accepted (1/0) diff 3000 (55 ms)
-[2018-03-05 10:24:24] accepted (2/0) diff 3000 (55 ms)
-[2018-03-05 10:24:53]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:24:53]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:24:53]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:24:53]  * API PORT:     25000
-[2018-03-05 10:24:53]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:24:53]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:24:53]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:24:53]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:24:53] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:24:53] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:25:02] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:25:22]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:25:22]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:25:22]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:25:22]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:25:22]  * API PORT:     25000
-[2018-03-05 10:25:22]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:25:22]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:25:22]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:25:22] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:25:22] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:25:31] accepted (1/0) diff 3000 (55 ms)
-[2018-03-05 10:25:40]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:25:40]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:25:40]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:25:40]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:25:40]  * API PORT:     25000
-[2018-03-05 10:25:40]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:25:40]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:25:40]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:25:40] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:25:40] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:25:48] accepted (1/0) diff 3000 (55 ms)
-[2018-03-05 10:26:02] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:26:34]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:26:34]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:26:34]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:26:34]  * API PORT:     25000
-[2018-03-05 10:26:34]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:26:34]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:26:34]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:26:34]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:26:34] HTTP Daemon failed to start.
-[2018-03-05 10:26:35] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:26:35] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:27:41]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:27:41]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:27:41]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:27:41]  * API PORT:     25000
-[2018-03-05 10:27:41]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:27:41]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:27:41]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:27:41]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:27:41] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:27:41] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:28:02] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:30:33]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:30:33]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:30:33]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:30:33]  * API PORT:     25000
-[2018-03-05 10:30:33]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:30:33]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:30:33]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:30:33]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:30:33] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:30:33] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:30:42] accepted (1/0) diff 3000 (55 ms)
-[2018-03-05 10:31:03] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 10:35:43]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:35:43]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:35:43]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:35:43]  * API PORT:     25000
-[2018-03-05 10:35:43]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:35:43]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:35:43]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:35:43]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:35:44] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:35:44] new job from xmr.pool.hashto.cash:8080 diff 2984
-[2018-03-05 10:36:03] new job from xmr.pool.hashto.cash:8080 diff 2984
-[2018-03-05 10:36:26] accepted (1/0) diff 2984 (55 ms)
-[2018-03-05 10:36:43]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:36:43]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:36:43]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:36:43]  * API PORT:     25000
-[2018-03-05 10:36:43]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:36:43]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:36:43]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:36:43]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:36:43] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:36:43] new job from xmr.pool.hashto.cash:8080 diff 2984
-[2018-03-05 10:37:03] accepted (1/0) diff 2984 (55 ms)
-[2018-03-05 10:37:29]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:37:29]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:37:29]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:37:29]  * API PORT:     25000
-[2018-03-05 10:37:29]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:37:29]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:37:29]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:37:29]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:37:29] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:37:29] new job from xmr.pool.hashto.cash:8080 diff 2984
-[2018-03-05 10:38:03] new job from xmr.pool.hashto.cash:8080 diff 2984
-[2018-03-05 10:38:04] accepted (1/0) diff 2984 (55 ms)
-[2018-03-05 10:38:10] accepted (2/0) diff 2984 (55 ms)
-[2018-03-05 10:38:14] accepted (3/0) diff 2984 (55 ms)
-[2018-03-05 10:52:15]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:52:15]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:52:15]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:52:15]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:52:15]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:52:15]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:52:15]  * API PORT:     25000
-[2018-03-05 10:52:15]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:52:15] new job from xmr.pool.hashto.cash:8080 diff 2984
-[2018-03-05 10:52:15] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:59:32]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 10:59:32]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 10:59:32]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 10:59:32]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 10:59:32]  * API PORT:     25000
-[2018-03-05 10:59:32]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 10:59:32]  * HUGE PAGES:   available, enabled
-[2018-03-05 10:59:32]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 10:59:32] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 10:59:32] new job from xmr.pool.hashto.cash:8080 diff 2984
-[2018-03-05 10:59:39] accepted (1/0) diff 2984 (55 ms)
-[2018-03-05 11:01:00]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:01:00]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:01:00]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:01:00]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:01:00]  * API PORT:     25000
-[2018-03-05 11:01:00]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:01:00]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:01:00]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:01:00] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:01:00] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:01:02] accepted (1/0) diff 3000 (56 ms)
-[2018-03-05 11:01:04] accepted (2/0) diff 3000 (55 ms)
-[2018-03-05 11:01:04] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:01:20] accepted (3/0) diff 3000 (55 ms)
-[2018-03-05 11:01:24] accepted (4/0) diff 3000 (90 ms)
-[2018-03-05 11:01:47] accepted (5/0) diff 3000 (55 ms)
-[2018-03-05 11:01:48] accepted (6/0) diff 3000 (55 ms)
-[2018-03-05 11:01:56] accepted (7/0) diff 3000 (55 ms)
-[2018-03-05 11:02:09] accepted (8/0) diff 3000 (55 ms)
-[2018-03-05 11:02:10] accepted (9/0) diff 3000 (55 ms)
-[2018-03-05 11:02:25] accepted (10/0) diff 3000 (55 ms)
-[2018-03-05 11:02:25] accepted (11/0) diff 3000 (56 ms)
-[2018-03-05 11:02:53] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:02:56] accepted (12/0) diff 3000 (55 ms)
-[2018-03-05 11:03:05] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:03:11] accepted (13/0) diff 3000 (55 ms)
-[2018-03-05 11:03:22] accepted (14/0) diff 3000 (55 ms)
-[2018-03-05 11:03:25] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:36:01]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:36:01]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:36:01]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:36:01]  * API PORT:     25000
-[2018-03-05 11:36:01]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:36:01]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:36:01]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:36:01]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:36:01] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:36:01] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:36:07] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:36:09] accepted (1/0) diff 3000 (55 ms)
-[2018-03-05 11:36:14]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:36:14]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:36:14]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:36:14]  * API PORT:     25000
-[2018-03-05 11:36:14]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:36:14]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:36:14]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:36:14]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:36:14] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:36:14] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:36:27] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:36:33] accepted (1/0) diff 3000 (55 ms)
-[2018-03-05 11:37:09]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:37:09]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:37:09]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:37:09]  * API PORT:     25000
-[2018-03-05 11:37:09]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:37:09]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:37:09]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:37:09]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:37:09] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:37:09] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:38:33]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:38:33]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:38:33]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:38:33]  * API PORT:     25000
-[2018-03-05 11:38:33]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:38:33]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:38:33]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:38:33]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:38:34] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:38:34] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:38:37] accepted (1/0) diff 3000 (55 ms)
-[2018-03-05 11:38:50] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:39:07] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:39:17] accepted (2/0) diff 3000 (139 ms)
-[2018-03-05 11:39:28] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-05 11:40:07]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:40:07]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:40:07]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:40:07]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:40:07]  * API PORT:     25000
-[2018-03-05 11:40:07]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:40:07]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:40:07]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:40:07] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:40:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:40:18] accepted (1/0) diff 3705 (55 ms)
-[2018-03-05 11:40:51]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:40:51]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:40:51]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:40:51]  * API PORT:     25000
-[2018-03-05 11:40:51]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:40:51]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:40:51]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:40:51]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:40:51] HTTP Daemon failed to start.
-[2018-03-05 11:40:51] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:40:51] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:40:52]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:40:52]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:40:52]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:40:52]  * API PORT:     25000
-[2018-03-05 11:40:52]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:40:52]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:40:52]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:40:52]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:40:52] HTTP Daemon failed to start.
-[2018-03-05 11:40:52] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:40:52] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:41:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:41:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:41:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:41:13] accepted (1/0) diff 3705 (55 ms)
-[2018-03-05 11:41:54]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:41:54]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:41:54]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:41:54]  * API PORT:     25000
-[2018-03-05 11:41:54]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:41:54]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:41:54]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:41:54]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:41:55] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:41:55] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:42:00] accepted (1/0) diff 3705 (55 ms)
-[2018-03-05 11:42:03] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:42:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:42:24] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:42:29] accepted (2/0) diff 3705 (55 ms)
-[2018-03-05 11:43:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:43:07]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:43:07]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:43:07]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:43:07]  * API PORT:     25000
-[2018-03-05 11:43:07]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:43:07]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:43:07]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:43:07]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:43:07] HTTP Daemon failed to start.
-[2018-03-05 11:43:07] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:43:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:43:15] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:43:15] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:43:46] accepted (1/0) diff 3705 (55 ms)
-[2018-03-05 11:44:32]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-05 11:44:32]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-05 11:44:32]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-05 11:44:32]  * API PORT:     25000
-[2018-03-05 11:44:32]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-05 11:44:32]  * HUGE PAGES:   available, enabled
-[2018-03-05 11:44:32]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-05 11:44:32]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-05 11:44:32] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-05 11:44:32] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:45:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:45:46] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:46:03] accepted (1/0) diff 3705 (55 ms)
-[2018-03-05 11:46:06] accepted (2/0) diff 3705 (55 ms)
-[2018-03-05 11:46:19] accepted (3/0) diff 3705 (56 ms)
-[2018-03-05 11:47:06] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:47:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:47:12] accepted (4/0) diff 3705 (55 ms)
-[2018-03-05 11:47:33] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:47:45] accepted (5/0) diff 3705 (55 ms)
-[2018-03-05 11:48:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:48:38] accepted (6/0) diff 3705 (55 ms)
-[2018-03-05 11:49:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:49:27] accepted (7/0) diff 3705 (58 ms)
-[2018-03-05 11:49:37] accepted (8/0) diff 3705 (55 ms)
-[2018-03-05 11:50:07] new job from xmr.pool.hashto.cash:8080 diff 3705
-[2018-03-05 11:50:09] accepted (9/0) diff 3705 (56 ms)
-[2018-03-05 11:50:09] accepted (10/0) diff 3705 (55 ms)
-[2018-03-05 11:50:18] accepted (11/0) diff 3705 (55 ms)
-[2018-03-06 16:45:05]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-06 16:45:05]  * HUGE PAGES:   available, enabled
-[2018-03-06 16:45:05]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-06 16:45:05]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-06 16:45:05]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-06 16:45:05]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-06 16:45:05]  * API PORT:     25000
-[2018-03-06 16:45:05]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-06 16:45:05] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-06 16:45:05] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-06 16:45:19] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-06 16:45:44] accepted (1/0) diff 3000 (55 ms)
-[2018-03-09 19:28:02]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 19:28:02]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 19:28:02]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 19:28:02]  * API PORT:     25000
-[2018-03-09 19:28:02]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 19:28:02]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 19:28:02]  * HUGE PAGES:   available, enabled
-[2018-03-09 19:28:02]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 19:28:02] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 19:28:02] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 19:28:05] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 19:28:18] accepted (1/0) diff 3000 (55 ms)
-[2018-03-09 19:28:21] accepted (2/0) diff 3000 (55 ms)
-[2018-03-09 19:28:58] accepted (3/0) diff 3000 (55 ms)
-[2018-03-09 19:34:49]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 19:34:49]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 19:34:49]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 19:34:49]  * API PORT:     25000
-[2018-03-09 19:34:49]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 19:34:49]  * HUGE PAGES:   available, enabled
-[2018-03-09 19:34:49]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 19:34:49]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 19:34:50] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 19:34:50] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 19:34:50] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 19:35:08] accepted (1/0) diff 3000 (56 ms)
-[2018-03-09 19:35:27] accepted (2/0) diff 3000 (56 ms)
-[2018-03-09 19:35:27] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 19:35:41] accepted (3/0) diff 3000 (56 ms)
-[2018-03-09 19:35:46] accepted (4/0) diff 3000 (56 ms)
-[2018-03-09 19:35:50] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 19:56:55]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 19:56:55]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 19:56:55]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 19:56:55]  * API PORT:     25000
-[2018-03-09 19:56:55]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 19:56:55]  * HUGE PAGES:   available, enabled
-[2018-03-09 19:56:55]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 19:56:55]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 19:56:55] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 19:56:55] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 19:57:30] accepted (1/0) diff 3000 (56 ms)
-[2018-03-09 19:57:40] accepted (2/0) diff 3000 (57 ms)
-[2018-03-09 19:57:50] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:07:03]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:07:03]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:07:03]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:07:03]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:07:03]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:07:03]  * API PORT:     25000
-[2018-03-09 20:07:03]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:07:03]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:07:03] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:07:03] new job from xmr.pool.hashto.cash:8080 diff 2880
-[2018-03-09 20:07:38] accepted (1/0) diff 2880 (56 ms)
-[2018-03-09 20:07:42] accepted (2/0) diff 2880 (56 ms)
-[2018-03-09 20:07:51]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:07:51]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:07:51]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:07:51]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:07:51]  * API PORT:     25000
-[2018-03-09 20:07:51]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:07:51]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:07:51]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:07:51] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:07:51] new job from xmr.pool.hashto.cash:8080 diff 2880
-[2018-03-09 20:08:12] new job from xmr.pool.hashto.cash:8080 diff 2880
-[2018-03-09 20:08:14] accepted (1/0) diff 2880 (55 ms)
-[2018-03-09 20:08:28] accepted (2/0) diff 2880 (56 ms)
-[2018-03-09 20:18:28]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:18:28]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:18:28]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:18:28]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:18:28]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:18:28]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:18:28]  * API PORT:     25000
-[2018-03-09 20:18:28]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:18:28] new job from xmr.pool.hashto.cash:8080 diff 2880
-[2018-03-09 20:18:28] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:18:39] accepted (1/0) diff 2880 (56 ms)
-[2018-03-09 20:20:00]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:20:00]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:20:00]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:20:00]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:20:00]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:20:00]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:20:00]  * API PORT:     25000
-[2018-03-09 20:20:00]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:20:00] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:20:00] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:20:04] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:21:00] accepted (1/0) diff 3000 (56 ms)
-[2018-03-09 20:24:11]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:24:11]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:24:11]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:24:11]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:24:11]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:24:11]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:24:11]  * API PORT:     25000
-[2018-03-09 20:24:11]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:24:11] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:24:11] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:26:40]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:26:40]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:26:40]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:26:40]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:26:40]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:26:40]  * API PORT:     25000
-[2018-03-09 20:26:40]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:26:40]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:26:40] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:26:40] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:29:33]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:29:33]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:29:33]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:29:33]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:29:33]  * API PORT:     25000
-[2018-03-09 20:29:33]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:29:33]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:29:33]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:29:33] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:29:33] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:29:45] accepted (1/0) diff 3000 (55 ms)
-[2018-03-09 20:29:52] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:30:29] accepted (2/0) diff 3000 (56 ms)
-[2018-03-09 20:30:32] accepted (3/0) diff 3000 (56 ms)
-[2018-03-09 20:32:15]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:32:15]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:32:15]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:32:15]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:32:15]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:32:15]  * API PORT:     25000
-[2018-03-09 20:32:15]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:32:15]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:32:15] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:32:15] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:34:05]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:34:05]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:34:05]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:34:05]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:34:05]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:34:05]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:34:05]  * API PORT:     25000
-[2018-03-09 20:34:05]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:34:05] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:34:05] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:34:37]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:34:37]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:34:37]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:34:37]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:34:37]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:34:37]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:34:37]  * API PORT:     25000
-[2018-03-09 20:34:37]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:34:37] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:34:37] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:34:52] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:39:36]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:39:36]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:39:36]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:39:36]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:39:36]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:39:36]  * API PORT:     25000
-[2018-03-09 20:39:36]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:39:36]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:39:36] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:39:36] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:39:50]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:39:50]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:39:50]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:39:50]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:39:50]  * API PORT:     25000
-[2018-03-09 20:39:50]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:39:50]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:39:50]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:39:50] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:39:50] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:39:52] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:40:09] accepted (1/0) diff 3000 (55 ms)
-[2018-03-09 20:41:11] accepted (2/0) diff 3000 (55 ms)
-[2018-03-09 20:42:01] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:42:20] accepted (3/0) diff 3000 (55 ms)
-[2018-03-09 20:42:26] accepted (4/0) diff 3000 (55 ms)
-[2018-03-09 20:42:28] accepted (5/0) diff 3000 (54 ms)
-[2018-03-09 20:42:29] accepted (6/0) diff 3000 (55 ms)
-[2018-03-09 20:42:44] accepted (7/0) diff 3000 (55 ms)
-[2018-03-09 20:43:05] accepted (8/0) diff 3000 (55 ms)
-[2018-03-09 20:43:07] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:43:23] accepted (9/0) diff 3000 (55 ms)
-[2018-03-09 20:43:28] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:43:43] accepted (10/0) diff 3000 (55 ms)
-[2018-03-09 20:43:57] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:44:03]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:44:03]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:44:03]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:44:03]  * API PORT:     25000
-[2018-03-09 20:44:03]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:44:03]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:44:03]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:44:03]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:44:03] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:44:03] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:44:12]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:44:12]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:44:12]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:44:12]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:44:12]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:44:12]  * API PORT:     25000
-[2018-03-09 20:44:12]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:44:12]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:44:12] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:44:12] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:44:31]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:44:31]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:44:31]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:44:31]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:44:31]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:44:31]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:44:31]  * API PORT:     25000
-[2018-03-09 20:44:31]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:44:31] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:44:31] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:44:49] accepted (1/0) diff 3000 (55 ms)
-[2018-03-09 20:44:52] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:45:24] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:45:25] accepted (2/0) diff 3000 (55 ms)
-[2018-03-09 20:45:53]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:45:53]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:45:53]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:45:53]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:45:53]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:45:53]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:45:53]  * API PORT:     25000
-[2018-03-09 20:45:53]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:45:54] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:45:54] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:46:57]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:46:57]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:46:57]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:46:57]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:46:57]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:46:57]  * API PORT:     25000
-[2018-03-09 20:46:57]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:46:57]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:46:57] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:46:57] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:47:07]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:47:07]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:47:07]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:47:07]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:47:07]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:47:07]  * API PORT:     25000
-[2018-03-09 20:47:07]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:47:07]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:47:07] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:47:07] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:47:24] accepted (1/0) diff 3000 (56 ms)
-[2018-03-09 20:47:31] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:47:45] accepted (2/0) diff 3000 (55 ms)
-[2018-03-09 20:47:52] accepted (3/0) diff 3000 (55 ms)
-[2018-03-09 20:48:06] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:56:26]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 20:56:26]  * HUGE PAGES:   available, enabled
-[2018-03-09 20:56:26]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 20:56:26]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 20:56:26]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 20:56:26]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 20:56:26]  * API PORT:     25000
-[2018-03-09 20:56:26]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 20:56:26] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 20:56:26] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:56:52] accepted (1/0) diff 3000 (55 ms)
-[2018-03-09 20:56:54] accepted (2/0) diff 3000 (55 ms)
-[2018-03-09 20:57:14] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 20:57:14] accepted (3/0) diff 3000 (55 ms)
-[2018-03-09 21:04:36]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 21:04:36]  * HUGE PAGES:   available, enabled
-[2018-03-09 21:04:36]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 21:04:36]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 21:04:36]  * API PORT:     25000
-[2018-03-09 21:04:36]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 21:04:36]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 21:04:36]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 21:04:36] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 21:04:36] new job from xmr.pool.hashto.cash:8080 diff 2455
-[2018-03-09 21:04:53] new job from xmr.pool.hashto.cash:8080 diff 2455
-[2018-03-09 21:05:10] accepted (1/0) diff 2455 (55 ms)
-[2018-03-09 21:10:24]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 21:10:24]  * HUGE PAGES:   available, enabled
-[2018-03-09 21:10:24]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 21:10:24]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 21:10:24]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 21:10:24]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 21:10:24]  * API PORT:     25000
-[2018-03-09 21:10:24]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 21:10:24] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 21:10:24] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:10:52] accepted (1/0) diff 3000 (55 ms)
-[2018-03-09 21:10:53] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:10:58] accepted (2/0) diff 3000 (55 ms)
-[2018-03-09 21:12:12]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 21:12:12]  * HUGE PAGES:   available, enabled
-[2018-03-09 21:12:12]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 21:12:12]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 21:12:12]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 21:12:12]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 21:12:12]  * API PORT:     25000
-[2018-03-09 21:12:12]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 21:12:12] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 21:12:12] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:12:45]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 21:12:45]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 21:12:45]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 21:12:45]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 21:12:45]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 21:12:45]  * API PORT:     25000
-[2018-03-09 21:12:45]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 21:12:45]  * HUGE PAGES:   available, enabled
-[2018-03-09 21:12:45] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 21:12:45] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:12:53] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:12:55] accepted (1/0) diff 3000 (55 ms)
-[2018-03-09 21:12:58] accepted (2/0) diff 3000 (55 ms)
-[2018-03-09 21:13:00]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 21:13:00]  * HUGE PAGES:   available, enabled
-[2018-03-09 21:13:00]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 21:13:00]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 21:13:00]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 21:13:00]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 21:13:00]  * API PORT:     25000
-[2018-03-09 21:13:00]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 21:13:00] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:13:00] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 21:13:21] accepted (1/0) diff 3000 (55 ms)
-[2018-03-09 21:13:51] accepted (2/0) diff 3000 (55 ms)
-[2018-03-09 21:13:53] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:18:09]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 gcc/7.2.0
-[2018-03-09 21:18:09]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 21:18:09]  * CPU L2/L3:    0.5 MB/6.0 MB
-[2018-03-09 21:18:09]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 21:18:09]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 21:18:09]  * API PORT:     25000
-[2018-03-09 21:18:09]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 21:18:09]  * HUGE PAGES:   available, enabled
-[2018-03-09 21:18:09] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 21:18:09] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:18:16] accepted (1/0) diff 3000 (95 ms)
-[2018-03-09 21:18:20] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:18:53] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:32:37]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 MSVC/2017
-[2018-03-09 21:32:37]  * HUGE PAGES:   available, enabled
-[2018-03-09 21:32:37]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-09 21:32:37]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 21:32:37]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 21:32:37]  * API PORT:     25000
-[2018-03-09 21:32:37]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 21:32:37]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 21:32:37] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 21:32:37] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:32:38] accepted (1/0) diff 3000 (55 ms)
-[2018-03-09 21:33:15] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-09 21:33:29] accepted (2/0) diff 3000 (55 ms)
-[2018-03-09 21:34:41]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 MSVC/2017
-[2018-03-09 21:34:41]  * HUGE PAGES:   available, enabled
-[2018-03-09 21:34:41]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 21:34:41]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-09 21:34:41]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 21:34:41]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 21:34:41]  * API PORT:     25000
-[2018-03-09 21:34:41]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 21:34:41] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 21:34:41] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-09 21:34:54] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-09 22:29:47]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 MSVC/2017
-[2018-03-09 22:29:47]  * HUGE PAGES:   available, enabled
-[2018-03-09 22:29:47]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 22:29:47]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-09 22:29:47]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 22:29:47]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 22:29:47]  * API PORT:     25000
-[2018-03-09 22:29:47]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 22:29:47] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-09 22:29:47] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 22:29:49]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 MSVC/2017
-[2018-03-09 22:29:49]  * HUGE PAGES:   available, enabled
-[2018-03-09 22:29:49]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 22:29:49]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-09 22:29:49]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 22:29:49]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 22:29:49]  * API PORT:     25000
-[2018-03-09 22:29:49]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 22:29:49] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 22:29:49] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-09 22:30:22] accepted (1/0) diff 2700 (55 ms)
-[2018-03-09 22:30:48]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 MSVC/2017
-[2018-03-09 22:30:48]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-09 22:30:48]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-09 22:30:48]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-09 22:30:48]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-09 22:30:48]  * API PORT:     25000
-[2018-03-09 22:30:48]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-09 22:30:48]  * HUGE PAGES:   available, enabled
-[2018-03-09 22:30:48] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-09 22:30:48] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-09 22:30:48] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-09 22:30:54] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-11 17:08:23]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 MSVC/2017
-[2018-03-11 17:08:23]  * HUGE PAGES:   available, enabled
-[2018-03-11 17:08:23]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-11 17:08:23]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-11 17:08:23]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-11 17:08:23]  * API PORT:     25000
-[2018-03-11 17:08:23]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-11 17:08:23]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-11 17:08:23] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-11 17:08:23] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-11 17:09:12] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-11 17:09:13] accepted (1/0) diff 2700 (55 ms)
-[2018-03-11 17:09:18]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 MSVC/2017
-[2018-03-11 17:09:18]  * HUGE PAGES:   available, enabled
-[2018-03-11 17:09:18]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-11 17:09:18]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-11 17:09:18]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-11 17:09:18]  * API PORT:     25000
-[2018-03-11 17:09:18]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-11 17:09:18]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-11 17:09:18] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-11 17:09:18] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-11 17:09:20]  * VERSIONS:     XMRig/2.4.5 libuv/1.19.0 MSVC/2017
-[2018-03-11 17:09:20]  * HUGE PAGES:   available, enabled
-[2018-03-11 17:09:20]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-11 17:09:20]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-11 17:09:20]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-11 17:09:20]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-11 17:09:20]  * API PORT:     25000
-[2018-03-11 17:09:20]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-11 17:09:20] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-11 17:09:20] new job from xmr.pool.hashto.cash:8080 diff 2700
-[2018-03-11 17:21:00]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-11 17:21:00]  * HUGE PAGES:   available, enabled
-[2018-03-11 17:21:00]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-11 17:21:00]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-11 17:21:00]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-11 17:21:00]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-11 17:21:00]  * API PORT:     25000
-[2018-03-11 17:21:00]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-11 17:21:00] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-11 17:21:00] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-11 17:21:11] accepted (1/0) diff 3000 (55 ms)
-[2018-03-11 17:21:13] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-11 17:21:40] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 11:52:49]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 11:52:49]  * HUGE PAGES:   available, enabled
-[2018-03-15 11:52:49]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 11:52:49]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 11:52:49]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 11:52:49]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 11:52:49]  * API PORT:     25000
-[2018-03-15 11:52:49]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 11:52:50] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 11:52:50] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 11:52:50] accepted (1/0) diff 3000 (55 ms)
-[2018-03-15 12:03:03]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:03:03]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:03:03]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:03:03]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:03:03]  * API PORT:     25000
-[2018-03-15 12:03:03]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:03:03]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:03:03]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:03:03] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:03:03] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:06:49]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:06:49]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:06:49]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:06:49]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:06:49]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:06:49]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:06:49]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:06:49]  * API PORT:     25000
-[2018-03-15 12:06:49] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:06:49] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:06:55]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:06:55]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:06:55]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:06:55]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:06:55]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:06:55]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:06:55]  * API PORT:     25000
-[2018-03-15 12:06:55]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:06:56] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:06:56] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:08:19]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:08:19]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:08:19]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:08:19]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:08:19]  * API PORT:     25000
-[2018-03-15 12:08:19]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:08:19]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:08:19]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:08:19] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:08:19] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:08:22] accepted (1/0) diff 3000 (55 ms)
-[2018-03-15 12:08:53] accepted (2/0) diff 3000 (56 ms)
-[2018-03-15 12:09:00] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:12:58]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:12:58]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:12:58]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:12:58]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:12:58]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:12:58]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:12:58]  * API PORT:     25000
-[2018-03-15 12:12:58]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:12:58] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:12:58] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:13:47] accepted (1/0) diff 3000 (55 ms)
-[2018-03-15 12:13:53] accepted (2/0) diff 3000 (55 ms)
-[2018-03-15 12:13:56] accepted (3/0) diff 3000 (55 ms)
-[2018-03-15 12:15:46]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:15:46]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:15:46]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:15:46]  * API PORT:     25000
-[2018-03-15 12:15:46]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:15:46]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:15:46]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:15:46]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:15:46] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:15:46] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:15:50] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:16:00] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:16:13] accepted (1/0) diff 3000 (103 ms)
-[2018-03-15 12:16:45] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:20:59]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:20:59]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:20:59]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:20:59]  * API PORT:     25000
-[2018-03-15 12:20:59]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:20:59]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:20:59]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:20:59]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:20:59] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:20:59] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 12:21:32] accepted (1/0) diff 3000 (60 ms)
-[2018-03-15 12:21:39] accepted (2/0) diff 3000 (56 ms)
-[2018-03-15 12:21:43] accepted (3/0) diff 3000 (55 ms)
-[2018-03-15 12:22:13]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:13]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:13]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:13]  * API PORT:     25000
-[2018-03-15 12:22:13]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:13]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:13]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:13]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:13] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:13] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:15]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:15]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:15]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:15]  * API PORT:     25000
-[2018-03-15 12:22:15]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:15]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:15]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:15]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:15] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:15] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:16]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:16]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:16]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:16]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:16]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:16]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:16]  * API PORT:     25000
-[2018-03-15 12:22:16]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:16] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:16] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:17]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:17]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:17]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:17]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:17]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:17]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:17]  * API PORT:     25000
-[2018-03-15 12:22:17]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:17]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:17]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:17]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:17]  * API PORT:     25000
-[2018-03-15 12:22:17]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:17]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:17]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:17]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:18]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:18]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:18]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:18]  * API PORT:     25000
-[2018-03-15 12:22:18]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:18]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:18]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:18]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:18]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:18]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:18]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:18]  * API PORT:     25000
-[2018-03-15 12:22:18]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:18]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:18]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:18]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:18]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:18]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:18]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:18]  * API PORT:     25000
-[2018-03-15 12:22:18]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:18]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:18]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:18]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:19] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:19] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:19]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:19]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:19]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:19]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:19]  * API PORT:     25000
-[2018-03-15 12:22:19]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:19]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:19]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:19] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:19] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:20]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:20]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:20]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:20]  * API PORT:     25000
-[2018-03-15 12:22:20]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:20]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:20]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:20]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:20] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:20] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:21]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:21]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:21]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:21]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:21]  * API PORT:     25000
-[2018-03-15 12:22:21]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:21]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:21]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:21] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:21] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:22]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:22]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:22]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:22]  * API PORT:     25000
-[2018-03-15 12:22:22]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:22]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:22]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:22]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:22] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:22] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:22]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:22]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:22]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:22]  * API PORT:     25000
-[2018-03-15 12:22:22]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:22]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:22]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:22]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:23] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:23] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:23]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:23]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:23]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:23]  * API PORT:     25000
-[2018-03-15 12:22:23]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:23]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:23]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:23]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:23] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:23] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:24]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:24]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:24]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:24]  * API PORT:     25000
-[2018-03-15 12:22:24]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:24]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:24]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:24]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:24] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:24] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:24]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:24]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:24]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:24]  * API PORT:     25000
-[2018-03-15 12:22:24]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:24]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:24]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:24]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:25]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:25]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:25]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:25]  * API PORT:     25000
-[2018-03-15 12:22:25]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:25]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:25]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:25]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:25]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:25]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:25]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:25]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:25]  * API PORT:     25000
-[2018-03-15 12:22:25]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:25]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:25]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:25] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:25] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:26]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:26]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:26]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:26]  * API PORT:     25000
-[2018-03-15 12:22:26]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:26]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:26]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:26]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:26] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:26] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:26]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:26]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:26]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:26]  * API PORT:     25000
-[2018-03-15 12:22:26]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:26]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:26]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:26]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:26] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:26] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:27]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:27]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:27]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:27]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:27]  * API PORT:     25000
-[2018-03-15 12:22:27]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:27]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:27]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:27] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:27] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:28]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:28]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:28]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:28]  * API PORT:     25000
-[2018-03-15 12:22:28]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:28]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:28]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:28]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:28] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:28] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:28]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:28]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:28]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:28]  * API PORT:     25000
-[2018-03-15 12:22:28]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:28]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:28]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:28]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:28] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:28] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:29]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:29]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:29]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:29]  * API PORT:     25000
-[2018-03-15 12:22:29]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:29]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:29]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:29]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:29] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:29] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:30]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:30]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:30]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:30]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:30]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:30]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:30]  * API PORT:     25000
-[2018-03-15 12:22:30]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:30] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:30] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:31]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:31]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:31]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:31]  * API PORT:     25000
-[2018-03-15 12:22:31]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:31]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:31]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:31]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:31] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:31] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:31]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:31]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:31]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:31]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:31]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:31]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:31]  * API PORT:     25000
-[2018-03-15 12:22:31]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:32] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:32] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:32]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:32]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:32]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:32]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:32]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:32]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:32]  * API PORT:     25000
-[2018-03-15 12:22:32]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:32]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:32]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:32]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:32]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:32]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:32]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:32]  * API PORT:     25000
-[2018-03-15 12:22:32]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:33]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:33]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:33]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:33]  * API PORT:     25000
-[2018-03-15 12:22:33]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:33]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:33]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:33]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:33]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:33]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:33]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:33]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:33]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:33]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:33]  * API PORT:     25000
-[2018-03-15 12:22:33]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:33]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:33]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:33]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:33]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:33]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:33]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:33]  * API PORT:     25000
-[2018-03-15 12:22:33]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:34]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:34]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:34]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:34]  * API PORT:     25000
-[2018-03-15 12:22:34]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:34]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:34]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:34]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:34]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:34]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:34]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:34]  * API PORT:     25000
-[2018-03-15 12:22:34]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:34]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:34]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:34]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:34] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:34] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:35]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:35]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:35]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:35]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:35]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:35]  * API PORT:     25000
-[2018-03-15 12:22:35]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:35]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:35] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:35] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:35]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:35]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:35]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:35]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:35]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:35]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:35]  * API PORT:     25000
-[2018-03-15 12:22:35]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:35] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:35] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:35]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:35]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:35]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:35]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:35]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:35]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:35]  * API PORT:     25000
-[2018-03-15 12:22:35]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:36] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:36] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:36]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:36]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:36]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:36]  * API PORT:     25000
-[2018-03-15 12:22:36]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:36]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:36]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:36]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:36] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:36] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 12:22:42]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 12:22:42]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 12:22:42]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 12:22:42]  * API PORT:     25000
-[2018-03-15 12:22:42]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 12:22:42]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 12:22:42]  * HUGE PAGES:   available, enabled
-[2018-03-15 12:22:42]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 12:22:42] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 12:22:42] new job from xmr.pool.hashto.cash:8080 diff 3587
-[2018-03-15 14:43:18]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 14:43:18]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 14:43:18]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 14:43:18]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 14:43:18]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 14:43:18]  * API PORT:     25000
-[2018-03-15 14:43:18]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 14:43:18]  * HUGE PAGES:   available, enabled
-[2018-03-15 14:43:18] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 14:43:18] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 14:44:01] accepted (1/0) diff 3000 (54 ms)
-[2018-03-15 14:53:56]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 14:53:56]  * HUGE PAGES:   available, enabled
-[2018-03-15 14:53:56]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 14:53:56]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 14:53:56]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 14:53:56]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 14:53:56]  * API PORT:     25000
-[2018-03-15 14:53:56]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 14:53:56] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 14:53:56] new job from xmr.pool.hashto.cash:8080 diff 3327
-[2018-03-15 14:54:06] new job from xmr.pool.hashto.cash:8080 diff 3327
-[2018-03-15 14:54:36] new job from xmr.pool.hashto.cash:8080 diff 3327
-[2018-03-15 14:54:56] accepted (1/0) diff 3327 (53 ms)
-[2018-03-15 15:11:35]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 15:11:35]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 15:11:35]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 15:11:35]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 15:11:35]  * API PORT:     25000
-[2018-03-15 15:11:35]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 15:11:35]  * HUGE PAGES:   available, enabled
-[2018-03-15 15:11:35]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 15:11:35] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 15:11:35] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 15:11:41] accepted (1/0) diff 3000 (53 ms)
-[2018-03-15 15:11:43] accepted (2/0) diff 3000 (53 ms)
-[2018-03-15 15:12:07] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 15:12:11] accepted (3/0) diff 3000 (53 ms)
-[2018-03-15 15:44:42]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 15:44:42]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 15:44:42]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 15:44:42]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 15:44:42]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 15:44:42]  * API PORT:     25000
-[2018-03-15 15:44:42]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 15:44:42]  * HUGE PAGES:   available, enabled
-[2018-03-15 15:44:43] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 15:44:43] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 15:44:47] accepted (1/0) diff 3000 (53 ms)
-[2018-03-15 15:45:08] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 16:15:40]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 16:15:40]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 16:15:40]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 16:15:40]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 16:15:40]  * API PORT:     25000
-[2018-03-15 16:15:40]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 16:15:40]  * HUGE PAGES:   available, enabled
-[2018-03-15 16:15:40]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 16:15:40] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 16:15:40] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 16:23:34]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 16:23:34]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 16:23:34]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 16:23:34]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 16:23:34]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 16:23:34]  * API PORT:     25000
-[2018-03-15 16:23:34]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 16:23:34]  * HUGE PAGES:   available, enabled
-[2018-03-15 16:23:34] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 16:23:34] new job from xmr.pool.hashto.cash:8080 diff 3000
-[2018-03-15 16:24:12] accepted (1/0) diff 3000 (53 ms)
-[2018-03-15 16:24:18] accepted (2/0) diff 3000 (54 ms)
-[2018-03-15 16:24:46]  * VERSIONS:     XMRig/2.5.0-dev libuv/1.19.0 MSVC/2017
-[2018-03-15 16:24:46]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-03-15 16:24:46]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-03-15 16:24:46]  * THREADS:      3, cryptonight, av=1, donate=1%
-[2018-03-15 16:24:46]  * POOL #1:      xmr.pool.hashto.cash:8080
-[2018-03-15 16:24:46]  * API PORT:     25000
-[2018-03-15 16:24:46]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-03-15 16:24:46]  * HUGE PAGES:   available, enabled
-[2018-03-15 16:24:46] use pool xmr.pool.hashto.cash:8080 46.101.241.34
-[2018-03-15 16:24:46] new job from xmr.pool.hashto.cash:8080 diff 2889
-[2018-03-15 16:25:19] accepted (1/0) diff 2889 (67 ms)
-[2018-03-15 16:25:23] accepted (2/0) diff 2889 (53 ms)
-[2018-03-15 16:25:30] accepted (3/0) diff 2889 (63 ms)
-[2018-03-15 16:25:33] accepted (4/0) diff 2889 (59 ms)
-[2018-03-15 16:25:51] accepted (5/0) diff 2889 (57 ms)
-[2018-05-07 19:59:45]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
-[2018-05-07 19:59:45]  * THREADS:      3, cryptonight, av=1, donate=5%
-[2018-05-07 19:59:45]  * POOL #1:      xmr.pool.hashto.cash:80
-[2018-05-07 19:59:45]  * API BIND:     0.0.0.0:25000
-[2018-05-07 19:59:45]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
-[2018-05-07 19:59:45]  * CPU L2/L3:    1.0 MB/6.0 MB
-[2018-05-07 19:59:45]  * HUGE PAGES:   available
-[2018-05-07 19:59:45]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
-[2018-05-07 19:59:45] [01;32mREADY (CPU)[0m threads [01;36m3(3)[0m huge pages [01;32m3/3 100%[0m memory [01;36m6.0 MB
-[2018-05-07 19:59:45] use pool xmr.pool.hashto.cash:80 188.166.192.159
-[2018-05-07 19:59:45] new job from xmr.pool.hashto.cash:80 diff 1393
+[2018-05-11 19:02:51]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-11 19:02:51]  * HUGE PAGES:   available
+[2018-05-11 19:02:51]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-11 19:02:51]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-11 19:02:51]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-11 19:02:51]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-11 19:02:51]  * API BIND:     0.0.0.0:25000
+[2018-05-11 19:02:51]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-11 19:02:51] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-11 19:03:12] [xmr.pool.hashto.cash:80] connect error: "connection timed out"
+[2018-05-11 19:03:19] [xmr.pool.hashto.cash:80] connect error: "software caused connection abort"
+[2018-05-11 19:03:26] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-11 19:03:26] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-11 20:01:05]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-11 20:01:05]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-11 20:01:05]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-11 20:01:05]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-11 20:01:05]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-11 20:01:05]  * API BIND:     0.0.0.0:25000
+[2018-05-11 20:01:05]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-11 20:01:05]  * HUGE PAGES:   available
+[2018-05-11 20:01:05] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-11 20:01:05] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-11 20:01:05] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 14:09:53]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 14:09:53]  * HUGE PAGES:   available
+[2018-05-13 14:09:53]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 14:09:53]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 14:09:53]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 14:09:53]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 14:09:53]  * API BIND:     0.0.0.0:25000
+[2018-05-13 14:09:53]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 14:09:53] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 14:09:53] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 14:09:53] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 14:09:56] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 14:10:20] accepted (1/0) diff 3000 (123 ms)
+[2018-05-13 14:10:27] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 14:10:41] accepted (2/0) diff 3000 (175 ms)
+[2018-05-13 14:13:02]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 14:13:02]  * HUGE PAGES:   available
+[2018-05-13 14:13:02]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 14:13:02]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 14:13:02]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 14:13:02]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 14:13:02]  * API BIND:     0.0.0.0:25000
+[2018-05-13 14:13:02]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 14:13:02] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 14:13:02] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 14:13:02] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 14:13:14] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 14:18:29]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 14:18:29]  * HUGE PAGES:   available
+[2018-05-13 14:18:29]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 14:18:29]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 14:18:29]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 14:18:29]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 14:18:29]  * API BIND:     0.0.0.0:25000
+[2018-05-13 14:18:29]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 14:18:29] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 14:18:29] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 14:18:29] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 14:19:07] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 14:19:28] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:30:02]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:30:02]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:30:02]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:30:02]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:30:02]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:30:02]  * HUGE PAGES:   available
+[2018-05-13 17:30:02]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:30:02]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:30:02] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:30:03] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 17:30:03] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:30:04] accepted (1/0) diff 3000 (211 ms)
+[2018-05-13 17:30:34] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:31:01]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:31:01]  * HUGE PAGES:   available
+[2018-05-13 17:31:01]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:31:01]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:31:01]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:31:01]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:31:01]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:31:01]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:31:01] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:31:02] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 17:31:02] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:31:12]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:31:12]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:31:12]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:31:12]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:31:12]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:31:12]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:31:12]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:31:12]  * HUGE PAGES:   available
+[2018-05-13 17:31:12] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:31:12] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 17:31:12] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:31:25]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:31:25]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:31:25]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:31:25]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:31:25]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:31:25]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:31:25]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:31:25]  * HUGE PAGES:   available
+[2018-05-13 17:31:25] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:31:25] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 17:31:25] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:31:34] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:31:40]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:31:40]  * HUGE PAGES:   available
+[2018-05-13 17:31:40]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:31:40]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:31:40]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:31:40]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:31:40]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:31:40]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:31:41] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:31:41] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 17:31:41] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:32:33]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:32:33]  * HUGE PAGES:   available
+[2018-05-13 17:32:33]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:32:33]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:32:33]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:32:33]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:32:33]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:32:33]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:32:33] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:32:33] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 17:32:33] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:32:34] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:33:18] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:33:32] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:34:32]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:34:32]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:34:32]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:34:32]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:34:32]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:34:32]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:34:32]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:34:32]  * HUGE PAGES:   available
+[2018-05-13 17:34:32] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 17:34:32] new job from xmr.pool.hashto.cash:80 diff 623
+[2018-05-13 17:34:34] new job from xmr.pool.hashto.cash:80 diff 623
+[2018-05-13 17:34:35] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:34:46]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:34:46]  * HUGE PAGES:   available
+[2018-05-13 17:34:46]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:34:46]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:34:46]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:34:46]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:34:46]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:34:46]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:34:46] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:34:46] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 17:34:46] new job from xmr.pool.hashto.cash:80 diff 623
+[2018-05-13 17:34:50] accepted (1/0) diff 623 (215 ms)
+[2018-05-13 17:35:19]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:35:19]  * HUGE PAGES:   available
+[2018-05-13 17:35:19]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:35:19]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:35:19]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:35:19]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:35:19]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:35:19]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:35:19] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:35:20] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 17:35:20] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:37:31]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:37:31]  * HUGE PAGES:   available
+[2018-05-13 17:37:31]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:37:31]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:37:31]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:37:31]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:37:31]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:37:31]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:37:31] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:37:31] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 17:37:31] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:38:16] accepted (1/0) diff 3000 (180 ms)
+[2018-05-13 17:41:03]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:41:03]  * HUGE PAGES:   available
+[2018-05-13 17:41:03]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:41:03]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:41:03]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:41:03]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:41:03]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:41:03]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:41:04] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:41:04] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 17:41:04] new job from xmr.pool.hashto.cash:80 diff 683
+[2018-05-13 17:41:27]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:41:27]  * HUGE PAGES:   available
+[2018-05-13 17:41:27]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:41:27]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:41:27]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:41:27]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:41:27]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:41:27]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:41:27] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:41:27] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 17:41:27] new job from xmr.pool.hashto.cash:80 diff 683
+[2018-05-13 17:41:29]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:41:29]  * HUGE PAGES:   available
+[2018-05-13 17:41:29]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:41:29]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:41:29]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:41:29]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:41:29]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:41:29]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:41:29] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:41:29]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:41:29]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:41:29]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:41:29]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:41:29]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:41:29]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:41:29]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:41:29]  * HUGE PAGES:   available
+[2018-05-13 17:41:29] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:41:30]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:41:30]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:41:30]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:41:30]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:41:30]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:41:30]  * HUGE PAGES:   available
+[2018-05-13 17:41:30]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:41:30]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:41:30] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:41:30]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:41:30]  * HUGE PAGES:   available
+[2018-05-13 17:41:30]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:41:30]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:41:30]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:41:30]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:41:30]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:41:30]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:41:30] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:41:30] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 17:41:30] new job from xmr.pool.hashto.cash:80 diff 683
+[2018-05-13 17:43:20]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:43:20]  * HUGE PAGES:   available
+[2018-05-13 17:43:20]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:43:20]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:43:20]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:43:20]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:43:20]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:43:20]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:43:20] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:43:20] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 17:43:20] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:43:44]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 17:43:44]  * HUGE PAGES:   available
+[2018-05-13 17:43:44]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 17:43:44]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 17:43:44]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 17:43:44]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 17:43:44]  * API BIND:     0.0.0.0:25000
+[2018-05-13 17:43:44]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 17:43:44] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 17:43:44] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 17:43:44] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:43:55] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:44:34] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-13 17:44:40] accepted (1/0) diff 3000 (179 ms)
+[2018-05-13 18:22:38]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 18:22:38]  * HUGE PAGES:   available
+[2018-05-13 18:22:38]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 18:22:38]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 18:22:38]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 18:22:38]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 18:22:38]  * API BIND:     0.0.0.0:25000
+[2018-05-13 18:22:38]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 18:22:38] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 18:22:38] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 18:22:38] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:22:49] accepted (1/0) diff 668 (147 ms)
+[2018-05-13 18:23:03] accepted (2/0) diff 668 (108 ms)
+[2018-05-13 18:23:10] accepted (3/0) diff 668 (228 ms)
+[2018-05-13 18:23:17] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:23:29] accepted (4/0) diff 668 (141 ms)
+[2018-05-13 18:23:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:23:41]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 18:23:41]  * HUGE PAGES:   available
+[2018-05-13 18:23:41]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 18:23:41]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 18:23:41]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 18:23:41]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 18:23:41]  * API BIND:     0.0.0.0:25000
+[2018-05-13 18:23:41]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 18:23:41] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 18:23:41] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 18:23:41] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:23:48]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 18:23:48]  * HUGE PAGES:   available
+[2018-05-13 18:23:48]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 18:23:48]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 18:23:48]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 18:23:48]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 18:23:48]  * API BIND:     0.0.0.0:25000
+[2018-05-13 18:23:48]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 18:23:49] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 18:23:49] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 18:23:49] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:23:50] accepted (1/0) diff 668 (177 ms)
+[2018-05-13 18:24:09] accepted (2/0) diff 668 (126 ms)
+[2018-05-13 18:24:16] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:24:18] accepted (3/0) diff 668 (127 ms)
+[2018-05-13 18:24:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:24:39] accepted (4/0) diff 668 (175 ms)
+[2018-05-13 18:25:06] accepted (5/0) diff 668 (127 ms)
+[2018-05-13 18:25:09] accepted (6/0) diff 668 (390 ms)
+[2018-05-13 18:25:11] accepted (7/0) diff 668 (99 ms)
+[2018-05-13 18:25:21] accepted (8/0) diff 668 (113 ms)
+[2018-05-13 18:25:31] accepted (9/0) diff 668 (103 ms)
+[2018-05-13 18:25:35] accepted (10/0) diff 668 (147 ms)
+[2018-05-13 18:25:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:25:37] accepted (11/0) diff 668 (61 ms)
+[2018-05-13 18:25:57]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 18:25:57]  * HUGE PAGES:   available
+[2018-05-13 18:25:57]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 18:25:57]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 18:25:57]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 18:25:57]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 18:25:57]  * API BIND:     0.0.0.0:25000
+[2018-05-13 18:25:57]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 18:25:57] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 18:25:57] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 18:25:57] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:26:00]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 18:26:00]  * HUGE PAGES:   available
+[2018-05-13 18:26:00]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 18:26:00]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 18:26:00]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 18:26:00]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 18:26:00]  * API BIND:     0.0.0.0:25000
+[2018-05-13 18:26:00]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 18:26:00] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 18:26:00] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 18:26:00] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:26:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:27:34] accepted (1/0) diff 668 (129 ms)
+[2018-05-13 18:27:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:27:39] accepted (2/0) diff 668 (107 ms)
+[2018-05-13 18:28:01] accepted (3/0) diff 668 (272 ms)
+[2018-05-13 18:28:04] accepted (4/0) diff 668 (133 ms)
+[2018-05-13 18:28:08] accepted (5/0) diff 668 (167 ms)
+[2018-05-13 18:28:20] accepted (6/0) diff 668 (59 ms)
+[2018-05-13 18:28:22] accepted (7/0) diff 668 (117 ms)
+[2018-05-13 18:28:24] accepted (8/0) diff 668 (99 ms)
+[2018-05-13 18:28:24] accepted (9/0) diff 668 (122 ms)
+[2018-05-13 18:28:27] accepted (10/0) diff 668 (109 ms)
+[2018-05-13 18:28:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:29:11] accepted (11/0) diff 668 (157 ms)
+[2018-05-13 18:29:26] accepted (12/0) diff 668 (129 ms)
+[2018-05-13 18:29:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:30:04] accepted (13/0) diff 668 (59 ms)
+[2018-05-13 18:30:09] accepted (14/0) diff 668 (524 ms)
+[2018-05-13 18:30:17] accepted (15/0) diff 668 (256 ms)
+[2018-05-13 18:30:31] accepted (16/0) diff 668 (95 ms)
+[2018-05-13 18:30:39] accepted (17/0) diff 668 (166 ms)
+[2018-05-13 18:31:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:31:44] accepted (18/0) diff 668 (179 ms)
+[2018-05-13 18:31:50] accepted (19/0) diff 668 (161 ms)
+[2018-05-13 18:32:04] accepted (20/0) diff 668 (337 ms)
+[2018-05-13 18:32:20] accepted (21/0) diff 668 (144 ms)
+[2018-05-13 18:32:36] accepted (22/0) diff 668 (77 ms)
+[2018-05-13 18:32:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:32:56] accepted (23/0) diff 668 (99 ms)
+[2018-05-13 18:33:21] accepted (24/0) diff 668 (179 ms)
+[2018-05-13 18:33:36] accepted (25/0) diff 668 (63 ms)
+[2018-05-13 18:33:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:33:49] accepted (26/0) diff 668 (59 ms)
+[2018-05-13 18:33:53] accepted (27/0) diff 668 (59 ms)
+[2018-05-13 18:33:57] accepted (28/0) diff 668 (59 ms)
+[2018-05-13 18:33:58] accepted (29/0) diff 668 (62 ms)
+[2018-05-13 18:34:25] accepted (30/0) diff 668 (136 ms)
+[2018-05-13 18:34:36] accepted (31/0) diff 668 (59 ms)
+[2018-05-13 18:34:45] accepted (32/0) diff 668 (114 ms)
+[2018-05-13 18:34:55] accepted (33/0) diff 668 (60 ms)
+[2018-05-13 18:35:13] accepted (34/0) diff 668 (60 ms)
+[2018-05-13 18:35:25] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:35:32] accepted (35/0) diff 668 (59 ms)
+[2018-05-13 18:35:33] accepted (36/0) diff 668 (97 ms)
+[2018-05-13 18:35:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:35:40] accepted (37/0) diff 668 (164 ms)
+[2018-05-13 18:35:44] accepted (38/0) diff 668 (59 ms)
+[2018-05-13 18:35:58] accepted (39/0) diff 668 (211 ms)
+[2018-05-13 18:36:03] accepted (40/0) diff 668 (157 ms)
+[2018-05-13 18:36:08] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:36:11] accepted (41/0) diff 668 (190 ms)
+[2018-05-13 18:36:21] accepted (42/0) diff 668 (185 ms)
+[2018-05-13 18:36:55] accepted (43/0) diff 668 (80 ms)
+[2018-05-13 18:36:56] accepted (44/0) diff 668 (188 ms)
+[2018-05-13 18:37:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:37:57] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:38:22] accepted (45/0) diff 668 (103 ms)
+[2018-05-13 18:38:27] accepted (46/0) diff 668 (104 ms)
+[2018-05-13 18:38:51] accepted (47/0) diff 668 (169 ms)
+[2018-05-13 18:38:51] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:38:57] accepted (48/0) diff 668 (169 ms)
+[2018-05-13 18:39:05] accepted (49/0) diff 668 (59 ms)
+[2018-05-13 18:39:18] accepted (50/0) diff 668 (59 ms)
+[2018-05-13 18:39:18] accepted (51/0) diff 668 (172 ms)
+[2018-05-13 18:39:36] accepted (52/0) diff 668 (60 ms)
+[2018-05-13 18:39:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:39:59] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:40:25] accepted (53/0) diff 668 (62 ms)
+[2018-05-13 18:40:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:40:58] accepted (54/0) diff 668 (131 ms)
+[2018-05-13 18:41:01] accepted (55/0) diff 668 (100 ms)
+[2018-05-13 18:41:13] accepted (56/0) diff 668 (187 ms)
+[2018-05-13 18:41:26] accepted (57/0) diff 668 (134 ms)
+[2018-05-13 18:41:36] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:41:40] accepted (58/0) diff 668 (103 ms)
+[2018-05-13 18:41:45] accepted (59/0) diff 668 (166 ms)
+[2018-05-13 18:41:48] accepted (60/0) diff 668 (183 ms)
+[2018-05-13 18:42:06] accepted (61/0) diff 668 (59 ms)
+[2018-05-13 18:42:32] accepted (62/0) diff 668 (59 ms)
+[2018-05-13 18:42:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:42:43] accepted (63/0) diff 668 (60 ms)
+[2018-05-13 18:42:44] speed 2.5s/60s/15m 53.7 47.0 46.1 H/s max: 59.4 H/s
+[2018-05-13 18:42:54] accepted (64/0) diff 668 (128 ms)
+[2018-05-13 18:42:59] accepted (65/0) diff 668 (59 ms)
+[2018-05-13 18:43:11] accepted (66/0) diff 668 (59 ms)
+[2018-05-13 18:43:24] accepted (67/0) diff 668 (125 ms)
+[2018-05-13 18:43:26] accepted (68/0) diff 668 (102 ms)
+[2018-05-13 18:43:34] accepted (69/0) diff 668 (109 ms)
+[2018-05-13 18:43:35] accepted (70/0) diff 668 (60 ms)
+[2018-05-13 18:43:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:43:41] accepted (71/0) diff 668 (88 ms)
+[2018-05-13 18:43:43] accepted (72/0) diff 668 (92 ms)
+[2018-05-13 18:44:18] accepted (73/0) diff 668 (69 ms)
+[2018-05-13 18:44:44] accepted (74/0) diff 668 (187 ms)
+[2018-05-13 18:44:48] accepted (75/0) diff 668 (59 ms)
+[2018-05-13 18:45:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:45:37] accepted (76/0) diff 668 (59 ms)
+[2018-05-13 18:45:38] accepted (77/0) diff 668 (61 ms)
+[2018-05-13 18:45:45] accepted (78/0) diff 668 (59 ms)
+[2018-05-13 18:45:50] accepted (79/0) diff 668 (146 ms)
+[2018-05-13 18:45:52] accepted (80/0) diff 668 (109 ms)
+[2018-05-13 18:45:57] accepted (81/0) diff 668 (122 ms)
+[2018-05-13 18:45:57] accepted (82/0) diff 668 (102 ms)
+[2018-05-13 18:45:58] accepted (83/0) diff 668 (59 ms)
+[2018-05-13 18:46:11] accepted (84/0) diff 668 (133 ms)
+[2018-05-13 18:46:16] accepted (85/0) diff 668 (59 ms)
+[2018-05-13 18:46:19] accepted (86/0) diff 668 (115 ms)
+[2018-05-13 18:46:29] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:46:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:46:42] accepted (87/0) diff 668 (59 ms)
+[2018-05-13 18:47:03] accepted (88/0) diff 668 (59 ms)
+[2018-05-13 18:47:04] accepted (89/0) diff 668 (59 ms)
+[2018-05-13 18:47:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:47:52] accepted (90/0) diff 668 (140 ms)
+[2018-05-13 18:47:59] accepted (91/0) diff 668 (59 ms)
+[2018-05-13 18:48:05] accepted (92/0) diff 668 (549 ms)
+[2018-05-13 18:48:20] accepted (93/0) diff 668 (59 ms)
+[2018-05-13 18:48:25] accepted (94/0) diff 668 (130 ms)
+[2018-05-13 18:48:33] accepted (95/0) diff 668 (57 ms)
+[2018-05-13 18:48:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:48:38] accepted (96/0) diff 668 (59 ms)
+[2018-05-13 18:48:52] accepted (97/0) diff 668 (57 ms)
+[2018-05-13 18:49:03] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:49:06] accepted (98/0) diff 668 (57 ms)
+[2018-05-13 18:49:08] accepted (99/0) diff 668 (57 ms)
+[2018-05-13 18:49:26] accepted (100/0) diff 668 (123 ms)
+[2018-05-13 18:49:28] accepted (101/0) diff 668 (57 ms)
+[2018-05-13 18:49:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:50:03] accepted (102/0) diff 668 (110 ms)
+[2018-05-13 18:50:06] accepted (103/0) diff 668 (172 ms)
+[2018-05-13 18:50:27] accepted (104/0) diff 668 (182 ms)
+[2018-05-13 18:50:35] accepted (105/0) diff 668 (197 ms)
+[2018-05-13 18:50:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:50:45] accepted (106/0) diff 668 (57 ms)
+[2018-05-13 18:50:55] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:51:04] accepted (107/0) diff 668 (57 ms)
+[2018-05-13 18:51:10] accepted (108/0) diff 668 (82 ms)
+[2018-05-13 18:51:11] accepted (109/0) diff 668 (57 ms)
+[2018-05-13 18:51:20] accepted (110/0) diff 668 (152 ms)
+[2018-05-13 18:51:24] accepted (111/0) diff 668 (64 ms)
+[2018-05-13 18:51:24] accepted (112/0) diff 668 (57 ms)
+[2018-05-13 18:51:35] accepted (113/0) diff 668 (57 ms)
+[2018-05-13 18:51:36] accepted (114/0) diff 668 (57 ms)
+[2018-05-13 18:51:36] accepted (115/0) diff 668 (76 ms)
+[2018-05-13 18:51:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:51:44]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 18:51:44]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 18:51:44]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 18:51:44]  * API BIND:     0.0.0.0:25000
+[2018-05-13 18:51:44]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 18:51:44]  * HUGE PAGES:   available
+[2018-05-13 18:51:44]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 18:51:44]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 18:51:44] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 18:51:44] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 18:51:44] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:52:09] accepted (1/0) diff 668 (201 ms)
+[2018-05-13 18:52:22] accepted (2/0) diff 668 (183 ms)
+[2018-05-13 18:52:25] accepted (3/0) diff 668 (325 ms)
+[2018-05-13 18:52:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:52:43] accepted (4/0) diff 668 (317 ms)
+[2018-05-13 18:53:10] accepted (5/0) diff 668 (233 ms)
+[2018-05-13 18:53:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:53:44] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:53:53] accepted (6/0) diff 668 (213 ms)
+[2018-05-13 18:54:16] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:54:18] accepted (7/0) diff 668 (192 ms)
+[2018-05-13 18:54:19] accepted (8/0) diff 668 (184 ms)
+[2018-05-13 18:54:21] accepted (9/0) diff 668 (227 ms)
+[2018-05-13 18:54:22] accepted (10/0) diff 668 (215 ms)
+[2018-05-13 18:54:31] accepted (11/0) diff 668 (61 ms)
+[2018-05-13 18:54:37] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 18:54:42] accepted (12/0) diff 668 (133 ms)
+[2018-05-13 18:54:50] accepted (13/0) diff 668 (59 ms)
+[2018-05-13 18:55:30] accepted (14/0) diff 668 (210 ms)
+[2018-05-13 19:38:56]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 19:38:56]  * HUGE PAGES:   available
+[2018-05-13 19:38:56]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 19:38:56]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 19:38:56]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 19:38:56]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 19:38:56]  * API BIND:     0.0.0.0:25000
+[2018-05-13 19:38:56]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 19:38:57] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 19:38:57] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 19:38:57] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 19:39:00] accepted (1/0) diff 668 (192 ms)
+[2018-05-13 20:06:50]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 20:06:50]  * HUGE PAGES:   available
+[2018-05-13 20:06:50]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 20:06:50]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 20:06:50]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 20:06:50]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 20:06:50]  * API BIND:     0.0.0.0:25000
+[2018-05-13 20:06:50]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 20:06:50] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 20:06:50] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 20:06:50] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 20:07:10] accepted (1/0) diff 668 (116 ms)
+[2018-05-13 20:07:26]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 20:07:26]  * HUGE PAGES:   available
+[2018-05-13 20:07:26]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 20:07:26]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 20:07:26]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 20:07:26]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 20:07:26]  * API BIND:     0.0.0.0:25000
+[2018-05-13 20:07:26]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 20:07:27] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 20:07:27] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 20:07:27] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 20:07:30]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 20:07:30]  * HUGE PAGES:   available
+[2018-05-13 20:07:30]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 20:07:30]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 20:07:30]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 20:07:30]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 20:07:30]  * API BIND:     0.0.0.0:25000
+[2018-05-13 20:07:30]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 20:07:30] HTTP Daemon failed to start.
+[2018-05-13 20:07:30] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 20:07:31] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 20:07:31] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 20:07:38] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 20:08:10] accepted (1/0) diff 668 (195 ms)
+[2018-05-13 20:08:13] accepted (2/0) diff 668 (191 ms)
+[2018-05-13 20:08:19] accepted (3/0) diff 668 (293 ms)
+[2018-05-13 20:08:35] accepted (4/0) diff 668 (206 ms)
+[2018-05-13 20:08:38] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 20:08:39] accepted (5/0) diff 668 (204 ms)
+[2018-05-13 20:08:51] accepted (6/0) diff 668 (156 ms)
+[2018-05-13 20:09:14] accepted (7/0) diff 668 (290 ms)
+[2018-05-13 20:09:25]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 20:09:25]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 20:09:25]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 20:09:25]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 20:09:25]  * API BIND:     0.0.0.0:25000
+[2018-05-13 20:09:25]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 20:09:25]  * HUGE PAGES:   available
+[2018-05-13 20:09:25]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 20:09:25] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 20:09:25] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 20:09:25] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 20:09:38] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 20:09:46] accepted (1/0) diff 668 (289 ms)
+[2018-05-13 20:09:50] accepted (2/0) diff 668 (138 ms)
+[2018-05-13 20:09:52]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 20:09:52]  * HUGE PAGES:   available
+[2018-05-13 20:09:52]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 20:09:52]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 20:09:52]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 20:09:52]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 20:09:52]  * API BIND:     0.0.0.0:25000
+[2018-05-13 20:09:52]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 20:09:52] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 20:09:52] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 20:09:52] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 20:09:56] accepted (1/0) diff 668 (117 ms)
+[2018-05-13 20:10:03] accepted (2/0) diff 668 (142 ms)
+[2018-05-13 20:10:08] accepted (3/0) diff 668 (157 ms)
+[2018-05-13 20:10:12] accepted (4/0) diff 668 (65 ms)
+[2018-05-13 20:10:31] accepted (5/0) diff 668 (186 ms)
+[2018-05-13 20:10:38] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 20:10:42] accepted (6/0) diff 668 (128 ms)
+[2018-05-13 20:10:44]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 20:10:44]  * HUGE PAGES:   available
+[2018-05-13 20:10:44]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 20:10:44]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 20:10:44]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 20:10:44]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 20:10:44]  * API BIND:     0.0.0.0:25000
+[2018-05-13 20:10:44]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 20:10:44] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 20:10:44] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-13 20:10:44] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-13 20:10:46] accepted (1/0) diff 668 (217 ms)
+[2018-05-13 20:10:48]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-13 20:10:48]  * HUGE PAGES:   available
+[2018-05-13 20:10:48]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-13 20:10:48]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-13 20:10:48]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-13 20:10:48]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-13 20:10:48]  * API BIND:     0.0.0.0:25000
+[2018-05-13 20:10:48]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-13 20:10:49] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-13 20:10:49] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-13 20:10:49] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:05:51]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:05:51]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:05:51]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:05:51]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:05:51]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:05:51]  * HUGE PAGES:   available
+[2018-05-14 07:05:51]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:05:51]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:05:51] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:05:51] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-14 07:05:51] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:05:54] accepted (1/0) diff 668 (106 ms)
+[2018-05-14 07:05:55] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:08]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:08]  * HUGE PAGES:   available
+[2018-05-14 07:06:08]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:08]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:08]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:08]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:08]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:08]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:08] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:08] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:08] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:09]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:09]  * HUGE PAGES:   available
+[2018-05-14 07:06:09]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:09]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:09]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:09]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:09]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:09]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:09] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:09] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:09] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:10]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:10]  * HUGE PAGES:   available
+[2018-05-14 07:06:10]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:10]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:10]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:10]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:10]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:10]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:10] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:10] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-14 07:06:10] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:11]  * HUGE PAGES:   available
+[2018-05-14 07:06:11]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:11]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:11]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:11]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:11]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:11]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:11]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:11] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:11] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:11] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:12]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:12]  * HUGE PAGES:   available
+[2018-05-14 07:06:12]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:12]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:12]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:12]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:12]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:12]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:12] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:12] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:12] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:13]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:13]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:13]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:13]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:13]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:13]  * HUGE PAGES:   available
+[2018-05-14 07:06:13]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:13]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:13] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:13] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:13] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:14]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:14]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:14]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:14]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:14]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:14]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:14]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:14]  * HUGE PAGES:   available
+[2018-05-14 07:06:14] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:14] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:14] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:15]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:15]  * HUGE PAGES:   available
+[2018-05-14 07:06:15]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:15]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:15]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:15]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:15]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:15]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:15] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:15] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:15] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:15]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:15]  * HUGE PAGES:   available
+[2018-05-14 07:06:15]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:15]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:15]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:15]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:15]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:15]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:15] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:16] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:16] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:18]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:18]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:18]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:18]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:18]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:18]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:18]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:18]  * HUGE PAGES:   available
+[2018-05-14 07:06:18] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:19] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-14 07:06:19] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:20]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:20]  * HUGE PAGES:   available
+[2018-05-14 07:06:20]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:20]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:20]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:20]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:20]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:20]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:20] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:20] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-14 07:06:20] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:22]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:22]  * HUGE PAGES:   available
+[2018-05-14 07:06:22]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:22]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:22]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:22]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:22]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:22]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:22] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:22] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:22] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:23]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:23]  * HUGE PAGES:   available
+[2018-05-14 07:06:23]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:23]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:23]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:23]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:23]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:23]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:23] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:23] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:23] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 07:06:24]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 07:06:24]  * HUGE PAGES:   available
+[2018-05-14 07:06:24]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 07:06:24]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 07:06:24]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 07:06:24]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 07:06:24]  * API BIND:     0.0.0.0:25000
+[2018-05-14 07:06:24]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 07:06:24] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 07:06:24] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 07:06:24] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 08:46:24]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 08:46:24]  * HUGE PAGES:   available
+[2018-05-14 08:46:24]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 08:46:24]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 08:46:24]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 08:46:24]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 08:46:24]  * API BIND:     0.0.0.0:25000
+[2018-05-14 08:46:24]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 08:46:25] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 08:46:25] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-14 08:46:25] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 08:46:26]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 08:46:26]  * HUGE PAGES:   available
+[2018-05-14 08:46:26]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 08:46:26]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 08:46:26]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 08:46:26]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 08:46:26]  * API BIND:     0.0.0.0:25000
+[2018-05-14 08:46:26]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 08:46:26] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 08:46:27] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-14 08:46:27] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 16:57:54]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 16:57:54]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 16:57:54]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 16:57:54]  * API BIND:     0.0.0.0:25000
+[2018-05-14 16:57:54]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 16:57:54]  * HUGE PAGES:   available
+[2018-05-14 16:57:54]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 16:57:54]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 16:57:54] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 16:57:54] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-14 16:57:54] new job from xmr.pool.hashto.cash:80 diff 668
+[2018-05-14 16:58:48]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 16:58:48]  * HUGE PAGES:   available
+[2018-05-14 16:58:48]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 16:58:48]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 16:58:48]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 16:58:48]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 16:58:48]  * API BIND:     0.0.0.0:25000
+[2018-05-14 16:58:48]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 16:58:48] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 16:58:48] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 16:58:48] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-14 16:58:53] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-14 16:59:04] new job from xmr.pool.hashto.cash:80 diff 3000
+[2018-05-14 16:59:04] accepted (1/0) diff 3000 (174 ms)
+[2018-05-14 16:59:40] accepted (2/0) diff 3000 (65 ms)
+[2018-05-14 17:19:45]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-14 17:19:45]  * HUGE PAGES:   available
+[2018-05-14 17:19:45]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-14 17:19:45]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-14 17:19:45]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-14 17:19:45]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-14 17:19:45]  * API BIND:     0.0.0.0:25000
+[2018-05-14 17:19:45]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-14 17:19:45] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-14 17:19:45] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-14 17:19:45] new job from xmr.pool.hashto.cash:80 diff 636
+[2018-05-14 17:19:47] accepted (1/0) diff 636 (182 ms)
+[2018-05-19 16:29:35]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-19 16:29:35]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-19 16:29:35]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-19 16:29:35]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-19 16:29:35]  * API BIND:     0.0.0.0:25000
+[2018-05-19 16:29:35]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-19 16:29:35]  * HUGE PAGES:   available
+[2018-05-19 16:29:35]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-19 16:29:35] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-19 16:29:35] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-19 16:29:35] new job from xmr.pool.hashto.cash:80 diff 636
+[2018-05-19 16:29:38] accepted (1/0) diff 636 (92 ms)
+[2018-05-19 16:29:41] accepted (2/0) diff 636 (92 ms)
+[2018-05-19 17:03:39]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-19 17:03:39]  * HUGE PAGES:   available
+[2018-05-19 17:03:39]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-19 17:03:39]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-19 17:03:39]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-19 17:03:39]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-19 17:03:39]  * API BIND:     0.0.0.0:25000
+[2018-05-19 17:03:39]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-19 17:03:39] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-19 17:03:39] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-19 17:03:39] new job from xmr.pool.hashto.cash:80 diff 1000
+[2018-05-19 17:04:12] new job from xmr.pool.hashto.cash:80 diff 1000
+[2018-05-19 17:04:39]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-19 17:04:39]  * HUGE PAGES:   available
+[2018-05-19 17:04:39]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-19 17:04:39]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-19 17:04:39]  * THREADS:      1, cryptonight, av=1, donate=5%
+[2018-05-19 17:04:39]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-19 17:04:39]  * API BIND:     0.0.0.0:25000
+[2018-05-19 17:04:39]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-19 17:04:39] [01;32mREADY (CPU)[0m threads [01;36m1(1)[0m huge pages [01;32m1/1 100%[0m memory [01;36m2.0 MB
+[2018-05-19 17:04:39] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-19 17:04:39] new job from xmr.pool.hashto.cash:80 diff 1000
+[2018-05-19 17:04:41] accepted (1/0) diff 1000 (177 ms)
+[2018-05-19 17:04:50] accepted (2/0) diff 1000 (66 ms)
+[2018-05-19 17:04:53] accepted (3/0) diff 1000 (198 ms)
+[2018-05-19 17:05:20] new job from xmr.pool.hashto.cash:80 diff 2250
+[2018-05-19 17:08:16]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-19 17:08:16]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-19 17:08:16]  * THREADS:      3, cryptonight, av=1, donate=5%
+[2018-05-19 17:08:16]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-19 17:08:16]  * API BIND:     0.0.0.0:25000
+[2018-05-19 17:08:16]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-19 17:08:16]  * HUGE PAGES:   available
+[2018-05-19 17:08:16]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-19 17:08:17] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-19 17:08:17] new job from xmr.pool.hashto.cash:80 diff 531
+[2018-05-19 17:08:17] [01;32mREADY (CPU)[0m threads [01;36m3(3)[0m huge pages [01;31m0/3 0%[0m memory [01;36m6.0 MB
+[2018-05-19 17:08:23] new job from xmr.pool.hashto.cash:80 diff 531
+[2018-05-19 17:08:28] accepted (1/0) diff 531 (285 ms)
+[2018-05-19 17:08:30] accepted (2/0) diff 531 (101 ms)
+[2018-05-19 17:08:42] accepted (3/0) diff 531 (142 ms)
+[2018-05-19 17:09:02]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-19 17:09:02]  * HUGE PAGES:   available
+[2018-05-19 17:09:02]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-19 17:09:02]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-19 17:09:02]  * THREADS:      3, cryptonight, av=1, donate=5%
+[2018-05-19 17:09:02]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-19 17:09:02]  * API BIND:     0.0.0.0:25000
+[2018-05-19 17:09:02]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-19 17:09:02] use pool xmr.pool.hashto.cash:80 138.68.114.199
+[2018-05-19 17:09:02] new job from xmr.pool.hashto.cash:80 diff 531
+[2018-05-19 17:09:02] [01;32mREADY (CPU)[0m threads [01;36m3(3)[0m huge pages [01;31m0/3 0%[0m memory [01;36m6.0 MB
+[2018-05-19 17:10:49]  * VERSIONS:     XMRig/2.6.0-beta3 libuv/1.19.2 MSVC/2017
+[2018-05-19 17:10:49]  * HUGE PAGES:   available
+[2018-05-19 17:10:49]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
+[2018-05-19 17:10:49]  * CPU L2/L3:    1.0 MB/6.0 MB
+[2018-05-19 17:10:49]  * THREADS:      3, cryptonight, av=1, donate=5%
+[2018-05-19 17:10:49]  * POOL #1:      xmr.pool.hashto.cash:80
+[2018-05-19 17:10:49]  * API BIND:     0.0.0.0:25000
+[2018-05-19 17:10:49]  * COMMANDS:     'h' hashrate, 'p' pause, 'r' resume
+[2018-05-19 17:10:49] use pool xmr.pool.hashto.cash:80 188.166.192.159
+[2018-05-19 17:10:49] new job from xmr.pool.hashto.cash:80 diff 531
+[2018-05-19 17:10:49] [01;32mREADY (CPU)[0m threads [01;36m3(3)[0m huge pages [01;31m0/3 0%[0m memory [01;36m6.0 MB

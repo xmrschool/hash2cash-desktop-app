@@ -1,28 +1,9 @@
 import * as electron from 'electron';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { BaseUpdater } from 'electron-updater/out/BaseUpdater';
-
-let autoUpdater: BaseUpdater;
+import { autoUpdater } from 'electron-updater';
 
 const app = electron.app || electron.remote.app;
-// tslint:disable:prefer-conditional-expression
-if (process.platform === 'win32') {
-  autoUpdater = new (require('electron-updater/out/NsisUpdater')).NsisUpdater(
-    undefined,
-    app
-  );
-} else if (process.platform === 'darwin') {
-  autoUpdater = new (require('electron-updater/out/MacUpdater')).MacUpdater(
-    undefined,
-    app
-  );
-} else {
-  autoUpdater = new (require('electron-updater/out/AppImageUpdater')).AppImageUpdater(
-    undefined,
-    app
-  );
-}
 
 autoUpdater.logger = require('electron-log');
 (autoUpdater.logger as any).transports.file.level = 'info';

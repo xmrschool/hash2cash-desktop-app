@@ -1,17 +1,48 @@
 import * as React from 'react';
+import { sortBy } from 'lodash';
 import { shell } from 'electron';
 import { FormattedMessage } from 'react-intl';
 import * as os from 'os';
 import { Response } from 'opencl-detector';
 import { observable } from 'mobx';
 import { ITip } from './';
-import { Driver, PossibleArches } from '../../renderer/api/Api';
+import { Driver, SeriesFilter } from '../../renderer/api/Api';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
 import { intl } from '../../renderer/intl';
 
 const compare = require('compare-versions');
 const debug = require('debug')('app:tips:driverVersion');
 
+export function seriesMatch(series: SeriesFilter[], name: string) {
+  const filteredName = name.includes('GB')
+    ? name.replace(/ (\d+)GB/, '')
+    : name;
+  const lowercasedFiltered = filteredName.toLowerCase();
+  const serieNumber = /(\d+)/.exec(filteredName);
+  const parsedSerieNumber = serieNumber ? +serieNumber[0] : 0;
+
+  debug({ filteredName, serieNumber, parsedSerieNumber, series });
+
+  const matchedFilters = series.filter(filter => {
+    if (filter.type && parsedSerieNumber) {
+      return (
+        lowercasedFiltered.includes(filter.type.toLowerCase()) &&
+        (filter as any).minimalSupported <= parsedSerieNumber &&
+        (filter as any).maximalSupported >= parsedSerieNumber
+      );
+    } else if (filter.seriesList) {
+      const matchedSerie = filter.seriesList.find(d => d === filteredName);
+
+      return !!matchedSerie;
+    }
+
+    debug('Faled to check condition ', filter);
+    // Condition is strange.
+    return false;
+  });
+
+  return matchedFilters.length > 0;
+}
 export default class DriverVersionTip implements ITip {
   id = 'driverVersion';
   name = 'Update GPU drivers';
@@ -48,6 +79,7 @@ export default class DriverVersionTip implements ITip {
     }
 
     const cudaDevice = parsedReport.cuda && parsedReport.cuda.devices[0];
+
     // Two reasons of why cuda device doesn't exist
     // 1. device too old
     // 2. drivers too old
@@ -70,6 +102,7 @@ export default class DriverVersionTip implements ITip {
       debug('GPU series is %d', +parsed[0]);
       // Older are cuda less than 2, we don't need 'em
       if (+parsed[0] < 430) {
+        debug('GPU is too old: ', parsed);
         this.defined = false;
 
         return;
@@ -101,14 +134,26 @@ export default class DriverVersionTip implements ITip {
 
       return;
     }
-    const driver = drivers.find(
+
+    debug('Tryna find GPU that matches condition: %o', {
+      isMobile,
+      major,
+      arch,
+    });
+    const matchedDrivers = drivers.filter(
       d =>
         d.isMobile === isMobile &&
         d.major === major &&
-        d.arch === PossibleArches[arch]
+        d.arch === (arch as any) &&
+        seriesMatch(d.series, compatibleDevice.name)
     );
 
+    const driver = sortBy(matchedDrivers, 'priority')[0];
+
+    debug('Driver is: ', driver);
+
     if (!driver) {
+      debug('No matched driver');
       this.defined = false;
 
       return;
@@ -160,6 +205,7 @@ export default class DriverVersionTip implements ITip {
   async fixIt() {
     shell.openExternal(this.downloadLink);
 
-    return false;
+    this.buttonDisabled = false;
+    return true;
   }
 }

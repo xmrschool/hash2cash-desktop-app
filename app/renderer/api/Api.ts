@@ -25,8 +25,16 @@ export type Driver = {
   isMobile: boolean;
   major: number;
   arch: PossibleArches;
+  series: SeriesFilter[];
   version: string; // 1.4.5
   downloadLink: string;
+};
+
+export type SeriesFilter = {
+  maximalSupported?: number;
+  minimalSupported?: number;
+  type?: string;
+  seriesList?: string[];
 };
 
 export type AppInfo = {

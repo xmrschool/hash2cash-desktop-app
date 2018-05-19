@@ -195,40 +195,47 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   async start(): Promise<boolean> {
     if (this.running) throw new Error('Miner already running');
 
-    const args = await this.getAppArgs();
-    const fullyPath = path.join(this.path, __WIN32__ ? 'xmrig.exe' : 'xmrig');
+    try {
+      const args = await this.getAppArgs();
+      const fullyPath = path.join(this.path, __WIN32__ ? 'xmrig.exe' : 'xmrig');
 
-    this.willQuit = false;
-    if (debug.enabled)
-      debug(
-        'Running a miner...\n%c"%s" %s',
-        'color: crimson',
-        fullyPath,
-        args.join(' ')
-      );
-    this.daemon = spawn(fullyPath, args);
-    this.pid = this.daemon.pid;
-
-    addRunningPid(this.pid);
-
-    this.daemon.stdout.on('data', data => {
+      this.willQuit = false;
       if (debug.enabled)
         debug(
-          '%c[STDOUT] %c\n%s',
-          'color: dodgerblue',
-          'color: black',
-          data.toString()
+          'Running a miner...\n%c"%s" %s',
+          'color: crimson',
+          fullyPath,
+          args.join(' ')
         );
-    });
+      this.daemon = spawn(fullyPath, args);
+      this.pid = this.daemon.pid;
 
-    this.emit({ running: true });
+      addRunningPid(this.pid);
 
-    this.daemon.on('close', err => this.handleTermination(err, true));
-    this.daemon.on('error', err => this.handleTermination(err));
+      this.daemon.stdout.on('data', data => {
+        if (debug.enabled)
+          debug(
+            '%c[STDOUT] %c\n%s',
+            'color: dodgerblue',
+            'color: black',
+            data.toString()
+          );
+      });
 
-    this.running = true;
+      this.emit({ running: true });
 
-    return true;
+      this.daemon.on('close', err => this.handleTermination(err, true));
+      this.daemon.on('error', err => this.handleTermination(err));
+
+      this.running = true;
+
+      return true;
+    } catch(e) {
+      console.error('Failed to start miner: ', e);
+      this.handleTermination(e, undefined, true);
+
+      return false;
+    }
   }
 
   async stop(): Promise<boolean> {

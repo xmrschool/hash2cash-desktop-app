@@ -138,11 +138,11 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
   }
 
   // In case miner has been stopped unexpectedly
-  handleTermination(data: any, isClose: boolean = false) {
+  handleTermination(data: any, isClose: boolean = false, forceHandle: boolean = false) {
     if (this.pid) {
       shiftRunningPid(this.pid);
     }
-    if (this.willQuit || !this.running) return;
+    if (!forceHandle && (this.willQuit || !this.running)) return;
 
     let errorMessage = `Worker ${this.workerName} stopped with code ${data}`;
 
@@ -156,8 +156,8 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
       errorMessage = 'miner.workers.base.stoppedWithNoCode';
     }
 
-    console.log('Handling termination', data);
-    if ((data && data.code === 'ENOENT') || data === -4058 || data === 4058) {
+    console.log('Handling termination', data, data && data.code);
+    if ((data && (data.code === 'UNKNOWN' || data.code === 'ENOENT')) || data === -4058 || data === 4058) {
       // If miner has been deleted we remove record that indicates if miner has been unpacked
       fs.remove(this.pathTo('unpacked'));
 
@@ -168,7 +168,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
       _data: {
         grateful: isClose,
         message: errorMessage,
-        code: data,
+        code: data && data.code,
         raw: data,
       },
     });
