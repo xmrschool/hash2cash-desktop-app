@@ -41,6 +41,8 @@ export default async function updateMiners(
   if ((manifest as any).errors! || !manifest.success)
     throw new Error((manifest as any).errors[0]);
 
+  LocalStorage.manifest = manifest;
+
   const failed: string[] = [];
   let uptoDate = true;
 
@@ -103,10 +105,6 @@ export default async function updateMiners(
       return d;
     })
     .filter(d => typeof d !== 'undefined') as Downloadable[];
-  LocalStorage.manifest = {
-    success: true,
-    downloadable: outerManifest,
-  };
   // fs-extra is heavy and taking so many time to load it
   await require('fs-extra').outputFile(
     path.join(config.MINERS_PATH, 'manifest.json'),

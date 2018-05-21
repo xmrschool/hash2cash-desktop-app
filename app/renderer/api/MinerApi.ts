@@ -28,6 +28,16 @@ export class Worker extends EventEmitter {
     this.bindEvents();
   }
 
+  isRunningOnUltimate(): boolean {
+    if (this.data.parameters && this.data.parameters.power) {
+      return this.data.parameters.power === '100';
+    } else if (this.data.parameters && this.data.parameters.main) {
+      return this.data.parameters.main === 'full';
+    }
+
+    return false;
+  }
+
   listenForEvents() {
     onceMinerReady(localSocket => {
       localSocket.on('state', ({ name, _data, ...params }: any) => {

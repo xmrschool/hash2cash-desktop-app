@@ -1,8 +1,9 @@
 import { defineMessages } from 'react-intl';
+import { machineId } from 'node-machine-id';
 import getCudaDevices from 'cuda-detector';
 import getOpenCLDevices from 'opencl-detector';
-import { cpu, graphics, system } from 'systeminformation';
-import { arch } from 'os';
+import { cpu, graphics } from 'systeminformation';
+import { arch, release } from 'os';
 
 import { Architecture } from '../../renderer/api/Api';
 import trackError from '../raven';
@@ -80,11 +81,7 @@ export default async function collectHardware(): Promise<Architecture> {
     collectedCpu = await safeGetter(cpu, 'systeminformation');
   }
 
-  const systemInformation = await system();
-  const uuid =
-    systemInformation && systemInformation.uuid
-      ? systemInformation.uuid.toLowerCase()
-      : '';
+  const uuid = await machineId(true);
 
   const detectedArch = arch();
 
@@ -94,6 +91,7 @@ export default async function collectHardware(): Promise<Architecture> {
     uuid,
     reportVersion: 2,
     cpuArch: (detectedArch === 'ia32' ? 'x32' : arch()) as 'x32' | 'x64',
+    platformVersion: release(),
   };
 
   if (cpuInfo) {

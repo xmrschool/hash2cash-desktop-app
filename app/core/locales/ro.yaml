@@ -1,0 +1,168 @@
+---
+LOGIN_YOU_AGREED: Prin înregistrarea pe Hash to Cash, sunteți de acord cu Politica noastră de securitate și de confidențialitate. (djuriy)
+LOGIN_WELCOME_BACK: Bine ai revenit! Introduceți parola pentru a intra
+LOGIN_EMAIL: email
+LOGIN_PASSWORD: parola
+LOGIN_NEXT: Următor
+LOGIN_REGISTER: Inregistreaza-te
+LOGIN_LOGIN: Login
+LOGIN_THROUGH_SITE: Autentificaţi-vă prin intermediul site-ului
+BENCHMARK_HEADER: Pentru a începe, trebuie să clarificăm câteva lucruri
+BENCHMARK_FIRST: |
+  Unele antivirusuri folosesc aplicația noastră ca pe un virus. Și motivul pentru asta
+  este aplicații care criptocurrency mea fără concurs de utilizator. Hash to Cash
+  -nu este un virus. Antivirus nu poate detecta dacă un utilizator dă
+  permisiune, așa că interzice fiecărui miner.
+BENCHMARK_SECOND: |
+  Dacă antivirusul a făcut o greșeală, adăugați dosarul Aplicația Hash to Cash
+  lista de excepții pentru antivirus.
+BENCHMARK_THIRD: |
+  Avem nevoie de aproximativ 5 minute pentru a descărca binarele de minerit și nu face referință
+  Test. Rezistă!(djuriy)
+BENCHMARK_GO: Ok,start
+DASHBOARD_LABEL: Tabloul de bord
+DASHBOARD_CURRENT_BALANCE: SOLDUL CURENT
+DASHBOARD_PERFORMANCE_LABEL: PERFORMANŢĂ TOTALĂ
+DASHBOARD_PERFORMANCE_CAPTION: pe lună
+DASHBOARD_EARNED_LABEL: HASHES TRANSMISE
+DASHBOARD_RIGNAME_LABEL: Rig Denumirea  
+DASHBOARD_RIGNAME_EMPTY: Nu poate fi gol
+DASHBOARD_REFRESHER_REFRESH: Verifică pentru actualizări(djuriy)
+DASHBOARD_MENU_START: Start
+DASHBOARD_MENU_STOP: Stop
+DASHBOARD_MENU_TIPS: Sfaturi
+DASHBOARD_MENU_DEVICES: Dispozitive
+OPTIONS_MAIN: GPU principal
+OPTIONS_ADDITIONAL: GPU suplimentar
+OPTIONS_POWER: Putere
+OPTIONS_PRIORITY: CPU prioritate
+PERFORMANCE_MONTHLY: pe lună
+PERFORMANCE_DAILY: pe zi
+POWER_LEVEL_ULTRAOPTIMIZED: Cel mai mic posibil
+POWER_LEVEL_OPTIMIZED: Scăzut
+POWER_LEVEL_MIDDLE: Mijloc
+POWER_LEVEL_HIGH: '🔥 Mare'
+POWER_LEVEL_FULL: '🔥 Ultra 🔥'
+POWER_LEVEL_10: Cel mai mic posibil
+POWER_LEVEL_25: Scăzut
+POWER_LEVEL_50: Mijloc
+POWER_LEVEL_75: '🔥 Mare'
+POWER_LEVEL_100: '🔥 Ultra 🔥'
+POWER_LEVEL_0: Scăzut
+POWER_LEVEL_1: Peste normal
+POWER_LEVEL_2: Mijloc
+POWER_LEVEL_3: Mai sus de mijloc
+POWER_LEVEL_4: Mare
+POWER_LEVEL_5: "În timp real (nu recomandăm)\n"
+TIPS_HEADER: Sfaturi
+TIPS_BUTTON_FIX: fix
+TIPS_DRIVER_VERSION_POSSIBLY_OLD: |
+  S-ar putea să utilizați vechea versiune de driver, dar nu o putem verifica. Simțiți-vă liber si faceți singuri
+TIPS_DRIVER_VERSION_UPDATE_AVAILABLE: |
+  Utilizați un vechi driver GPU, aveți {versiune veche}, noul este {versiune noua}. Îl vom descărca de pe site-ul Nvidia
+TIPS_DRIVER_VERSION_UPDATE_UNAVAILABLE: |
+  Utilizaţi cel mai recent driver posibila ({version}).
+TIPS_LARGE_PAGES_WORKAROUND: |
+  Această remediere activează paginile mari(Large Pages). Sunt necesare privilegii de administrator
+TIPS_LARGE_PAGES_REBOOT_MIGHT_HELP: |
+  O repornire ar putea ajuta.
+TIPS_LARGE_PAGES_REBOOT_MUST_HELP: |
+  Reboot-ați PC-ul pentru a aplica modificările.
+TIPS_LARGE_PAGES_FAILED: |
+  Nu a reușit să aplice fix ({reason}). S-ar putea ajuta PC-ul reboot, sau, poate că sunteţi de funcţionare app nu ca administrator
+TIPS_AES_NAME: CPU  trebuie să suporte hardware-ul AES
+TIPS_AES_WORKAROUND: |
+  AES este o specificație de criptare, care accelerează extracția mai mult de 50%
+  
+SETTINGS_MENU_GO_SETTINGS: Setări
+SETTINGS_MENU_LOGOUT: Deconectare
+SETTINGS_MENU_LOGOUT_SURE: Doriți să vă deconectați?
+SETTINGS_MENU_LOGOUT_YEAH: "Ieșire\n"
+SETTINGS_MENU_LOGOUT_CANCEL: Anulare
+SETTINGS_MENU_QUIT: Părăsi Hash to Cash
+SETTINGS_HEADER: Setări
+SETTINGS_LANGUAGE: Limba
+SETTINGS_LANGUAGE_DESC: Selectaţi limbă
+SETTINGS_CURRENCY: Valută
+SETTINGS_CURRENCY_DESC: Pentru comoditate, Hash to Cash convertește XMR în această monedă
+SETTINGS_STARTUP: început
+SETTINGS_STARTUP_DESC: Salvează in câteva clicuri - Hash to Cash va începe miniere împreună cu lansarea sistemului de operare(OS Startup)
+SETTINGS_BENCHMARK: "Benchmark din nou\n"
+SETTINGS_BENCHMARK_DESC: Hardware-ul schimbat? Face acest lucru, şi vom face teste din nou
+SETTINGS_BENCHMARK_BTN: "Benchmark\n"
+SETTINGS_FORGET: "Uită tot\n\n"
+SETTINGS_FORGET_DESC: "Elimină toate datele pe care le aveți: date auth, mineri, cache. Este alegerea dvs. dacă doriți să dezinstalați Hash to Cash"
+SETTINGS_FORGET_BTN: Ștergeți
+USD: "Dolar american\n"
+RUB: Rublă
+DRIVERS_ISSUE_HEADER: "Sa întâmplat ceva cu GPU\n"
+TIPS_UPDATE_DRIVER_LABEL: Actualizarea driverului grafic
+TIPS_VCREDIST_WORKAROUND: Este o bibliotecă Microsoft cerută pentru a rula mineralul GPU. Chiar ar trebui să-l instalați
+TIPS_VCREDIST_LABEL: Instalați VCRedist
+DRIVER_ISSUE_ABOUT: |
+  Nu putem detecta dispozitivele OpenCL (AMD) pe care le utilizați. Hash to Cash poate cădea din cauza conducătorului auto vechi GPU. Puteți trece la o altă metodă de detectare (care nu este la fel de exactă ca cea originală), dar ar trebui să funcționeze peste tot.
+DRIVER_ISSUE_APPLY_CHANGES: "Treceți la o rezervă\n"
+DRIVER_ISSUE_DONT_APPLY: "Reîncercați din nou\n"
+DISABLE_OPENCL: Dezactivați detectarea dispozitivului OpenCL (AMD)
+DISABLE_OPENCL_DESC: "Nu este recomandat. Dar folosiți dacă Hash to Cash se prăbușește\n"
+invalid_password: "Parolă Invalidă\n"
+sign_through_site: "conectați-vă prin site\n"
+email_blacklisted: "acest e-mail este interzis\n"
+email_forbidden: "acest e-mail este interzis\n"
+core.hardwareCollector.unsupported: Furnizorul dvs. de GPU ({furnizor}) nu este acceptat. Contactați-ne dacă credeți că aceasta este o greșeală sau actualizați driverele
+core.hardwareCollector.cudaFailed: Driverul dvs. GPU este prea vechi, obțineți unul nou de la nvidia.com
+core.hardwareCollector.archTooLow: GPU-ul dvs. este prea vechi, sm_20 este minim necesar, sm_ {major} {minor}. Nu putem face nimic
+mobx.global.connectionFail: Verificați conexiunea la internet.Hash to Cash nu poate conecta la server
+mobx.init.status.collecting: "Colectarea informațiilor despre hardware ...\n"
+mobx.init.status.vcredist.checking: "Verificarea instalării VCRedistului\n"
+mobx.init.status.vcredist.downloading: Descărcarea VCRedist {status}
+mobx.init.status.vcredist.failed: Nu am putut instala VCRedist 2017. Trebuie să o faci singur, pentru GPU.
+mobx.login.password.mislength: "lungimea parolei trebuie să fie de cel puțin 5\n"
+mobx.login.email.invalid: "e-mail trebuie să conțină @\n"
+mobx.login.unexpected: "Eroare neașteptată. Încercați din nou sau contactați-ne\n"
+mobx.reload.update: Actualizare
+scenes.init.status.fetchingManifest: Descărcarea manifestului
+scenes.init.status.checkingDeps: Asigurați-vă că sunt instalate dependențele necesare
+scenes.init.status.downloadingBinaries: Descărcare necesare mineri
+scenes.init.status.benchmarking: Face unele teste...
+scenes.init.hardwares: Hardware
+scenes.init.internalError: Oops! Ceva a mers prost pe partea noastră
+scenes.init.justError: Oops! Nu putem descărca miner
+scenes.init.whatAfterError: Încercați din nou sau contactaţi-ne dacă credeţi că problema pe partea noastră
+scenes.init.tryAgain: încearcă din nou
+scenes.init.downsidePerMonth: puteți mina pe lună
+scenes.init.startMine: Start 
+scenes.init.algorithms: Algoritmi
+scenes.init.worker.dailyProfit: pe zi
+scenes.init.worker.monthlyProfit: pe lună
+core.reload.updates.checking: Verificați actualizările aplicației.
+core.reload.updates.newAvailable: Descărcarea noii versiuni a aplicației {versiune}
+core.reload.updates.installingAfter: Actualizare va fi lansat după {secs, number} {unreadCount, plural, one {al doilea} other {secunde}}
+core.reload.devices.collecting: Dispozitive de colectare
+core.reload.minerUpdater.checking: Verificați actualizările disponibile
+core.reload.minerUpdater.newVersion: O versiune nouă este disponibilă {numele} {versiune veche} → {versiune noua}
+core.reload.minerUpdater.failed: Nu a reuşit să descărcaţi miner {name}, derulare înapoi
+core.reload.minerUpdater.uptodate: Toate actualizate!
+miner.workers.openInShell: Deschideți dosarul(folder) cu miner
+miner.workers.preserveConfig: Păstrați config
+miner.workers.disableAmd: Dezactivați AMD
+miner.workers.disableNvidia: Dezactivați NVidia
+miner.workers.affineToCpu: Conectează-te la CPU
+miner.workers.dynamicDifficulty: Dinamică dificultate
+miner.workers.base.noDevices: Nu au fost găsite dispozitive. Încercați să actualizați driverele și să reîncărcați aplicația
+miner.workers.base.noVcredist: "Încercați să instalați VCRedist 2017 sau să dezactivați AMD\n"
+miner.workers.base.tooExpensive: "Încercați să reduceți puterea GPU \n"
+miner.workers.base.stoppedWithNoCode: Miner {workerName} sa oprit fără cod de ieșire
+miner.workers.base.enoent: "Mineritul nu există. Descărcați din nou\n"
+runtimeError.workerStopped: Miner sa oprit
+runtimeError.noFile: Se pare că antivirusul a fost eliminat de miner. Trebuie să adăugați {path} , apoi reporniți aplicația.
+runtimeError.noAccess: Nu există acces la mineri. Ar putea fi din cauza antivirusului dvs., nu ezitați să adăugați {path} la lista de excluderi și apoi reîncărcați aplicația
+runtimeError.undefinedError: Eroare incertă a sistemului de fișiere ({code} - {errno}). Încercați din nou mai târziu sau contactați-ne
+runtimeError.close: Închideţi
+dashboard.switchArch: Hashrate va fi mai mic, iar GPU nu va funcționa
+dashboard.switchArchDesc: Acest lucru se datorează programului de instalare a aplicației. Trebuie să descărcați programul de instalare x64 în loc de x32.
+dashboard.downloadForRightArch: Descărcați instalatorul x64
+dashboard.skipArchWarning: Treci la continut
+LANGUAGE_COMMUNITY_EFFORT: Localizarea lui Hash to Cash depinde parțial de comunitate. Dacă doriți ca Hash to Cash să fie tradusă în limba dvs., vom fi fericiți și vă vom răsplăti pentru ajutor.
+LANGUAGE_COMMUNITY_APPLY: Pentru a aplica vizitați site-ul nostru {site}
+LANGUAGE_COMMUNITY_LINK: Site-ul de traducere

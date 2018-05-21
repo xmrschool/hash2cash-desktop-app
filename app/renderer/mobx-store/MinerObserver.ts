@@ -1,4 +1,6 @@
 import { action, observable } from 'mobx';
+import Api from '../api/Api';
+
 import { Worker } from '../api/MinerApi';
 import CurrenciesService, {
   AllowedCurrencies,
@@ -6,6 +8,7 @@ import CurrenciesService, {
 } from './CurrenciesService';
 import globalState from './GlobalState';
 import { EventEmitter } from 'events';
+import { LocalStorage } from '../utils/LocalStorage';
 
 export const INTERVAL_TIME = 1000;
 
@@ -17,12 +20,52 @@ export class InternalObserver extends EventEmitter {
   _interval: any;
   _isObserver: true = true;
   _data: Worker;
+  metricsLeft: number = 0;
 
   constructor(worker: Worker) {
     super();
 
     this.name = worker.name;
     this._data = worker;
+  }
+
+  async tryToEmitMetrics(stats: { highest: number; total: number[] }) {
+    try {
+      const [, minute, hourly] = stats.total;
+
+      console.log('stats are: ', stats);
+      if (!stats.highest || !minute || !this._data.isRunningOnUltimate()) {
+        return;
+      }
+
+      if (this.metricsLeft === 0) {
+        this.metricsLeft = 60;
+      } else {
+        this.metricsLeft--;
+        return;
+      }
+
+      const minerIds = LocalStorage.manifest!.minerIds;
+
+      if (minerIds.length <= 2) {
+        // Cpu is first, then goes GPU
+        const requiredMinerId =
+          this._data.data.name === 'MoneroCryptonight' ? 0 : 1;
+        const minerId = minerIds[requiredMinerId];
+
+        if (minerId) {
+          const res = await Api.mining.submitMetrics({
+            id: minerId,
+            hourly: hourly,
+            minute: minute,
+            max: stats.highest,
+          });
+          console.log('writing metrics: ', minerId, minute, hourly, res);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to emit metrics: ', e);
+    }
   }
 
   @action
@@ -39,6 +82,7 @@ export class InternalObserver extends EventEmitter {
       // Do not emit if not a number
       if (speed[0] && speed[0] > 0) this.latestSpeed = speed[0];
       if (speed[1] && speed[1] > 0) this.speedPerMinute = speed[1];
+      this.tryToEmitMetrics(stats.hashrate);
       this.hashesSubmitted = stats.results.hashes_total;
     } catch (e) {
       console.error('Failed to get worker stats\n', e);

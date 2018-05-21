@@ -141,6 +141,7 @@ export type Architecture = {
   uuid: string;
   platform?: 'darwin' | 'win32' | 'linux';
   cpuArch: 'x32' | 'x64';
+  platformVersion: string;
   reportVersion?: number;
   warnings: string[];
   devices: Device[];
@@ -176,6 +177,14 @@ export type SuccessManifest = {
   success: true;
   warnings?: string[];
   downloadable: Downloadable[];
+  minerIds: (string | null)[];
+};
+
+export type Metrics = {
+  id: string;
+  minute: number;
+  hourly?: number;
+  max?: number;
 };
 
 export type Manifest = FailedManifest | SuccessManifest;
@@ -185,9 +194,10 @@ export function builder<T, D>(method: string) {
     return new Promise((resolve, reject) => {
       debug(`[${method}] =>`, data);
 
-      setTimeout(() => reject('Timeout error'), 8000);
+      const timeout = setTimeout(() => reject('Timeout error'), 8000);
       socket.emit(method, data, (response: any) => {
         debug(`[${method}] <=`, response);
+        clearTimeout(timeout);
         resolve(response);
       });
     });
@@ -205,5 +215,8 @@ export default {
   },
   mining: {
     manifest: builder<Architecture, Manifest>('mining.manifest'),
+    submitMetrics: builder<Metrics, { accepted: boolean }>(
+      'mining.submitMetrics'
+    ),
   },
 };

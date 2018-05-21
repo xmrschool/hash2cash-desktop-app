@@ -1,7 +1,7 @@
 {
   "name": "hashtocash",
   "productName": "Hash to Cash",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "description": "Hash to cash allows you to mine cryptocurrencies and transform them directly to fiat. Future is here!",
   "main": "app/main/main.js",
   "scripts": {
@@ -140,6 +140,7 @@
     "mobx-react": "^5.0.0",
     "mobx-react-devtools": "^5.0.1",
     "native-utils": "file:../electron-deps/native-utils",
+    "node-machine-id": "^1.1.10",
     "opencl-detector": "file:../electron-deps/opencl-detector",
     "p-queue": "^2.3.0",
     "progressbar.js": "^1.0.1",
