@@ -1,7 +1,7 @@
 {
   "name": "hashtocash",
   "productName": "Hash to Cash",
-  "version": "0.14.2",
+  "version": "0.14.3",
   "description": "Hash to cash allows you to mine cryptocurrencies and transform them directly to fiat. Future is here!",
   "main": "app/main/main.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "start-hot": "cross-env HOT=1 NODE_ENV=development electron ./app/main/main.js",
     "dev": "npm run build-main && npm run hot-server -- --start-hot",
     "package": "npm run build && which build && build --publish always",
-    "package-win": "cross-env NODE_ENV=production npm run build && build --win --x64 --publish always",
+    "package-win": "cross-env NODE_ENV=production npm run build && build --win --x64",
     "package-mac": "NODE_ENV=production npm run build && build --mac --publish always",
     "package-linux": "npm run build && build --linux",
     "package-all": "NODE_ENV=production npm run build && build -mwl --publish always",

@@ -38,24 +38,24 @@ export default async function checkAppUpdates(
   ctx: Context
 ): Promise<ExpectedReturn> {
   if (__DEV__) return { skipped: true };
-  ctx.setStatus('Checking for app updates...');
+  ctx.setStatus(intl.formatMessage(messages.checking));
 
   ipcRenderer.send('check-updates');
   const update = await waitTilReply();
 
-  console.log("What's up?", update);
+  console.log("What's up with updates?", update);
 
   // Then update available
   // ToDo is it better to use downloadPromise?
   if (update.available) {
     const message = intl.formatMessage(messages.newAvailable, {
-      version: update.updateInfo.version,
+      version: update.version,
     });
     ctx.setStatusWithoutAnimation(message);
 
     ipcRenderer.on('update-download-stats', (event: any, stats: any) => {
       ctx.setStatusWithoutAnimation(
-        `${update.updateInfo.version} ${formatBytes(
+        `${message} ${formatBytes(
           stats.transferred || 0
         )} / ${formatBytes(stats.total || 0)} @ ${formatBytes(
           stats.bytesPerSecond || 0
