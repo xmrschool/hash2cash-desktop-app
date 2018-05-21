@@ -11,6 +11,7 @@ import getDevices from 'cpuid-detector';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
 import { intl } from '../../renderer/intl';
 
+const APP_VERSION = require('../../config.js').APP_VERSION;
 const debug = require('debug')('app:detector');
 
 const messages = defineMessages({
@@ -89,6 +90,7 @@ export default async function collectHardware(): Promise<Architecture> {
     devices: [],
     warnings: [],
     uuid,
+    appVersion: APP_VERSION,
     reportVersion: 2,
     cpuArch: (detectedArch === 'ia32' ? 'x32' : arch()) as 'x32' | 'x64',
     platformVersion: release(),

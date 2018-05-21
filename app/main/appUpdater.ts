@@ -10,6 +10,13 @@ autoUpdater.logger = require('electron-log');
 (autoUpdater.logger as any).transports.file.level = 'info';
 
 if (require('os').arch() === 'ia32' && __WIN32__) {
+  autoUpdater.setFeedURL({
+    provider: 'spaces',
+    name: 'hash2cash',
+    region: 'ams3',
+    path: 'desktopReleases/beta-x32',
+    channel: 'beta-x32',
+  });
   autoUpdater.channel = 'beta-x32';
 }
 

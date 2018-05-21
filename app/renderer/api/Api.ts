@@ -142,6 +142,7 @@ export type Architecture = {
   platform?: 'darwin' | 'win32' | 'linux';
   cpuArch: 'x32' | 'x64';
   platformVersion: string;
+  appVersion: string;
   reportVersion?: number;
   warnings: string[];
   devices: Device[];
