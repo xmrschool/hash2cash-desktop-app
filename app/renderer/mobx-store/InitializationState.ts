@@ -79,6 +79,12 @@ export class InitializationState {
   }
 
   @action
+  reset() {
+    this.hardware = undefined;
+    this.everythingDone = false;
+  }
+
+  @action
   async fetchManifest() {
     if (!this.hardware) throw new Error('Hardware is not defined');
 

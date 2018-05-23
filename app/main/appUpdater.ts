@@ -8,8 +8,16 @@ const app = electron.app || electron.remote.app;
 autoUpdater.logger = require('electron-log');
 (autoUpdater.logger as any).transports.file.level = 'info';
 
+autoUpdater.setFeedURL({
+  provider: 'spaces',
+  name: 'hash2cash',
+  region: 'ams3',
+  path: 'app',
+  channel: 'latest',
+});
+
 if (require('os').arch() === 'ia32' && __WIN32__) {
-  autoUpdater.channel = 'beta-x32';
+  autoUpdater.channel = 'latest-x32';
 }
 
 autoUpdater.on('update-available', () => {

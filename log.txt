@@ -1,7 +1,6 @@
-[2018-05-21 12:29:35] accepted (118/0) diff 861 (159 ms)
-0 diff 861 algo cn/1
-le"
- x64 AES-NI
+[2018-05-23 16:32:50] no active pools, stop mining
+cash:80 diff 1410 algo cn/1
+(1) x64 AES-NI
 :02:51]  * HUGE PAGES:   available
 [2018-05-11 19:02:51]  * CPU:          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES-NI
 [2018-05-11 19:02:51]  * CPU L2/L3:    1.0 MB/6.0 MB

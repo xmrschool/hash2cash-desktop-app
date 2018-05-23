@@ -3,7 +3,10 @@
 }
 
 .input {
+  --input-width: 100%;
+
   justify-content: flex-start;
+  max-width: 100%;
 }
 
 .input > span {

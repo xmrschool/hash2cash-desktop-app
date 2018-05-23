@@ -25,7 +25,7 @@ export default function buildMenu(
     },
     separator,
     {
-      label: 'v' + remote.app.getVersion() + '-prerelease',
+      label: 'v' + remote.app.getVersion(),
       enabled: false,
     },
     separator,

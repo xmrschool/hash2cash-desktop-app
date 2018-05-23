@@ -19,6 +19,14 @@ function asyncComponent(getComponent: ReturningFunction) {
           });
       }
     }
+
+    componentDidUpdate() {
+      if (typeof (window as any).ga === 'function') {
+        (window as any).ga('set', 'page', location.hash.slice(1));
+        (window as any).ga('send', 'pageview');
+      }
+    }
+
     render() {
       const { Component } = this.state;
       if (Component) {

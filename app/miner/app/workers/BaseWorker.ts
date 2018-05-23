@@ -88,7 +88,6 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
       type: 'function',
       localizedName: 'miner.workers.openInShell',
       onCalled: async () => {
-        console.log('Opening up explorer:', this.path);
         remote.shell.openItem(this.path);
 
         return true;
@@ -102,8 +101,8 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
       type: 'pick',
       localizedName,
       isPicked: this.state[id],
-      onChanged: async newValue => {
-        this.state[id] = newValue;
+      onChanged: async () => {
+        this.state[id] = !this.state[id];
 
         return true;
       },

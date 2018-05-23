@@ -33,7 +33,6 @@ export class InternalObserver extends EventEmitter {
     try {
       const [, minute, hourly] = stats.total;
 
-      console.log('stats are: ', stats);
       if (!stats.highest || !minute || !this._data.isRunningOnUltimate()) {
         return;
       }
@@ -54,13 +53,12 @@ export class InternalObserver extends EventEmitter {
         const minerId = minerIds[requiredMinerId];
 
         if (minerId) {
-          const res = await Api.mining.submitMetrics({
+          await Api.mining.submitMetrics({
             id: minerId,
             hourly: hourly,
             minute: minute,
             max: stats.highest,
           });
-          console.log('writing metrics: ', minerId, minute, hourly, res);
         }
       }
     } catch (e) {

@@ -38,7 +38,7 @@ export default async function checkAppUpdates(
   ctx: Context
 ): Promise<ExpectedReturn> {
   if (__DEV__) return { skipped: true };
-  ctx.setStatus('Checking for app updates...');
+  ctx.setStatus(intl.formatMessage(messages.checking));
 
   ipcRenderer.send('check-updates');
   const update = await waitTilReply();

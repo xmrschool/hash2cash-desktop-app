@@ -137,6 +137,11 @@ export default class Initialization extends React.Component<
     try {
       const { formatMessage } = this.props.intl;
 
+      initializationState.reset();
+      initializationState.setStatus(
+        formatMessage({ id: 'mobx.init.status.collecting' })
+      );
+
       await minerApi.stopAll();
       await initializationState.checkIfVcredistInstalled();
 

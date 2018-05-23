@@ -9,6 +9,7 @@ import accountService from '../mobx-store/CurrenciesService';
 import { connectionPromise, onceMinerReady } from '../socket';
 import RuntimeError from '../mobx-store/RuntimeError';
 import { sleep } from '../utils/sleep';
+import { intl } from '../intl';
 
 const debug = require('debug');
 
@@ -65,7 +66,13 @@ export class Worker extends EventEmitter {
     this.on('runtimeError', err => {
       if (err.grateful) {
         GlobalState.setToast({
-          message: err.message,
+          message: intl.formatMessage(
+            {
+              id: err.message,
+              defaultMessage: err.message,
+            },
+            { workerName: this.data.name }
+          ),
           type: 'danger',
           timeout: 5000,
           closable: true,

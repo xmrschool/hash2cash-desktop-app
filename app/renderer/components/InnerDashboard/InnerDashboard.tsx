@@ -138,7 +138,9 @@ export class WorkerView extends React.Component<
   { worker: Worker },
   { observer?: InternalObserver; menuOpened: boolean }
 > {
-  state: { observer?: InternalObserver; menuOpened: boolean } = { menuOpened: false };
+  state: { observer?: InternalObserver; menuOpened: boolean } = {
+    menuOpened: false,
+  };
   menu: any;
 
   constructor(props: any) {
@@ -261,11 +263,22 @@ export class WorkerView extends React.Component<
     }
 
     return (
-      <div key={menu.id} className={s.menuPick} onClick={() => menu.type === 'function' && this.props.worker.callFunc(menu.id)}>
+      <div
+        key={menu.id}
+        className={s.menuPick}
+        onClick={() =>
+          menu.type === 'function' && this.props.worker.callFunc(menu.id)
+        }
+      >
         <FormattedMessage id={menu.localizedName} />
         {menu.type === 'pick' && (
           <div>
-            <Switch checked={menu.isPicked} onChange={() => this.props.worker.callFunc(menu.id, !menu.isPicked)}/>
+            <Switch
+              checked={menu.isPicked}
+              onChange={() =>
+                this.props.worker.callFunc(menu.id, !menu.isPicked)
+              }
+            />
           </div>
         )}
       </div>
@@ -276,13 +289,19 @@ export class WorkerView extends React.Component<
     return (
       <div className={s.menu} ref={ref => (this.menu = ref)}>
         <CloseIcon opened={this.state.menuOpened} onClick={this.openMenu} />
-        <Dropdown isOpened={this.state.menuOpened} childRef={this.menu} onToggled={this.openMenu}>
+        <Dropdown
+          isOpened={this.state.menuOpened}
+          childRef={this.menu}
+          onToggled={this.openMenu}
+        >
           <div>
-            {this.props.worker.data.menu.map(menu => this.renderMenuChild(menu))}
+            {this.props.worker.data.menu.map(menu =>
+              this.renderMenuChild(menu)
+            )}
           </div>
         </Dropdown>
       </div>
-    )
+    );
   }
 
   render() {
@@ -306,35 +325,37 @@ export class WorkerView extends React.Component<
         </div>
         <div className={s.switcher}>
           <div className={cx(s.switcherIn, isOn && s.minerActive)}>
-            <div className={s.picks}>
-              {worker.customParameters &&
-                worker.customParameters.map(option => (
-                  <div key={option.id} className={s.pick}>
-                    <label className={s.label}>
-                      <FormattedMessage
-                        id={`OPTIONS_${option.id}`.toUpperCase()}
-                        defaultMessage={option.name}
-                      />
-                    </label>
-                    <select
-                      className={s.select}
-                      value={worker.parameters![option.id]}
-                      onChange={this.onOptionChange(option.id)}
-                    >
-                      {option.values.map(value => (
+            <div>
+              <div className={s.picks}>
+                {worker.customParameters &&
+                  worker.customParameters.map(option => (
+                    <div key={option.id} className={s.pick}>
+                      <label className={s.label}>
                         <FormattedMessage
-                          key={value.value}
-                          id={`POWER_LEVEL_${value.value}`.toUpperCase()}
-                          defaultMessage={value.name}
-                        >
-                          {(message: any) => (
-                            <option value={value.value}>{message}</option>
-                          )}
-                        </FormattedMessage>
-                      ))}
-                    </select>
-                  </div>
-                ))}
+                          id={`OPTIONS_${option.id}`.toUpperCase()}
+                          defaultMessage={option.name}
+                        />
+                      </label>
+                      <select
+                        className={s.select}
+                        value={worker.parameters![option.id]}
+                        onChange={this.onOptionChange(option.id)}
+                      >
+                        {option.values.map(value => (
+                          <FormattedMessage
+                            key={value.value}
+                            id={`POWER_LEVEL_${value.value}`.toUpperCase()}
+                            defaultMessage={value.name}
+                          >
+                            {(message: any) => (
+                              <option value={value.value}>{message}</option>
+                            )}
+                          </FormattedMessage>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+              </div>
             </div>
             <div>
               {observer && (

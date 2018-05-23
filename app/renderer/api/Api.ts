@@ -189,15 +189,18 @@ export type Metrics = {
 
 export type Manifest = FailedManifest | SuccessManifest;
 
-export function builder<T, D>(method: string) {
+export function builder<T, D>(method: string, withTimeout = true) {
   return function query(data: T): Promise<D> {
     return new Promise((resolve, reject) => {
       debug(`[${method}] =>`, data);
 
-      const timeout = setTimeout(() => reject('Timeout error'), 8000);
+      let timeout: any;
+      if (withTimeout) {
+        timeout = setTimeout(() => reject('Timeout error'), 8000);
+      }
       socket.emit(method, data, (response: any) => {
         debug(`[${method}] <=`, response);
-        clearTimeout(timeout);
+        if (timeout) clearTimeout(timeout);
         resolve(response);
       });
     });
@@ -210,7 +213,8 @@ export default {
     attempt: builder<AuthAttempt, AuthAttemptResponse>('auth.attempt'),
     attach: builder<string, AuthAttachResponse>('auth.attach'),
     loginThroughWebsite: builder<undefined, AuthThroughSite>(
-      'auth.loginThroughWebsite'
+      'auth.loginThroughWebsite',
+      false
     ),
   },
   mining: {
