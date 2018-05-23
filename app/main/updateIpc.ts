@@ -1,26 +1,28 @@
 import { ipcMain } from 'electron';
-import { autoUpdater } from './appUpdater';
+import { autoUpdater, downloadPromise } from './appUpdater';
 
 ipcMain.on('check-updates', async (event: any) => {
   try {
-    const update = await autoUpdater.checkForUpdates();
+    const update = await (downloadPromise || autoUpdater.checkForUpdates());
 
-    if (update.downloadPromise) {
-      autoUpdater.on('download-progress', stats => {
+    if (update && update.downloadPromise) {
+      autoUpdater.on('download-progress', (ev, stats) => {
+        console.log('Update progress: ', stats);
         event.sender.send('update-download-stats', stats);
       });
 
       autoUpdater.on('update-downloaded', () => {
-        event.sender('update-downloaded', '');
+        console.log('Update has been downloaded');
+        event.sender.send('update-downloaded', '');
         setTimeout(() => {
-          autoUpdater.quitAndInstall();
+          autoUpdater.quitAndInstall(true, true);
         }, 5000);
       });
     }
 
     event.sender.send('update-state', {
-      available: !!update.downloadPromise,
-      version: update.updateInfo.version,
+      available: !!update!.downloadPromise,
+      version: update!.updateInfo.version,
     });
   } catch (e) {
     console.error('Failed to check updates: ', e);

@@ -79,7 +79,7 @@ SETTINGS_MENU_LOGOUT_CANCEL: Ні
 SETTINGS_MENU_QUIT: Вийти з Hash to Cash
 SETTINGS_HEADER: Налаштування
 SETTINGS_LANGUAGE: Мова
-SETTINGS_LANGUAGE_DESC: Оиберіть мову
+SETTINGS_LANGUAGE_DESC: Оберіть мову
 SETTINGS_CURRENCY: Курс
 SETTINGS_CURRENCY_DESC: Заради зручності, суми будуть відображатися у 2-х валютах - у XMR та у тій, яку ви зазначите
 SETTINGS_STARTUP: Запускати Hash to Cash
