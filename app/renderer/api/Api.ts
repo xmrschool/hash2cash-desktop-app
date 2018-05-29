@@ -197,7 +197,7 @@ export function builder<T, D>(method: string, withTimeout = true) {
 
       let timeout: any;
       if (withTimeout) {
-        timeout = setTimeout(() => reject('Timeout error'), 8000);
+        timeout = setTimeout(() => reject(`Timeout error when requesting ${method}`), 15000);
       }
       socket.emit(method, data, (response: any) => {
         debug(`[${method}] <=`, response);

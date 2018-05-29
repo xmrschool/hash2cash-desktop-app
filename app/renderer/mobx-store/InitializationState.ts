@@ -198,7 +198,7 @@ export class InitializationState {
       }
       const miner = this.benchmarkQueue[this.benchmarkQueueIndex];
 
-      await miner._data.start(false);
+      await Promise.race([sleep(10000), miner._data.start(false)]);
       miner.start();
 
       let stateListener: any;
@@ -238,6 +238,7 @@ export class InitializationState {
         };
 
         // ToDo show notify if miner was stopped or when timeout error
+        miner.on('stopListening', errorListener);
         miner.on('speed', speedListener);
         miner._data.on('state', stateListener);
         miner._data.on('runtimeError', errorListener);
@@ -258,7 +259,12 @@ export class InitializationState {
       miner._data.removeListener('runtimeError', errorListener);
 
       // Once benchmark is done we shut down each things
-      minerObserver.stopObserving(miner, false);
+      try {
+        minerObserver.stopObserving(miner, false);
+      } catch (e) {
+
+      }
+
       clearInterval(this.benchmarkCountDown);
       this.benchmarkCountDown = false;
 

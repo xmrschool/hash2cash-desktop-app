@@ -68,7 +68,10 @@ export class InternalObserver extends EventEmitter {
 
   @action
   async updateWorkerData() {
-    if (!this._data.running) return;
+    if (!this._data.running) {
+      this.emit('stopListening');
+      return;
+    }
 
     try {
       const stats = await this._data.getStats();

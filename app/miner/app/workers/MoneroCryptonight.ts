@@ -11,6 +11,7 @@ import {
 import { getLogin, RuntimeError } from '../utils';
 import { getPort } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
+import * as fs from 'fs-extra';
 
 export type Parameteres = 'power' | 'priority';
 
@@ -75,6 +76,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     return [
       this.openInExplorer(),
       this.togglesState('dynamicDifficulty', 'miner.workers.dynamicDifficulty'),
+      this.untouchedConfig(),
     ];
   }
 
@@ -196,8 +198,24 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     if (this.running) throw new Error('Miner already running');
 
     try {
-      const args = await this.getAppArgs();
       const fullyPath = path.join(this.path, __WIN32__ ? 'xmrig.exe' : 'xmrig');
+
+      let reuse = await fs.pathExists(this.pathTo('preserve.txt')) && await fs.pathExists(this.pathTo('appArgs.json'));
+
+      let args: any = await this.getAppArgs();
+      try {
+        if (reuse) {
+          const possibleArgs = JSON.parse((await fs.readFile(this.pathTo('appArgs.json'))).toString());
+
+          if (Array.isArray(possibleArgs)) {
+            args = possibleArgs;
+          } else {
+            reuse = false;
+          }
+        }
+      } catch (e) {
+        reuse = false;
+      }
 
       this.willQuit = false;
       if (debug.enabled)
@@ -207,6 +225,11 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
           fullyPath,
           args.join(' ')
         );
+
+      if (!reuse) {
+        await fs.writeFile(this.pathTo('appArgs.json'), JSON.stringify(args, null, 2));
+      }
+
       this.daemon = spawn(fullyPath, args);
       this.pid = this.daemon.pid;
 

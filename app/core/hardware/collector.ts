@@ -64,10 +64,12 @@ export async function safeGetter<T>(
     debug(`safeGetter(${name}): `, result);
     return result;
   } catch (e) {
-    errCallback && errCallback(e);
+    if (errCallback) errCallback(e);
+    const isOpenClMissing = e.message && (e.message.includes('The specified module could not be found') || e.message.includes('The specified procedure could not be found'));
+
     console.error(`Failed in safeGetter(${name}): `, e);
     e.message = `safeGetter(${name}): ${e.message}`;
-    trackError(e);
+    if (!isOpenClMissing) trackError(e);
     return null;
   }
 }
@@ -146,6 +148,9 @@ export default async function collectHardware(): Promise<Architecture> {
       cudaFailReason
     );
   }
+
+  const doesCudaFailed = cuda === null || cuda.driverVersion === 0;
+
   // This is a fallback for opencl getter.
   if (!openCl) {
     const graphicsResult = await graphics();
@@ -163,7 +168,7 @@ export default async function collectHardware(): Promise<Architecture> {
 
           if (platform === false) return; // Do not emit nvidia gpu's, let deviceCollector do that thing
           const merge =
-            cuda === null
+            doesCudaFailed
               ? { unavailableReason: intl.formatMessage(messages.cudaFailed) }
               : {};
 
@@ -176,7 +181,6 @@ export default async function collectHardware(): Promise<Architecture> {
             ...merge,
           });
         } catch (e) {
-          trackError(new Error('Unsupported gpu'), { gpu });
           report.devices.push({
             type: 'gpu',
             platform: gpu.vendor as any,
@@ -220,7 +224,7 @@ export default async function collectHardware(): Promise<Architecture> {
       });
 
     // Then, if it failed too, emit it too
-    if (cudaFailReason) {
+    if (doesCudaFailed) {
       // If cuda has been failed, we emit messages about it
       openCl.devices
         .filter(d => d.deviceVersion.includes('CUDA'))

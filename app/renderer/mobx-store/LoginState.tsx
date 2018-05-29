@@ -137,7 +137,7 @@ export class LoginState {
       return false;
     } catch (e) {
       this.submitting = false;
-      this.dispatchError(intl.formatMessage({ id: e.message }));
+      this.dispatchError(e.message || 'Unexpected error.');
       return false;
     }
   }

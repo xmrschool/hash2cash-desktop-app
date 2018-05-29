@@ -100,11 +100,12 @@ router.get('/workers/:id/:action(start|stop|reload)', async ctx => {
       return;
     }
 
-    if (action === 'start' && worker.running) {
+    // Just prevent error.
+    /*if (action === 'start' && worker.running) {
       wrapError(ctx, 'Worker already running');
 
       return;
-    }
+    }*/
 
     if (action === 'stop' && !worker.running) {
       wrapError(ctx, 'Worker not running, so you cant stop it');

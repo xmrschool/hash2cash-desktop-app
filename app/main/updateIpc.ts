@@ -6,7 +6,7 @@ ipcMain.on('check-updates', async (event: any) => {
     const update = await (downloadPromise || autoUpdater.checkForUpdates());
 
     if (update && update.downloadPromise) {
-      autoUpdater.on('download-progress', (ev, stats) => {
+      autoUpdater.on('download-progress', stats => {
         console.log('Update progress: ', stats);
         event.sender.send('update-download-stats', stats);
       });

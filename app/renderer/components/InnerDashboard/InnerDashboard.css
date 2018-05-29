@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 100px);
 }
 
 .padded {
@@ -149,8 +149,8 @@
 .switcherIn > div {
   height: 60px;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
   flex-direction: column;
 }
 

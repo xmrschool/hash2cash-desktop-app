@@ -13,13 +13,9 @@ autoUpdater.setFeedURL({
   provider: 'spaces',
   name: 'hash2cash',
   region: 'ams3',
-  path: 'app',
+  path: `app${require('os').arch() === 'ia32' ? '-x32' : ''}`,
   channel: 'latest',
 });
-
-if (require('os').arch() === 'ia32' && __WIN32__) {
-  autoUpdater.channel = 'latest-x32';
-}
 
 autoUpdater.on('update-available', () => {
   fs.writeFile(path.join(app.getPath('userData'), 'update.lock'), '');

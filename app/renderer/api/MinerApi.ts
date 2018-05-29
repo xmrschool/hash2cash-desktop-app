@@ -191,9 +191,10 @@ export class Worker extends EventEmitter {
 
 export class Api {
   @observable workers: Worker[] = [];
+  realHost = 'localhost';
 
   get host() {
-    return 'http://127.0.0.1:' + globalState.minerPort;
+    return 'http://' + this.realHost + ':' + globalState.minerPort;
   }
 
   // What does this algorithm do? Sorts by usedHardware, orders by profitability
@@ -247,16 +248,26 @@ export class Api {
 
   async fetch(
     resource: string,
-    query: { [st: string]: any } = {}
+    query: { [st: string]: any } = {},
+    deep = 0,
   ): Promise<any> {
     const querified = queryString.stringify(query);
 
     await connectionPromise;
-    const resp = await fetch(
-      `${this.host}${resource}${querified.length > 0 ? `?${querified}` : ''}`
-    );
-    const json = await resp.json();
+    let resp;
+    try {
+      resp = await fetch(
+        `${this.host}${resource}${querified.length > 0 ? `?${querified}` : ''}`
+      );
+    } catch (e) {
+      this.realHost = 'localhost' ? '127.0.0.1' : 'localhost';
 
+      if (deep > 2) throw e;
+
+      return this.fetch(resource, query, deep + 1);
+    }
+
+    const json = await resp.json();
     if (json.error) throw new Error(json.error);
 
     return json;
