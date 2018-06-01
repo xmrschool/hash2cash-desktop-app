@@ -205,15 +205,20 @@ export class WorkerView extends React.Component<
       case 'start':
         try {
           await worker.start();
-          this.setState({ observer: minerObserver.observe(worker) });
         } catch (e) {
-          // Everything is happen in the minerApi code
+          console.error('Failed to start miner: ', e);
         }
+
+        this.setState({ observer: minerObserver.observe(worker) });
 
         return;
       case 'stop':
         // Stop observing first to prevent any errors
-        minerObserver.stopObserving(worker);
+        try {
+          minerObserver.stopObserving(worker);
+        } catch (e) {
+          console.error('Failed to stop observing: ', e);
+        }
         await worker.stop();
 
         return;
@@ -328,33 +333,33 @@ export class WorkerView extends React.Component<
             <div>
               <div className={s.picks}>
                 {worker.customParameters &&
-                  worker.customParameters.map(option => (
-                    <div key={option.id} className={s.pick}>
-                      <label className={s.label}>
+                worker.customParameters.map(option => (
+                  <div key={option.id} className={s.pick}>
+                    <label className={s.label}>
+                      <FormattedMessage
+                        id={`OPTIONS_${option.id}`.toUpperCase()}
+                        defaultMessage={option.name}
+                      />
+                    </label>
+                    <select
+                      className={s.select}
+                      value={worker.parameters![option.id]}
+                      onChange={this.onOptionChange(option.id)}
+                    >
+                      {option.values.map(value => (
                         <FormattedMessage
-                          id={`OPTIONS_${option.id}`.toUpperCase()}
-                          defaultMessage={option.name}
-                        />
-                      </label>
-                      <select
-                        className={s.select}
-                        value={worker.parameters![option.id]}
-                        onChange={this.onOptionChange(option.id)}
-                      >
-                        {option.values.map(value => (
-                          <FormattedMessage
-                            key={value.value}
-                            id={`POWER_LEVEL_${value.value}`.toUpperCase()}
-                            defaultMessage={value.name}
-                          >
-                            {(message: any) => (
-                              <option value={value.value}>{message}</option>
-                            )}
-                          </FormattedMessage>
-                        ))}
-                      </select>
-                    </div>
-                  ))}
+                          key={value.value}
+                          id={`POWER_LEVEL_${value.value}`.toUpperCase()}
+                          defaultMessage={value.name}
+                        >
+                          {(message: any) => (
+                            <option value={value.value}>{message}</option>
+                          )}
+                        </FormattedMessage>
+                      ))}
+                    </select>
+                  </div>
+                ))}
               </div>
             </div>
             <div>

@@ -1,5 +1,6 @@
 export type Algorithms =
   | 'MoneroCryptonight'
+  | 'JceCryptonight'
   | 'ether'
   | 'equihash'
   | 'GpuCryptonight';

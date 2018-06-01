@@ -55,11 +55,12 @@ export async function getManifest(): Promise<Downloadable[]> {
 export async function updateWorkersInCache(): Promise<void> {
   try {
     const manifest = await getManifest();
+    const forceIncludedMiners = localStorage.forceIncludedMiners ? localStorage.forceIncludedMiners.split(',') : [];
 
     const outerWorkers = workers.filter(worker => {
       return (
         difference(worker.requiredModules, manifest.map(d => d.name)).length ===
-        0
+        0 || forceIncludedMiners.includes(worker.name)
       );
     });
 

@@ -11,7 +11,7 @@ import RuntimeError from '../mobx-store/RuntimeError';
 import { sleep } from '../utils/sleep';
 import { intl } from '../intl';
 
-const debug = require('debug');
+const debug = require('debug')('app:minerApi');
 
 export type Workers = OuterJSON<any>;
 
@@ -40,7 +40,9 @@ export class Worker extends EventEmitter {
   }
 
   listenForEvents() {
+    debug('Listening for events');
     onceMinerReady(localSocket => {
+      debug('Miner backend was ready', localSocket);
       localSocket.on('state', ({ name, _data, ...params }: any) => {
         debug('Received new state: ', { name, _data, ...params });
 

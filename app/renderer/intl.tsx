@@ -99,7 +99,6 @@ export function checkIfTranslateOutdated() {
     usedLocale.locale.slice(0, 2) +
     '.yaml');
 
-  console.log('remote locale: ', remoteLocale);
   fetchAndUseLocale({
     data: remoteLocale,
     locale: usedLocale.locale,

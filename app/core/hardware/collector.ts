@@ -10,6 +10,7 @@ import trackError from '../raven';
 import getDevices from 'cpuid-detector';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
 import { intl } from '../../renderer/intl';
+import { sleep } from '../../renderer/utils/sleep';
 
 const APP_VERSION = require('../../config.js').APP_VERSION;
 const debug = require('debug')('app:detector');
@@ -18,7 +19,7 @@ const messages = defineMessages({
   unsupported: {
     id: 'core.hardwareCollector.unsupported',
     defaultMessage:
-      'Your GPU vendor ({vendor}) is unsupported. Contact us if you think that is mistake, or update your drivers',
+      'Your GPU vendor {vendor} is unsupported. There\'s nothing we can do with this.',
   },
   cudaFailed: {
     id: 'core.hardwareCollector.cudaFailed',
@@ -60,9 +61,9 @@ export async function safeGetter<T>(
   errCallback?: (err: Error) => void
 ): Promise<T | null> {
   try {
-    const result = await callback();
+    const result = await Promise.race([callback(), sleep(2000)]);
     debug(`safeGetter(${name}): `, result);
-    return result;
+    return result || null;
   } catch (e) {
     if (errCallback) errCallback(e);
     const isOpenClMissing = e.message && (e.message.includes('The specified module could not be found') || e.message.includes('The specified procedure could not be found'));
@@ -84,14 +85,21 @@ export default async function collectHardware(): Promise<Architecture> {
     collectedCpu = await safeGetter(cpu, 'systeminformation');
   }
 
-  const uuid = await machineId(true);
-
+  let uuid = await safeGetter(() => machineId(true), 'machineid');
+  if (uuid === null) {
+    if (localStorage.generatedUuid) {
+      uuid = localStorage.generatedUuid as string;
+    } else {
+      uuid = (+new Date).toString();
+      localStorage.generatedUuid = uuid;
+    }
+  }
   const detectedArch = arch();
 
   const report: Architecture = {
     devices: [],
     warnings: [],
-    uuid,
+    uuid: uuid,
     appVersion: APP_VERSION,
     reportVersion: 2,
     cpuArch: (detectedArch === 'ia32' ? 'x32' : arch()) as 'x32' | 'x64',
@@ -227,7 +235,7 @@ export default async function collectHardware(): Promise<Architecture> {
     if (doesCudaFailed) {
       // If cuda has been failed, we emit messages about it
       openCl.devices
-        .filter(d => d.deviceVersion.includes('CUDA'))
+        .filter(d => d.deviceVersion.includes('CUDA') || d.vendor.toLowerCase().includes('nvidia'))
         .forEach(device => {
           report.devices.push({
             type: 'gpu',
@@ -242,7 +250,7 @@ export default async function collectHardware(): Promise<Architecture> {
   }
 
   // Then emit cuda devices
-  if (cuda) {
+  if (!doesCudaFailed && cuda) {
     cuda.devices.forEach(device => {
       if (device.major < 2) {
         return report.devices.push({

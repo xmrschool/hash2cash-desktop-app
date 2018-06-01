@@ -1,5 +1,6 @@
 import * as Winreg from 'winreg';
 import { sleep } from '../../renderer/utils/sleep';
+import * as path from 'path';
 
 const arch = require('os').arch();
 const dep = arch === 'ia32' ? 'x86' : 'amd64';
@@ -18,8 +19,8 @@ export const vcRedists = {
     'https://download.visualstudio.microsoft.com/download/pr/11100229/78c1e864d806e36f6035d80a0e80399e/VC_redist.x86.exe',
 };
 
-export function isOk(): Promise<boolean> {
-  return new Promise(resolve => {
+export async function isOk(): Promise<boolean> {
+  return await Promise.race([new Promise(resolve => {
     regKey.get('DisplayName', (err, item) => {
       if (err) {
         resolve(false);
@@ -31,7 +32,7 @@ export function isOk(): Promise<boolean> {
       debug('Detected version: ', name);
       resolve(name.includes('2017'));
     });
-  });
+  }), sleep(3000).then(d => (true as any))]);
 }
 
 export function downloadAndInstall(speedReceiver: Function, outerPath: string) {
@@ -60,7 +61,9 @@ export function downloadAndInstall(speedReceiver: Function, outerPath: string) {
           '/install',
           '/norestart',
           '/passive',
-        ]);
+        ], {
+          cwd: path.dirname(outerPath),
+        });
 
         descriptor.on('exit', async () => {
           const result = await isOk();

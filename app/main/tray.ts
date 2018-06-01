@@ -16,6 +16,5 @@ export default function buildTray() {
   tray.setToolTip('Hash to Cash');
   tray.setContextMenu(contextMenu);
 
-  console.log('Built tray: ', tray);
   return tray;
 }

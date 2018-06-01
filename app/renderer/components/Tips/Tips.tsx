@@ -78,7 +78,6 @@ export default class Tips extends React.Component {
     const tipsList = tips.tips.filter(d => d.defined);
 
     const sorted = sortBy(tipsList, ['isOk']);
-    console.log('sorted: ', tips.tips);
     return (
       <div>
         <div className={s.row}>

@@ -192,14 +192,16 @@ export class GlobalState {
     this.toast = toast;
     if (toast.timeout !== Infinity)
       setTimeout(
-        () => (this.toast = undefined),
+        () => (this.closeToast()),
         toast.timeout || DEFAULT_TOAST_TIMEOUT
       );
   }
 
   @action
   closeToast() {
-    this.toast = undefined;
+    if (this.toast) {
+      this.toast = undefined;
+    }
   }
 }
 

@@ -76,7 +76,7 @@ export default class RignameEditor extends React.Component<
   componentDidMount() {
     if (this.state.rigName) return;
 
-    this.generateRigname();
+    this.generateScienceName();
   }
 
   changeName(event: any) {
@@ -105,8 +105,7 @@ export default class RignameEditor extends React.Component<
           label={intl.formatMessage({ id: 'DASHBOARD_RIGNAME_LABEL' })}
           placeholder="my-pc"
           maxLength={29}
-          onLabelClick={() => this.generateRigname()}
-          onLabelDoubleClick={() => this.generateScienceName()}
+          onLabelClick={() => this.generateScienceName()}
           value={this.state.rigName || ''}
           error={!this.state.valid ? errMessage : null}
           onChange={this.changeName}

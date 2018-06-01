@@ -185,6 +185,10 @@ export class AppWindow {
     return this.emitter.on('did-load', fn);
   }
 
+  public onceDidLoad(fn: () => void) {
+    return this.emitter.once('did-load', fn);
+  }
+
   public isMinimized() {
     return this.window.isMinimized();
   }
@@ -213,7 +217,7 @@ export class AppWindow {
 
   /** Send the app launch timing stats to the renderer. */
   public sendMinerPort(port: number) {
-    this.onDidLoad(() => {
+    this.onceDidLoad(() => {
       this.window.webContents.send('miner-server-port', port);
     });
 
