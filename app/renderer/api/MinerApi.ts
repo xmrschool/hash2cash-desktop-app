@@ -40,7 +40,7 @@ export class Worker extends EventEmitter {
   }
 
   listenForEvents() {
-    debug('Listening for events');
+    debug('Listening for events', this.data.name);
     onceMinerReady(localSocket => {
       debug('Miner backend was ready', localSocket);
       localSocket.on('state', ({ name, _data, ...params }: any) => {
@@ -187,7 +187,16 @@ export class Worker extends EventEmitter {
   }
 
   async getStats(): Promise<any | null> {
-    return minerApi.fetch(`/workers/${this.data.name}/getStats`);
+    try {
+      return minerApi.fetch(`/workers/${this.data.name}/getStats`);
+    } catch (e) {
+      if (e && e.message.includes('is not running')) {
+        this.data.running = false;
+      }
+
+      throw e;
+    }
+
   }
 }
 
@@ -226,10 +235,15 @@ export class Api {
         '/workers?asArray=true&updateCache=' + updateCache
       )) as Workers[];
 
+      /**
+       * ToDo dont update me because it will cause memory leak in future.
+       * Or make something like .destroy method, which will destroy event listeners.
+       */
       this.workers = response.map(d => new Worker(d));
 
       return this.workers;
     } catch (e) {
+      console.error(e);
       // Repeat request if it has been failed
       await sleep(700);
       return this.getWorkers(updateCache);
@@ -251,7 +265,7 @@ export class Api {
   async fetch(
     resource: string,
     query: { [st: string]: any } = {},
-    deep = 0,
+    deep = 0
   ): Promise<any> {
     const querified = queryString.stringify(query);
 
@@ -264,13 +278,17 @@ export class Api {
     } catch (e) {
       this.realHost = 'localhost' ? '127.0.0.1' : 'localhost';
 
-      if (deep > 2) throw e;
+      if (deep > 1) {
+        console.warn(`Failed to get resource ${resource}`, resource);
+        throw e;
+      }
 
       return this.fetch(resource, query, deep + 1);
     }
 
     const json = await resp.json();
-    if (json.error) throw new Error(json.error);
+    // Because it's already error
+    if (json.error) throw json.error;
 
     return json;
   }

@@ -205,11 +205,10 @@ export class WorkerView extends React.Component<
       case 'start':
         try {
           await worker.start();
+          this.setState({ observer: minerObserver.observe(worker) });
         } catch (e) {
           console.error('Failed to start miner: ', e);
         }
-
-        this.setState({ observer: minerObserver.observe(worker) });
 
         return;
       case 'stop':
@@ -464,9 +463,6 @@ export class InnerDashboard extends React.Component<any> {
   componentDidMount() {
     if (minerApi.workers.length === 0) {
       minerApi.getWorkers();
-
-      // Repeat request after WS conencted
-      setTimeout(() => minerApi.getWorkers(), 250);
     }
 
     User.watchOutForSubmitting();
@@ -550,9 +546,10 @@ export class InnerDashboard extends React.Component<any> {
         </div>
         <StatsView />
         <ActionBar workers={workers} />
+        {!workers.cpu && <h3 className={s.header}>Загрузка майнеров...</h3>}
         {workers.gpu && <h3 className={s.header}>GPU</h3>}
         {workers.gpu && <WorkersView workers={workers.gpu} />}
-        <h3 className={s.header}>CPU</h3>
+        {workers.cpu && <h3 className={s.header}>CPU</h3>}
         {workers.cpu && <WorkersView workers={workers.cpu} />}
 
         <div style={{ flexGrow: 1 }} />

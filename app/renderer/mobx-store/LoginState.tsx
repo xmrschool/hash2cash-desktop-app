@@ -88,7 +88,6 @@ export class LoginState {
         password: this.password,
       });
 
-      console.log('resp is: ', response);
       if (!response.success) {
         if (response.error)
           return this.dispatchPasswordError(

@@ -4,6 +4,7 @@ import { AppWindow } from './appWindow';
 import { now } from './now';
 import buildDefaultMenu from './menu';
 import { Server, serverPort } from './server';
+import { Sandbox } from './sandbox';
 import * as path from 'path';
 import buildTray from './tray';
 import enableUpdates from './appUpdater';
@@ -19,6 +20,7 @@ const launchTime = now();
 
 let readyTime: number | null = null;
 export let server: Server | null = null;
+export let sandbox: Sandbox | null = null;
 const quitting = false;
 
 type OnDidLoadFn = (window: AppWindow | null) => void;
@@ -127,6 +129,7 @@ app.on('ready', () => {
   }
 
   createServer();
+  createSandbox();
 });
 
 export function openMainWindow() {
@@ -165,6 +168,13 @@ function createServer() {
   server = new Server();
 
   server.load(mainWindow);
+}
+
+function createSandbox() {
+  sandbox = new Sandbox();
+
+  sandbox.load();
+  sandbox.forward();
 }
 
 function createWindow() {

@@ -1,13 +1,14 @@
+import { ipcRenderer } from 'electron';
 import { defineMessages } from 'react-intl';
 import { machineId } from 'node-machine-id';
-import getCudaDevices from 'cuda-detector';
-import getOpenCLDevices from 'opencl-detector';
+import { Response as CudaResponse } from 'cuda-detector';
+import { Response as OpenCLResponse } from 'opencl-detector';
+import { CpuInfo } from 'cpuid-detector';
 import { cpu, graphics } from 'systeminformation';
 import { arch, release } from 'os';
 
 import { Architecture } from '../../renderer/api/Api';
 import trackError from '../raven';
-import getDevices from 'cpuid-detector';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
 import { intl } from '../../renderer/intl';
 import { sleep } from '../../renderer/utils/sleep';
@@ -19,11 +20,17 @@ const messages = defineMessages({
   unsupported: {
     id: 'core.hardwareCollector.unsupported',
     defaultMessage:
-      'Your GPU vendor {vendor} is unsupported. There\'s nothing we can do with this.',
+      "Your GPU vendor {vendor} is unsupported. There's nothing we can do with this.",
+  },
+  failedToGetOpenCl: {
+    id: 'core.hardwareCollector.failedToGetOpenCl',
+    defaultMessage:
+      "Most likely this GPU won't work: try to update your drivers.",
   },
   cudaFailed: {
     id: 'core.hardwareCollector.cudaFailed',
-    defaultMessage: 'Driver for GPU is outdated, download new from nvidia.com',
+    defaultMessage:
+      'There is a problem with your Nvidia drivers, update them: nvidia.com/drivers',
   },
   cudaArchTooLow: {
     id: 'core.hardwareCollector.archTooLow',
@@ -54,6 +61,21 @@ function checkVendor(
   }
 }
 
+export async function remoteCall(command: string): Promise<any> {
+  return new Promise((resolve, reject) => {
+    ipcRenderer.send('execute', command);
+    ipcRenderer.once('execution-result', (_: any, result: any) => {
+      debug('Received response: ', result);
+
+      if (result.error) {
+        return reject(new Error(result.error as any));
+      }
+
+      return resolve(result.result);
+    });
+  });
+}
+
 // What this function do? In case exception throwed, it reports and returns null
 export async function safeGetter<T>(
   callback: () => Promise<T>,
@@ -66,7 +88,10 @@ export async function safeGetter<T>(
     return result || null;
   } catch (e) {
     if (errCallback) errCallback(e);
-    const isOpenClMissing = e.message && (e.message.includes('The specified module could not be found') || e.message.includes('The specified procedure could not be found'));
+    const isOpenClMissing =
+      e.message &&
+      (e.message.includes('The specified module could not be found') ||
+        e.message.includes('The specified procedure could not be found'));
 
     console.error(`Failed in safeGetter(${name}): `, e);
     e.message = `safeGetter(${name}): ${e.message}`;
@@ -78,7 +103,10 @@ export async function safeGetter<T>(
 export default async function collectHardware(): Promise<Architecture> {
   console.time('hardwareCollecting');
   // Retrieve it natively. Works fine, everywhere
-  const cpuInfo = await safeGetter(getDevices, 'cpuid');
+  const cpuInfo = await safeGetter<CpuInfo>(
+    () => remoteCall("require('cpuid-detector')()"),
+    'cpuid'
+  );
 
   let collectedCpu = null;
   if (collectedCpu) {
@@ -90,7 +118,7 @@ export default async function collectHardware(): Promise<Architecture> {
     if (localStorage.generatedUuid) {
       uuid = localStorage.generatedUuid as string;
     } else {
-      uuid = (+new Date).toString();
+      uuid = (+new Date()).toString();
       localStorage.generatedUuid = uuid;
     }
   }
@@ -132,24 +160,34 @@ export default async function collectHardware(): Promise<Architecture> {
   }
 
   /** An openCL and cuda devices.
-   * ToDo Works almost fine, but fails somewhere. So, we should provide ability to disable this.
-   * I dunno how to fix it, maybe, include OpenCL.dll somehow?
    */
   const openCl =
     !localStorage.skipOpenCl && process.arch !== 'ia32'
-      ? await safeGetter(getOpenCLDevices, 'openCl')
+      ? await safeGetter<OpenCLResponse>(
+          () => remoteCall('require("opencl-detector")()'),
+          'openCl',
+          err => {
+            // Disable OpenCL if its been crashed
+            if (err && err.message && err.message.includes('crashed')) {
+              localStorage.skipOpenCl = true;
+            }
+          }
+        )
       : null;
   // CudaFailReason - is a variable to pass `unavailableReason` later.
   let cudaFailReason: string | undefined;
   const cuda =
     process.arch !== 'ia32'
-      ? await safeGetter(
-          getCudaDevices,
+      ? await safeGetter<CudaResponse>(
+          () => remoteCall('require("cuda-detector")()'),
           'cuda',
           err => (cudaFailReason = err.message)
         )
       : null;
 
+  if (cuda && cuda.error) {
+    cudaFailReason = cuda.error;
+  }
   if (cudaFailReason) {
     console.warn(
       'Failed to get CUDA devices through native extension: ',
@@ -157,7 +195,11 @@ export default async function collectHardware(): Promise<Architecture> {
     );
   }
 
-  const doesCudaFailed = cuda === null || cuda.driverVersion === 0;
+  const doesCudaFailed =
+    cuda === null ||
+    typeof cuda.error !== 'undefined' ||
+    cuda.driverVersion === 0 ||
+    (cuda.devices && cuda.devices.length === 0);
 
   // This is a fallback for opencl getter.
   if (!openCl) {
@@ -171,14 +213,10 @@ export default async function collectHardware(): Promise<Architecture> {
             gpu.vendor,
             'gpu',
             gpu.model,
-            cuda === null
+            doesCudaFailed
           ) as any;
 
           if (platform === false) return; // Do not emit nvidia gpu's, let deviceCollector do that thing
-          const merge =
-            doesCudaFailed
-              ? { unavailableReason: intl.formatMessage(messages.cudaFailed) }
-              : {};
 
           report.devices.push({
             type: 'gpu',
@@ -186,7 +224,7 @@ export default async function collectHardware(): Promise<Architecture> {
             deviceID: report.devices.length.toString(),
             model: gpu.model,
             collectedInfo: gpu as any,
-            ...merge,
+            warning: intl.formatMessage(messages.failedToGetOpenCl),
           });
         } catch (e) {
           report.devices.push({
@@ -212,41 +250,43 @@ export default async function collectHardware(): Promise<Architecture> {
       });
     }
   } else {
+    localStorage.removeItem('skipOpenCl');
     // We have OpenCL devices available (Ya-hoo!)
+    openCl.devices.forEach(device => {
+      try {
+        const platform = checkVendor(
+          device.vendor,
+          'gpu',
+          device.name,
+          doesCudaFailed
+        ) as any;
 
-    // Emit devices which aren't Cuda powered
-    openCl.devices
-      .filter(
-        d =>
-          !d.deviceVersion.includes('CUDA') &&
-          d.vendor.toLowerCase() !== 'nvidia'
-      )
-      .forEach(device => {
+        if (platform === false) return; // Do not emit nvidia gpu's, let deviceCollector do that thing
+        const merge =
+          platform === 'nvidia'
+            ? { unavailableReason: intl.formatMessage(messages.cudaFailed) }
+            : {};
         report.devices.push({
           type: 'gpu',
           platform: 'opencl',
           deviceID: device.index ? `opencl-${device.index}` : '',
           model: device.name,
           collectedInfo: device,
+          ...merge,
         });
-      });
+      } catch (e) {
+        report.devices.push({
+          type: 'gpu',
+          platform: 'opencl',
+          deviceID: report.devices.length.toString(),
+          model: device.name,
+          unavailableReason: e.message,
+          collectedInfo: device,
+        });
 
-    // Then, if it failed too, emit it too
-    if (doesCudaFailed) {
-      // If cuda has been failed, we emit messages about it
-      openCl.devices
-        .filter(d => d.deviceVersion.includes('CUDA') || d.vendor.toLowerCase().includes('nvidia'))
-        .forEach(device => {
-          report.devices.push({
-            type: 'gpu',
-            platform: 'opencl',
-            deviceID: device.index ? `opencl-${device.index}` : '',
-            model: device.name,
-            collectedInfo: device,
-            unavailableReason: intl.formatMessage(messages.cudaFailed),
-          });
-        });
-    }
+        report.warnings.push(e.message);
+      }
+    });
   }
 
   // Then emit cuda devices

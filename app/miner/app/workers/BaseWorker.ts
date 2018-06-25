@@ -129,7 +129,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
 
   // Used to emit any state changes
   emit(value: any) {
-    socket.emit('state', Object.assign({ name: this.workerName }, value));
+    socket.emit('state', Object.assign({}, { name: this.workerName }, value));
   }
 
   pathTo(configName: string) {
@@ -137,7 +137,11 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
   }
 
   // In case miner has been stopped unexpectedly
-  handleTermination(data: any, isClose: boolean = false, forceHandle: boolean = false) {
+  handleTermination(
+    data: any,
+    isClose: boolean = false,
+    forceHandle: boolean = false
+  ) {
     if (this.pid) {
       shiftRunningPid(this.pid);
     }
@@ -156,7 +160,11 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
     }
 
     console.log('Handling termination', data, data && data.code);
-    if ((data && (data.code === 'UNKNOWN' || data.code === 'ENOENT')) || data === -4058 || data === 4058) {
+    if (
+      (data && (data.code === 'UNKNOWN' || data.code === 'ENOENT')) ||
+      data === -4058 ||
+      data === 4058
+    ) {
       // If miner has been deleted we remove record that indicates if miner has been unpacked
       fs.remove(this.pathTo('unpacked'));
 
@@ -294,7 +302,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
       localStorage.removeItem(this.workerKey);
     }
 
-    this.emit('inited');
+    this.emit({ initialized: true });
   }
 
   updateCache() {

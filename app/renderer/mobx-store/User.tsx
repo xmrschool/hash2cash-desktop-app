@@ -89,7 +89,6 @@ export class User {
     }
 
     if (resp.user) {
-      this.submitJwtEachConnect();
       this.setUser(resp.user);
       this.authenticated = true;
       return resp.user;

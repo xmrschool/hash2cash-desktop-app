@@ -1,4 +1,5 @@
 import { action, observable } from 'mobx';
+import trackError from '../../core/raven';
 
 export type FSError = {
   code: string;
@@ -33,6 +34,7 @@ export class RuntimeError {
 
   @action
   handleError(e: ErrorFormat) {
+    trackError(new Error(e.message), e);
     this.error = e;
     this.stackExpanded = false;
   }

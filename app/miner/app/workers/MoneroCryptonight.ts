@@ -9,7 +9,7 @@ import {
   Pick,
 } from './BaseWorker';
 import { getLogin, RuntimeError } from '../utils';
-import { getPort } from '../../../core/utils';
+import { getPort, timeout } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
 import * as fs from 'fs-extra';
 
@@ -168,7 +168,19 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       if (!this.running) {
         throw new Error('Worker is not running');
       }
-      const resp = await fetch(`http://127.0.0.1:${this.daemonPort}`);
+
+      const resp = await Promise.race([
+        timeout(),
+        fetch(`http://localhost:${this.daemonPort}`),
+      ]);
+
+      if (resp === false) {
+        return new RuntimeError(
+          'Failed to getStats',
+          new Error('Timeout error while getting stats')
+        );
+      }
+
       const json = await resp.json();
 
       localStorage.largePageState = json.hugepages;

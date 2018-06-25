@@ -4,11 +4,10 @@ import { difference } from 'lodash';
 import workers from './workers';
 import { Downloadable } from '../../renderer/api/Api';
 import workersCache, { WorkersCache } from './workersCache';
-import {
-  algorithmsMaxDiff,
-} from './constants/algorithms';
+import { algorithmsMaxDiff } from './constants/algorithms';
 import { Algorithms } from './constants/algorithms';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
+import trackError from '../../core/raven';
 const logger = require('debug')('app:miner');
 
 const config = require('../../config.js');
@@ -16,21 +15,34 @@ const debug = require('debug')('app:server:utils');
 
 export class RuntimeError extends Error {
   originalError: Error;
+  originalMessage: string;
 
-  constructor(displayError: string, originalError: Error) {
+  constructor(
+    displayError: string,
+    originalError: Error,
+    trackable: boolean = true
+  ) {
     super(displayError);
 
     this.stack = new Error().stack;
-    this.message = displayError;
+    this.originalMessage =
+      originalError && originalError.message ? originalError.message : '';
+    this.message = `${displayError} : ${this.originalMessage}`;
     this.originalError = originalError;
+
+    if (trackable) {
+      trackError(originalError, { extra: displayError });
+    }
   }
 
   toJSON() {
     return {
       error: {
+        kind: 'RuntimeError',
         message: this.message,
         raw: this.originalError,
         stack: this.stack,
+        originalMessage: this.originalMessage,
       },
     };
   }
@@ -47,20 +59,26 @@ export async function getManifest(): Promise<Downloadable[]> {
 
     return content;
   } catch (e) {
-    console.error(e);
-    throw new RuntimeError('Manifest is unavailable. Try to reinit app', e);
+    console.warn('Failed to get manifest: \n', e);
+    throw new RuntimeError(
+      'Manifest is unavailable. Try to reinit app',
+      e,
+      false
+    );
   }
 }
 
 export async function updateWorkersInCache(): Promise<void> {
   try {
     const manifest = await getManifest();
-    const forceIncludedMiners = localStorage.forceIncludedMiners ? localStorage.forceIncludedMiners.split(',') : [];
+    const forceIncludedMiners = localStorage.forceIncludedMiners
+      ? localStorage.forceIncludedMiners.split(',')
+      : [];
 
     const outerWorkers = workers.filter(worker => {
       return (
         difference(worker.requiredModules, manifest.map(d => d.name)).length ===
-        0 || forceIncludedMiners.includes(worker.name)
+          0 || forceIncludedMiners.includes(worker.name)
       );
     });
 
@@ -95,7 +113,14 @@ export function getLogin(
   algorithm: Algorithms,
   dynamicDifficulty: boolean = false
 ): string {
-  const rigName = localStorage.rigName ? `.${localStorage.rigName}` : '';
+  let postfix = '-cpu';
+
+  if (algorithm === 'GpuCryptonight') {
+    postfix = '-gpu';
+  }
+  const rigName = localStorage.rigName
+    ? `.${localStorage.rigName}${postfix}`
+    : '';
   const diff = getDifficulty(algorithm);
 
   return `app/${LocalStorage.userId}${rigName}${

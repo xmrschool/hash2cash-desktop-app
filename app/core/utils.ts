@@ -18,3 +18,9 @@ export function getPort(startingAt: number): Promise<number> {
     getNextAvailablePort(startingAt, resolve);
   });
 }
+
+export function timeout(seconds = 5000): Promise<false> {
+  return new Promise(resolve =>
+    setTimeout(() => resolve(false), seconds)
+  ) as any;
+}

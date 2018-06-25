@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain, Menu, app } from 'electron';
+import { BrowserWindow, ipcMain, Menu, app, shell } from 'electron';
 import { now } from './now';
 import * as path from 'path';
 import { EventEmitter } from 'events';
@@ -9,6 +9,8 @@ export let RENDERER_PATH: string;
 export class AppWindow {
   private readonly window: Electron.BrowserWindow;
   private emitter = new EventEmitter();
+  // Listener which updates each time we retrieve new port.
+  private portListener: any = null;
 
   private _loadTime: number | null = null;
   private _rendererReadyTime: number | null = null;
@@ -59,6 +61,11 @@ export class AppWindow {
     ipcMain.on('will-quit', (event: Electron.IpcMessageEvent) => {
       quitting = true;
       event.returnValue = true;
+    });
+
+    this.window.webContents.on('new-window', function(event, url){
+      event.preventDefault();
+      shell.openExternal(url);
     });
 
     this.window.setAutoHideMenuBar(true);
@@ -217,9 +224,15 @@ export class AppWindow {
 
   /** Send the app launch timing stats to the renderer. */
   public sendMinerPort(port: number) {
-    this.onceDidLoad(() => {
+    if (this.portListener) {
+      this.emitter.removeListener('did-load', this.portListener);
+    }
+
+    this.portListener = () => {
+      console.log('Renderer has been initialized, so sending a port');
       this.window.webContents.send('miner-server-port', port);
-    });
+    };
+    this.onDidLoad(this.portListener);
 
     if (this.window.isDestroyed()) {
       return;

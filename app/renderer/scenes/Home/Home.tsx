@@ -4,7 +4,6 @@ import * as cx from 'classnames';
 import Preloader from 'components/Preloader';
 import { sleep } from 'utils/sleep';
 import socketConnect from 'utils/socket';
-import globalState from 'mobx-store/GlobalState';
 import userState from 'mobx-store/User';
 
 const s = require('./Home.css');
@@ -36,8 +35,7 @@ export class HomePage extends React.Component<
   async onEntered() {
     // We don't care about server if user already connected at least once
     if (!localStorage.appInfo && userState.authenticated) {
-      await globalState.connectionPromise;
-      await userState.attemptToLogin();
+
     } else {
       // We wait til user logined but auth him, and if it fails we redirect from dashboard to login
       if (userState.authenticated)

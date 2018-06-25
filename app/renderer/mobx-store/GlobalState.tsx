@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { ipcRenderer } from 'electron';
 import socket, { connectToLocalMiner } from 'socket';
 import { intl, LocaleWithData } from '../intl';
@@ -34,6 +34,12 @@ export type Benchmark = {
   time: Date;
 };
 
+export type Notify = {
+  type: 'danger' | 'notify';
+  short: string;
+  long: string;
+};
+
 export class GlobalState {
   connectionTimeout?: number;
   connectionPromise?: Promise<void>;
@@ -43,8 +49,9 @@ export class GlobalState {
   @observable minerPort?: number;
   @observable socketConnected: boolean = false;
   @observable socketCantConnect: boolean = false;
-  @observable userShare: number = 0.7;
+  @observable userShare: number = 0.6;
   @observable benchmark?: Benchmark;
+  @observable currentNotify?: Notify;
 
   @observable toast?: Toast;
   @observable openedLayer: 'settings' | 'tips' | null = null;
@@ -138,7 +145,9 @@ export class GlobalState {
         debug('Socket.io is connected');
 
         this.setSocketState();
+        socket.emit('metrics', this.metrics);
         this.connectionResolve!();
+        this.listenForNotify();
       });
       socket.on('disconnect', () => {
         debug('Socket.io disconnected');
@@ -148,6 +157,13 @@ export class GlobalState {
           resolve => (this.connectionResolve = resolve)
         );
       });
+    });
+  }
+
+  @action
+  listenForNotify() {
+    socket.on('notify', (notify: any) => {
+      this.currentNotify = notify;
     });
   }
 
@@ -192,7 +208,7 @@ export class GlobalState {
     this.toast = toast;
     if (toast.timeout !== Infinity)
       setTimeout(
-        () => (this.closeToast()),
+        () => this.closeToast(),
         toast.timeout || DEFAULT_TOAST_TIMEOUT
       );
   }
@@ -202,6 +218,17 @@ export class GlobalState {
     if (this.toast) {
       this.toast = undefined;
     }
+  }
+
+  @computed
+  get metrics() {
+    return {
+      language: this.currentLocale,
+      realLanguage: navigator.language,
+      platform: navigator.platform,
+      release: __RELEASE__,
+      userAgent: navigator.userAgent,
+    };
   }
 }
 

@@ -1,6 +1,7 @@
 import * as io from 'socket.io-client';
 import CurrenciesService from './mobx-store/CurrenciesService';
 import { LocalStorage } from './utils/LocalStorage';
+import userState from './mobx-store/User';
 const config = require('../config.js'); // tslint:disable-line
 
 export type MinerReadyCallback = (_socket: SocketIOClient.Socket) => any;
@@ -8,6 +9,7 @@ export type MinerReadyCallback = (_socket: SocketIOClient.Socket) => any;
 let localSocket: SocketIOClient.Socket | null;
 const socketLoadFns: MinerReadyCallback[] = [];
 
+// ToDo implement compression
 const socket = io(config.SOCKET_URL, {
   path: '/websocket_desktop',
   autoConnect: false,
@@ -17,6 +19,11 @@ const socket = io(config.SOCKET_URL, {
 
 async function delayedCreate() {
   socket.connect();
+
+  socket.on('connect', () => {
+    console.log('Socket has been successfully connected: ', socket);
+    userState.attemptToLogin();
+  });
 
   // First time we have to manually ask for appInfo
   socket.emit('appInfo', '', (response: any) => {
@@ -42,6 +49,7 @@ delayedCreate();
 export default socket;
 
 export function onceMinerReady(callback: MinerReadyCallback) {
+  console.log('New onceMinerReady listener');
   if (localSocket) {
     callback(localSocket);
   } else {
@@ -49,7 +57,8 @@ export function onceMinerReady(callback: MinerReadyCallback) {
   }
 }
 
-export function connectToLocalMiner(port: number) {
+export function connectToLocalMiner(_port: number) {
+  const port = _port || 8024;
   console.log('Getting socket up on ', port, ' port');
   if (localSocket && !localSocket.connected) {
     // If already exists, don't do almost anything

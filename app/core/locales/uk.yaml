@@ -106,9 +106,10 @@ invalid_password: невірний пароль
 sign_through_site: увійти через сайт
 email_blacklisted: цей email заборонено
 email_forbidden: цей email заборонено
-core.hardwareCollector.unsupported: Ваш GPU ({vendor}) не підтримується. Спробуйте оновити драйвера або зв'яжіться з нами, якщо вважаєте що це помилка
-core.hardwareCollector.cudaFailed: Ваш драйвер GPU застарів, завантажте новий з nvidia.com
-core.hardwareCollector.archTooLow: Ваша відеокарта застаріла, мінімальна версія - sm_20, у вас - sm_{major}{minor}. Нічого зробити не можна :(
+core.hardwareCollector.unsupported: Ваш GPU {vendor} не підтримується. Ми нічого не можемо з цим зробити.
+core.hardwareCollector.failedToGetOpenCl: "Скоріш за все, цей GPU не працюватиме: спробуйте оновити ваші драйвера."
+core.hardwareCollector.cudaFailed: "У вас занадто старі драйвера Nvidia, обновіть їх: nvidia.com/drivers"
+core.hardwareCollector.archTooLow: Версія архітектури GPU занадто мала, мінімальна sm_20, а у вас sm_{major}{minor}
 mobx.global.connectionFail: Hash to Cash не може підключитися до сервера. Перевірте інтернет
 mobx.init.status.collecting: Збираємо інформацію про відеокарти
 mobx.init.status.vcredist.checking: Перевіряємо, чи встановлений VCRedist
@@ -132,6 +133,7 @@ scenes.init.startMine: Почати майнити!
 scenes.init.algorithms: Алгоритми
 scenes.init.worker.dailyProfit: за день
 scenes.init.worker.monthlyProfit: за місяць
+scenes.init.noGPU: Чому моя відеокарта не відобразилась?
 core.reload.updates.checking: Перевірка наявності оновлень
 core.reload.updates.newAvailable: Завантажуємо нову версію Hash to Cash {version}
 core.reload.updates.installingAfter: Встановлення оновлення через {secs, number} {secs, plural, one {секунду} other {секунд} few {секунди}}
@@ -146,6 +148,20 @@ miner.workers.disableAmd: Відключити AMD
 miner.workers.disableNvidia: Відключити Nvidia
 miner.workers.affineToCpu: Оптимізувати з CPU
 miner.workers.dynamicDifficulty: Динамічна складність майнінгу
+dashboard.av.checking: Перевірка наявності антивіруса
+dashboard.av.installed: "У вас встановлений {av}"
+dashboard.av.nothings: "Антивірус не знайдений, все чисто"
+dashboard.av.addToExclusions: Додати до виключення
+dashboard.av.findOutHow: Дізнатися як
+dashboard.av.skip: Пропустити
+dashboard.av.done: Я зробив це, продовжити
+dashboard.av.auto: Але ми можемо автоматично додати Hash to Cash до списку виключень.
+dashboard.av.noAuto: Ми не можемо додати Hash to Cash до виключення автоматично, але ви можете зробити це самостійно.
+dashboard.av.folder: "Це папка, яку необхідно додати до виключення:"
+dashboard.av.addToExceptions: Додати до виключення
+dashboard.av.whitelisted: У виключеннях.
+dashboard.av.notWhitelisted: Немає у виключеннях.
+dashboard.av.adminRequired: Необхідні права адміністратора
 miner.workers.base.noDevices: Не знайдено придатних пристроїв. Оновите драйвера і запустіть програму
 miner.workers.base.noVcredist: Спробуйте встановити VCRedist 2017 або відключити майнінг на AMD
 miner.workers.base.tooExpensive: Спробуйте зменшити потужність майнінгу на GPU

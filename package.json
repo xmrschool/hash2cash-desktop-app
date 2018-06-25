@@ -1,7 +1,7 @@
 {
   "name": "hashtocash",
   "productName": "Hash to Cash",
-  "version": "1.0.3",
+  "version": "1.1.1",
   "description": "Hash to cash allows you to mine cryptocurrencies and transform them directly to fiat. Future is here!",
   "main": "app/main/main.js",
   "scripts": {
@@ -42,6 +42,7 @@
       "app/main/trayIcon.png",
       "app/miner/app/index.html",
       "app/main/main.js",
+      "app/sandbox/*",
       "node_modules/",
       "!node_modules/uws",
       "!node_modules/*-detector/{build,extra,src,json,extra,libcpuid,binding.gyp,.git}",
@@ -116,6 +117,7 @@
   "homepage": "https://hashto.cash/?utm_source=extension&utm_medium=pkg",
   "dependencies": {
     "@sentry/electron": "^0.5.4",
+    "@types/node-powershell": "^3.1.0",
     "auto-launch": "^5.0.5",
     "classnames": "^2.2.5",
     "compare-versions": "^3.1.0",
@@ -138,6 +140,7 @@
     "mobx-react-devtools": "^5.0.1",
     "native-utils": "file:../electron-deps/native-utils",
     "node-machine-id": "^1.1.10",
+    "node-powershell": "^3.3.1",
     "opencl-detector": "file:../electron-deps/opencl-detector",
     "p-queue": "^2.3.0",
     "progressbar.js": "^1.0.1",
@@ -221,6 +224,7 @@
     "html-webpack-plugin": "^3.0.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.4.2",
+    "jest-validate": "^23.0.1",
     "json-loader": "^0.5.7",
     "minimist": "latest",
     "node-loader": "^0.6.0",
@@ -243,6 +247,7 @@
     "sinon": "^5.0.6",
     "spectron": "^3.8.0",
     "style-loader": "^0.21.0",
+    "ts-jest": "^22.4.6",
     "ts-loader": "^4.0.0",
     "ts-node": "^6.0.3",
     "tslint": "^5.9.1",

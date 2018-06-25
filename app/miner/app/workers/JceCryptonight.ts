@@ -118,10 +118,8 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
       if (!this.running) {
         throw new Error('Worker is not running');
       }
-      const resp = await fetch(`http://127.0.0.1:${this.daemonPort}`);
+      const resp = await fetch(`http://localhost:${this.daemonPort}`);
       const json = await resp.json();
-
-      localStorage.largePageState = json.hugepages;
 
       return json;
     } catch (e) {

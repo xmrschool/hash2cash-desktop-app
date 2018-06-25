@@ -113,6 +113,7 @@ export type _CudaDevice = {
   deviceID: string;
   model: string;
   unavailableReason?: string;
+  warning?: string;
   driverVersion?: string | null;
   collectedInfo: CudaCollectedDevice;
 };
@@ -123,6 +124,7 @@ export type _OpenCLDevice = {
   deviceID: string;
   model: string;
   unavailableReason?: string;
+  warning?: string;
   driverVersion?: string | null;
   collectedInfo: OpenCLCollectedDevice;
 };
@@ -132,6 +134,7 @@ export type CpuDevice = {
   platform: 'amd' | 'intel';
   model: string;
   unavailableReason?: string;
+  warning?: string;
   driverVersion?: string | null;
   collectedInfo: Systeminformation.CpuData | CpuInfo;
 };

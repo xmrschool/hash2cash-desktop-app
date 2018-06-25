@@ -26,7 +26,17 @@ koa.use(async (ctx, next) => {
   try {
     await next();
   } catch (e) {
-    ctx.body = e;
+    if (e instanceof RuntimeError) {
+      ctx.body = e;
+    } else {
+      ctx.body = {
+        error: {
+          kind: typeof e,
+          message: e.message,
+          stack: e.stack,
+        },
+      };
+    }
   }
 });
 router.get('/manifest', async ctx => {
@@ -135,7 +145,10 @@ router.get('/workers/:id/func/:func', async ctx => {
 
       return;
     }
-    ctx.body = await worker.callFunction(func, typeof value !== 'undefined' ? value === 'true' : undefined);
+    ctx.body = await worker.callFunction(
+      func,
+      typeof value !== 'undefined' ? value === 'true' : undefined
+    );
   } catch (e) {
     throw e;
   }

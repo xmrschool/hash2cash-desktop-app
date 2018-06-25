@@ -9,11 +9,12 @@ import {
   Pick,
 } from './BaseWorker';
 import { getLogin, RuntimeError } from '../utils';
-import { getPort } from '../../../core/utils';
+import { getPort, timeout } from '../../../core/utils';
 import { _CudaDevice, Architecture } from '../../../renderer/api/Api';
 import { sleep } from '../../../renderer/utils/sleep';
 import { LocalStorage } from '../../../renderer/utils/LocalStorage';
 import { addRunningPid } from '../RunningPids';
+import trackError from '../../../core/raven';
 
 export type Parameteres = 'main' | 'additional';
 
@@ -27,7 +28,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
 
   path: string = '';
   state: { [p: string]: any } = {
-    noAMD: false,
+    noAMD: localStorage.skipOpenCl === 'true',
     noNVIDIA: false,
     affineToCpu: false,
     dynamicDifficulty: false,
@@ -55,6 +56,14 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
 
   get executableName() {
     return __WIN32__ ? 'hashtocash-cryptonight.exe' : 'hashtocash-cryptonight';
+  }
+
+  get noAMD() {
+    return this.state.noAMD || localStorage.skipOpenCl === 'true';
+  }
+
+  get rigName() {
+    return localStorage.rigName || 'pc';
   }
 
   get maps() {
@@ -101,7 +110,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
 
   buildNvidiaConfig(report: Architecture) {
     const nvidiaGpus = report.devices.filter(
-      d => d.platform && d.platform === 'cuda',
+      d => d.platform && d.platform === 'cuda'
     ) as _CudaDevice[];
 
     if (nvidiaGpus.length > 0) {
@@ -158,9 +167,9 @@ ${outer.join(',\n')}
     "pool_list" :
 [
 	{"pool_address" : ${s(this.getPool('cryptonight'))}, "wallet_address" : ${s(
-      getLogin('GpuCryptonight', this.state.dynamicDifficulty),
+      getLogin('GpuCryptonight', this.state.dynamicDifficulty)
     )}, "rig_id" : ${s(
-      localStorage.rigName || '',
+      this.rigName + '-gpu'
     )}, "pool_password" : "", "use_nicehash" : true, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
 ],
 "currency" : "monero7",
@@ -186,7 +195,7 @@ ${outer.join(',\n')}
 
     console.log(
       'Saving config to directory: ',
-      path.join(this.path, 'config.txt'),
+      path.join(this.path, 'config.txt')
     );
     await fs.outputFile(path.join(this.path, 'config.txt'), template);
     await fs.outputFile(path.join(this.path, 'pools.txt'), pools);
@@ -249,7 +258,15 @@ ${outer.join(',\n')}
       if (!this.running) {
         throw new Error('Worker is not running');
       }
-      const resp = await fetch(`http://127.0.0.1:${this.daemonPort}/api.json`);
+
+      const resp = await Promise.race([
+        timeout(),
+        fetch(`http://localhost:${this.daemonPort}/api.json`),
+      ]);
+
+      if (resp === false) {
+        return new Error('Timeout while getting stats');
+      }
 
       return await resp.json();
     } catch (e) {
@@ -276,45 +293,52 @@ ${outer.join(',\n')}
   async start(): Promise<boolean> {
     if (this.running) throw new Error('Miner already running');
 
-    const isPathExists = await fs.pathExists(this.pathTo('preserve.txt'));
-    this.preserveConfig = isPathExists;
+    try {
+      const isPathExists = await fs.pathExists(this.pathTo('preserve.txt'));
+      this.preserveConfig = isPathExists;
 
-    // If no config exists, build it
-    if (!isPathExists) await this.buildConfigs();
+      // If no config exists, build it
+      if (!isPathExists) await this.buildConfigs();
 
-    this.willQuit = false;
+      this.willQuit = false;
 
-    const uac = __WIN32__ ? ['--noUAC'] : [];
-    const args = [
-      '-i',
-      (await this.getDaemonPort()).toString(),
-      '--noCPU',
-      this.state.noAMD && '--noAMD',
-      this.state.noNVIDIA && '--noNVIDIA',
-      ...uac,
-    ].filter(d => !!d); // Exclude false
+      const uac = __WIN32__ ? ['--noUAC'] : [];
+      const args = [
+        '-i',
+        (await this.getDaemonPort()).toString(),
+        '--noCPU',
+        this.noAMD && '--noAMD',
+        this.state.noNVIDIA && '--noNVIDIA',
+        ...uac,
+      ].filter(d => !!d); // Exclude false
 
-    console.log('Running GPU miner with args: ', args, this.state);
-    this.daemon = spawn(path.join(this.path, this.executableName), args, {
-      cwd: this.path,
-    });
-    this.pid = this.daemon.pid;
+      console.log('Running GPU miner with args: ', args, this.state);
+      this.daemon = spawn(path.join(this.path, this.executableName), args, {
+        cwd: this.path,
+      });
+      this.pid = this.daemon.pid;
 
-    addRunningPid(this.pid);
+      addRunningPid(this.pid);
 
-    this.emit({ running: true });
+      this.emit({ running: true });
 
-    this.daemon.stdout.on('data', data => {
-      console.log(`stdout: ${data}`);
-    });
+      this.daemon.stdout.on('data', data => {
+        console.log(`stdout: ${data}`);
+      });
 
-    this.daemon.on('close', err => this.handleTermination(err, true));
-    this.daemon.on('error', err => this.handleTermination(err));
+      this.daemon.on('close', err => this.handleTermination(err, true));
+      this.daemon.on('error', err => this.handleTermination(err));
 
-    this.running = true;
-    await sleep(1000); // wait til miner is on
+      this.running = true;
+      await sleep(1000); // wait til miner is on
 
-    return true;
+      return true;
+    } catch (e) {
+      trackError(e, this.toJSON());
+      this.handleTermination(e, undefined, true);
+
+      return false;
+    }
   }
 
   async stop(): Promise<boolean> {

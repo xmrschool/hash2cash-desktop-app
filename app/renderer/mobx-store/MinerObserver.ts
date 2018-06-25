@@ -86,7 +86,9 @@ export class InternalObserver extends EventEmitter {
       this.tryToEmitMetrics(stats.hashrate);
       this.hashesSubmitted = stats.results.hashes_total;
     } catch (e) {
-      console.error('Failed to get worker stats\n', e);
+      console.error('Failed to get worker stats\n', {
+        message: e.message,
+      });
     }
   }
 

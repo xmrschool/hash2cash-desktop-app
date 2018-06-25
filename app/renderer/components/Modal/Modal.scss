@@ -20,6 +20,7 @@
   padding: 16px;
   transform: scale(0.7);
   animation-delay: 0.1s;
+  z-index: 10;
   animation: fadeIn var(--animation-delay) var(--animation-type) forwards;
 
   & h2 {

@@ -8,6 +8,7 @@
   font-size: 96%;
   z-index: 1;
   transition: var(--animation-delay) bottom var(--animation-type);
+  margin-left: 0;
   background: #da4141;
 
   justify-content: space-between;
@@ -21,6 +22,11 @@
   text-overflow: ellipsis;
   user-select: text;
   overflow: hidden;
+  margin-left: 0;
+}
+
+.animating {
+  transition: 2s margin-left;
 }
 
 .show {

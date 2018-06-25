@@ -33,6 +33,7 @@ import isCpuIdReport from '../../utils/isCpuIdReport';
 import formatCpuName from '../../utils/formatCpuName';
 import trackError from '../../../core/raven';
 import minerApi from '../../api/MinerApi';
+import { HelpItem } from '../../components/Help/Help';
 
 const s = require('./Initialization.scss');
 const warning = require('./warning.svg');
@@ -89,6 +90,10 @@ const messages = defineMessages({
     id: 'scenes.init.algorithms',
     defaultMessage: 'Algorithms',
   },
+  noGPU: {
+    id: 'scenes.init.noGPU',
+    defaultMessage: "Why my GPU doesn't detected?",
+  },
 });
 
 let initializationState = _initializationState;
@@ -137,6 +142,7 @@ export default class Initialization extends React.Component<
     try {
       const { formatMessage } = this.props.intl;
 
+      debug('Starting initialization...');
       initializationState.reset();
       initializationState.setStatus(
         formatMessage({ id: 'mobx.init.status.collecting' })
@@ -219,14 +225,14 @@ export default class Initialization extends React.Component<
   }
 
   renderModel(device: Device) {
-    if (device.type === 'gpu' && device.unavailableReason) {
+    if (device.type === 'gpu' && (device.unavailableReason || device.warning)) {
       return (
         <div style={{ flexGrow: 1 }}>
           <div className={s.unavailable}>
             <span className={s.model}>{device.model}</span>
             <img className={s.warning} src={warning} />
           </div>
-          <div className={s.reasonContainer}>{device.unavailableReason}</div>
+          <div className={s.reasonContainer}>{device.unavailableReason || device.warning}</div>
         </div>
       );
     }
@@ -332,6 +338,11 @@ export default class Initialization extends React.Component<
                     <span className={s.power}>{this.formatPower(device)}</span>
                   </div>
                 ))}
+              <div style={{ marginTop: 15 }}>
+                <HelpItem link="https://help.hashto.cash/hc/ru/articles/360004439972-%D0%A7%D1%82%D0%BE-%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C-%D0%B5%D1%81%D0%BB%D0%B8-%D0%BD%D0%B5-%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D1%8F%D0%B5%D1%82%D1%81%D1%8F-%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D0%B0-%D0%B2-%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B5-%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2-">
+                  <FormattedMessage {...messages.noGPU} />
+                </HelpItem>
+              </div>
             </div>
             {initializationState.bechmarking &&
               this.renderBenchmarkDetails(initializationState)}

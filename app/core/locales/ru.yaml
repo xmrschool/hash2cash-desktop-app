@@ -1,5 +1,5 @@
 ---
-LOGIN_YOU_AGREED: Регистрируясь на Hash to Cash, вы соглашаетесь с правилами использования и политикой конфендициальности
+LOGIN_YOU_AGREED: Регистрируясь на Hash to Cash, вы соглашаетесь с правилами использования и политикой конфиденциальности
 LOGIN_WELCOME_BACK: Добро пожаловать! Введите пароль, чтобы войти
 LOGIN_EMAIL: ваш email
 LOGIN_PASSWORD: пароль
@@ -106,9 +106,10 @@ invalid_password: неверный пароль
 sign_through_site: войдите через сайт
 email_blacklisted: этот email запрещен
 email_forbidden: этот email запрещен
-core.hardwareCollector.unsupported: Ваш GPU ({vendor}) не поддерживается. Попробуйте обновить драйвера или свяжитесь с нами, если считаете что это ошибка
-core.hardwareCollector.cudaFailed: Ваш драйвер GPU устарел, скачайте новый с nvidia.com
-core.hardwareCollector.archTooLow: Ваша видеокарта устарела, минимальная версия - sm_20, у вас - sm_{major}{minor}. Ничего нельзя сделать :(
+core.hardwareCollector.unsupported: Ваш GPU {vendor} не поддерживается. Мы ничего не можем с этим сделать.
+core.hardwareCollector.failedToGetOpenCl: "Скорее всего, этот GPU не будет работать: попробуйте обновить ваши драйвера."
+core.hardwareCollector.cudaFailed: "У вас слишком старые драйвера Nvidia, обновите их: nvidia.com/drivers"
+core.hardwareCollector.archTooLow: Версия архитектуры GPU слишком мала, минимальная sm_20, а у вас sm_{major}{minor}
 mobx.global.connectionFail: Hash to Cash не может подключиться к серверу. Проверьте интернет
 mobx.init.status.collecting: Собираем информацию о видеокартах
 mobx.init.status.vcredist.checking: Проверяем, установлен ли VCRedist
@@ -132,6 +133,7 @@ scenes.init.startMine: Начать майнить!
 scenes.init.algorithms: Алгоритмы
 scenes.init.worker.dailyProfit: за день
 scenes.init.worker.monthlyProfit: за месяц
+scenes.init.noGPU: Почему моя видеокарта не определилась?
 core.reload.updates.checking: Проверка обновлений приложения
 core.reload.updates.newAvailable: Скачиваем новую версию приложения {version}
 core.reload.updates.installingAfter: Установка обновления через {secs, number} {secs, plural, one {секунду} other {секунд} few {секунды}}
@@ -146,6 +148,20 @@ miner.workers.disableAmd: Отключить AMD
 miner.workers.disableNvidia: Отключить Nvidia
 miner.workers.affineToCpu: Оптимизировать с CPU
 miner.workers.dynamicDifficulty: Динамическая сложность майнинга
+dashboard.av.checking: Проверка наличия антивируса
+dashboard.av.installed: "У вас установлен {av}"
+dashboard.av.nothings: "Антивирус не найден, все чисто"
+dashboard.av.addToExclusions: Добавить в исключения
+dashboard.av.findOutHow: Узнать как
+dashboard.av.skip: Пропустить
+dashboard.av.done: Я сделал это, продолжить
+dashboard.av.auto: Но мы можем автоматически добавить Hash to Cash в список исключений.
+dashboard.av.noAuto: Мы не можем добавить Hash to Cash в исключения автоматически, но вы можете сделать это вручную.
+dashboard.av.folder: "Это папка, которую необходимо добавить в исключения:"
+dashboard.av.addToExceptions: Добавить в исключения
+dashboard.av.whitelisted: В исключениях.
+dashboard.av.notWhitelisted: Не в исключениях.
+dashboard.av.adminRequired: Необходимы права администратора
 miner.workers.base.noDevices: Не найдено подходящих устройств. Обновите драйвера и перезапустите приложение
 miner.workers.base.noVcredist: Попробуйте установить VCRedist 2017 или отключить майнинг на AMD
 miner.workers.base.tooExpensive: Попробуйте снизить мощность майнинга на GPU

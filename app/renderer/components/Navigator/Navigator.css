@@ -40,3 +40,81 @@
     -webkit-app-region: no-drag;
     padding: 4px 0;
 }
+
+.notify {
+    position: absolute;
+    white-space: nowrap;
+    background: #da4141;
+    justify-content: space-between;
+    padding: 7px 8px;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.notifyContainer {
+    max-width: 523px;
+    width: 523px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.notify:hover:after, .notify:hover:before {
+    transform: translate(-50%,10px);
+    opacity: 1;
+    visibility: visible;
+}
+
+.notify:before {
+    margin-bottom: -15px;
+    border: 6px solid transparent;
+    border-bottom-color: #ecf0f1;
+    margin-top: -11px;
+    content: "";
+}
+
+.notify:after {
+    background-color: #fff;
+
+    color: #333;
+    bottom: 100%;
+    width: auto;
+    -webkit-filter: drop-shadow(hsla(0,0%,100%,.1) 0 0 5px);
+    filter: drop-shadow(rgba(255,255,255,.1) 0 0 5px);
+    height: 22px;
+    padding: 11px 11px 0;
+    font-size: 13.5px;
+    line-height: 11px;
+    content: attr(data-tooltip);
+    white-space: nowrap;
+    border-radius: 4px;
+}
+
+.notify:after, .notify:before {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 9999;
+    box-sizing: content-box;
+    transform: translate(-50%);
+}
+
+.notify:after, .notify:before {
+    left: 50%;
+    top: 100%;
+    transition: all .1s linear;
+}
+
+.modalContainer a {
+    opacity: 1;
+    cursor: pointer;
+    border-bottom: 2px solid #2d7df7;
+}
+
+.modalContainer a:hover {
+    border-bottom: 2px solid #255fbe;
+}
+
+.primary {
+    background: var(--primary-color);
+}

@@ -108,9 +108,10 @@ invalid_password: invalid password
 sign_through_site: sign in through site
 email_blacklisted: this email is forbidden
 email_forbidden: this email is forbidden
-core.hardwareCollector.unsupported: Your GPU vendor ({vendor}) is unsupported. Contact us if you think that is a mistake, or update your drivers
-core.hardwareCollector.cudaFailed: Your GPU driver is too old, get a new one from nvidia.com
-core.hardwareCollector.archTooLow: Your GPU is too old, minimal required is sm_20, got sm_{major}{minor}. We can't do anything about it :(
+core.hardwareCollector.unsupported: Your GPU vendor {vendor} is unsupported. There's nothing we can do with this.
+core.hardwareCollector.failedToGetOpenCl: "Most likely this GPU won't work: try to update your drivers."
+core.hardwareCollector.cudaFailed: "There is a problem with your Nvidia drivers, update them: nvidia.com/drivers"
+core.hardwareCollector.archTooLow: GPU architecture is too low, minimal required is sm_20, got sm_{major}{minor}
 mobx.global.connectionFail: Hash to Cash can't connect to the server. Check your internet connection
 mobx.init.status.collecting: Collecting hardware information
 mobx.init.status.vcredist.checking: Checking if VCRedist installed
@@ -134,6 +135,8 @@ scenes.init.startMine: Start to mine!
 scenes.init.algorithms: Algorithms
 scenes.init.worker.dailyProfit: per day
 scenes.init.worker.monthlyProfit: per month
+scenes.init.noGPU: Why my GPU doesn't detected?
+
 core.reload.updates.checking: Checking app updates
 core.reload.updates.newAvailable: Downloading new version of app {version}
 core.reload.updates.installingAfter: Update gonna be launched after {secs, number} {unreadCount, plural, one {second} other {seconds}}
@@ -148,6 +151,23 @@ miner.workers.disableAmd: Disable AMD
 miner.workers.disableNvidia: Disable NVidia
 miner.workers.affineToCpu: Affine to CPU
 miner.workers.dynamicDifficulty: Dynamic difficulty
+
+dashboard.av.checking: Checking your antivirus
+dashboard.av.installed: "{av} on your board"
+dashboard.av.nothings: "Nothing is found, you're clean"
+dashboard.av.addToExclusions: Add to exclusions
+dashboard.av.findOutHow: Find out how
+dashboard.av.skip: Skip it
+dashboard.av.done: I did it, continue
+
+dashboard.av.auto: But we can automatically add Hash to Cash to exclusions.
+dashboard.av.noAuto: We can't add Hash to Cash to exceptions, but you can do it manually. And should.
+dashboard.av.folder: "That is folder you should add to exceptions:"
+dashboard.av.addToExceptions: Add to exceptions
+dashboard.av.whitelisted: Whitelisted.
+dashboard.av.notWhitelisted: Not whitelisted.
+dashboard.av.adminRequired: Administrator privileges are required
+
 
 miner.workers.base.noDevices: No devices found. Try to update your drivers and reload app
 miner.workers.base.noVcredist: Try to install VCRedist 2017 or disable AMD

@@ -17,15 +17,36 @@ export default class Toast extends React.Component<
   {
     toast?: TToast;
   },
-  { lastToast?: TToast }
+  { lastToast?: TToast; margin: number; animating: boolean }
 > {
+  ref: any;
   state = {
     lastToast: undefined,
+    margin: 0,
+    animating: false,
   };
 
   componentWillReceiveProps(nextProps: any) {
     if (nextProps.toast) {
-      this.setState({ lastToast: nextProps.toast });
+      this.setState({
+        lastToast: nextProps.toast,
+        margin: 0,
+        animating: false,
+      });
+      setTimeout(() => {
+        this.assignMargin(document.getElementById('toast-message'));
+      }, 50);
+    }
+  }
+
+  assignMargin(ref: any) {
+    if (ref && ref.scrollWidth !== ref.offsetWidth) {
+      setTimeout(() => {
+        this.setState({
+          margin: ref.offsetWidth - ref.scrollWidth - 5,
+          animating: true,
+        });
+      }, 400);
     }
   }
 
@@ -35,7 +56,15 @@ export default class Toast extends React.Component<
 
     return (
       <div className={cx(s.toast, shouldShow && s.show)}>
-        {toast && <div className={s.message}>{toast.message}</div>}
+        {toast && (
+          <div
+            id="toast-message"
+            className={cx(s.message, this.state.animating && s.animating)}
+            style={{ marginLeft: this.state.margin }}
+          >
+            {toast.message}
+          </div>
+        )}
         {toast &&
           toast.closable && (
             <div onClick={() => GlobalState.closeToast()}>

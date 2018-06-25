@@ -3,8 +3,8 @@ import { FormattedMessage, defineMessages } from 'react-intl';
 import { observer } from 'mobx-react';
 import RuntimeError, { isFsError } from '../../mobx-store/RuntimeError';
 import Modal from '../Modal/Modal';
-import { librariesPath } from '../../utils/FileDownloader';
 import Button from '../Button/Button';
+import PathToLibraries from '../PathToLibraries';
 
 const close = require('../../../core/icon/close.svg');
 
@@ -40,22 +40,9 @@ export default class RuntimeErrorNotifier extends React.Component {
     this.renderPath = this.renderPath.bind(this);
   }
 
-  selectCopy(event: any) {
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(event.target as any);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  }
-
   renderPath() {
-    const prefix = __WIN32__ ? '\\' : '/'; // Backslash in Win32
-
     return (
-      <code onClick={this.selectCopy} onContextMenu={this.selectCopy}>
-        {librariesPath.replace(/\//g, prefix)}
-        {prefix}
-      </code>
+      <PathToLibraries />
     );
   }
 
@@ -89,7 +76,7 @@ export default class RuntimeErrorNotifier extends React.Component {
     }
 
     // ToDo Add other cases to handle errors?
-    return <p style={styles}>{message}</p>;
+    return <p style={styles}>{JSON.stringify(message)}</p>;
   }
 
   renderError() {
@@ -111,7 +98,7 @@ export default class RuntimeErrorNotifier extends React.Component {
         />
         <h2><FormattedMessage {...messages.stopped} /></h2>
         {this.renderPossibleFix()}
-        <p onClick={RuntimeError.expandStack}>{RuntimeError.stackExpanded ? 'Hide' : 'Show'} error details</p>
+        <p onClick={RuntimeError.expandStack}>{RuntimeError.stackExpanded ? 'Скрыть' : 'Показать'} детали ошибки</p>
         {RuntimeError.stackExpanded && (
           <>
             {raw && <code>{JSON.stringify(raw, null, 2)}</code>}

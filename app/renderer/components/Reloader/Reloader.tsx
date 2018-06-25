@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as cx from 'classnames';
 import { inject, observer } from 'mobx-react';
 import { MobxState } from '../../mobx-store';
+import Spinner from '../Spinner/Spinner';
 
 const s = require('./Reloader.css');
-const reload = require('./reload.svg');
 
 export interface IProps {
   running?: boolean;
@@ -31,11 +31,7 @@ export default class Reloader extends React.Component<IProps> {
     return (
       <div className={s.reload}>
         <div>
-          <img
-            className={cx(s.icon, running && s.spinner)}
-            src={reload}
-            onClick={() => run!()}
-          />
+          <Spinner running={running} onClick={() => run!()} />
         </div>
         <div className={s.switcherWrapper}>
           <div className={cx(s.switcher, switching && s.switch)}>

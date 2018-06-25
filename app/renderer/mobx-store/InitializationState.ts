@@ -378,6 +378,7 @@ export class InitializationState {
       throw e;
     }
 
+    this.setText('');
     this.downloading = false;
   }
 
