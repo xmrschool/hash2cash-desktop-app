@@ -146,6 +146,12 @@ export class Worker extends EventEmitter {
 
       return resp;
     } catch (e) {
+      if (e.message.includes('already running')) {
+        this.data.running = true;
+
+        return true;
+      }
+
       RuntimeError.handleError(e);
       this.httpRequest = false;
 
@@ -196,7 +202,6 @@ export class Worker extends EventEmitter {
 
       throw e;
     }
-
   }
 }
 

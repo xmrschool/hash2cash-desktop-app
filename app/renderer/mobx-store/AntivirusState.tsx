@@ -3,6 +3,7 @@ import { promisify } from 'util';
 import { observable, action } from 'mobx';
 import { exec } from 'child_process';
 import { PersistedState } from './PersistedState';
+import { timeout } from '../../core/utils';
 // For test purposes
 let trackError = (e: Error) => {};
 if (typeof localStorage !== 'undefined') {
@@ -10,16 +11,29 @@ if (typeof localStorage !== 'undefined') {
 }
 
 let ps: Shell;
-async function initPs() {
+async function initPs(setEncoding = true): Promise<boolean> {
   ps = new Shell({
     noProfile: true,
   });
 
-  return ps
-    .addCommand(
-      'echo 123 | out-null;$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding'
-    )
-    .then(() => ps.invoke());
+  if (!setEncoding) {
+    return true;
+  }
+  const result = await Promise.race([
+    timeout(500),
+    ps
+      .addCommand(
+        'echo 123 | out-null;$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding'
+      )
+      .then(() => ps.invoke()),
+  ]);
+
+  if (result === false) {
+    await ps.dispose();
+    return initPs(false);
+  }
+
+  return true;
 }
 // Command which returns name of AV software.
 export const avCheckCommand =
@@ -68,11 +82,22 @@ export class AntivirusState extends PersistedState {
   }
 
   get showAfter() {
-    return !this.running && (this.isKnown && this.whitelisted);
+    return this.error || (!this.running && (this.isKnown && this.whitelisted));
   }
 
   @action
   async check() {
+    const result = await Promise.race([timeout(1500), this._check()]);
+
+    if (result === false) {
+      this.error = 'Timeout error.';
+    }
+
+    return result;
+  }
+
+  @action
+  async _check() {
     try {
       await initPs();
 
@@ -101,14 +126,14 @@ export class AntivirusState extends PersistedState {
         this.checked = true;
 
         ps.dispose();
-        return false;
+        return true;
       }
     } catch (e) {
       trackError(e);
       this.error = e.message;
 
       ps.dispose();
-      return false;
+      return true;
     }
   }
 

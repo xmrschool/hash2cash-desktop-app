@@ -19,8 +19,8 @@ export function getPort(startingAt: number): Promise<number> {
   });
 }
 
-export function timeout(seconds = 5000): Promise<false> {
+export function timeout(ms = 5000): Promise<false> {
   return new Promise(resolve =>
-    setTimeout(() => resolve(false), seconds)
+    setTimeout(() => resolve(false), ms)
   ) as any;
 }

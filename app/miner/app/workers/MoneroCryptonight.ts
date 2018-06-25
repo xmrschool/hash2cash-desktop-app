@@ -177,7 +177,8 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       if (resp === false) {
         return new RuntimeError(
           'Failed to getStats',
-          new Error('Timeout error while getting stats')
+          new Error('Timeout error while getting stats'),
+          false
         );
       }
 
@@ -187,7 +188,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
 
       return json;
     } catch (e) {
-      throw new RuntimeError('Failed to get stats', e);
+      throw new RuntimeError('Failed to get stats', e, false);
     }
   }
 

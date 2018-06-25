@@ -265,13 +265,13 @@ ${outer.join(',\n')}
       ]);
 
       if (resp === false) {
-        return new Error('Timeout while getting stats');
+        return new Error('Timeout while gett ing stats');
       }
 
       return await resp.json();
     } catch (e) {
       console.error('Failed to get stats', e);
-      throw new RuntimeError('Failed to get stats', e);
+      throw new RuntimeError('Failed to get stats', e, false);
     }
   }
 

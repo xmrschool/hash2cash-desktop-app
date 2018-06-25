@@ -109,7 +109,7 @@ export default async function collectHardware(): Promise<Architecture> {
   );
 
   let collectedCpu = null;
-  if (collectedCpu) {
+  if (!cpuInfo) {
     collectedCpu = await safeGetter(cpu, 'systeminformation');
   }
 
@@ -144,19 +144,13 @@ export default async function collectHardware(): Promise<Architecture> {
       collectedInfo: cpuInfo,
     });
   } else if (collectedCpu) {
-    const cpuVendor = checkVendor(
-      collectedCpu.vendor,
-      'cpu',
-      collectedCpu.model
-    ) as any;
-
     report.devices.push({
       type: 'cpu',
-      platform: cpuVendor,
+      platform: collectedCpu.vendor,
       model: collectedCpu.brand,
       driverVersion: null,
       collectedInfo: collectedCpu,
-    });
+    } as any);
   }
 
   /** An openCL and cuda devices.
@@ -201,8 +195,11 @@ export default async function collectHardware(): Promise<Architecture> {
     cuda.driverVersion === 0 ||
     (cuda.devices && cuda.devices.length === 0);
 
+  // Check if there is no error and there are devices
+  const doesOpenClFailed = !openCl || !!openCl.error || !openCl.devices;
+
   // This is a fallback for opencl getter.
-  if (!openCl) {
+  if (doesOpenClFailed) {
     const graphicsResult = await graphics();
     if (graphicsResult && graphicsResult.controllers) {
       const { controllers } = graphicsResult;
@@ -252,7 +249,7 @@ export default async function collectHardware(): Promise<Architecture> {
   } else {
     localStorage.removeItem('skipOpenCl');
     // We have OpenCL devices available (Ya-hoo!)
-    openCl.devices.forEach(device => {
+    openCl!.devices.forEach(device => {
       try {
         const platform = checkVendor(
           device.vendor,
