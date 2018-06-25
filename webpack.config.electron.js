@@ -10,7 +10,7 @@ const getReplacements = require('./app/app-info').getReplacements;
 const isDebug = process.env.NODE_ENV !== 'production';
 
 module.exports = merge(baseConfig, {
-  devtool: isDebug ? 'cheap-module-inline-source-map' : 'none',
+  devtool: isDebug ? 'cheap-module-inline-source-map' : 'source-map',
 
   mode: isDebug ? 'development' : 'production',
   entry: ['./app/main/index.ts'],

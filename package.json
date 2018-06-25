@@ -48,6 +48,7 @@
       "!node_modules/*-detector/{build,extra,src,json,extra,libcpuid,binding.gyp,.git}",
       "!node_modules/native-utils/{build,extra,src,json,extra,libcpuid,binding.gyp,.git}",
       "!node_modules/raven-js/dist",
+      "!app/main/dist/*.map",
       "package.json"
     ],
     "dmg": {

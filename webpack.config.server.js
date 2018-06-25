@@ -15,7 +15,7 @@ const isDebug = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 4513;
 
 module.exports = merge(baseConfig, {
-  devtool: isDebug ? 'cheap-module-inline-source-map' : 'none',
+  devtool: isDebug ? 'cheap-module-inline-source-map' : 'source-map',
 
   mode: isDebug ? 'development' : 'production',
   externals: [

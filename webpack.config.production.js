@@ -10,7 +10,7 @@ const baseConfig = require('./webpack.config.base');
 const getReplacements = require('./app/app-info').getReplacements;
 
 module.exports = merge(baseConfig, {
-  devtool: 'none',
+  devtool: 'source-map',
 
   mode: 'production',
   entry: ['./app/renderer/index.tsx'],
