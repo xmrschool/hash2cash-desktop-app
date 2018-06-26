@@ -1,9 +1,9 @@
 import { ipcRenderer } from 'electron';
 import { defineMessages } from 'react-intl';
 import { machineId } from 'node-machine-id';
-import { Response as CudaResponse } from 'cuda-detector';
-import { Response as OpenCLResponse } from 'opencl-detector';
-import { CpuInfo } from 'cpuid-detector';
+import detectCuda, { Response as CudaResponse } from 'cuda-detector';
+import detectOpencl, { Response as OpenCLResponse } from 'opencl-detector';
+import cpuId, { CpuInfo } from 'cpuid-detector';
 import { cpu, graphics } from 'systeminformation';
 import { arch, release } from 'os';
 
@@ -62,7 +62,7 @@ function checkVendor(
 }
 
 export async function remoteCall(command: string): Promise<any> {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     ipcRenderer.send('execute', command);
     ipcRenderer.once('execution-result', (_: any, result: any) => {
       debug('Received response: ', result);
@@ -79,12 +79,34 @@ export async function remoteCall(command: string): Promise<any> {
 // What this function do? In case exception throwed, it reports and returns null
 export async function safeGetter<T>(
   callback: () => Promise<T>,
+  fallbackGetter: (() => Promise<T | false>) | undefined,
   name: String,
   errCallback?: (err: Error) => void
 ): Promise<T | null> {
   try {
-    const result = await Promise.race([callback(), sleep(2000)]);
-    debug(`safeGetter(${name}): `, result);
+    let result = await Promise.race([callback(), sleep(2000)]);
+    debug(`safeGetter(${name})(main getter) => `, result);
+    // We noticed a guy who have "Unknown error" message...
+    // That never happened, maybe it some kind of ipc error?
+    if (
+      fallbackGetter &&
+      (!result ||
+        (result &&
+          (result as any).error &&
+          (result as any).error.includes('unknown error')))
+    ) {
+      console.log(
+        '[safeGetter] main getter has been failed, so using a fallback'
+      );
+
+      const temp = await Promise.race([fallbackGetter(), sleep(2000)]);
+      if (temp === false) {
+        throw new Error('Fallback action failed');
+      }
+
+      result = temp;
+      debug(`safeGetter(${name})(fallback getter) => `, result);
+    }
     return result || null;
   } catch (e) {
     if (errCallback) errCallback(e);
@@ -105,15 +127,16 @@ export default async function collectHardware(): Promise<Architecture> {
   // Retrieve it natively. Works fine, everywhere
   const cpuInfo = await safeGetter<CpuInfo>(
     () => remoteCall("require('cpuid-detector')()"),
+    () => cpuId(),
     'cpuid'
   );
 
   let collectedCpu = null;
   if (!cpuInfo) {
-    collectedCpu = await safeGetter(cpu, 'systeminformation');
+    collectedCpu = await safeGetter(cpu, undefined, 'systeminformation');
   }
 
-  let uuid = await safeGetter(() => machineId(true), 'machineid');
+  let uuid = await safeGetter(() => machineId(true), undefined, 'machineid');
   if (uuid === null) {
     if (localStorage.generatedUuid) {
       uuid = localStorage.generatedUuid as string;
@@ -156,9 +179,10 @@ export default async function collectHardware(): Promise<Architecture> {
   /** An openCL and cuda devices.
    */
   const openCl =
-    !localStorage.skipOpenCl && process.arch !== 'ia32'
+    process.arch !== 'ia32'
       ? await safeGetter<OpenCLResponse>(
           () => remoteCall('require("opencl-detector")()'),
+          async () => (localStorage.skipOpenCl ? false : detectOpencl()),
           'openCl',
           err => {
             // Disable OpenCL if its been crashed
@@ -174,6 +198,7 @@ export default async function collectHardware(): Promise<Architecture> {
     process.arch !== 'ia32'
       ? await safeGetter<CudaResponse>(
           () => remoteCall('require("cuda-detector")()'),
+          () => detectCuda(),
           'cuda',
           err => (cudaFailReason = err.message)
         )
@@ -217,7 +242,7 @@ export default async function collectHardware(): Promise<Architecture> {
 
           report.devices.push({
             type: 'gpu',
-            platform,
+            platform: 'opencl',
             deviceID: report.devices.length.toString(),
             model: gpu.model,
             collectedInfo: gpu as any,
@@ -226,7 +251,7 @@ export default async function collectHardware(): Promise<Architecture> {
         } catch (e) {
           report.devices.push({
             type: 'gpu',
-            platform: gpu.vendor as any,
+            platform: 'opencl',
             deviceID: report.devices.length.toString(),
             model: gpu.model,
             unavailableReason: e.message,
@@ -261,7 +286,7 @@ export default async function collectHardware(): Promise<Architecture> {
         if (platform === false) return; // Do not emit nvidia gpu's, let deviceCollector do that thing
         const merge =
           platform === 'nvidia'
-            ? { unavailableReason: intl.formatMessage(messages.cudaFailed) }
+            ? { warning: intl.formatMessage(messages.cudaFailed) }
             : {};
         report.devices.push({
           type: 'gpu',
@@ -277,7 +302,7 @@ export default async function collectHardware(): Promise<Architecture> {
           platform: 'opencl',
           deviceID: report.devices.length.toString(),
           model: device.name,
-          unavailableReason: e.message,
+          warning: e.message,
           collectedInfo: device,
         });
 

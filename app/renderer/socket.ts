@@ -21,7 +21,6 @@ async function delayedCreate() {
   socket.connect();
 
   socket.on('connect', () => {
-    console.log('Socket has been successfully connected: ', socket);
     userState.attemptToLogin();
   });
 
@@ -49,7 +48,6 @@ delayedCreate();
 export default socket;
 
 export function onceMinerReady(callback: MinerReadyCallback) {
-  console.log('New onceMinerReady listener');
   if (localSocket) {
     callback(localSocket);
   } else {
