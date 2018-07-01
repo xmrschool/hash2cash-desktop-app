@@ -89,27 +89,29 @@ export default class Worker extends React.Component<PropTypes> {
     const hashrate = this.getHashrate();
     return (
       <div key={worker.name} className={cx(s.worker, isOn && s.highlighted)}>
-        <span className={s.name}>
-          {this.getCurrencyName(miner.usesAccount)}
-          <div className={s.badge}>
-            {miner.usesHardware![0].toUpperCase()}
-            {hashrate}
-          </div>
-        </span>
-        <span className={s.profits}>
-          <span className={s.monthly}>
-            {this.getSpeed()}{' '}
-            <span className={s.caption}>
-              <FormattedMessage {...messages.monthly} />
+        <div className={s.inner}>
+          <span className={s.name}>
+            {this.getCurrencyName(miner.usesAccount)} — {miner.displayName}
+            <div className={s.badge}>
+              {miner.usesHardware![0].toUpperCase()}
+              {hashrate}
+            </div>
+          </span>
+          <span className={s.profits}>
+            <span className={s.monthly}>
+              {this.getSpeed()}{' '}
+              <span className={s.caption}>
+                <FormattedMessage {...messages.monthly} />
+              </span>
+            </span>
+            <span className={s.daily}>
+              {this.getSpeed(false)}{' '}
+              <span className={s.caption}>
+                <FormattedMessage {...messages.daily} />
+              </span>
             </span>
           </span>
-          <span className={s.daily}>
-            {this.getSpeed(false)}{' '}
-            <span className={s.caption}>
-              <FormattedMessage {...messages.daily} />
-            </span>
-          </span>
-        </span>
+        </div>
       </div>
     );
   }

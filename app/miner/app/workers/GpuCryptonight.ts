@@ -22,6 +22,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
   static requiredModules = ['cryptonight-xmrstak'];
   static usesHardware = ['gpu'];
   static usesAccount = 'XMR';
+  static displayName = 'XMR Stak';
 
   willQuit: boolean = false;
   workerName: string = 'GpuCryptonight';
@@ -370,6 +371,7 @@ ${outer.join(',\n')}
       parameters: this.parameters,
       daemonPort: this.daemonPort,
       menu: this.getMenuItems(),
+      displayName: GpuCryptonight.displayName,
     };
   }
 }

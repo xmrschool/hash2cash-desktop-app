@@ -178,6 +178,7 @@ module.exports = merge(baseConfig, {
     'request',
     'request-progress',
     'p-queue',
+    '@sentry/electron',
   ],
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
   target: 'electron-renderer',

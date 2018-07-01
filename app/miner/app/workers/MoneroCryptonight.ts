@@ -12,6 +12,7 @@ import { getLogin, RuntimeError } from '../utils';
 import { getPort, timeout } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
 import * as fs from 'fs-extra';
+import workersCache from '../workersCache';
 
 export type Parameteres = 'power' | 'priority';
 
@@ -20,6 +21,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   static requiredModules = ['cryptonight'];
   static usesHardware = ['cpu'];
   static usesAccount = 'XMR';
+  static displayName = 'XMRig';
 
   workerName: string = 'MoneroCryptonight';
 
@@ -207,9 +209,18 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     }
   }
 
+  async preventUncompatibleParallel() {
+    const worker = workersCache.get('JceCryptonight');
+
+    if (worker && worker.running) {
+      await worker.stop();
+    }
+  }
+
   async start(): Promise<boolean> {
     if (this.running) throw new Error('Miner already running');
 
+    await this.preventUncompatibleParallel();
     try {
       const fullyPath = path.join(this.path, __WIN32__ ? 'xmrig.exe' : 'xmrig');
 
@@ -302,6 +313,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       parameters: this.parameters,
       daemonPort: this.daemonPort,
       menu: this.getMenuItems(),
+      displayName: MoneroCryptonight.displayName,
     };
   }
 }

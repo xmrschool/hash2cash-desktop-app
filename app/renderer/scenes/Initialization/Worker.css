@@ -1,12 +1,14 @@
 .worker {
-  display: flex;
-  flex-direction: row;
   opacity: var(--worker-opacity, 0.7);
 
-  align-items: center;
   background-color: rgba(255, 255, 255, 0.07);
   padding: 10px 20px;
   border-radius: 6px;
+}
+.inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .worker + .worker {
@@ -48,4 +50,34 @@
   margin-top: 10px;
   text-transform: uppercase;
   display: flex;
+}
+
+.customMiners {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.new {
+  letter-spacing: 2px;
+  font-size: 10px;
+  color: #a7ff00;
+  text-transform: uppercase;
+}
+
+.customMiner {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 15px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.active {
+  opacity: 1;
+}
+
+.customMiner + .customMiner {
+  margin-left: 10px;
 }

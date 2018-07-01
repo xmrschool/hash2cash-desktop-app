@@ -177,6 +177,7 @@ module.exports = merge(baseConfig, {
     'request',
     'request-progress',
     'p-queue',
+    '@sentry/electron',
   ],
   node: {
     __dirname: false,

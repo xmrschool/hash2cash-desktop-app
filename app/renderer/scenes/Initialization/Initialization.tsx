@@ -305,6 +305,7 @@ export default class Initialization extends React.Component<
         <div
           className={cx(
             s.root,
+            initializationState.everythingDone ? s.expanded : '',
             this.state.appeared && s.appeared,
             (initializationState.downloadError ||
               initializationState.unexpectedError) &&

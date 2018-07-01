@@ -39,22 +39,20 @@ export default class ActionBar extends React.Component<Props> {
   }
 
   runEverything(action: 'stop' | 'start') {
-    const workers = minerApi.findMostProfitableWorkers();
+    const workers = minerApi.findWorkersInView();
 
     if (
       workers.gpu &&
-      workers.gpu[0] &&
-      workers.gpu[0].running === (action === 'stop')
+      workers.gpu.running === (action === 'stop')
     ) {
-      workers.gpu[0][action]();
+      workers.gpu[action]();
     }
 
     if (
       workers.cpu &&
-      workers.cpu[0] &&
-      workers.cpu[0].running === (action === 'stop')
+      workers.cpu.running === (action === 'stop')
     ) {
-      workers.cpu[0][action]();
+      workers.cpu[action]();
     }
   }
 

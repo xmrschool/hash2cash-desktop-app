@@ -20,6 +20,7 @@ export type ParameterMap<P extends string> = { [K in P]: any };
 export type Mapping = { [algorithm: string]: string };
 export type OuterJSON<P extends string> = {
   name: string;
+  displayName: string;
   usesHardware?: string[];
   running?: boolean;
   // Difference between options and parameters is options just a picks from .getCustomParameters()

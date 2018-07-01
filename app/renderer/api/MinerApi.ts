@@ -14,6 +14,8 @@ import { intl } from '../intl';
 const debug = require('debug')('app:minerApi');
 
 export type Workers = OuterJSON<any>;
+export type WorkersMappedByHardware = { [hardware: string]: Worker[] };
+export type WorkerMappedByHardware = { [hardware: string]: Worker };
 
 export class Worker extends EventEmitter {
   @observable data: Workers;
@@ -85,6 +87,10 @@ export class Worker extends EventEmitter {
 
   get name() {
     return this.data.name;
+  }
+
+  get displayName() {
+    return this.data.displayName;
   }
 
   get running() {
@@ -205,6 +211,20 @@ export class Worker extends EventEmitter {
   }
 }
 
+export function pickWorkerByData(data: WorkersMappedByHardware, name: string) {
+  const key = `active_${name}`;
+  const wanted = localStorage[key];
+
+  if (wanted) {
+    const possible = data[name].find(d => d.name === wanted);
+    if (possible) {
+      return possible;
+    }
+  }
+
+  return data[name][0];
+}
+
 export class Api {
   @observable workers: Worker[] = [];
   realHost = 'localhost';
@@ -214,7 +234,7 @@ export class Api {
   }
 
   // What does this algorithm do? Sorts by usedHardware, orders by profitability
-  findMostProfitableWorkers(): { [hardware: string]: Worker[] } {
+  findMostProfitableWorkers(): WorkersMappedByHardware {
     const ticker = accountService.ticker;
     const groupedWorkers = groupBy(this.workers, object => {
       return object.data!.usesHardware![0];
@@ -231,6 +251,15 @@ export class Api {
     });
 
     return groupedWorkers;
+  }
+
+  findWorkersInView(): WorkerMappedByHardware {
+    const workers = this.findMostProfitableWorkers();
+
+    const cpu = pickWorkerByData(workers, 'cpu');
+    const gpu = pickWorkerByData(workers, 'gpu');
+
+    return { cpu, gpu };
   }
 
   @action

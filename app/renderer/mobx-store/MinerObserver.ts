@@ -20,6 +20,8 @@ export class InternalObserver extends EventEmitter {
   _interval: any;
   _isObserver: true = true;
   _data: Worker;
+  totalSpeed: number = 0; // We summarize speed and then divide it by 1 minute. Hence we get avg speed per minute
+  receivedMetrics: number = 0;
   metricsLeft: number = 0;
 
   constructor(worker: Worker) {
@@ -77,6 +79,24 @@ export class InternalObserver extends EventEmitter {
       const stats = await this._data.getStats();
 
       if (stats === null) return;
+
+      // It emits same speed by default, so we made a trick and calculate speed here
+      if (this._data.name === 'JceCryptonight') {
+        stats.hashrate.total[1] = null;
+        stats.hashrate.total[2] = null;
+
+        if (stats.hashrate.total[0]) {
+          this.receivedMetrics += 1;
+          this.totalSpeed += stats.hashrate.total[0];
+
+          if (this.receivedMetrics >= 59) {
+            stats.hashrate.total[1] = parseFloat(
+              (this.totalSpeed / this.receivedMetrics).toFixed(2)
+            );
+          }
+        }
+      }
+
       const speed = stats.hashrate.total;
 
       this.emit('speed', speed);
@@ -116,8 +136,7 @@ export class InternalObserver extends EventEmitter {
 
     // What does formule looks like? (<solved_hashes>/<global_difficulty>) * <block_reward> * 0.7
     const localCurrency =
-      hashesPerDay /
-      service.difficulty *
+      (hashesPerDay / service.difficulty) *
       service.blockReward *
       globalState.userShare *
       service.modifier;
@@ -141,8 +160,7 @@ export class InternalObserver extends EventEmitter {
 
     // What does formule looks like? (<solved_hashes>/<global_difficulty>) * <block_reward> * 0.7
     const localCurrency =
-      hashesPerDay /
-      service.difficulty *
+      (hashesPerDay / service.difficulty) *
       service.blockReward *
       globalState.userShare *
       service.modifier;

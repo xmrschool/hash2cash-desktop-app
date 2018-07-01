@@ -87,7 +87,7 @@ export async function updateWorkersInCache(): Promise<void> {
       workersCache.set(instance.workerName, instance);
     });
 
-    for (const [_, value] of workersCache) {
+    for (const [, value] of workersCache) {
       value.init();
     }
   } catch (e) {

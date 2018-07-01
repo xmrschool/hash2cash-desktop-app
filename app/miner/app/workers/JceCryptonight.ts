@@ -1,5 +1,6 @@
 import { ChildProcess, spawn } from 'child_process';
 import * as path from 'path';
+import * as kill from 'tree-kill';
 
 import {
   BaseWorker,
@@ -12,6 +13,7 @@ import { getLogin, RuntimeError } from '../utils';
 import { getPort } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
 import * as fs from 'fs-extra';
+import workersCache from '../workersCache';
 
 export type Parameteres = 'power';
 
@@ -20,13 +22,14 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
   static requiredModules = ['jce-cryptonight'];
   static usesHardware = ['cpu'];
   static usesAccount = 'XMR';
+  static displayName = 'JCE Miner';
 
   workerName: string = 'JceCryptonight';
 
   path: string = '';
   state: { [p: string]: any } = { dynamicDifficulty: false };
   parameters: ParameterMap<Parameteres> = {
-    power: true,
+    power: 'default',
   };
   daemon?: ChildProcess;
   running: boolean = false;
@@ -49,12 +52,12 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
   getSpeeds(): Pick[] {
     return [
       {
-        name: '🔥 Ultra 🔥',
-        value: true,
+        name: 'Default',
+        value: 'ultra',
       },
       {
         name: 'Low',
-        value: false,
+        value: 'low',
       },
     ];
   }
@@ -83,6 +86,10 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
       outer.push(d);
       outer.push(args[d]);
     });
+    if (this.parameters.power === 'low') {
+      outer.push('--low');
+    }
+
     outer.push('--nicehash', '--stakjson', '--any', '--auto');
 
     return outer;
@@ -142,18 +149,32 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
     }
   }
 
+  async preventUncompatibleParallel() {
+    const worker = workersCache.get('MoneroCryptonight');
+
+    if (worker && worker.running) {
+      await worker.stop();
+    }
+  }
+
   async start(): Promise<boolean> {
     if (this.running) throw new Error('Miner already running');
+
+    await this.preventUncompatibleParallel();
 
     try {
       const fullyPath = path.join(this.path, __WIN32__ ? 'jce.exe' : 'jce');
 
-      let reuse = await fs.pathExists(this.pathTo('preserve.txt')) && await fs.pathExists(this.pathTo('appArgs.json'));
+      let reuse =
+        (await fs.pathExists(this.pathTo('preserve.txt'))) &&
+        (await fs.pathExists(this.pathTo('appArgs.json')));
 
       let args: any = await this.getAppArgs();
       try {
         if (reuse) {
-          const possibleArgs = JSON.parse((await fs.readFile(this.pathTo('appArgs.json'))).toString());
+          const possibleArgs = JSON.parse(
+            (await fs.readFile(this.pathTo('appArgs.json'))).toString()
+          );
 
           if (Array.isArray(possibleArgs)) {
             args = possibleArgs;
@@ -175,7 +196,10 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
         );
 
       if (!reuse) {
-        await fs.writeFile(this.pathTo('appArgs.json'), JSON.stringify(args, null, 2));
+        await fs.writeFile(
+          this.pathTo('appArgs.json'),
+          JSON.stringify(args, null, 2)
+        );
       }
 
       this.daemon = spawn(fullyPath, args, {
@@ -203,7 +227,7 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
       this.running = true;
 
       return true;
-    } catch(e) {
+    } catch (e) {
       console.error('Failed to start miner: ', e);
       this.handleTermination(e, undefined, true);
 
@@ -218,8 +242,8 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
     this.emit({ running: false });
 
     this.willQuit = true;
-    this.daemon!.stdin.write('q');
-    this.daemon!.kill('SIGKILL');
+
+    kill(this.pid as number);
 
     return true;
   }
@@ -240,6 +264,7 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
       parameters: this.parameters,
       daemonPort: this.daemonPort,
       menu: this.getMenuItems(),
+      displayName: JceCryptonight.displayName,
     };
   }
 }

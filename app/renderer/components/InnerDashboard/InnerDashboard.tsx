@@ -1,4 +1,5 @@
 import { remote } from 'electron';
+import { sortBy } from 'lodash';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
@@ -135,7 +136,7 @@ export const PlayButton = ({ state, ...props }: PlayButtonProps) => {
 
 @observer
 export class WorkerView extends React.Component<
-  { worker: Worker },
+  { worker: Worker; workers: Worker[]; pickWorker: Function },
   { observer?: InternalObserver; menuOpened: boolean }
 > {
   state: { observer?: InternalObserver; menuOpened: boolean } = {
@@ -247,14 +248,14 @@ export class WorkerView extends React.Component<
     if (observer && isOn) {
       return (
         <FallbackLoader condition={observer.latestSpeed}>
-          {observer.latestSpeed} H/s
+          {(observer.latestSpeed || 0).toFixed(2)} H/s
         </FallbackLoader>
       );
     } else {
       const latest = globalState.getBenchmarkHashrate(worker.name);
 
       if (latest) {
-        return <span>{latest} H/s</span>;
+        return <span>{latest.toFixed(2)} H/s</span>;
       }
     }
 
@@ -308,8 +309,26 @@ export class WorkerView extends React.Component<
     );
   }
 
+  minerPicker() {
+    const { workers, worker, pickWorker } = this.props;
+    const picked = worker.name;
+
+    return (
+      <div className={ws.customMiners}>
+        {workers.map(w => (
+          <div
+            className={cx(ws.customMiner, picked === w.name && ws.active)}
+            onClick={() => pickWorker(w.name)}
+          >
+            {w.displayName}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   render() {
-    const { worker } = this.props;
+    const { worker, workers } = this.props;
 
     const miner = worker.data;
     const isOn = worker.running;
@@ -319,69 +338,72 @@ export class WorkerView extends React.Component<
 
     return (
       <div key={worker.name} className={cx(ws.worker, isOn && ws.highlighted)}>
-        <PlayButton state={this.workerState()} onClick={this.clickHandler} />
-        <div className={ws.name}>
-          {currenciesService.getCurrencyName(miner.usesAccount)}
-          <div className={ws.badge}>
-            {miner.usesHardware![0].toUpperCase()}
-            {speed ? <span>&nbsp;—&nbsp;{speed}</span> : null}
+        <div className={ws.inner}>
+          <PlayButton state={this.workerState()} onClick={this.clickHandler} />
+          <div className={ws.name}>
+            {currenciesService.getCurrencyName(miner.usesAccount)}
+            <div className={ws.badge}>
+              {miner.usesHardware![0].toUpperCase()}
+              {speed ? <span>&nbsp;—&nbsp;{speed}</span> : null}
+            </div>
           </div>
-        </div>
-        <div className={s.switcher}>
-          <div className={cx(s.switcherIn, isOn && s.minerActive)}>
-            <div>
-              <div className={s.picks}>
-                {worker.customParameters &&
-                worker.customParameters.map(option => (
-                  <div key={option.id} className={s.pick}>
-                    <label className={s.label}>
-                      <FormattedMessage
-                        id={`OPTIONS_${option.id}`.toUpperCase()}
-                        defaultMessage={option.name}
-                      />
-                    </label>
-                    <select
-                      className={s.select}
-                      value={worker.parameters![option.id]}
-                      onChange={this.onOptionChange(option.id)}
-                    >
-                      {option.values.map(value => (
-                        <FormattedMessage
-                          key={value.value}
-                          id={`POWER_LEVEL_${value.value}`.toUpperCase()}
-                          defaultMessage={value.name}
+          <div className={s.switcher}>
+            <div className={cx(s.switcherIn, isOn && s.minerActive)}>
+              <div>
+                <div className={s.picks}>
+                  {worker.customParameters &&
+                    worker.customParameters.map(option => (
+                      <div key={option.id} className={s.pick}>
+                        <label className={s.label}>
+                          <FormattedMessage
+                            id={`OPTIONS_${option.id}`.toUpperCase()}
+                            defaultMessage={option.name}
+                          />
+                        </label>
+                        <select
+                          className={s.select}
+                          value={worker.parameters![option.id]}
+                          onChange={this.onOptionChange(option.id)}
                         >
-                          {(message: any) => (
-                            <option value={value.value}>{message}</option>
-                          )}
-                        </FormattedMessage>
-                      ))}
-                    </select>
-                  </div>
-                ))}
+                          {option.values.map(value => (
+                            <FormattedMessage
+                              key={value.value}
+                              id={`POWER_LEVEL_${value.value}`.toUpperCase()}
+                              defaultMessage={value.name}
+                            >
+                              {(message: any) => (
+                                <option value={value.value}>{message}</option>
+                              )}
+                            </FormattedMessage>
+                          ))}
+                        </select>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <div>
+                {observer && (
+                  <span className={ws.profits}>
+                    <span className={ws.monthly}>
+                      {observer.monthlyProfit().reactFormatted()}{' '}
+                      <span className={ws.caption}>
+                        <FormattedMessage id="PERFORMANCE_MONTHLY" />
+                      </span>
+                    </span>
+                    <span className={ws.daily}>
+                      {observer.dailyProfit().reactFormatted()}{' '}
+                      <span className={ws.caption}>
+                        <FormattedMessage id="PERFORMANCE_DAILY" />
+                      </span>
+                    </span>
+                  </span>
+                )}
               </div>
             </div>
-            <div>
-              {observer && (
-                <span className={ws.profits}>
-                  <span className={ws.monthly}>
-                    {observer.monthlyProfit().reactFormatted()}{' '}
-                    <span className={ws.caption}>
-                      <FormattedMessage id="PERFORMANCE_MONTHLY" />
-                    </span>
-                  </span>
-                  <span className={ws.daily}>
-                    {observer.dailyProfit().reactFormatted()}{' '}
-                    <span className={ws.caption}>
-                      <FormattedMessage id="PERFORMANCE_DAILY" />
-                    </span>
-                  </span>
-                </span>
-              )}
-            </div>
           </div>
+          {this.renderMenu()}
         </div>
-        {this.renderMenu()}
+        {workers.length > 1 && this.minerPicker()}
       </div>
     );
   }
@@ -436,12 +458,69 @@ export default class Layer extends React.Component<
   }
 }
 
-@observer
-export class WorkersView extends React.Component<{ workers: Worker[] }, any> {
+export type WorkersViewProps = { workers: Worker[]; kind: string };
+
+@(observer as any)
+export class WorkersView extends React.Component<
+  WorkersViewProps,
+  { active: string }
+> {
+  get key() {
+    return `active_${this.props.kind}`;
+  }
+
+  static getDerivedStateFromProps(props: WorkersViewProps) {
+    const { workers, kind } = props;
+
+    if (props.workers.length === 0) {
+      return { active: workers[0].name };
+    }
+
+    const key = `active_${kind}`;
+    const wanted = localStorage[key];
+
+    if (wanted) {
+      if (workers.find(d => d.name === wanted)) {
+        return { active: wanted };
+      }
+    }
+
+    const sorted = sortBy(workers, worker =>
+      globalState.getBenchmarkHashrate(worker.name)
+    );
+    const name = sorted[sorted.length - 1].name;
+
+    localStorage.setItem(key, name);
+
+    return { active: name };
+  }
+
+  get currentWorker() {
+    return (
+      this.props.workers.find(d => d.name === this.state.active) ||
+      this.props.workers[0]
+    );
+  }
+
+  pickWorker(name: string) {
+    if (this.currentWorker.running) {
+      this.currentWorker.stop(true);
+    }
+    this.setState({ active: name });
+    localStorage.setItem(this.key, name);
+  }
+
   render() {
-    return this.props.workers.map(worker => (
-      <WorkerView key={worker.name} worker={worker} />
-    ));
+    const worker = this.currentWorker;
+
+    return (
+      <WorkerView
+        key={worker.name}
+        worker={worker}
+        workers={this.props.workers}
+        pickWorker={(name: string) => this.pickWorker(name)}
+      />
+    );
   }
 }
 
@@ -548,9 +627,9 @@ export class InnerDashboard extends React.Component<any> {
         <ActionBar workers={workers} />
         {!workers.cpu && <h3 className={s.header}>Загрузка майнеров...</h3>}
         {workers.gpu && <h3 className={s.header}>GPU</h3>}
-        {workers.gpu && <WorkersView workers={workers.gpu} />}
+        {workers.gpu && <WorkersView workers={workers.gpu} kind="gpu" />}
         {workers.cpu && <h3 className={s.header}>CPU</h3>}
-        {workers.cpu && <WorkersView workers={workers.cpu} />}
+        {workers.cpu && <WorkersView workers={workers.cpu} kind="cpu" />}
 
         <div style={{ flexGrow: 1 }} />
         <Reloader refreshTrigger={() => this.refreshTrigger()} />

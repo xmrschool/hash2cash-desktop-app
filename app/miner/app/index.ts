@@ -1,5 +1,6 @@
 // A backend for starting / ending / fetching stats of miner
 import * as Koa from 'koa';
+import * as Shell from 'node-powershell';
 import * as Router from 'koa-router';
 import { ipcRenderer, remote } from 'electron';
 import { createServer } from 'http';
@@ -80,7 +81,7 @@ router.get('/workers/:action(start|stop|reload)', async ctx => {
   const reloaded = [];
   const mustCommit = !ctx.query.dontCommit;
 
-  for (const [_, worker] of await getWorkers()) {
+  for (const [, worker] of await getWorkers()) {
     try {
       if (worker.running) {
         await worker[ctx.params.action as 'start' | 'stop' | 'reload']();
@@ -219,7 +220,7 @@ koa.use(router.routes());
 ipcRenderer.on('quit', async () => {
   server.close(); // Closing server here will help to shut down faster
   console.log('quit() received, so shutting down...');
-  for (const [_, worker] of await getWorkers()) {
+  for (const [, worker] of await getWorkers()) {
     if (worker.running) {
       // We check if worker running and close without commiting
       await worker.stop();
@@ -276,7 +277,34 @@ async function killUnkilledProccesses() {
   }
 }
 
+async function attemptToTerminateAllMiners() {
+  let ps;
+  try {
+    const command = `
+  $processes = @('hashtocash-cryptonight', 'xmrig', 'xmr-stak', 'jce', 'ccminer')    
+  $processesRegex = [string]::Join('|', $processes) # create the regex
+  $list = Get-Process | Where-Object { $_.ProcessName -match $processesRegex } | Where-Object { $_.Path.StartsWith("$env:APPDATA\\Hash to Cash") }
+  ForEach ($pro in $list) {
+    taskkill /pid $pro.ID /T /F
+  }
+  `;
+
+    const ps = new Shell({
+      noProfile: true,
+    });
+
+    await ps.addCommand(command);
+    await ps.invoke().then(console.log);
+    await ps.dispose();
+  } catch (e) {
+    if (ps) {
+      (ps as any).dispose();
+    }
+  }
+}
+
 killUnkilledProccesses()
+  .then(() => attemptToTerminateAllMiners())
   .then(() => updateWorkersInCache())
   .then(() =>
     getPort(8024).then(port => {
