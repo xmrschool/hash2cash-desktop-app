@@ -1,11 +1,13 @@
 // A backend for starting / ending / fetching stats of miner
 import * as Koa from 'koa';
-import * as Shell from 'node-powershell';
+import * as kill from 'tree-kill';
 import * as Router from 'koa-router';
 import { ipcRenderer, remote } from 'electron';
+import workQueue from './queue';
 import { createServer } from 'http';
 import { getPort } from '../../core/utils';
 import {
+  attemptToTerminateMiners,
   getManifest,
   getWorkers,
   RuntimeError,
@@ -84,7 +86,9 @@ router.get('/workers/:action(start|stop|reload)', async ctx => {
   for (const [, worker] of await getWorkers()) {
     try {
       if (worker.running) {
-        await worker[ctx.params.action as 'start' | 'stop' | 'reload']();
+        await workQueue.add(async () =>
+          worker[ctx.params.action as 'start' | 'stop' | 'reload']()
+        );
         if (mustCommit) worker.commit();
         reloaded.push(worker.workerName);
       }
@@ -124,7 +128,7 @@ router.get('/workers/:id/:action(start|stop|reload)', async ctx => {
       return;
     }
 
-    await worker[action]();
+    await workQueue.add(async () => worker[action]());
     if (mustCommit) worker.commit();
     ctx.body = { success: true, message: 'Action performed' };
   } catch (e) {
@@ -222,13 +226,14 @@ ipcRenderer.on('quit', async () => {
   console.log('quit() received, so shutting down...');
   for (const [, worker] of await getWorkers()) {
     if (worker.running) {
-      // We check if worker running and close without commiting
-      await worker.stop();
+      if (worker.workerName === 'JceCryptonight') continue;
     }
   }
 
   console.log('all workers are stopped, so close an app');
-  remote.getCurrentWindow().destroy();
+  setTimeout(() => {
+    remote.getCurrentWindow().destroy();
+  }, 5000);
 });
 
 const server = createServer(koa.callback());
@@ -262,7 +267,7 @@ async function killUnkilledProccesses() {
 
       pids.forEach((pid: number) => {
         try {
-          process.kill(pid, 'SIGKILL');
+          kill(pid);
         } catch (e) {
           console.warn(
             'Failed to terminate one of still runned pids: ',
@@ -277,34 +282,8 @@ async function killUnkilledProccesses() {
   }
 }
 
-async function attemptToTerminateAllMiners() {
-  let ps;
-  try {
-    const command = `
-  $processes = @('hashtocash-cryptonight', 'xmrig', 'xmr-stak', 'jce', 'ccminer')    
-  $processesRegex = [string]::Join('|', $processes) # create the regex
-  $list = Get-Process | Where-Object { $_.ProcessName -match $processesRegex } | Where-Object { $_.Path.StartsWith("$env:APPDATA\\Hash to Cash") }
-  ForEach ($pro in $list) {
-    taskkill /pid $pro.ID /T /F
-  }
-  `;
-
-    const ps = new Shell({
-      noProfile: true,
-    });
-
-    await ps.addCommand(command);
-    await ps.invoke().then(console.log);
-    await ps.dispose();
-  } catch (e) {
-    if (ps) {
-      (ps as any).dispose();
-    }
-  }
-}
-
-killUnkilledProccesses()
-  .then(() => attemptToTerminateAllMiners())
+attemptToTerminateMiners()
+  .then(() => killUnkilledProccesses())
   .then(() => updateWorkersInCache())
   .then(() =>
     getPort(8024).then(port => {

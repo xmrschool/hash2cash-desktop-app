@@ -29,6 +29,7 @@ export class Server extends EventEmitter {
 
   bindClose() {
     this.window.on('close', async event => {
+      console.log('Server wanted to leave');
       event.preventDefault();
 
       return await this.quit();

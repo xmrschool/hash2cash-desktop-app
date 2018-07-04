@@ -1,16 +1,21 @@
 import { readJson } from 'fs-extra';
+import * as Shell from 'node-powershell';
 import * as path from 'path';
 import { difference } from 'lodash';
+
 import workers from './workers';
-import { Downloadable } from '../../renderer/api/Api';
 import workersCache, { WorkersCache } from './workersCache';
-import { algorithmsMaxDiff } from './constants/algorithms';
-import { Algorithms } from './constants/algorithms';
-import { LocalStorage } from '../../renderer/utils/LocalStorage';
+import { algorithmsMaxDiff, Algorithms } from './constants/algorithms';
+
 import trackError from '../../core/raven';
-const logger = require('debug')('app:miner');
+
+import { Downloadable } from '../../renderer/api/Api';
+import { LocalStorage } from '../../renderer/utils/LocalStorage';
+import workQueue from './queue';
 
 const config = require('../../config.js');
+
+const logger = require('debug')('app:miner');
 const debug = require('debug')('app:server:utils');
 
 export class RuntimeError extends Error {
@@ -67,8 +72,16 @@ export async function getManifest(): Promise<Downloadable[]> {
     );
   }
 }
+let updatePromise: Promise<void> | null = null;
 
+// A wrapper to make it sync
 export async function updateWorkersInCache(): Promise<void> {
+  updatePromise = workQueue.add(() => _updateWorkersInCache());
+
+  return updatePromise;
+}
+
+export async function _updateWorkersInCache(): Promise<void> {
   try {
     const manifest = await getManifest();
     const forceIncludedMiners = localStorage.forceIncludedMiners
@@ -88,7 +101,7 @@ export async function updateWorkersInCache(): Promise<void> {
     });
 
     for (const [, value] of workersCache) {
-      value.init();
+      await value.init();
     }
   } catch (e) {
     console.warn('Cant init app: \n', e);
@@ -96,6 +109,10 @@ export async function updateWorkersInCache(): Promise<void> {
 }
 
 export async function getWorkers(updateCache = false): Promise<WorkersCache> {
+  if (updatePromise) {
+    await updatePromise;
+  }
+
   if (updateCache || workersCache.size === 0) {
     for (const workerName in workersCache.keys()) {
       await workersCache.get(workerName)!.stop();
@@ -150,4 +167,48 @@ export function wrapError(ctx: any, err: string) {
 
   ctx.status = 400;
   ctx.body = { success: false, error: err };
+}
+
+const defaultWorkers = [
+  'hashtocash-cryptonight',
+  'xmrig',
+  'xmr-stak',
+  'jce',
+  'ccminer',
+];
+
+export function joinArray(array: string[]) {
+  return "'" + array.join("','") + "'";
+}
+
+export async function attemptToTerminateMiners(
+  workers: string[] = defaultWorkers
+) {
+  const ps: Shell | null = null;
+  try {
+    const joined = joinArray(workers);
+
+    const command = `
+  $processes = @(${joined})    
+  $processesRegex = [string]::Join('|', $processes) # create the regex
+  $list = Get-Process | Where-Object { $_.ProcessName -match $processesRegex } | Where-Object { $_.Path.StartsWith("$env:APPDATA\\${__DEV__ ? 'Electron' : 'Hash to Cash'}") }
+  ForEach ($pro in $list) {
+    taskkill /pid $pro.ID /T /F
+  }
+  `;
+
+    const ps = new Shell({
+      noProfile: true,
+    });
+
+    await ps.addCommand(command);
+    await ps.invoke().then(console.log);
+    await ps.dispose();
+  } catch (e) {
+    try {
+      if (ps && (ps as any).dispose) {
+        (ps as any).dispose();
+      }
+    } catch (e) {}
+  }
 }

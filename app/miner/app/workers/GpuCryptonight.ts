@@ -1,5 +1,6 @@
 import { ChildProcess, spawn } from 'child_process';
 import * as path from 'path';
+import * as moment from 'moment';
 import * as fs from 'fs-extra';
 import {
   BaseWorker,
@@ -8,7 +9,7 @@ import {
   ParameterMap,
   Pick,
 } from './BaseWorker';
-import { getLogin, RuntimeError } from '../utils';
+import { attemptToTerminateMiners, getLogin, RuntimeError } from '../utils';
 import { getPort, timeout } from '../../../core/utils';
 import { _CudaDevice, Architecture } from '../../../renderer/api/Api';
 import { sleep } from '../../../renderer/utils/sleep';
@@ -24,6 +25,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
   static usesAccount = 'XMR';
   static displayName = 'XMR Stak';
 
+  runningSince: moment.Moment | null = null;
   willQuit: boolean = false;
   workerName: string = 'GpuCryptonight';
 
@@ -314,9 +316,17 @@ ${outer.join(',\n')}
       ].filter(d => !!d); // Exclude false
 
       console.log('Running GPU miner with args: ', args, this.state);
+      await attemptToTerminateMiners(['hashtocash-cryptonight']);
+      if (this.daemon && this.daemon.kill) {
+        try {
+          await this.stop();
+        } catch (e) {}
+      }
+
       this.daemon = spawn(path.join(this.path, this.executableName), args, {
         cwd: this.path,
       });
+      this.runningSince = moment();
       this.pid = this.daemon.pid;
 
       addRunningPid(this.pid);
@@ -343,13 +353,16 @@ ${outer.join(',\n')}
   }
 
   async stop(): Promise<boolean> {
-    if (!this.running) throw new Error('Miner not running');
+    if (!this.running) {
+      return true;
+    }
 
     this.emit({ running: false });
 
     this.willQuit = true;
     this.daemon!.kill('SIGTERM'); // shutdown a process gratefully
     this.running = false;
+    this.daemon = undefined;
 
     await sleep(1000);
     return true;

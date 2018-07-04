@@ -35,6 +35,9 @@ export default class LoginContainer extends React.Component<
   };
 
   componentDidMount() {
+    if (!localStorage.firstInstalledVersion) {
+      localStorage.firstInstalledVersion = require('electron').remote.app.getVersion();
+    }
     setTimeout(() => this.setState({ appeared: true }), 10);
   }
 

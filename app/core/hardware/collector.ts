@@ -113,7 +113,8 @@ export async function safeGetter<T>(
     const isOpenClMissing =
       e.message &&
       (e.message.includes('The specified module could not be found') ||
-        e.message.includes('The specified procedure could not be found'));
+        e.message.includes('The specified procedure could not be found') ||
+        e.message.includes('insufficient for CUDA runtime version'));
 
     console.error(`Failed in safeGetter(${name}): `, e);
     e.message = `safeGetter(${name}): ${e.message}`;

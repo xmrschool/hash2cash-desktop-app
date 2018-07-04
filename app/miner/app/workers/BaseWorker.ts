@@ -1,10 +1,12 @@
 import * as path from 'path';
+import * as moment from 'moment';
 import { remote } from 'electron';
 import * as fs from 'fs-extra';
 import socket from '../socket';
 import { LocalStorage } from '../../../renderer/utils/LocalStorage';
 import { shiftRunningPid } from '../RunningPids';
 import trackError from '../../../core/raven';
+import workQueue from '../queue';
 
 const config = require('../../../config.js');
 
@@ -56,6 +58,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
   static usesAccount: string;
 
   preserveConfig: boolean = false;
+  locked: boolean = false;
 
   abstract get requiredModules(): string[];
   abstract get usesHardware(): string[];
@@ -77,6 +80,8 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
   abstract willQuit: boolean;
   // A process number, which we use to kill proccess in case they unterminated
   abstract pid?: number;
+  // Time of  launch
+  abstract runningSince: moment.Moment | null;
 
   abstract getCustomParameters(): Parameter<P>[];
   abstract setCustomParameter(id: P, value: any): Promise<void>;
@@ -137,6 +142,18 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
     return path.join(this.path, configName);
   }
 
+  handleKeeper() {
+    if (this.runningSince && localStorage.enableKeeper) {
+      console.info('Setting up a keeper because we have runningSince');
+      const diff = moment().diff(this.runningSince);
+      console.info('Diff between current time and runningSince is (ms) ', diff);
+      if (diff >= 10000) {
+        setTimeout(() => {
+          workQueue.add(() => this.start().catch(console.error));
+        }, 10000);
+      }
+    }
+  }
   // In case miner has been stopped unexpectedly
   handleTermination(
     data: any,
@@ -170,7 +187,10 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
       fs.remove(this.pathTo('unpacked'));
 
       errorMessage = 'miner.workers.base.enoent';
+    } else {
+      this.handleKeeper();
     }
+
     this.emit({
       running: false,
       _data: {

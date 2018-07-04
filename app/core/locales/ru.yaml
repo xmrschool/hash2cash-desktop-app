@@ -137,11 +137,11 @@ scenes.init.worker.dailyProfit: за день
 scenes.init.worker.monthlyProfit: за месяц
 scenes.init.noGPU: Почему моя видеокарта не определилась?
 core.reload.updates.checking: Проверка обновлений приложения
-core.reload.updates.newAvailable: Скачиваем новую версию приложения {version}
+core.reload.updates.newAvailable: Обновление приложения {version}
 core.reload.updates.installingAfter: Установка обновления через {secs, number} {secs, plural, one {секунду} other {секунд} few {секунды}}
 core.reload.devices.collecting: Собираем используемые устройства
 core.reload.minerUpdater.checking: Проверка доступных обновлений для майнеров
-core.reload.minerUpdater.newVersion: Доступна новая версия майнера {name} {oldVersion} → {newVersion}
+core.reload.minerUpdater.newVersion: Обновление майнера {name} {oldVersion} → {newVersion}
 core.reload.minerUpdater.failed: Не удалось установить майнер {name}, возвращаем назад
 core.reload.minerUpdater.uptodate: Все в порядке! Вперед к майнингу
 miner.workers.openInShell: Открыть папку с майнером
@@ -181,3 +181,6 @@ dashboard.skipArchWarning: Игнорировать
 LANGUAGE_COMMUNITY_EFFORT: Hash to Cash отчасти переводится такими же людьми как вы. Если вы хотите видеть Hash to Cash на своем языке, мы будем рады вашей помощи и вознаградим ее.
 LANGUAGE_COMMUNITY_APPLY: Чтобы начать, посетите {site}
 LANGUAGE_COMMUNITY_LINK: сайт для перевода
+
+ENABLE_KEEPER: Включить Кипер
+SETTINGS_KEEPER_DESC: Кипер автоматически перезагружает майнеры, если они, например, внезапно остановились.

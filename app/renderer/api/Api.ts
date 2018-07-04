@@ -74,6 +74,7 @@ export type AuthAttemptResponse = {
     | 'invalid_password'
     | 'email_forbidden'
     | string;
+  redirectUrl?: string;
 };
 
 export type Profile = {

@@ -98,6 +98,10 @@ export class LoginState {
         );
       }
 
+      if (response.redirectUrl) {
+        require('electron').remote.shell.openExternal(response.redirectUrl);
+      }
+
       localStorage[AUTH_TOKEN] = response.token;
       User.setToken(response.token!);
 

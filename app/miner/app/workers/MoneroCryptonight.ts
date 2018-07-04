@@ -1,4 +1,5 @@
 import { ChildProcess, spawn } from 'child_process';
+import * as moment from 'moment';
 import * as path from 'path';
 
 import {
@@ -8,7 +9,7 @@ import {
   ParameterMap,
   Pick,
 } from './BaseWorker';
-import { getLogin, RuntimeError } from '../utils';
+import { attemptToTerminateMiners, getLogin, RuntimeError } from '../utils';
 import { getPort, timeout } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
 import * as fs from 'fs-extra';
@@ -24,6 +25,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   static displayName = 'XMRig';
 
   workerName: string = 'MoneroCryptonight';
+  runningSince: moment.Moment | null = null;
 
   path: string = '';
   state: { [p: string]: any } = { dynamicDifficulty: false };
@@ -224,12 +226,16 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     try {
       const fullyPath = path.join(this.path, __WIN32__ ? 'xmrig.exe' : 'xmrig');
 
-      let reuse = await fs.pathExists(this.pathTo('preserve.txt')) && await fs.pathExists(this.pathTo('appArgs.json'));
+      let reuse =
+        (await fs.pathExists(this.pathTo('preserve.txt'))) &&
+        (await fs.pathExists(this.pathTo('appArgs.json')));
 
       let args: any = await this.getAppArgs();
       try {
         if (reuse) {
-          const possibleArgs = JSON.parse((await fs.readFile(this.pathTo('appArgs.json'))).toString());
+          const possibleArgs = JSON.parse(
+            (await fs.readFile(this.pathTo('appArgs.json'))).toString()
+          );
 
           if (Array.isArray(possibleArgs)) {
             args = possibleArgs;
@@ -251,10 +257,21 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
         );
 
       if (!reuse) {
-        await fs.writeFile(this.pathTo('appArgs.json'), JSON.stringify(args, null, 2));
+        await fs.writeFile(
+          this.pathTo('appArgs.json'),
+          JSON.stringify(args, null, 2)
+        );
+      }
+
+      await attemptToTerminateMiners(['jce', 'xmrig']);
+      if (this.daemon && this.daemon.kill) {
+        try {
+          await this.stop();
+        } catch (e) {}
       }
 
       this.daemon = spawn(fullyPath, args);
+      this.runningSince = moment();
       this.pid = this.daemon.pid;
 
       addRunningPid(this.pid);
@@ -277,7 +294,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       this.running = true;
 
       return true;
-    } catch(e) {
+    } catch (e) {
       console.error('Failed to start miner: ', e);
       this.handleTermination(e, undefined, true);
 

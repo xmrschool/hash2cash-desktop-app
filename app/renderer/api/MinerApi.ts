@@ -15,7 +15,7 @@ const debug = require('debug')('app:minerApi');
 
 export type Workers = OuterJSON<any>;
 export type WorkersMappedByHardware = { [hardware: string]: Worker[] };
-export type WorkerMappedByHardware = { [hardware: string]: Worker };
+export type WorkerMappedByHardware = { [hardware: string]: Worker | null };
 
 export class Worker extends EventEmitter {
   @observable data: Workers;
@@ -222,7 +222,7 @@ export function pickWorkerByData(data: WorkersMappedByHardware, name: string) {
     }
   }
 
-  return data[name][0];
+  return data[name] ? data[name][0] : null;
 }
 
 export class Api {

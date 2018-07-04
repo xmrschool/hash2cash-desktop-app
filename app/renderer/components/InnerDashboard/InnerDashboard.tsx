@@ -23,6 +23,7 @@ import buildMenu from '../Settings';
 import RuntimeErrorNotifier from '../RuntimeErrorNotifier';
 import { FallbackLoader } from '../LineLoader/LineLoader';
 import ActionBar from '../ActionBar';
+
 import Tips from '../Tips/Tips';
 import Reloader from '../Reloader/Reloader';
 import RignameEditor from '../RignameEditor/RignameEditor';
@@ -31,6 +32,7 @@ import CloseIcon from '../CloseIcon/CloseIcon';
 import Dropdown from '../Dropdown/Dropdown';
 import Switch from '../Switch/Switch';
 import { MenuPick } from '../../../miner/app/workers/BaseWorker';
+import Changelog from '../Changelog/Changelog';
 
 const settings = require('../../../core/icon/settings.svg');
 const ws = require('scenes/Initialization/Worker.css');
@@ -317,6 +319,7 @@ export class WorkerView extends React.Component<
       <div className={ws.customMiners}>
         {workers.map(w => (
           <div
+            key={w.name}
             className={cx(ws.customMiner, picked === w.name && ws.active)}
             onClick={() => pickWorker(w.name)}
           >
@@ -465,6 +468,8 @@ export class WorkersView extends React.Component<
   WorkersViewProps,
   { active: string }
 > {
+  state = { active: '' };
+
   get key() {
     return `active_${this.props.kind}`;
   }
@@ -481,6 +486,7 @@ export class WorkersView extends React.Component<
 
     if (wanted) {
       if (workers.find(d => d.name === wanted)) {
+        console.log('wanted is: ', wanted);
         return { active: wanted };
       }
     }
@@ -492,6 +498,7 @@ export class WorkersView extends React.Component<
 
     localStorage.setItem(key, name);
 
+    console.log('name is: ', name);
     return { active: name };
   }
 
@@ -634,6 +641,7 @@ export class InnerDashboard extends React.Component<any> {
         <div style={{ flexGrow: 1 }} />
         <Reloader refreshTrigger={() => this.refreshTrigger()} />
         <RuntimeErrorNotifier />
+        <Changelog />
       </div>
     );
   }

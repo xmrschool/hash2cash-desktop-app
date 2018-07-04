@@ -20,7 +20,7 @@ const messages = defineMessages({
   },
   newAvailable: {
     id: 'core.reload.updates.newAvailable',
-    defaultMessage: 'Available new version of app {version}, downloading...',
+    defaultMessage: 'Updating app {version}',
   },
   getReady: {
     id: 'core.reload.updates.installingAfter',
@@ -57,9 +57,7 @@ export default async function checkAppUpdates(
       ctx.setStatusWithoutAnimation(
         `${message} ${formatBytes(
           stats.transferred || 0
-        )} / ${formatBytes(stats.total || 0)} @ ${formatBytes(
-          stats.bytesPerSecond || 0
-        )}/s`
+        )} / ${formatBytes(stats.total || 0)}`
       );
     });
 

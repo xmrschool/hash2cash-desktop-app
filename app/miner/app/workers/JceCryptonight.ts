@@ -1,4 +1,5 @@
 import { ChildProcess, spawn } from 'child_process';
+import * as moment from 'moment';
 import * as path from 'path';
 import * as kill from 'tree-kill';
 
@@ -9,7 +10,7 @@ import {
   ParameterMap,
   Pick,
 } from './BaseWorker';
-import { getLogin, RuntimeError } from '../utils';
+import { attemptToTerminateMiners, getLogin, RuntimeError } from '../utils';
 import { getPort } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
 import * as fs from 'fs-extra';
@@ -25,6 +26,7 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
   static displayName = 'JCE Miner';
 
   workerName: string = 'JceCryptonight';
+  runningSince: moment.Moment | null = null;
 
   path: string = '';
   state: { [p: string]: any } = { dynamicDifficulty: false };
@@ -202,10 +204,20 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
         );
       }
 
+      await attemptToTerminateMiners(['jce', 'xmrig']);
+      if (this.daemon && this.daemon.kill) {
+        try {
+          await this.stop();
+        } catch (e) {}
+      }
+
       this.daemon = spawn(fullyPath, args, {
         cwd: this.path,
+        stdio: ['ignore'],
       });
+      this.runningSince = moment();
       this.pid = this.daemon.pid;
+      this.daemon.unref();
 
       addRunningPid(this.pid);
 
@@ -236,7 +248,9 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
   }
 
   async stop(): Promise<boolean> {
-    if (!this.running) throw new Error('Miner not running');
+    if (!this.running) {
+      return true;
+    }
 
     this.running = false;
     this.emit({ running: false });
@@ -244,6 +258,7 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
     this.willQuit = true;
 
     kill(this.pid as number);
+    this.daemon = undefined;
 
     return true;
   }

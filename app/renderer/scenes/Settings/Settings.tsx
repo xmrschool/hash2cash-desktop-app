@@ -24,6 +24,7 @@ export type State = {
   animating: boolean;
   openingAtStartup: boolean;
   openclDisabled: boolean;
+  keeperEnabled: boolean;
 };
 
 @observer
@@ -34,6 +35,7 @@ export default class Settings extends React.Component<
   state = {
     animating: false,
     openingAtStartup: false,
+    keeperEnabled: !!localStorage.enableKeeper,
     openclDisabled: localStorage.skipOpenCl,
   };
 
@@ -84,6 +86,18 @@ export default class Settings extends React.Component<
       localStorage.skipOpenCl = 'true';
       this.setState({ openclDisabled: true });
     }
+  }
+
+  toggleKeeper() {
+    if (localStorage.enableKeeper) {
+      localStorage.removeItem('enableKeeper');
+    } else {
+      localStorage.setItem('enableKeeper', 'true');
+    }
+
+    this.setState({
+      keeperEnabled: !this.state.keeperEnabled,
+    })
   }
 
   async onEntered() {}
@@ -230,6 +244,19 @@ export default class Settings extends React.Component<
               <Switch
                 checked={this.state.openingAtStartup}
                 onChange={this.updateStartupSettings}
+              />
+            </div>
+          </div>
+
+          <div className={s.pick}>
+            <div className={s.question}>
+              <h4 className={s.questionText}>{d('ENABLE_KEEPER')}</h4>
+              <p>{d('SETTINGS_KEEPER_DESC')}</p>
+            </div>
+            <div className={s.answer}>
+              <Switch
+                checked={this.state.keeperEnabled}
+                onChange={() => this.toggleKeeper()}
               />
             </div>
           </div>

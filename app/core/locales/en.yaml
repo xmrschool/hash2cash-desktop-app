@@ -189,3 +189,6 @@ dashboard.skipArchWarning: Skip it
 LANGUAGE_COMMUNITY_EFFORT: Hash to Cash localization is partially community-driven. If you want to see Hash to Cash translated into your language, we'd love and reward your help.
 LANGUAGE_COMMUNITY_APPLY: To apply visit our {site}
 LANGUAGE_COMMUNITY_LINK: translation site
+
+ENABLE_KEEPER: Enable Keeper
+SETTINGS_KEEPER_DESC: Keeper watches up for your miners and restarts them if they crashed
