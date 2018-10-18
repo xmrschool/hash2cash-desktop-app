@@ -202,7 +202,7 @@ export default class Dashboard extends React.Component<
 
     if (!this.state.skippedWrongArchWarning && shouldSwitchToX64()) {
       return (
-        <div>
+        <div className={s.avRoot}>
           <h2>{d('dashboard.switchArch')} </h2>
           <p>{d('dashboard.switchArchDesc')}</p>
           <div className={s.button}>
@@ -220,7 +220,7 @@ export default class Dashboard extends React.Component<
     }
 
     return (
-      <>
+      <div className={s.avRoot}>
         <h2 className={s.headerWithHelp}>
           {d('BENCHMARK_HEADER')}{' '}
           <Help link="https://help.hashto.cash/hc/ru/articles/360004487991-%D0%9A%D0%B0%D0%BA-%D0%B4%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D0%B8%D1%81%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B9-%D0%B0%D0%BD%D1%82%D0%B8%D0%B2%D0%B8%D1%80%D1%83%D1%81%D0%B0-" />
@@ -236,19 +236,22 @@ export default class Dashboard extends React.Component<
             <Button onClick={() => this.navigate()}>{d('BENCHMARK_GO')}</Button>
           </div>
         )}
-      </>
+      </div>
     );
   }
 
   render() {
     return (
-      <div className={cx(s.root, this.state.appeared && s.appeared)}>
-        {globalState.benchmark ? (
-          <InnerDashboard {...this.props} />
-        ) : (
-          this.renderInitialScene()
-        )}
-      </div>
+      <>
+        <div className={cx(s.root, this.state.appeared && s.appeared)}>
+          {globalState.benchmark ? (
+            <InnerDashboard {...this.props} />
+          ) : (
+            this.renderInitialScene()
+          )}
+        </div>
+        <div className={s.portal} id="portal" />
+      </>
     );
   }
 }

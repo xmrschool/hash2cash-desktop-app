@@ -155,6 +155,10 @@ export default class Settings extends React.Component<
     event.preventDefault();
   }
 
+  copyToClipboard() {
+    remote.clipboard.writeText(localStorage.minerAccessKey);
+  }
+
   get runnedAtStartup() {
     const shouldOpen = this.state.openingAtStartup;
 
@@ -162,7 +166,7 @@ export default class Settings extends React.Component<
   }
 
   render() {
-    const d = (id: string) => <FormattedMessage id={id} />;
+    const d = (id: string, fallback?: string) => <FormattedMessage defaultMessage={fallback} id={id} />;
     const p = (id: string) => (
       <FormattedMessage id={id}>
         {(message: any) => <option value={id}>{message}</option>}
@@ -193,6 +197,7 @@ export default class Settings extends React.Component<
                 <option value="ru">Русский</option>
                 <option value="uk">Український</option>
                 <option value="ro">Română (community-driven)</option>
+                <option value="pt">Português do Brasil</option>
               </select>
             </div>
           </div>
@@ -250,8 +255,8 @@ export default class Settings extends React.Component<
 
           <div className={s.pick}>
             <div className={s.question}>
-              <h4 className={s.questionText}>{d('ENABLE_KEEPER')}</h4>
-              <p>{d('SETTINGS_KEEPER_DESC')}</p>
+              <h4 className={s.questionText}>{d('ENABLE_KEEPER', 'Enable Keeper')}</h4>
+              <p>{d('SETTINGS_KEEPER_DESC', 'Keeper watches up for your miners and restart them if they crashed')}</p>
             </div>
             <div className={s.answer}>
               <Switch
@@ -271,6 +276,14 @@ export default class Settings extends React.Component<
                 checked={this.state.openclDisabled}
                 onChange={this.toggleOpenCl}
               />
+            </div>
+          </div>
+
+          <div className={s.pick}>
+            <div className={s.question}>
+              <h4 className={s.questionText}>{d('YOUR_API_ACCESS_KEY', 'Miner API key')}</h4>
+              <div>{localStorage.minerAccessKey}
+                <div className={s.copy}>{d('COPY', 'Copy')}</div></div>
             </div>
           </div>
 

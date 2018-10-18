@@ -62,11 +62,36 @@ export class InitializationState {
   @observable everythingDone = false;
   benchmarkCountDown: any;
 
+  aborted: boolean = false;
+
   // Used for downloader
   @observable speed: number = 0;
   @observable downloaded: number = 0;
   @observable totalSize: number = 0;
   @observable downloading: boolean = false;
+
+  @action reset() {
+    this.hardware = undefined;
+    this.manifest = undefined;
+    this.unexpectedError = null;
+    this.status = 'Collecting hardware...';
+    this.step = 0;
+    this.progressText = undefined;
+    this.downloadError = undefined;
+
+    this.bechmarking = false;
+    this.benchmarkQueue = [];
+    this.benchmarkQueueIndex = 0;
+    this.benchmarkSecsLeft = 0;
+    this.everythingDone = false;
+    this.benchmarkCountDown = undefined;
+
+    this.aborted = false;
+    this.speed = 0;
+    this.downloaded = 0;
+    this.totalSize = 0;
+    this.downloading = false;
+  }
 
   @action
   setUnexpectedError(error: string) {
@@ -76,12 +101,6 @@ export class InitializationState {
   @action
   setHardware(hardware: Architecture) {
     this.hardware = hardware;
-  }
-
-  @action
-  reset() {
-    this.hardware = undefined;
-    this.everythingDone = false;
   }
 
   @action
@@ -151,45 +170,61 @@ export class InitializationState {
   }
   // We set up a countdown for 60 seconds since speed is emitted
   @action
-  async benchmark() {
-    if (!this.manifest || this.manifest.success === false) {
-      throw new Error('Manifest not fetched');
-    }
+  async benchmark(abort: AbortController) {
+    return new Promise(async (resolve, reject) => {
+      if (!this.manifest || this.manifest.success === false) {
+        throw new Error('Manifest not fetched');
+      }
 
-    await minerApi.stopAll();
-    // Wait till all workers are done
-    await sleep(200);
+      this.aborted = false;
 
-    const workers = await minerApi.getWorkers(true); // Force get new workers
-    if (minerApi.workers.length === 0) {
-      throw new Error('Failed to get any of workers. Seems to be strange!');
-    }
+      abort.signal.addEventListener('abort', () => {
+        console.log('Benchmark has been cancelled!');
 
-    this.benchmarkQueue = workers.map(worker =>
-      minerObserver.observe(worker, false)
-    );
-    this.benchmarkSecsLeft = TOTAL_BENCHMARK_TIME * workers.length;
+        this.aborted = true;
 
-    await this.nextMiner();
+        if (this.benchmarkQueue[this.benchmarkQueueIndex]) {
+          this.benchmarkQueue[this.benchmarkQueueIndex]._data.stop()
+        }
+        resolve();
+      });
 
-    const results = minerObserver.workers.map(result => ({
-      speed: result.speedPerMinute,
-      name: result._data.name,
-    }));
+      await minerApi.stopAll();
+      // Wait till all workers are done
+      await sleep(200);
 
-    const benchmark = {
-      data: results,
-      time: new Date(),
-    };
+      const workers = await minerApi.getWorkers(true); // Force get new workers
+      if (minerApi.workers.length === 0) {
+        throw new Error('Failed to get any of workers. Seems to be strange!');
+      }
 
-    globalState.setBenchmark(benchmark);
-    LocalStorage.benchmark = benchmark;
+      this.benchmarkQueue = workers.map(worker =>
+        minerObserver.observe(worker, false)
+      );
+      this.benchmarkSecsLeft = TOTAL_BENCHMARK_TIME * workers.length;
 
-    console.log('Benchmark is done!');
+      await this.nextMiner();
+
+      const results = minerObserver.workers.map(result => ({
+        speed: result.speedPerMinute,
+        name: result._data.name,
+      }));
+
+      const benchmark = {
+        data: results,
+        time: new Date(),
+      };
+
+      globalState.setBenchmark(benchmark);
+      LocalStorage.benchmark = benchmark;
+
+      console.log('Benchmark is done!');
+    });
   }
 
   @action
   async nextMiner(): Promise<any> {
+    if (this.aborted) return false;
     try {
       if (this.benchmarkQueue.length <= this.benchmarkQueueIndex) {
         // element doesnt exist
@@ -218,7 +253,8 @@ export class InitializationState {
             return resolve(speed[1]);
           }
 
-          if (!speed[0] || speed[0] === 0) return;
+          const outerSpeed = speed[0] || speed[1];
+          if (!outerSpeed || outerSpeed === 0) return;
 
           // Once miner is on and benchmark is down we start benchmark
           if (!this.benchmarkCountDown) {
@@ -253,7 +289,6 @@ export class InitializationState {
 
       await promise;
 
-      console.log('Promise is done');
       miner.removeListener('speed', speedListener);
       miner._data.removeListener('state', stateListener);
       miner._data.removeListener('runtimeError', errorListener);
@@ -262,7 +297,7 @@ export class InitializationState {
       try {
         minerObserver.stopObserving(miner, false);
       } catch (e) {
-
+        console.error('Failed to stop observing worker: ', e);
       }
 
       clearInterval(this.benchmarkCountDown);

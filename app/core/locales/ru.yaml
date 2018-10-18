@@ -182,5 +182,5 @@ LANGUAGE_COMMUNITY_EFFORT: Hash to Cash отчасти переводится т
 LANGUAGE_COMMUNITY_APPLY: Чтобы начать, посетите {site}
 LANGUAGE_COMMUNITY_LINK: сайт для перевода
 
-ENABLE_KEEPER: Включить Кипер
-SETTINGS_KEEPER_DESC: Кипер автоматически перезагружает майнеры, если они, например, внезапно остановились.
+ENABLE_KEEPER: Включить ВатчДог
+SETTINGS_KEEPER_DESC: ВатчДог автоматически перезагружает майнеры, если они, например, внезапно остановились.

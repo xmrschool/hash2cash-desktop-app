@@ -145,6 +145,32 @@ export function getLogin(
   }`;
 }
 
+export function getEthUrl() {
+  try {
+    const pool = LocalStorage.appInfo!.pools.ether as any;
+    const fullUrl = pool.sslUrl || pool.url;
+    const withPort =
+      fullUrl === 'eth.pool.hashto.cash' ? 'eth.pool.hashto.cash:443' : fullUrl;
+
+    return `ssl://${withPort}`;
+  } catch (e) {
+    return `ssl://eth.pool.hashto.cash:443`;
+  }
+}
+export function getEthUri(username: string) {
+  try {
+    const ethPool = LocalStorage.appInfo!.pools.ether as any;
+
+    const { url, proto = 'ethproxy' } = ethPool;
+    const outerUrl = url.includes(':') ? url : `${url}:80`;
+    return `${proto}://${encodeURIComponent(username)}@${outerUrl}/`;
+  } catch (e) {
+    return `ethproxy://${encodeURIComponent(
+      username
+    )}@eth.pool.hashto.cash:80/`;
+  }
+}
+
 export function getDifficulty(algorithm: Algorithms): number | null {
   try {
     const benchmark = LocalStorage.benchmark!.data;
@@ -175,6 +201,8 @@ const defaultWorkers = [
   'xmr-stak',
   'jce',
   'ccminer',
+  'PhoenixMiner',
+  'bminer',
 ];
 
 export function joinArray(array: string[]) {
@@ -191,7 +219,9 @@ export async function attemptToTerminateMiners(
     const command = `
   $processes = @(${joined})    
   $processesRegex = [string]::Join('|', $processes) # create the regex
-  $list = Get-Process | Where-Object { $_.ProcessName -match $processesRegex } | Where-Object { $_.Path.StartsWith("$env:APPDATA\\${__DEV__ ? 'Electron' : 'Hash to Cash'}") }
+  $list = Get-Process | Where-Object { $_.ProcessName -match $processesRegex } | Where-Object { $_.Path.StartsWith("$env:APPDATA\\${
+    __DEV__ ? 'Electron' : 'Hash to Cash'
+  }") }
   ForEach ($pro in $list) {
     taskkill /pid $pro.ID /T /F
   }
@@ -199,10 +229,11 @@ export async function attemptToTerminateMiners(
 
     const ps = new Shell({
       noProfile: true,
+      debugMsg: debug.enabled,
     });
 
     await ps.addCommand(command);
-    await ps.invoke().then(console.log);
+    await ps.invoke();
     await ps.dispose();
   } catch (e) {
     try {

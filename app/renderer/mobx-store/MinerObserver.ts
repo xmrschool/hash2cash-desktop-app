@@ -6,9 +6,10 @@ import CurrenciesService, {
   AllowedCurrencies,
   CurrencyNumber,
 } from './CurrenciesService';
-import globalState from './GlobalState';
 import { EventEmitter } from 'events';
 import { LocalStorage } from '../utils/LocalStorage';
+import { sleep } from '../utils/sleep';
+import calculateHourlyReturn from '../utils/calculator';
 
 export const INTERVAL_TIME = 1000;
 
@@ -17,6 +18,11 @@ export class InternalObserver extends EventEmitter {
   @observable latestSpeed?: number | null;
   @observable speedPerMinute?: number | null;
   @observable hashesSubmitted = 0;
+
+  @observable monthly: any = null;
+  @observable daily: any = null;
+
+  private isObserving = false;
   _interval: any;
   _isObserver: true = true;
   _data: Worker;
@@ -76,35 +82,53 @@ export class InternalObserver extends EventEmitter {
     }
 
     try {
-      const stats = await this._data.getStats();
+      const stats = await this._data.getSpeed();
 
       if (stats === null) return;
 
       // It emits same speed by default, so we made a trick and calculate speed here
       if (this._data.name === 'JceCryptonight') {
-        stats.hashrate.total[1] = null;
-        stats.hashrate.total[2] = null;
+        stats[1] = null;
+        stats[2] = null;
 
-        if (stats.hashrate.total[0]) {
+        if (stats[0]) {
           this.receivedMetrics += 1;
-          this.totalSpeed += stats.hashrate.total[0];
+          this.totalSpeed += stats[0]!;
 
           if (this.receivedMetrics >= 59) {
-            stats.hashrate.total[1] = parseFloat(
+            stats[1] = parseFloat(
               (this.totalSpeed / this.receivedMetrics).toFixed(2)
             );
           }
         }
       }
 
-      const speed = stats.hashrate.total;
+      let hasChanged = false;
+      const speed = stats;
 
       this.emit('speed', speed);
       // Do not emit if not a number
-      if (speed[0] && speed[0] > 0) this.latestSpeed = speed[0];
-      if (speed[1] && speed[1] > 0) this.speedPerMinute = speed[1];
-      this.tryToEmitMetrics(stats.hashrate);
-      this.hashesSubmitted = stats.results.hashes_total;
+      if (speed[0] && speed[0]! > 0) {
+        if (this.latestSpeed !== speed[0]) {
+          this.latestSpeed = speed[0];
+          hasChanged = true;
+        }
+      }
+      if (speed[1] && speed[1]! > 0) {
+        if (this.speedPerMinute !== speed[1]) {
+          this.speedPerMinute = speed[1];
+        }
+        if (!this.latestSpeed) {
+          this.latestSpeed = speed[1];
+          hasChanged = true;
+        }
+      }
+
+      if (hasChanged) {
+        this.daily = this.dailyProfit().reactFormatted();
+        this.monthly = this.monthlyProfit().reactFormatted();
+      }
+      this.tryToEmitMetrics({ total: stats, highest: speed[0] } as any);
     } catch (e) {
       console.error('Failed to get worker stats\n', {
         message: e.message,
@@ -115,31 +139,32 @@ export class InternalObserver extends EventEmitter {
   @action
   stop() {
     if (this._interval) clearInterval(this._interval);
+    this.isObserving = false;
   }
 
   start() {
-    if (!this._interval) {
-      this._interval = setInterval(
-        () => this.updateWorkerData(),
-        INTERVAL_TIME
-      );
-      this.updateWorkerData();
+    if (!this.isObserving) {
+      this.isObserving = true;
+      this.updateWorkerData().then(() => this.tick());
     }
+  }
+
+  async tick(): Promise<any> {
+    await sleep(this._data.data.updateThrottle || INTERVAL_TIME);
+
+    if (this.isObserving) {
+      await this.updateWorkerData();
+    }
+
+    return this.tick();
   }
 
   dailyProfit() {
     const currency = this._data.data.usesAccount!;
     const service = CurrenciesService.ticker[currency];
 
-    const speed = Math.max(this.speedPerMinute || 0, this.latestSpeed || 0);
-    const hashesPerDay = speed * 60 * 60 * 24; // speed per day, non-stop of course
-
-    // What does formule looks like? (<solved_hashes>/<global_difficulty>) * <block_reward> * 0.7
-    const localCurrency =
-      (hashesPerDay / service.difficulty) *
-      service.blockReward *
-      globalState.userShare *
-      service.modifier;
+    const speed = this.getSpeed();
+    const localCurrency = calculateHourlyReturn(speed, service);
 
     return CurrenciesService.toLocalCurrency(
       currency as AllowedCurrencies,
@@ -156,14 +181,7 @@ export class InternalObserver extends EventEmitter {
     const service = CurrenciesService.ticker[currency];
 
     const speed = this.getSpeed();
-    const hashesPerDay = speed * 60 * 60 * 24 * 30; // speed per day, non-stop of course
-
-    // What does formule looks like? (<solved_hashes>/<global_difficulty>) * <block_reward> * 0.7
-    const localCurrency =
-      (hashesPerDay / service.difficulty) *
-      service.blockReward *
-      globalState.userShare *
-      service.modifier;
+    const localCurrency = calculateHourlyReturn(speed, service) * 30;
 
     return CurrenciesService.toLocalCurrency(
       currency as AllowedCurrencies,

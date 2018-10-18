@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { createPortal } from 'react-dom';
 import * as cx from 'classnames';
 import { inject, observer } from 'mobx-react';
 import { MobxState } from '../../mobx-store';
@@ -14,6 +15,7 @@ export interface IProps {
   run?: Function;
   refreshTrigger: () => void;
 }
+
 @inject((state: MobxState) => ({
   running: state.reloadState.running,
   oldStatus: state.reloadState.oldStatus,
@@ -27,9 +29,12 @@ export default class Reloader extends React.Component<IProps> {
     this.props.run!({ refreshTrigger: this.props.refreshTrigger });
   }
   render() {
+    const portal = document.getElementById('portal');
     const { running, switching, oldStatus, currentStatus, run } = this.props;
-    return (
-      <div className={s.reload}>
+
+    if (!portal) return null;
+    return createPortal(
+      <div className={cx([s.reload, running && s.running])}>
         <div>
           <Spinner running={running} onClick={() => run!()} />
         </div>
@@ -39,7 +44,8 @@ export default class Reloader extends React.Component<IProps> {
             <div className={s.currentStatus}>{currentStatus}</div>
           </div>
         </div>
-      </div>
+      </div>,
+      portal
     );
   }
 }

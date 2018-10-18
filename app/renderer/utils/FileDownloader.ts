@@ -3,6 +3,7 @@ import * as path from 'path';
 
 import { EventEmitter } from 'events';
 import { Downloadable } from '../api/Api';
+import extract7z from '../../core/7z/extractPromise';
 
 const md5File = require('md5-file/promise');
 const DecompressZip = require('decompress-zip');
@@ -35,6 +36,39 @@ export class DownloadError extends Error {
 
   get message(): string {
     return this.formattedMessage;
+  }
+}
+
+export function extractZip(fileName: string, output: string): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    const unzipper = new DecompressZip(fileName);
+
+    unzipper.on('error', reject);
+    unzipper.on('extract', resolve);
+
+    unzipper.extract({
+      path: output,
+    });
+  });
+}
+
+export async function extractFile(
+  format: '7z' | 'zip',
+  fileName: string,
+  output: string
+): Promise<boolean> {
+  debug('Trying to unpack format: ', { format, fileName, output });
+  switch (format) {
+    case 'zip':
+      await extractZip(fileName, output);
+
+      return true;
+    case '7z':
+      await extract7z(fileName, output);
+
+      return true;
+    default:
+      return false;
   }
 }
 
@@ -77,19 +111,6 @@ export default class FileDownloader extends EventEmitter {
     clearInterval(this.interval!);
   }
 
-  unpackFile(filename: string, output: string) {
-    return new Promise((resolve, reject) => {
-      const unzipper = new DecompressZip(filename);
-
-      unzipper.on('error', reject);
-      unzipper.on('extract', resolve);
-
-      unzipper.extract({
-        path: output,
-      });
-    });
-  }
-
   async validateMD5(filename: string, miner: Downloadable) {
     const compiledMd5 = await md5File(filename);
 
@@ -107,7 +128,7 @@ export default class FileDownloader extends EventEmitter {
 
   // We don't want request along with main bundle because it's too big
   async fetch(): Promise<any> {
-    // This modules are take long to load... so we requrie it lazily
+    // This modules are take long to load... so we require it lazily
     const fs = require('fs-extra');
     const request = require('request');
     const progress = require('request-progress');
@@ -142,11 +163,11 @@ export default class FileDownloader extends EventEmitter {
                       try {
                         await this.validateMD5(futurePathToFile, miner);
 
-                        if (miner.format === 'zip') {
-                          // Additional, we should check if file was unpacked properly
-                          if (!(await exists(outputDir + '/unpacked')))
-                            await this.unpackFile(futurePathToFile, outputDir);
-                        }
+                        await extractFile(
+                          miner.format,
+                          futurePathToFile,
+                          outputDir
+                        );
                         return resolve();
                       } catch (e) {
                         debug("Can't resolve exiting library", e);
@@ -192,11 +213,11 @@ export default class FileDownloader extends EventEmitter {
                         debug('Downloaded', data);
 
                         await this.validateMD5(futurePathToFile, miner);
-                        if (miner.format === 'zip') {
-                          await this.unpackFile(futurePathToFile, outputDir);
-
-                          await fs.outputFile(outputDir + '/unpacked', '');
-                        }
+                        await extractFile(
+                          miner.format,
+                          futurePathToFile,
+                          outputDir
+                        );
 
                         resolve(data);
                         this.stopBroadcasting();

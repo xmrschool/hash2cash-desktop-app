@@ -19,7 +19,7 @@ export type WorkerMappedByHardware = { [hardware: string]: Worker | null };
 
 export class Worker extends EventEmitter {
   @observable data: Workers;
-  @observable httpRequest: boolean = false;
+  @observable pendingRequest: boolean = false;
   debug: any;
 
   constructor(json: Workers) {
@@ -143,15 +143,17 @@ export class Worker extends EventEmitter {
   @action
   // Daemon management
   async start(commit = true) {
-    this.httpRequest = true;
+    this.pendingRequest = true;
     try {
       const resp = await minerApi.fetch(
         `/workers/${this.data.name}/start${minerApi.getQuery(commit)}`
       );
-      this.httpRequest = false;
+      this.pendingRequest = false;
 
       return resp;
     } catch (e) {
+      this.pendingRequest = false;
+
       if (e.message.includes('already running')) {
         this.data.running = true;
 
@@ -159,7 +161,6 @@ export class Worker extends EventEmitter {
       }
 
       RuntimeError.handleError(e);
-      this.httpRequest = false;
 
       throw e;
     }
@@ -172,13 +173,15 @@ export class Worker extends EventEmitter {
       if (!this.data.running) {
         return;
       }
-      this.httpRequest = true;
+      this.pendingRequest = true;
       const resp = await minerApi.fetch(
         `/workers/${this.data.name}/stop${minerApi.getQuery(commit)}`
       );
-      this.httpRequest = false;
+      this.pendingRequest = false;
       return resp;
     } catch (e) {
+      this.pendingRequest = false;
+
       console.error('Failed to stop miner!', e);
 
       return;
@@ -187,11 +190,17 @@ export class Worker extends EventEmitter {
 
   @action
   async reload() {
-    this.httpRequest = true;
-    const resp = await minerApi.fetch(`/workers/${this.data.name}/reload`);
-    this.httpRequest = false;
-    this.data.running = !!this.data.running;
-    return resp;
+    try {
+      this.pendingRequest = true;
+      const resp = await minerApi.fetch(`/workers/${this.data.name}/reload`);
+      this.pendingRequest = false;
+      this.data.running = !!this.data.running;
+      return resp;
+    } catch (e) {
+      this.pendingRequest = false;
+
+      return;
+    }
   }
 
   async getSpeed(): Promise<(number | null)[]> {
@@ -230,7 +239,7 @@ export class Api {
   realHost = 'localhost';
 
   get host() {
-    return 'http://' + this.realHost + ':' + globalState.minerPort;
+    return 'http://' + this.realHost + ':' + (globalState.minerPort || 8024);
   }
 
   // What does this algorithm do? Sorts by usedHardware, orders by profitability
@@ -306,8 +315,14 @@ export class Api {
     await connectionPromise;
     let resp;
     try {
+      const controller = new AbortController();
+      sleep(4000).then(d => controller.abort());
       resp = await fetch(
-        `${this.host}${resource}${querified.length > 0 ? `?${querified}` : ''}`
+        `${this.host}${resource}${querified.length > 0 ? `?${querified}` : ''}`,
+        {
+          headers: { 'X-Access-Key': localStorage.minerAccessKey },
+          signal: controller.signal,
+        }
       );
     } catch (e) {
       this.realHost = 'localhost' ? '127.0.0.1' : 'localhost';

@@ -1,8 +1,7 @@
 .root {
   -webkit-box-flex: 0;
   flex: 0 0 36px;
-  margin-right: 10px;
-  margin-top: -5px;
+  margin-right: -5px;
   position: relative;
   width: 60px;
 }

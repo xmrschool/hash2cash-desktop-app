@@ -11,10 +11,10 @@ import {
   Pick,
 } from './BaseWorker';
 import { attemptToTerminateMiners, getLogin, RuntimeError } from '../utils';
-import { getPort } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
 import * as fs from 'fs-extra';
 import workersCache from '../workersCache';
+import { findAPortNotInUse } from '../../../core/portfinder';
 
 export type Parameteres = 'power';
 
@@ -73,7 +73,9 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
   }
 
   async getAppArgs() {
-    this.daemonPort = await getPort(25002);
+    this.daemonPort = this.daemonPort = await findAPortNotInUse(
+      localStorage.jceCryptonightPort || 25003
+    );
 
     const args: any = {
       '--mport': this.daemonPort.toString(),

@@ -79,6 +79,10 @@ export default class RignameEditor extends React.Component<
     this.generateScienceName();
   }
 
+  shouldComponentUpdate(nextProps: any, nextState: any) {
+    return this.state.rigName !== nextState.rigName;
+  }
+
   changeName(event: any) {
     const { value } = event.target;
 

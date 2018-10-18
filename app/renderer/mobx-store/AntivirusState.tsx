@@ -104,20 +104,21 @@ export class AntivirusState extends PersistedState {
       this.checked = false;
       const command = avCheckCommand;
       debug('Command is: ', command);
-      const result = await promisedExec(command);
+      const { stdout: result } = await promisedExec(command);
 
       debug('Received result: ', result);
       if (result) {
         const name = sanitizeName(result as any);
         this.name = name;
-        this.checked = true;
         this.haveAny = !name.includes(undefinedCondition);
         if (this.haveAny) {
           this.isKnown = name.includes(isDefender);
           if (this.isKnown) {
+            console.log('We know it was you, Defender. Get ready.');
             await this.checkIfWhitelisted();
           }
         }
+        this.checked = true;
 
         // Destroy powershell
         ps.dispose();

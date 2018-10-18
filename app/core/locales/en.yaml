@@ -190,5 +190,5 @@ LANGUAGE_COMMUNITY_EFFORT: Hash to Cash localization is partially community-driv
 LANGUAGE_COMMUNITY_APPLY: To apply visit our {site}
 LANGUAGE_COMMUNITY_LINK: translation site
 
-ENABLE_KEEPER: Enable Keeper
-SETTINGS_KEEPER_DESC: Keeper watches up for your miners and restarts them if they crashed
+ENABLE_KEEPER: Enable WatchDog
+SETTINGS_KEEPER_DESC: WatchDog watches up for your miners and restarts them if they crashed

@@ -10,8 +10,9 @@ import * as en from 'react-intl/locale-data/en';
 import * as ru from 'react-intl/locale-data/ru';
 import * as uk from 'react-intl/locale-data/uk';
 import * as ro from 'react-intl/locale-data/ro';
+import * as pt from 'react-intl/locale-data/pt';
 
-addLocaleData([...en, ...ru, ...uk, ...ro]);
+addLocaleData([...en, ...ru, ...uk, ...ro, ...pt]);
 import { LocalStorage } from './utils/LocalStorage';
 import globalState from './mobx-store/GlobalState';
 import userOptions from './mobx-store/UserOptions';
@@ -23,7 +24,7 @@ export type Locale = {
   data: string;
 };
 
-export let intl: InjectedIntl;
+export let intl: InjectedIntl = { formatMessage: (d: any) => d.defaultMessage } as any;
 let resolver: Function;
 const promise: Promise<void> = new Promise(resolve => {
   resolver = resolve;

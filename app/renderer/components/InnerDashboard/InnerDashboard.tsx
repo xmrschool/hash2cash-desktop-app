@@ -1,22 +1,17 @@
+import * as React from 'react';
 import { remote } from 'electron';
 import { sortBy } from 'lodash';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import * as cx from 'classnames';
 
 import minerApi, { Worker } from 'api/MinerApi';
 import minerObserver, { InternalObserver } from 'mobx-store/MinerObserver';
-import currenciesService, {
-  CurrencyNumber,
-} from 'mobx-store/CurrenciesService';
+import currenciesService from 'mobx-store/CurrenciesService';
 import globalState from 'mobx-store/GlobalState';
-import userOptions from 'mobx-store/UserOptions';
 
 import User from 'mobx-store/User';
-
-import toMonero from 'utils/toMonero';
 
 import Settings from 'scenes/Settings';
 import buildMenu from '../Settings';
@@ -26,90 +21,18 @@ import ActionBar from '../ActionBar';
 
 import Tips from '../Tips/Tips';
 import Reloader from '../Reloader/Reloader';
-import RignameEditor from '../RignameEditor/RignameEditor';
-import PrettyNumber from '../PrettyNumber/PrettyNumber';
 import CloseIcon from '../CloseIcon/CloseIcon';
-import Dropdown from '../Dropdown/Dropdown';
+import Dropdown, { Delimiter, DropdownPick } from '../Dropdown/Dropdown';
 import Switch from '../Switch/Switch';
 import { MenuPick } from '../../../miner/app/workers/BaseWorker';
 import Changelog from '../Changelog/Changelog';
+import formatHashrate from '../../utils/formatHashrate';
+import { StatsView } from './StatsView';
+import { MobxState } from '../../mobx-store';
 
 const settings = require('../../../core/icon/settings.svg');
 const ws = require('scenes/Initialization/Worker.css');
 const s = require('./InnerDashboard.css');
-
-export const StatsView = observer(() => {
-  // ToDo Legacy code here, to support first version with mysql
-  const balanceInMonero =
-    User.balance && User.balance > 0 ? toMonero(User.balance) : 0;
-  const localBalance = currenciesService.toLocalCurrency(
-    'XMR',
-    balanceInMonero
-  );
-
-  const instance = currenciesService.ticker[userOptions.get('currency')];
-
-  const total = minerObserver.workers
-    .filter(d => d._data.running)
-    .map(queue => queue.monthlyProfit().float())
-    .reduce((d, prev) => prev + d, 0);
-
-  const totalHashes = minerObserver.workers
-    .filter(d => d._data.running)
-    .map(queue => queue.hashesSubmitted)
-    .reduce((d, prev) => prev + d, 0);
-
-  const doneAmount = new CurrencyNumber(total, instance);
-
-  return (
-    <div className={s.padded}>
-      <div>
-        <RignameEditor />
-        <div className={s.counter}>
-          <h4 className={s.counterHead}>
-            <FormattedMessage id="DASHBOARD_CURRENT_BALANCE" />
-          </h4>
-          <h4 className={s.counterValue}>
-            <FallbackLoader condition={typeof User.balance !== 'undefined'}>
-              <PrettyNumber unit="XMR" num={balanceInMonero} fixedLevel={5} />
-            </FallbackLoader>{' '}
-            {typeof User.balance !== 'undefined' && (
-              <span>
-                <span className={s.equal}>≈</span>{' '}
-                {localBalance.reactFormatted()}
-              </span>
-            )}
-          </h4>
-        </div>
-        <div className={s.row}>
-          <div className={s.counter}>
-            <h4 className={s.counterHead}>
-              <FormattedMessage id="DASHBOARD_PERFORMANCE_LABEL" />
-            </h4>
-            <h4 className={s.counterValue}>
-              {doneAmount.reactFormatted()}
-              <span className={s.period}>
-                {' '}
-                <FormattedMessage id="DASHBOARD_PERFORMANCE_CAPTION" />
-              </span>
-            </h4>
-          </div>
-
-          <div className={s.counter}>
-            <h4 className={s.counterHead}>
-              {' '}
-              <FormattedMessage id="DASHBOARD_EARNED_LABEL" />
-            </h4>
-            <h4 className={s.counterValue}>
-              {totalHashes.toLocaleString()}{' '}
-              <span className={s.currencySymbol}>H</span>
-            </h4>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-});
 
 // ToDo use svg icons instead and add YT like animation
 export const playSwitches = {
@@ -193,7 +116,7 @@ export class WorkerView extends React.Component<
   }
 
   workerState(): 'stop' | 'waiting' | 'start' {
-    if (this.props.worker.httpRequest) return 'waiting';
+    if (this.props.worker.pendingRequest) return 'waiting';
     if (this.props.worker.running) return 'stop';
     if (this.props.worker.running) return 'waiting';
 
@@ -250,14 +173,14 @@ export class WorkerView extends React.Component<
     if (observer && isOn) {
       return (
         <FallbackLoader condition={observer.latestSpeed}>
-          {(observer.latestSpeed || 0).toFixed(2)} H/s
+          {formatHashrate(observer.latestSpeed || 0)}
         </FallbackLoader>
       );
     } else {
       const latest = globalState.getBenchmarkHashrate(worker.name);
 
       if (latest) {
-        return <span>{latest.toFixed(2)} H/s</span>;
+        return <span>{formatHashrate(latest)}</span>;
       }
     }
 
@@ -339,6 +262,7 @@ export class WorkerView extends React.Component<
     const observer = this.state.observer;
     const speed = this.getSpeed();
 
+    // ToDo refactor options, so it won't cause re-render each time
     return (
       <div key={worker.name} className={cx(ws.worker, isOn && ws.highlighted)}>
         <div className={ws.inner}>
@@ -375,7 +299,7 @@ export class WorkerView extends React.Component<
                               defaultMessage={value.name}
                             >
                               {(message: any) => (
-                                <option value={value.value}>{message}</option>
+                                <option key={value.value} value={value.value}>{message}</option>
                               )}
                             </FormattedMessage>
                           ))}
@@ -388,13 +312,13 @@ export class WorkerView extends React.Component<
                 {observer && (
                   <span className={ws.profits}>
                     <span className={ws.monthly}>
-                      {observer.monthlyProfit().reactFormatted()}{' '}
+                      {observer.monthly}{' '}
                       <span className={ws.caption}>
                         <FormattedMessage id="PERFORMANCE_MONTHLY" />
                       </span>
                     </span>
                     <span className={ws.daily}>
-                      {observer.dailyProfit().reactFormatted()}{' '}
+                      {observer.daily}{' '}
                       <span className={ws.caption}>
                         <FormattedMessage id="PERFORMANCE_DAILY" />
                       </span>
@@ -442,7 +366,7 @@ export default class Layer extends React.Component<
             s.layer,
             s.reverse,
             (!layer || !layerOpened) && s.shown,
-            !layerAnimating && s.animationDone
+            !layerAnimating && !layerOpened && s.animationDone
           )}
         >
           <InnerDashboard {...props} />
@@ -486,7 +410,6 @@ export class WorkersView extends React.Component<
 
     if (wanted) {
       if (workers.find(d => d.name === wanted)) {
-        console.log('wanted is: ', wanted);
         return { active: wanted };
       }
     }
@@ -498,7 +421,6 @@ export class WorkersView extends React.Component<
 
     localStorage.setItem(key, name);
 
-    console.log('name is: ', name);
     return { active: name };
   }
 
@@ -531,12 +453,18 @@ export class WorkersView extends React.Component<
   }
 }
 
+@inject((state: MobxState) => ({
+  run: state.reloadState.run,
+}))
 @(injectIntl as any)
 @(withRouter as any)
 @observer
 export class InnerDashboard extends React.Component<any> {
+  menu: any;
+
   state = {
     appeared: false,
+    dropdownToggled: false,
   };
 
   constructor(props: any) {
@@ -600,12 +528,12 @@ export class InnerDashboard extends React.Component<any> {
     const gpuMiner = workers.gpu && workers.gpu[0];
 
     if (!gpuMiner) {
-      if (cpuMiner.httpRequest) return 'waiting';
+      if (cpuMiner.pendingRequest) return 'waiting';
       if (cpuMiner.running) return 'stop';
 
       return 'start';
     }
-    if (gpuMiner.httpRequest || cpuMiner.httpRequest) return 'waiting';
+    if (gpuMiner.pendingRequest || cpuMiner.pendingRequest) return 'waiting';
     if (cpuMiner.running && gpuMiner.running) return 'stop';
 
     return 'start';
@@ -616,6 +544,24 @@ export class InnerDashboard extends React.Component<any> {
     this.forceUpdate();
   }
 
+  toggle() {
+    this.setState({ dropdownToggled: !this.state.dropdownToggled });
+  }
+
+  renderOptions() {
+    return (
+      <div>
+        <DropdownPick>v{__RELEASE__.slice(0, 15)}-{process.platform}-{process.env.NODE_ENV!.slice(0, 5)}</DropdownPick>
+        <DropdownPick onClick={() => this.props.run()}><FormattedMessage id="mobx.reload.update" /></DropdownPick>
+        <Delimiter />
+        <DropdownPick onClick={() => globalState.showLayer('settings') && this.toggle()}><FormattedMessage id="SETTINGS_MENU_GO_SETTINGS" /></DropdownPick>
+        <Delimiter />
+        <DropdownPick><FormattedMessage id="SETTINGS_MENU_LOGOUT" /></DropdownPick>
+        <DropdownPick><FormattedMessage id="SETTINGS_MENU_LOGOUT_YEAH" /></DropdownPick>
+      </div>
+    )
+  }
+
   render() {
     const workers = minerApi.findMostProfitableWorkers();
     return (
@@ -624,13 +570,19 @@ export class InnerDashboard extends React.Component<any> {
           <h2>
             <FormattedMessage id="DASHBOARD_LABEL" />
           </h2>
-          <div>
-            <span>
-              <img src={settings} className={s.icon} onClick={this.openMenu} />
-            </span>
+          <div ref={ref => (this.menu = ref)}>
+            <Dropdown
+              top={30}
+              isOpened={this.state.dropdownToggled}
+              onToggled={() => this.toggle()}
+              childRef={this.menu}
+            >
+              {this.renderOptions()}
+            </Dropdown>
+            <img src={settings} className={s.icon} onClick={() => this.toggle()} />
           </div>
         </div>
-        <StatsView />
+        <StatsView s={s} />
         <ActionBar workers={workers} />
         {!workers.cpu && <h3 className={s.header}>Загрузка майнеров...</h3>}
         {workers.gpu && <h3 className={s.header}>GPU</h3>}

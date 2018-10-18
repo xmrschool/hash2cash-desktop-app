@@ -5,6 +5,10 @@ const s = require('./Spinner.css');
 const reload = require('./reload.svg');
 
 export default class Spinner extends React.Component<any> {
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     const { running, ...anotherProps } = this.props;
 

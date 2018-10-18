@@ -3,6 +3,7 @@ import * as path from 'path';
 
 import { EventEmitter } from 'events';
 import { Downloadable } from '../api/Api';
+import { extractFile } from './FileDownloader';
 
 const md5File = require('md5-file/promise');
 const DecompressZip = require('decompress-zip');
@@ -131,15 +132,8 @@ export default class FileDownloaderAlone extends EventEmitter {
           // We have to check if hash is valid, if so, skip downloading
           try {
             await this.validateMD5(futurePathToFile, miner);
+            await extractFile(miner.format, futurePathToFile, outputDir);
 
-            if (miner.format === 'zip') {
-              // Additional, we should check if file was unpacked properly
-              if (!(await exists(outputDir + '/unpacked'))) {
-                await this.unpackFile(futurePathToFile, outputDir);
-
-                await fs.outputFile(outputDir + '/unpacked', '');
-              }
-            }
             return resolve();
           } catch (e) {
             debug("Can't resolve exiting library", e);
@@ -171,11 +165,7 @@ export default class FileDownloaderAlone extends EventEmitter {
             debug('Downloaded', data);
 
             await this.validateMD5(futurePathToFile, miner);
-            if (miner.format === 'zip') {
-              await this.unpackFile(futurePathToFile, outputDir);
-
-              await fs.outputFile(outputDir + '/unpacked', '');
-            }
+            await extractFile(miner.format, futurePathToFile, outputDir);
 
             resolve(data);
             this.stopBroadcasting();

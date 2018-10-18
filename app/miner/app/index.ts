@@ -24,6 +24,11 @@ import { clearPids, getRunningPids } from './RunningPids';
 const logger = require('debug')('app:miner:server');
 const koa = new Koa();
 const router = new Router();
+const colors = {
+  blue: 'color: dodgerblue; font-weight: bold',
+  black: 'color: black',
+  yellow: 'color: #a8026f',
+};
 
 koa.use(async (ctx, next) => {
   try {
@@ -34,7 +39,8 @@ koa.use(async (ctx, next) => {
     } else {
       ctx.body = {
         error: {
-          kind: typeof e,
+          expected: false,
+          kind: e.constructor.name,
           message: e.message,
           stack: e.stack,
         },
@@ -42,6 +48,33 @@ koa.use(async (ctx, next) => {
     }
   }
 });
+
+koa.use(async (ctx, next) => {
+  const body = ctx.body || {}
+  const accessKey = body.accessKey || ctx.query.accessKey || ctx.get('X-Access-Key') || ctx.get('Authorization');
+
+  if (!localStorage.minerAccessKey || localStorage.minerAccessKey !== accessKey) {
+    ctx.status = 401;
+
+    ctx.body = {
+      error: {
+        expected: true,
+        kind: 'AuthorizationError',
+        message: 'You have to specify valid localStorage.minerAccessKey in body.accessKey || query.accessKey || header(\'X-Access-Key\') || header(\'Authorization\')',
+        code: 'invalid.minerAccessKey',
+      },
+    };
+
+    return;
+  } else {
+    const { blue, yellow } = colors;
+    logger('--> %c%s %s', blue, ctx.method, ctx.path);
+    const time = +new Date;
+    await next();
+    logger(`${''.padStart(4)}%c%s %s <-- %c%s %dms`, blue, ctx.method, ctx.path, yellow, ctx.status, (+new Date - time));
+  }
+});
+
 router.get('/manifest', async ctx => {
   ctx.body = await getManifest();
 });
@@ -249,9 +282,10 @@ const ensureStillOn = (port: number) => {
 const listen = (port: number) => {
   server.listen(port as any, 'localhost', 34);
   server.on('listening', () => {
+    const { blue, black } = colors;
     lastPort = port;
     ensureStillOn(port);
-    logger('Listening on %d port', port);
+    logger('Miner backend is accessible at %clocalhost:%d%c with X-Access-Key: %c%s%c', blue, port, black, blue, localStorage.minerAccessKey, black);
   });
 
   server.on('error', err => {
@@ -282,8 +316,12 @@ async function killUnkilledProccesses() {
   }
 }
 
+if (!localStorage.minerAccessKey) {
+  localStorage.minerAccessKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+}
+
 attemptToTerminateMiners()
-  .then(() => killUnkilledProccesses())
+  .then(() => killUnkilledProccesses()) // A trick to terminate miners that are not somehow closed
   .then(() => updateWorkersInCache())
   .then(() =>
     getPort(8024).then(port => {

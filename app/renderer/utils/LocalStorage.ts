@@ -29,6 +29,9 @@ export function safeParse(json: string) {
   }
 }
 
+const virtual = { getItem: () => null, setItem: () => null } as any;
+const localStorage: Storage = typeof window !== 'undefined' && window.localStorage ? window.localStorage : virtual;
+
 export class LocalStorage extends EventEmitter {
   static get authToken(): string | null {
     return localStorage[AUTH_TOKEN];
@@ -108,6 +111,24 @@ export class LocalStorage extends EventEmitter {
 
   static set settings(val: SettingsStore | null) {
     localStorage.settings = JSON.stringify(val);
+  }
+
+  // ToDo typings
+  static get poolsReport(): any | null {
+    return safeParse(localStorage.poolsReport);
+  }
+
+  static set poolsReport(val: any | null) {
+    localStorage.poolsReport = JSON.stringify(val);
+  }
+
+  // ToDo typings
+  static get availablePorts(): number[] | null {
+    return safeParse(localStorage.availablePorts);
+  }
+
+  static set availablePorts(val: number[] | null) {
+    localStorage.availablePorts = JSON.stringify(val);
   }
 
   static get userId(): string | null {

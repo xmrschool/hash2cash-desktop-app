@@ -6,9 +6,21 @@ export type DropdownProps = {
   children: React.ReactChild;
   onToggled: () => void;
   childRef: Element;
+  top?: number;
 };
 
 const s = require('./Dropdown.css');
+export function DropdownPick(props: any) {
+  return (
+    <div className={s.menuPick} {...props} />
+  );
+}
+
+export function Delimiter(props: any) {
+  return (
+    <div className={s.delimiter} {...props} />
+  );
+}
 
 export default class Dropdown extends React.Component<DropdownProps> {
   element: any;
@@ -53,10 +65,10 @@ export default class Dropdown extends React.Component<DropdownProps> {
   }
 
   render() {
-    const { children, isOpened } = this.props;
+    const { children, isOpened, top } = this.props;
 
     return (
-      <div className={cx(s.root, isOpened && s.opened)} ref={(ref) => (this.element = ref)}>
+      <div style={top ? { top: top } : {}} className={cx(s.root, isOpened && s.opened)} ref={(ref) => (this.element = ref)}>
         <div className={s.menu}>{children}</div>
       </div>
     );

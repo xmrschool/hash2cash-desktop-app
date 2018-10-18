@@ -22,6 +22,10 @@ export default class Close extends React.Component<{ [key: string]: any }> {
     document.removeEventListener('keyup', this.esc);
   }
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     return (
       <div className={s.root} {...this.props}>

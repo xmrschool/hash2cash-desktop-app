@@ -64,7 +64,7 @@ export default class DriverVersionTip implements ITip {
 
     this.name = intl.formatMessage({ id: 'TIPS_UPDATE_DRIVER_LABEL' });
 
-    const parsedReport = JSON.parse(localStorage._rawCollectedReport);
+    const parsedReport = LocalStorage.rawCollectedReport;
 
     if (!parsedReport || !parsedReport.openCl) return;
     const compatibleDevice = (parsedReport.openCl as Response).devices.find(d =>

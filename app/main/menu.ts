@@ -6,6 +6,8 @@ import { server } from './server';
 const openExternal = (link: string) => () =>
   shell.openExternal(getRelativeLink(link));
 
+// const zoomLevels = [50, 67, 75, 80, 90, 100, 110, 125, 150, 175, 200];
+
 const separator: Electron.MenuItemConstructorOptions = { type: 'separator' };
 export default function buildDefaultMenu() {
   // noinspection JSPrimitiveTypeWrapperUsage
@@ -22,6 +24,42 @@ export default function buildDefaultMenu() {
     ],
   });
 
+  template.push(
+    ...[
+      {
+        label: 'Actual Size',
+        accelerator: 'CmdOrCtrl+0',
+        click(item: any, focusedWindow: Electron.BrowserWindow) {
+          if (focusedWindow) focusedWindow.webContents.setZoomLevel(0);
+        },
+      },
+      { role: 'zoomin' },
+      {
+        label: 'Zoom In',
+        accelerator: 'CmdOrCtrl+=',
+        click(item: any, focusedWindow: Electron.BrowserWindow) {
+          if (focusedWindow) {
+            const { webContents } = focusedWindow;
+            webContents.getZoomLevel(zoomLevel => {
+              webContents.setZoomLevel(zoomLevel + 0.15);
+            });
+          }
+        },
+      },
+      {
+        label: 'Zoom Out',
+        accelerator: 'CmdOrCtrl+-',
+        click(item: any, focusedWindow: Electron.BrowserWindow) {
+          if (focusedWindow) {
+            const { webContents } = focusedWindow;
+            webContents.getZoomLevel(zoomLevel => {
+              webContents.setZoomLevel(zoomLevel - 0.15);
+            });
+          }
+        },
+      },
+    ]
+  );
   template.push({
     label: __DARWIN__ ? 'Edit' : '&Edit',
     submenu: [

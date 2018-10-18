@@ -6,6 +6,7 @@
 .container {
   height: calc(100vh - 80px);
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .root select {
@@ -87,4 +88,25 @@
   opacity: 0;
   animation: fadeIn var(--animation-delay) forwards;
   animation-delay: 0.1s;
+}
+
+.selectable {
+  user-select: text;
+  cursor: pointer;
+  text-align: center;
+  opacity: 0.9;
+  font-size: 90%;
+}
+
+.copy span {
+  cursor: pointer;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: #dcdcdc;
+  opacity: 0.9;
+}
+
+.selectable:hover .copy {
+  opacity: 1;
 }

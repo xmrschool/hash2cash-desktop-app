@@ -4,11 +4,13 @@ import { CudaCollectedDevice } from 'cuda-detector';
 import { OpenCLCollectedDevice } from 'opencl-detector';
 import { CpuInfo } from 'cpuid-detector';
 import { Currency } from '../mobx-store/CurrenciesService';
+import { PNPDevice } from '../../core/windows/wmic';
 
 const debug = require('debug')('app:socket');
 
 export type Pool = {
   isOk: boolean;
+  proto: string;
   url: string;
   unavialbleReason: string | null;
   status: 'ok' | 'down';
@@ -111,22 +113,28 @@ export type AuthThroughSite = {
 export type _CudaDevice = {
   type: 'gpu';
   platform: 'cuda';
+  memory?: number;
   deviceID: string;
   model: string;
   unavailableReason?: string;
   warning?: string;
   driverVersion?: string | null;
+  wmic?: PNPDevice;
+  collectedInfoType?: string;
   collectedInfo: CudaCollectedDevice;
 };
 
 export type _OpenCLDevice = {
   type: 'gpu';
   platform: 'opencl';
+  memory?: number;
   deviceID: string;
   model: string;
   unavailableReason?: string;
   warning?: string;
   driverVersion?: string | null;
+  wmic?: PNPDevice;
+  collectedInfoType?: string;
   collectedInfo: OpenCLCollectedDevice;
 };
 
@@ -137,6 +145,8 @@ export type CpuDevice = {
   unavailableReason?: string;
   warning?: string;
   driverVersion?: string | null;
+  wmic?: PNPDevice;
+  collectedInfoType?: string;
   collectedInfo: Systeminformation.CpuData | CpuInfo;
 };
 
@@ -150,13 +160,14 @@ export type Architecture = {
   reportVersion?: number;
   warnings: string[];
   devices: Device[];
+  wmicDevices?: any;
 };
 
 export type Downloadable = {
   name: string;
   tag: string;
   size: number; // in kbytes
-  format: 'zip'; // only zip is supported
+  format: 'zip' | '7z'; // only zip is supported
   id: string; // and id to file (saved to manifest/${id}
   md5: string;
   downloadUrl: string;

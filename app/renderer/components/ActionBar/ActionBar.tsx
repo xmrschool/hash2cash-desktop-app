@@ -28,12 +28,12 @@ export default class ActionBar extends React.Component<Props> {
 
     if (!gpuMiner) {
       const mainState = cpuMiner.running;
-      const secondary = cpuMiner.httpRequest;
+      const secondary = cpuMiner.pendingRequest;
 
       return [mainState ? 'stop' : 'start', secondary];
     }
     const mainState = cpuMiner.running || gpuMiner.running;
-    const secondary = gpuMiner.httpRequest || cpuMiner.httpRequest;
+    const secondary = gpuMiner.pendingRequest || cpuMiner.pendingRequest;
 
     return [mainState ? 'stop' : 'start', secondary];
   }

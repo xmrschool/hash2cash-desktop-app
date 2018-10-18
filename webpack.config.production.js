@@ -12,7 +12,7 @@ const getReplacements = require('./app/app-info').getReplacements;
 module.exports = merge(baseConfig, {
   devtool: 'source-map',
 
-  mode: 'production',
+  mode: 'development',
   entry: ['./app/renderer/index.tsx'],
 
   output: {

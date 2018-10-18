@@ -41,7 +41,11 @@ export function configureStore(initialState: any) {
   if (module.hot) {
     module.hot.accept(
       '../reducers',
-      () => store.replaceReducer(require('reducers')) // eslint-disable-line global-require
+      () => {
+        try {
+          store.replaceReducer(require('reducers'))
+        } catch (e) {}
+      } // eslint-disable-line global-require
     );
   }
 

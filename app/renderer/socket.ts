@@ -11,7 +11,7 @@ const socketLoadFns: MinerReadyCallback[] = [];
 
 // ToDo implement compression
 const socket = io(config.SOCKET_URL, {
-  path: '/websocket_desktop',
+  path:  '/websocket_desktop',
   autoConnect: false,
 });
 

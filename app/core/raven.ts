@@ -14,7 +14,7 @@ export function clearLocalStorage() {
 }
 
 Sentry.init({
-  dsn: 'https://b61f08f7e6994a1f9ae83b3e7d49f004@sentry.hashtocash.net/4',
+  dsn: 'https://b50bca5143f4480dad67a63ca18cd90f@sentry.hashtocash.net/4',
   environment: process.env.NODE_ENV,
   release: __RELEASE__,
 });

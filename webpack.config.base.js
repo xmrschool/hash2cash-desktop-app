@@ -20,7 +20,7 @@ function proposeVersion() {
 
 const version = proposeVersion();
 module.exports = {
-  mode: isDebug ? 'development' : 'production',
+  mode: 'development',
   module: {
     noParse: [path.join(__dirname, 'node_modules/ws')],
     rules: [
@@ -70,12 +70,5 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin(getReplacements(version)),
-    ...(isDebug ? [] : [new SentryWebpackPlugin({
-      release: version,
-      include: './',
-      ignoreFile: '.sentrycliignore',
-      ignore: ['node_modules', 'webpack.config.js', 'release', 'resources', 'test', '.vscode', 'server.js', 'setup.js', 'node_modules1'],
-      configFile: './sentry.properties'
-    })])
   ],
 };

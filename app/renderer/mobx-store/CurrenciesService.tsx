@@ -97,10 +97,13 @@ export class CurrencyInstance {
   @observable unicodeSymbol?: string;
   @observable svgSymbol?: string;
 
+  @observable blockTime!: number;
   @observable blockReward!: number;
   @observable difficulty!: number;
   @observable modifier!: number;
   @observable profitability!: number;
+
+  @observable share!: number;
 
   @observable priceUsd!: number;
   @observable priceBtc?: number;
@@ -113,6 +116,10 @@ export class CurrencyInstance {
 
   constructor(currency: Currency) {
     Object.assign(this, currency);
+
+    if (this.symbol === 'ETH' && this.blockTime === 120) {
+      this.blockTime = 15;
+    }
   }
 
   exchange(to: AllowedCurrencies, amount: number) {

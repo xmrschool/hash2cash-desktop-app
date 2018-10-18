@@ -17,7 +17,7 @@ const port = process.env.PORT || 4513;
 module.exports = merge(baseConfig, {
   devtool: isDebug ? 'cheap-module-inline-source-map' : 'source-map',
 
-  mode: isDebug ? 'development' : 'production',
+  mode: 'development',
   externals: [
     nodeExternals({
       whitelist: [/webpack-hot-middleware/],

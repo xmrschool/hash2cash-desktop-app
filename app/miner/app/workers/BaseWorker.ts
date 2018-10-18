@@ -32,7 +32,9 @@ export type OuterJSON<P extends string> = {
   parameters?: ParameterMap<P>;
   daemonPort?: number;
   menu: MenuPicks;
+  updateThrottle?: number;
 };
+
 
 export interface IWorker<P> {
   running: boolean;
@@ -143,7 +145,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
   }
 
   handleKeeper() {
-    if (this.runningSince && localStorage.enableKeeper) {
+    if (this.runningSince && localStorage.enableKeeper && localStorage.benchmark) { // We don't use keeper when running a benchmark
       console.info('Setting up a keeper because we have runningSince');
       const diff = moment().diff(this.runningSince);
       console.info('Diff between current time and runningSince is (ms) ', diff);

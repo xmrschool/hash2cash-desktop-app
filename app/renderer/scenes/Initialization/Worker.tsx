@@ -10,6 +10,8 @@ import currenciesService, {
   currencies,
 } from 'mobx-store/CurrenciesService';
 import { FallbackLoader } from '../../components/LineLoader/LineLoader';
+// @ts-ignore
+import formatHashrate from '../../utils/formatHashrate';
 
 const s = require('./Worker.css');
 
@@ -76,7 +78,7 @@ export default class Worker extends React.Component<PropTypes> {
     return (
       <div>
         &nbsp; —&nbsp;{' '}
-        <FallbackLoader condition={speed > 0}>{speed} H/s</FallbackLoader>
+        <FallbackLoader condition={speed > 0}>{formatHashrate(speed)}</FallbackLoader>
       </div>
     );
   }

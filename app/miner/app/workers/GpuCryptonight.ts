@@ -16,6 +16,7 @@ import { sleep } from '../../../renderer/utils/sleep';
 import { LocalStorage } from '../../../renderer/utils/LocalStorage';
 import { addRunningPid } from '../RunningPids';
 import trackError from '../../../core/raven';
+import { findAPortNotInUse } from '../../../core/portfinder';
 
 export type Parameteres = 'main' | 'additional';
 
@@ -175,7 +176,7 @@ ${outer.join(',\n')}
       this.rigName + '-gpu'
     )}, "pool_password" : "", "use_nicehash" : true, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
 ],
-"currency" : "monero7",
+"currency" : "monero",
 `;
     const template = `
 "call_timeout" : 10,
@@ -251,7 +252,11 @@ ${outer.join(',\n')}
   }
 
   private async getDaemonPort() {
-    this.daemonPort = await getPort(25001);
+    this.daemonPort = await findAPortNotInUse(
+      localStorage.gpuCryptonightPort || 25001
+    );
+
+    console.log('Running GPUCryptonight miner on port: ', this.daemonPort);
 
     return this.daemonPort;
   }

@@ -8,6 +8,10 @@ export type SwitchProps = {
   onChange: Function;
 };
 export default class Switch extends React.Component<SwitchProps> {
+  shouldComponentUpdate(nextProps: SwitchProps) {
+    return this.props.checked !== nextProps.checked;
+  }
+
   render() {
     return (
       <div className={cx(s.switch, this.props.checked && s.checked)}>

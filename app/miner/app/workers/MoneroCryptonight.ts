@@ -10,10 +10,11 @@ import {
   Pick,
 } from './BaseWorker';
 import { attemptToTerminateMiners, getLogin, RuntimeError } from '../utils';
-import { getPort, timeout } from '../../../core/utils';
+import { timeout } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
 import * as fs from 'fs-extra';
 import workersCache from '../workersCache';
+import { findAPortNotInUse } from '../../../core/portfinder';
 
 export type Parameteres = 'power' | 'priority';
 
@@ -114,7 +115,9 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   }
 
   async getAppArgs() {
-    this.daemonPort = await getPort(25000);
+    this.daemonPort = await findAPortNotInUse(
+      localStorage.xmrigPort || 25002
+    );
 
     const args: any = {
       '-l': './log.txt',

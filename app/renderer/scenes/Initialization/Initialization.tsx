@@ -40,6 +40,17 @@ const warning = require('./warning.svg');
 
 const debug = require('debug')('app:init');
 
+function beautifyPlatformName(name: string) {
+  switch (name) {
+    case 'cuda':
+      return 'CUDA';
+    case 'opencl':
+      return 'OpenCL';
+    default:
+      return name;
+  }
+}
+
 const messages = defineMessages({
   fetchingManifest: {
     id: 'scenes.init.status.fetchingManifest',
@@ -105,7 +116,7 @@ export default class Initialization extends React.Component<
   RouteComponentProps<any> & InjectedIntlProps,
   { appeared: boolean }
 > {
-  bar: any;
+  abortController?: AbortController;
 
   state = {
     appeared: false,
@@ -176,7 +187,10 @@ export default class Initialization extends React.Component<
       initializationState.setStep(4 / 7);
       initializationState.setStatus(formatMessage(messages.benchmarking));
       initializationState.bechmarking = true;
-      await initializationState.benchmark();
+
+      this.abortController = new AbortController();
+      await initializationState.benchmark(this.abortController);
+      initializationState.bechmarking = false;
 
       initializationState.setStep(1);
       initializationState.progressText = '100%';
@@ -191,7 +205,7 @@ export default class Initialization extends React.Component<
   formatPower(device: Device): string {
     try {
       const vram =
-        device.type === 'gpu' ? device.collectedInfo.memory.toFixed() : 0;
+        device.type === 'gpu' ? (device.memory || device.collectedInfo.memory).toFixed() : 0;
       const isCpuId =
         device.type === 'cpu' ? isCpuIdReport(device.collectedInfo) : false;
 
@@ -229,7 +243,7 @@ export default class Initialization extends React.Component<
       return (
         <div style={{ flexGrow: 1 }}>
           <div className={s.unavailable}>
-            <span className={s.model}>{device.model}</span>
+            <span>{device.model}</span>
             <img className={s.warning} src={warning} />
           </div>
           <div className={s.reasonContainer}>{device.unavailableReason || device.warning}</div>
@@ -255,11 +269,18 @@ export default class Initialization extends React.Component<
     this.action();
   }
 
+  abort() {
+    if (this.abortController) {
+      this.abortController.abort();
+    }
+  }
+
   renderBenchmarkDetails(initializationState: any) {
     return (
       <>
         <h2 className={s.header}>
           <FormattedMessage {...messages.algorithms} />
+          <Button simple onClick={() => this.abort()}>Skip benchmark</Button>
         </h2>
         <div className={s.benchmarks}>
           {minerObserver.workers.map(worker => (
@@ -286,12 +307,14 @@ export default class Initialization extends React.Component<
         )}
       >
         <div className={s.doneInner}>
-          <span className={s.doneAmount}>
+          {!initializationState.aborted && (
+            <span className={s.doneAmount}>
             <span>{doneAmount.reactFormatted()}</span>
             <span className={s.donePerMonth}>
               <FormattedMessage {...messages.downsidePerMonth} />
             </span>
           </span>
+          )}
           <Button onClick={this.navigateToDashboard}>
             <FormattedMessage {...messages.startMine} />
           </Button>
@@ -299,6 +322,7 @@ export default class Initialization extends React.Component<
       </div>
     );
   }
+
   render() {
     return (
       <React.Fragment>
@@ -332,9 +356,9 @@ export default class Initialization extends React.Component<
                       device.unavailableReason && s.behind
                     )}
                   >
-                    <div style={{ flexGrow: 1 }}>
+                    <div className={s.ellipsised}>
                       {this.renderModel(device)}
-                      <p className={s.badge}>{device.type}</p>
+                      <p className={s.badge}>{device.type.toUpperCase()} - {beautifyPlatformName(device.platform)}</p>
                     </div>
                     <span className={s.power}>{this.formatPower(device)}</span>
                   </div>
@@ -345,8 +369,8 @@ export default class Initialization extends React.Component<
                 </HelpItem>
               </div>
             </div>
-            {initializationState.bechmarking &&
-              this.renderBenchmarkDetails(initializationState)}
+            {(initializationState.bechmarking || initializationState.everythingDone) &&
+            this.renderBenchmarkDetails(initializationState)}
           </div>
         </div>
         {initializationState.hardware &&

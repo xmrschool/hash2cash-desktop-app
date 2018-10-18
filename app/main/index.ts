@@ -11,8 +11,14 @@ import enableUpdates from './appUpdater';
 import trackError from '../core/raven';
 import { enable } from '../renderer/utils/startup';
 import './updateIpc';
+import { initializeConfig } from './config';
 
 require('source-map-support').install();
+
+const config = initializeConfig();
+if (!config.enableHardwareAcceleration) {
+  app.disableHardwareAcceleration();
+}
 
 let mainWindow: AppWindow | null = null;
 
@@ -60,7 +66,10 @@ let isDuplicateInstance = false;
 
 // We want to let the updated instance launch and do its work. It will then quit
 // once it's done.
-isDuplicateInstance = app.makeSingleInstance((args, workingDirectory) => {
+const ok = app.requestSingleInstanceLock();
+
+if (!ok) app.quit();
+/*isDuplicateInstance = app.makeSingleInstance((args, workingDirectory) => {
   // Someone tried to run a second instance, we should focus our window.
   if (mainWindow && !mainWindow.destroyed()) {
     if (mainWindow.isMinimized()) {
@@ -77,7 +86,7 @@ isDuplicateInstance = app.makeSingleInstance((args, workingDirectory) => {
 
 if (isDuplicateInstance) {
   app.quit();
-}
+}*/
 
 app.on('ready', () => {
   runInitialSetupIfNeeded(() => {

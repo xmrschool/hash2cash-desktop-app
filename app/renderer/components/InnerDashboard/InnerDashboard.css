@@ -6,6 +6,10 @@
   height: calc(100vh - 100px);
 }
 
+.overflowing {
+  overflow-y: scroll;
+}
+
 .padded {
   margin-top: 30px;
 }
@@ -162,6 +166,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  position: relative;
 }
 
 .icon {
@@ -190,35 +195,38 @@ option {
   display: flex;
   flex-direction: column;
   position: relative;
+  contain: layout;
+  overflow: hidden;
+  flex: 1 1 auto;
 }
 
 .layer {
-  -webkit-box-direction: normal;
-  -webkit-box-orient: vertical;
   bottom: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-direction: column;
-  left: 0;
-  position: absolute;
   right: 0;
   top: 0;
-  opacity: 0;
-  transform: scale(1.1);
-  transition: 200ms transform var(--animation-type), 150ms opacity cubic-bezier(0.4,0.0,1,1);
+  left: 0;
+
+  padding: 35px 30px 40px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background: hsla(210, 16%, 11%, 1) linear-gradient(45deg, hsla(210, 16%, 11%, 1) 10%, hsla(210, 16%, 19%, 1));
+  opacity: 0.85;
+  transform: scale(1.13);
+  transition: 180ms transform var(--animation-type), 150ms opacity cubic-bezier(0.4,0.0,1,1);
   will-change: transform, opacity;
 }
 
 .reverse {
-  transform: scale(0.9);
+  transform: scale(0.85) translateZ(0px);
 }
 
 .shown {
   opacity: 1;
   z-index: 2;
   transform: scale(1)  translateY(0);
-  transition: 240ms transform var(--animation-type), 200ms opacity cubic-bezier(0.4,0.0,1,1);
+  transition: 250ms transform var(--animation-type), 150ms opacity cubic-bezier(0.4,0.0,1,1);
+  /*transition-delay: 25ms;*/
 }
 
 .animationDone {
@@ -227,7 +235,6 @@ option {
 
 .menu {
   margin-left: 5px;
-  position: relative;
 }
 
 .menuPick {

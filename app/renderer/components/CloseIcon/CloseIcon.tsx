@@ -4,6 +4,10 @@ import * as cx from 'classnames';
 const s = require('./CloseIcon.css');
 
 export default class CloseIcon extends React.Component<{ opened: boolean } & React.SVGProps<SVGSVGElement>> {
+  shouldComponentUpdate(nextProps: any) {
+    return nextProps.opened !== this.props.opened;
+  }
+
   render() {
     const { opened, ...props } = this.props;
 

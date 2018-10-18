@@ -11,6 +11,20 @@
 .reload {
   display: flex;
   cursor: pointer;
+  background: rgb(33, 33, 33);
+  color: #fff;
+  padding: 10px;
+  box-shadow: 1px -4px 10px rgba(0, 0, 0, 0.11);
+  position: absolute;
+  bottom: 0;
+  transition: 0.2s transform ease-in-out;
+  width: 100%;
+  align-items: flex-end;
+  transform: translateY(50px);
+}
+
+.running {
+  transform: translateY(0px);
 }
 
 .text {
@@ -26,6 +40,8 @@
 
 .switcher > * {
   height: 26px;
+  display: flex;
+  align-items: center;
 }
 
 .switcherWrapper {

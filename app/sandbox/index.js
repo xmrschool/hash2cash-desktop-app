@@ -10,5 +10,5 @@ ipcRenderer.on('execute', async (sender, data) => {
     error = e.message;
   }
 
-  ipcRenderer.send('execution-result', { result, error });
+  ipcRenderer.send('execution-result', { result, error, command: data });
 });

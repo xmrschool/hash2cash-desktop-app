@@ -44,8 +44,15 @@ export class User {
 
   @action
   updateBalance({ balance }: { balance: number }) {
-    debug('Received new balance: ', balance);
-    this.balance = balance;
+    const fixedNew = Number(balance.toFixed(6));
+    if (!this.balance) {
+      this.balance = fixedNew;
+    } else {
+      const fixed = Number(this.balance.toFixed(6));
+      if (fixed !== this.balance) {
+        this.balance = fixedNew;
+      }
+    }
   }
 
   @action

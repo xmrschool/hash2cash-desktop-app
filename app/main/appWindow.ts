@@ -40,8 +40,11 @@ export class AppWindow {
       // This fixes subpixel aliasing on Windows
       // See https://github.com/atom/atom/commit/683bef5b9d133cb194b476938c77cc07fd05b972
       backgroundColor: '#181C21',
-      resizable: false,
+      resizable: true,
       darkTheme: true,
+      maxWidth: 640,
+      minWidth: 460,
+      minHeight: 300,
       title: 'Hash to Cash',
       titleBarStyle: 'hiddenInset',
       webPreferences: {

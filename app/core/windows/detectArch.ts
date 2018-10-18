@@ -33,7 +33,7 @@ export function shouldSwitchToX64(): boolean {
   if (process.arch === 'ia32') {
     const realArch = detectNativeArch();
 
-    if (realArch !== 'ia32') {
+    if (realArch === 'x64') {
       return true;
     }
   }

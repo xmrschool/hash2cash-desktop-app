@@ -7,6 +7,11 @@ import socket from './socket';
 import './app.global.scss';
 import trackError from '../core/raven';
 
+if (__DEV__) {
+  const { whyDidYouUpdate } = require('why-did-you-update');
+  whyDidYouUpdate(React);
+}
+
 const { configureStore, history } = require('./store/configureStore').default;
 const store = configureStore();
 

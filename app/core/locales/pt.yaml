@@ -1,0 +1,178 @@
+---
+LOGIN_YOU_AGREED: Ao se registrar no Hash to Cash, você vai estar concordando com os Termos de Serviço e Política de Privacidade
+LOGIN_WELCOME_BACK: Bem-vindo de volta! Digite sua senha para entrar
+LOGIN_EMAIL: seu email
+LOGIN_PASSWORD: senha
+LOGIN_NEXT: Prosseguir
+LOGIN_REGISTER: Registrar
+LOGIN_LOGIN: Login
+LOGIN_THROUGH_SITE: Registre-se através do site
+BENCHMARK_HEADER: Antes de começar, precisamos explicar algumas coisas
+BENCHMARK_FIRST: |
+  Alguns antivírus estão erroneamente classificando nosso app como vírus. Isso acontece pois o app mineira criptomoeda sem ação direta do usuário. Hash to Cash não é um vírus. Os antivírus não conseguem detectar que o app teve permissão do usuário, por isso acusam falso positivo.
+BENCHMARK_SECOND: |
+  Se o seu antivírus errou e acusou o app como vírus, adicione a pasta do Hash to Cash à lista de exceções do seu antivírus.
+BENCHMARK_THIRD: |
+  Precisamos de 5 minutos para baixar os miner binaries e fazer o teste de benchmark. Aguarde um pouco.
+BENCHMARK_GO: Ok, começar
+DASHBOARD_LABEL: Painel
+DASHBOARD_CURRENT_BALANCE: SALDO ATUAL
+DASHBOARD_PERFORMANCE_LABEL: DESEMPENHO TOTAL
+DASHBOARD_PERFORMANCE_CAPTION: por mês
+DASHBOARD_EARNED_LABEL: HASHES ENVIADOS
+DASHBOARD_RIGNAME_LABEL: Nome da Rig
+DASHBOARD_RIGNAME_EMPTY: não pode estar vazio
+DASHBOARD_REFRESHER_REFRESH: Procurar por atualizações
+DASHBOARD_MENU_START: Começar
+DASHBOARD_MENU_STOP: Parar
+DASHBOARD_MENU_TIPS: Dicas
+DASHBOARD_MENU_DEVICES: Dispositivos
+OPTIONS_MAIN: GPU principal
+OPTIONS_ADDITIONAL: GPU adicional
+OPTIONS_POWER: Energia
+OPTIONS_PRIORITY: Prioridade da CPU
+PERFORMANCE_MONTHLY: por mês
+PERFORMANCE_DAILY: por dia
+POWER_LEVEL_ULTRAOPTIMIZED: Mais baixo possível
+POWER_LEVEL_OPTIMIZED: Baixo
+POWER_LEVEL_MIDDLE: Médio
+POWER_LEVEL_HIGH: '🔥 Alto'
+POWER_LEVEL_FULL: '🔥 Ultra 🔥'
+POWER_LEVEL_10: Mais baixo possível
+POWER_LEVEL_25: Baixo
+POWER_LEVEL_50: Médio
+POWER_LEVEL_75: '🔥 Alto'
+POWER_LEVEL_100: '🔥 Ultra 🔥'
+POWER_LEVEL_0: Baixo
+POWER_LEVEL_1: Acima do normal
+POWER_LEVEL_2: Médio
+POWER_LEVEL_3: Acima do médio
+POWER_LEVEL_4: Alto
+POWER_LEVEL_5: '🔥 Tempo-real (não recomendado) 🔥'
+TIPS_HEADER: Dicas
+TIPS_BUTTON_FIX: Corrigir
+TIPS_DRIVER_VERSION_POSSIBLY_OLD: |
+  Talvez você esteja usando uma versão antiga do driver, porém não podemos checar isso. Você precisa verificar manualmente
+TIPS_DRIVER_VERSION_UPDATE_AVAILABLE: |
+  Você está usando uma antiga versão do driver da GPU, sua versão é {oldVersion}, a nova é {newVersion}. Faremos o download do site da Nvidia
+TIPS_DRIVER_VERSION_UPDATE_UNAVAILABLE: |
+  Você está usando a versão mais recente do driver ({version}).
+TIPS_LARGE_PAGES_WORKAROUND: |
+  Esta correção ativa Páginas Grandes. Privilégios de administrador são necessários
+TIPS_LARGE_PAGES_REBOOT_MIGHT_HELP: |
+  Reiniciar pode ajudar.
+TIPS_LARGE_PAGES_REBOOT_MUST_HELP: |
+  Reinicie o PC para aplicar as alterações.
+TIPS_LARGE_PAGES_FAILED: |
+  Falhou ao aplicar a correção ({reason}). Reiniciar o PC pode ajudar ou, verifique que está executando o app como administrador
+TIPS_AES_NAME: A CPU deve suportar AES em nível de hardware
+TIPS_AES_WORKAROUND: |
+  AES é a especificação de criptografia, o que acelera a mineração em mais de 50%
+SETTINGS_MENU_GO_SETTINGS: Configurações
+SETTINGS_MENU_LOGOUT: Sair da conta
+SETTINGS_MENU_LOGOUT_SURE: Tem certeza que deseja sair?
+SETTINGS_MENU_LOGOUT_YEAH: Sair
+SETTINGS_MENU_LOGOUT_CANCEL: Cancelar
+SETTINGS_MENU_QUIT: Sair do Hash to Cash
+SETTINGS_HEADER: Configurações
+SETTINGS_LANGUAGE: Idioma
+SETTINGS_LANGUAGE_DESC: Selecione um idioma
+SETTINGS_CURRENCY: Moeda
+SETTINGS_CURRENCY_DESC: Por uma questão de conveniência, Hash to Cash converterá XMR para essa moeda
+SETTINGS_STARTUP: Iniciar
+SETTINGS_STARTUP_DESC: Economize seus cliques - Hash to Cash começará a minerar juntamente com a inicialização do sistema operacional
+SETTINGS_BENCHMARK: Benchmark novamente
+SETTINGS_BENCHMARK_DESC: Seu hardware mudou? Faça isso e nós faremos o teste novamente
+SETTINGS_BENCHMARK_BTN: Benchmark
+SETTINGS_FORGET: Esquecer tudo
+SETTINGS_FORGET_DESC: "Remove todos os dados salvos: auth data, miners e cachê. A escolha é sua se você deseja desinstalar Hash to Cash"
+SETTINGS_FORGET_BTN: Remover
+USD: Dólar Americano
+RUB: Rublo
+DRIVERS_ISSUE_HEADER: Algo de errado aconteceu com a GPU
+TIPS_UPDATE_DRIVER_LABEL: Atualizar driver da GPU
+TIPS_VCREDIST_WORKAROUND: É uma biblioteca da Microsoft necessária para rodar o miner da GPU. Você devia realmente instalar isso
+TIPS_VCREDIST_LABEL: Instalar VCRedist
+DRIVER_ISSUE_ABOUT: |
+  Nós não conseguimos detectar qual dispositivo OpenCL (AMD) você está usando. Hash to Cash talvez pare devido a um driver antigo da GPU. Você pode trocar o modo de detecção (o qual não é tão preciso quanto o original), mas pode funcionar com mais frequência.
+DRIVER_ISSUE_APPLY_CHANGES: Trocar p/ alternativa
+DRIVER_ISSUE_DONT_APPLY: Tentar novamente
+DISABLE_OPENCL: Desativar o Dispositivo de Detecção OpenCL (AMD)
+DISABLE_OPENCL_DESC: Não recomendado. Porém, use se o Hash to Cash estiver parando de funcionar
+invalid_password: senha inválida
+sign_through_site: registre-se através do site
+email_blacklisted: este email não é permitido
+email_forbidden: este email não é permitido
+core.hardwareCollector.unsupported: O fornecedor da GPU, {vendor}, não é suportado. Infelizmente não podemos fazer nada.
+core.hardwareCollector.failedToGetOpenCl: "Esta GPU provavelmente não funcionará: tente atualizar seus drivers."
+core.hardwareCollector.cudaFailed: "Há um problema com os drivers da Nvidia, atualize eles: nvidia.com/drivers"
+core.hardwareCollector.archTooLow: A arquitetura da GPU é muito baixa, o mínimo requerido é sm_20, a sua é sm_{major}{minor}
+mobx.global.connectionFail: Hash to Cash não conseguiu se conectar ao servidor. Verifique sua internet
+mobx.init.status.collecting: Coletando informações do hardware
+mobx.init.status.vcredist.checking: Verificando se VCRedist está instalado
+mobx.init.status.vcredist.downloading: Baixando VCRedist {status}
+mobx.init.status.vcredist.failed: Falha ao instalar o VCRedist 2017. Você deve instala-lo manualmente pois é uma exigência da GPU.
+mobx.login.password.mislength: a senha deve conter no mínimo 5 caracteres
+mobx.login.email.invalid: email deve ter @
+mobx.login.unexpected: Erro inesperado. Tente novamente ou contacte-nos
+mobx.reload.update: Atualizar
+scenes.init.status.fetchingManifest: Buscando baixar manifesto
+scenes.init.status.checkingDeps: Verificando se as dependências necessárias estão instaladas
+scenes.init.status.downloadingBinaries: Baixando os miners necessários
+scenes.init.status.benchmarking: Fazendo alguns testes
+scenes.init.hardwares: Seu hardware
+scenes.init.internalError: Opa! Algo deu errado no nosso lado
+scenes.init.justError: Opa! Não podemos baixar o miner
+scenes.init.whatAfterError: Tente novamente ou contacte-nos se achar que o erro vem do nosso lado
+scenes.init.tryAgain: Tentar novamente
+scenes.init.downsidePerMonth: você pode minerar por mês
+scenes.init.startMine: Começar a minerar!
+scenes.init.algorithms: Algorítimos
+scenes.init.worker.dailyProfit: por dia
+scenes.init.worker.monthlyProfit: por mês
+scenes.init.noGPU: Por que minha GPU não foi detectada?
+core.reload.updates.checking: Procurando por atualizações
+core.reload.updates.newAvailable: Baixando nova versão do app {version}
+core.reload.updates.installingAfter: A atualização será rodada em {secs, number} {unreadCount, plural, one {segundo} other {segundos}}
+core.reload.devices.collecting: Coletando dispositivos
+core.reload.minerUpdater.checking: Procurando por atualizações do miner
+core.reload.minerUpdater.newVersion: Nova versão de {name} está disponível {oldVersion} → {newVersion}
+core.reload.minerUpdater.failed: Falhou ao baixar o miner {name}, revertendo
+core.reload.minerUpdater.uptodate: Tudo está atualizado! Você pode seguir em frente
+miner.workers.openInShell: Abrir a pasta com o miner
+miner.workers.preserveConfig: Preservar configuração
+miner.workers.disableAmd: Desativar AMD
+miner.workers.disableNvidia: Desativar Nvidia
+miner.workers.affineToCpu: Afinar CPU
+miner.workers.dynamicDifficulty: Dificuldade dinâmica
+dashboard.av.checking: Verificando seu antivírus
+dashboard.av.installed: "Você tem {av} instalado"
+dashboard.av.nothings: "Nada foi encontrado, você está limpo"
+dashboard.av.addToExclusions: Adicionar à exceções
+dashboard.av.findOutHow: Aprenda como
+dashboard.av.skip: Ignorar
+dashboard.av.done: Eu fiz isso, continuar
+dashboard.av.auto: Mas podemos adicionar automaticamente Hash to Cash à lista de exceções.
+dashboard.av.noAuto: Não podemos adicionar Hash to Cash à lista de exceções, mas você pode fazer isso manualmente. E deveria.
+dashboard.av.folder: "Esta é a pasta que você deve adicionar às exceções:"
+dashboard.av.addToExceptions: Adicionar às exceções
+dashboard.av.whitelisted: Lista branca.
+dashboard.av.notWhitelisted: Não está na Lista branca.
+dashboard.av.adminRequired: Privilégios de Administrador necessários
+miner.workers.base.noDevices: Nenhum dispositivo foi encontrado. Tente atualizar seus drivers e recarregar o app
+miner.workers.base.noVcredist: Tente instalar o VCRedist 2017 ou desativar AMD
+miner.workers.base.tooExpensive: Tente reduzir o poder da sua GPU
+miner.workers.base.stoppedWithNoCode: Miner {workerName} parou sem nenhum código de saída
+miner.workers.base.enoent: Miner não foi encontrado. Baixe novamente
+runtimeError.workerStopped: Miner parou
+runtimeError.noFile: Parece que o antivírus deletou o miner. Você precisa adicionar o caminho {path} à lista de exceções e então, reiniciar o app
+runtimeError.noAccess: Sem acesso ao miner. Isso pode estar acontecendo por causa do seu antivírus, adicione {path} à lista de exceções e então, reinicie o app
+runtimeError.undefinedError: Erro de arquivo do sistema desconhecido ({code} – {errno}). Tente novamente mais tarde ou contacte-nos
+runtimeError.close: Fechar
+dashboard.switchArch: Hashrate será mais baixo e a GPU não funcionará
+dashboard.switchArchDesc: Isso é culpa do instalador ser inválido. Você deve baixar o instalador x64 ao invés do x32.
+dashboard.downloadForRightArch: Baixe o instalador x64
+dashboard.skipArchWarning: Ignorar
+LANGUAGE_COMMUNITY_EFFORT: Hash to Cash é parcialmente traduzido por pessoas comuns. Se você quiser ver Hash to Cash traduzido para o seu idioma, nós agradeceríamos e recompensaríamos sua ajuda.
+LANGUAGE_COMMUNITY_APPLY: Para participar, acesse nosso {site}
+LANGUAGE_COMMUNITY_LINK: site para tradução

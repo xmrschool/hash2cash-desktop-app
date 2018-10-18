@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx';
 import { ipcRenderer } from 'electron';
-import socket, { connectToLocalMiner } from 'socket';
+import socket, { connectToLocalMiner } from '../socket';
 import { intl, LocaleWithData } from '../intl';
 import { LocalStorage } from '../utils/LocalStorage';
 import { defineMessages } from 'react-intl';
@@ -83,6 +83,8 @@ export class GlobalState {
       this.openedLayer = layer;
       this.layerOpened = true;
     });
+
+    return true;
   }
 
   @action
