@@ -12,7 +12,7 @@ import utilSwitches from './switches'
  * @reject {Error} The error issued by 7-Zip.
  * @reject {number} Exit code issued by 7-Zip.
  */
-export default function (command, switches) {
+export default function (cmd, command, switches) {
   return when.promise(function (fulfill, reject, progress) {
 
     // Parse the command variable. If the command is not a string reject the
@@ -21,8 +21,7 @@ export default function (command, switches) {
     if (typeof command !== 'string') {
       return reject(new Error('Command must be a string'))
     }
-    var cmd  = command.split(' ')[0]
-    var args = [ command.split(' ')[1] ]
+    var args = [ command.split(' ')[0] ]
 
     const exePath = process.env.ES_7Z
     if(exePath){

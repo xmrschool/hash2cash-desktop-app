@@ -1,12 +1,8 @@
 import { remote, ipcRenderer } from 'electron';
 import { RouteComponentProps } from 'react-router';
 
-import User from '../mobx-store/User';
-import MinerObserver from '../mobx-store/MinerObserver';
 import globalState from '../mobx-store/GlobalState';
-import minerApi from '../api/MinerApi';
 import InjectedIntl = ReactIntl.InjectedIntl;
-import socket from '../socket';
 
 const separator: Electron.MenuItemConstructorOptions = { type: 'separator' };
 
@@ -32,28 +28,7 @@ export default function buildMenu(
     {
       label: getMessage('SETTINGS_MENU_LOGOUT'),
       click: () => {
-        const response = remote.dialog.showMessageBox({
-          type: 'warning',
-          buttons: [
-            getMessage('SETTINGS_MENU_LOGOUT_YEAH'),
-            getMessage('SETTINGS_MENU_LOGOUT_CANCEL'),
-          ],
-          defaultId: 0,
-          title: getMessage('SETTINGS_MENU_LOGOUT_SURE'),
-          message: getMessage('SETTINGS_MENU_LOGOUT_SURE'),
-        });
 
-        if (response === 0) {
-          User.clearAll();
-          MinerObserver.clearAll();
-          minerApi.workers.forEach(work => work.stop());
-          socket.disconnect();
-          setTimeout(() => {
-            socket.connect();
-          }, 500);
-
-          router.history.push('/login');
-        }
       },
     },
     {

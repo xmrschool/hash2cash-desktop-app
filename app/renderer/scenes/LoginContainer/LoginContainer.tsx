@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { remote, shell } from 'electron';
 import { injectIntl, InjectedIntl } from 'react-intl';
 import { FormattedMessage } from 'react-intl';
 import * as cx from 'classnames';
@@ -89,7 +90,7 @@ export default class LoginContainer extends React.Component<
   async throughSite() {
     const promise = Api.auth.loginThroughWebsite(undefined);
     socket.once('auth.redirectUri', (url: string) => {
-      require('electron').shell.openExternal(url);
+      shell.openExternal(url);
     });
 
     const result = await promise;
@@ -102,6 +103,7 @@ export default class LoginContainer extends React.Component<
       userState.jwtToken = result.token;
       await userState.attemptToLogin();
       await this.disappear();
+      remote.getCurrentWebContents().focus();
       this.props.history.push('/dashboard');
     }
   }

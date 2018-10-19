@@ -329,4 +329,6 @@ attemptToTerminateMiners()
     })
   );
 
+require('./shortcutHandler');
+
 (window as any).logger = logger;

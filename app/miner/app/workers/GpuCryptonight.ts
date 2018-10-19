@@ -1,5 +1,6 @@
 import { ChildProcess, spawn } from 'child_process';
 import * as path from 'path';
+import * as kill from 'tree-kill';
 import * as moment from 'moment';
 import * as fs from 'fs-extra';
 import {
@@ -131,7 +132,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
           props.deviceBlocks
         },
     "bfactor" : ${bfactor}, "bsleep" : ${bsleep},
-    "affine_to_cpu" : false, "sync_mode" : 3,
+    "affine_to_cpu" : false, "sync_mode" : 3, "mem_mode" : 1,
   }`);
       });
       const template = `
@@ -332,13 +333,18 @@ ${outer.join(',\n')}
         cwd: this.path,
       });
       this.runningSince = moment();
-      this.pid = this.daemon.pid;
+      const pid = this.daemon.pid;
+      this.pid = pid;
 
       addRunningPid(this.pid);
 
       this.emit({ running: true });
 
       this.daemon.stdout.on('data', data => {
+        if (!this.running) { // Still emits some stdout even if miner was shut down?
+          kill(pid);
+          attemptToTerminateMiners(['hashtocash-cryptonight']);
+        }
         console.log(`stdout: ${data}`);
       });
 

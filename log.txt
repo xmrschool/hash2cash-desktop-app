@@ -2619,3 +2619,510 @@ cash:80 diff 1410 algo cn/1
 [2018-10-18 16:24:37] new job from xmr.pool.hashto.cash:80 diff 1000
 [2018-10-18 16:24:43] accepted (4/0) diff 1000 (102 ms)
 [2018-10-18 16:24:53] speed 2.5s/60s/15m 67.3 65.2 n/a H/s max: 83.7 H/s
+[2018-10-18 19:36:23]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:36:23]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:36:23]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:36:23]  * ASSEMBLY     auto:intel
+[2018-10-18 19:36:23]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:36:23]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:36:23]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:36:23]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:36:23]  * HUGE PAGES   available
+[2018-10-18 19:36:23]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:36:23] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 19:36:23] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:36:25] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:36:49] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:36:56] accepted (1/0) diff 1100 (79 ms)
+[2018-10-18 19:37:22]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:37:22]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:37:22]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:37:22]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:37:22]  * ASSEMBLY     auto:intel
+[2018-10-18 19:37:22]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:37:22]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:37:22]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:37:22]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:37:22]  * HUGE PAGES   available
+[2018-10-18 19:37:22] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 19:37:22] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:37:22] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:37:27] accepted (1/0) diff 1100 (270 ms)
+[2018-10-18 19:37:49] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:37:51] accepted (2/0) diff 1100 (108 ms)
+[2018-10-18 19:37:57] accepted (3/0) diff 1100 (137 ms)
+[2018-10-18 19:38:11] new job from xmr.pool.hashto.cash:80 diff 2010 algo cn/2
+[2018-10-18 19:38:23] accepted (4/0) diff 2010 (128 ms)
+[2018-10-18 19:38:26] speed 10s/60s/15m 84.3 75.0 n/a H/s max 83.6 H/s
+[2018-10-18 19:38:49]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:38:49]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:38:49]  * HUGE PAGES   available
+[2018-10-18 19:38:49]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:38:49]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:38:49]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:38:49]  * ASSEMBLY     auto:intel
+[2018-10-18 19:38:49]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:38:49]  * API BIND     0.0.0.0:25003
+[2018-10-18 19:38:49]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:38:49] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 19:38:49] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:38:50] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:38:59] accepted (1/0) diff 1100 (96 ms)
+[2018-10-18 19:39:02]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:39:02]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:39:02]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:39:02]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:39:02]  * ASSEMBLY     auto:intel
+[2018-10-18 19:39:02]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:39:02]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:39:02]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:39:02]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:39:02]  * HUGE PAGES   available
+[2018-10-18 19:39:02] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 19:39:02] new job from xmr.pool.hashto.cash:80 diff 1000 algo cn/2
+[2018-10-18 19:39:02] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:39:07] accepted (1/0) diff 1000 (173 ms)
+[2018-10-18 19:39:13]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:39:13]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:39:13]  * HUGE PAGES   available
+[2018-10-18 19:39:13]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:39:13]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:39:13]  * API BIND     0.0.0.0:25003
+[2018-10-18 19:39:13]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:39:13]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:39:13]  * ASSEMBLY     auto:intel
+[2018-10-18 19:39:13]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:39:13] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 19:39:13] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:39:14] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:39:25]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:39:25]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:39:25]  * HUGE PAGES   available
+[2018-10-18 19:39:25]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:39:25]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:39:25]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:39:25]  * ASSEMBLY     auto:intel
+[2018-10-18 19:39:25]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:39:25]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:39:25]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:39:25] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 19:39:25] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:39:25] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:39:41]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:39:41]  * HUGE PAGES   available
+[2018-10-18 19:39:41]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:39:41]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:39:41]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:39:41]  * ASSEMBLY     auto:intel
+[2018-10-18 19:39:41]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:39:41]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:39:41]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:39:41]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:39:41] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 19:39:41] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:39:41] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:39:49] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:40:15] accepted (1/0) diff 1100 (79 ms)
+[2018-10-18 19:40:19] accepted (2/0) diff 1100 (61 ms)
+[2018-10-18 19:40:23]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:40:23]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:40:23]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:40:23]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:40:23]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:40:23]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:40:23]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:40:23]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:40:23]  * HUGE PAGES   available
+[2018-10-18 19:40:23]  * ASSEMBLY     auto:intel
+[2018-10-18 19:40:24] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 19:40:24] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:40:24] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:40:38] accepted (1/0) diff 1100 (133 ms)
+[2018-10-18 19:40:49] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:41:17] new job from xmr.pool.hashto.cash:80 diff 600 algo cn/2
+[2018-10-18 19:41:27] speed 10s/60s/15m 54.9 62.0 n/a H/s max 71.9 H/s
+[2018-10-18 19:41:49] accepted (2/0) diff 600 (231 ms)
+[2018-10-18 19:41:49] new job from xmr.pool.hashto.cash:80 diff 600 algo cn/2
+[2018-10-18 19:42:05]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:42:05]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:42:05]  * HUGE PAGES   available
+[2018-10-18 19:42:05]  * ASSEMBLY     auto:intel
+[2018-10-18 19:42:05]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:42:05]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:42:05]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:42:05]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:42:05]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:42:05]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:42:05] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 19:42:05] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:42:06] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:42:23] accepted (1/0) diff 1100 (229 ms)
+[2018-10-18 19:42:43]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:42:43]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:42:43]  * HUGE PAGES   available
+[2018-10-18 19:42:43]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:42:43]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:42:43]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:42:43]  * ASSEMBLY     auto:intel
+[2018-10-18 19:42:43]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:42:43]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:42:43]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:42:44] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 19:42:44] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:42:44] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:42:49] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:43:58]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:43:58]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:43:58]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:43:58]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:43:58]  * ASSEMBLY     auto:intel
+[2018-10-18 19:43:58]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:43:58]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:43:58]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:43:58]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:43:58]  * HUGE PAGES   available
+[2018-10-18 19:43:58] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 19:43:58] new job from xmr.pool.hashto.cash:80 diff 1000 algo cn/2
+[2018-10-18 19:43:59] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:44:12] new job from xmr.pool.hashto.cash:80 diff 1000 algo cn/2
+[2018-10-18 19:44:35]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:44:35]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:44:35]  * HUGE PAGES   available
+[2018-10-18 19:44:35]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:44:35]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:44:35]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:44:35]  * ASSEMBLY     auto:intel
+[2018-10-18 19:44:35]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:44:35]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:44:35]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:44:35] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 19:44:35] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:44:35] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 19:44:49] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:45:23] accepted (1/0) diff 1100 (80 ms)
+[2018-10-18 19:45:37] new job from xmr.pool.hashto.cash:80 diff 600 algo cn/2
+[2018-10-18 19:45:39] speed 10s/60s/15m 43.9 45.3 n/a H/s max 45.7 H/s
+[2018-10-18 19:45:49] new job from xmr.pool.hashto.cash:80 diff 600 algo cn/2
+[2018-10-18 19:45:58] accepted (2/0) diff 600 (150 ms)
+[2018-10-18 19:46:00] accepted (3/0) diff 600 (88 ms)
+[2018-10-18 19:46:06] accepted (4/0) diff 600 (76 ms)
+[2018-10-18 19:46:11] accepted (5/0) diff 600 (270 ms)
+[2018-10-18 19:46:22] new job from xmr.pool.hashto.cash:80 diff 990 algo cn/2
+[2018-10-18 19:46:22] new job from xmr.pool.hashto.cash:80 diff 990 algo cn/2
+[2018-10-18 19:46:39] speed 10s/60s/15m 40.8 42.3 n/a H/s max 47.6 H/s
+[2018-10-18 19:47:21]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 19:47:21]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 19:47:21]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 19:47:21]  * ASSEMBLY     auto:intel
+[2018-10-18 19:47:21]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 19:47:21]  * API BIND     0.0.0.0:25002
+[2018-10-18 19:47:21]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 19:47:21]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 19:47:21]  * HUGE PAGES   available
+[2018-10-18 19:47:21]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 19:47:21] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 19:47:21] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 19:47:21] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:02:32]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:02:32]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:02:32]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:02:32]  * ASSEMBLY     auto:intel
+[2018-10-18 20:02:32]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:02:32]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:02:32]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:02:32]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:02:32]  * HUGE PAGES   available
+[2018-10-18 20:02:32]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:02:33] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 20:02:33] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:02:33] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:02:41]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:02:41]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:02:41]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:02:41]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:02:41]  * ASSEMBLY     auto:intel
+[2018-10-18 20:02:41]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:02:41]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:02:41]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:02:41]  * HUGE PAGES   available
+[2018-10-18 20:02:41]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:02:41] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 20:02:41] new job from xmr.pool.hashto.cash:80 diff 1000 algo cn/2
+[2018-10-18 20:02:41] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:02:44] accepted (1/0) diff 1000 (98 ms)
+[2018-10-18 20:02:46] new job from xmr.pool.hashto.cash:80 diff 1000 algo cn/2
+[2018-10-18 20:02:52]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:02:52]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:02:52]  * HUGE PAGES   available
+[2018-10-18 20:02:52]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:02:52]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:02:52]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:02:52]  * ASSEMBLY     auto:intel
+[2018-10-18 20:02:52]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:02:52]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:02:52]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:02:52] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:02:52] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:02:53]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:02:54]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:02:54]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:02:54]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:02:54]  * ASSEMBLY     auto:intel
+[2018-10-18 20:02:54]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:02:54]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:02:54]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:02:54]  * HUGE PAGES   available
+[2018-10-18 20:02:54]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:02:54] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 20:02:54] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:02:55] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:02:58]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:02:58]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:02:58]  * HUGE PAGES   available
+[2018-10-18 20:02:58]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:02:58]  * ASSEMBLY     auto:intel
+[2018-10-18 20:02:58]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:02:58]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:02:58]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:02:58]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:02:58]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:02:59] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:03:00] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:03:00] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:03:10] accepted (1/0) diff 1100 (82 ms)
+[2018-10-18 20:03:11] new job from xmr.pool.hashto.cash:80 diff 3300 algo cn/2
+[2018-10-18 20:12:01]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:12:01]  * HUGE PAGES   available
+[2018-10-18 20:12:01]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:12:01]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:12:01]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:12:01]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:12:01]  * ASSEMBLY     auto:intel
+[2018-10-18 20:12:01]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:12:01]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:12:01]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:12:02] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:12:02] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:12:02] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:12:09]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:12:09]  * HUGE PAGES   available
+[2018-10-18 20:12:09]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:12:09]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:12:09]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:12:09]  * ASSEMBLY     auto:intel
+[2018-10-18 20:12:09]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:12:09]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:12:09]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:12:09]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:12:10] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:12:10] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:12:10] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:12:11]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:12:11]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:12:11]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:12:11]  * HUGE PAGES   available
+[2018-10-18 20:12:11]  * ASSEMBLY     auto:intel
+[2018-10-18 20:12:11]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:12:11]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:12:11]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:12:11]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:12:11]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:12:11]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:12:11]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:12:11]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:12:11]  * ASSEMBLY     auto:intel
+[2018-10-18 20:12:11]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:12:11]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:12:11]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:12:11]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:12:11]  * HUGE PAGES   available
+[2018-10-18 20:12:11]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:12:11] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 20:12:11] new job from xmr.pool.hashto.cash:80 diff 1000 algo cn/2
+[2018-10-18 20:12:12] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:12:13] accepted (1/0) diff 1000 (152 ms)
+[2018-10-18 20:15:37]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:15:37]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:15:37]  * HUGE PAGES   available
+[2018-10-18 20:15:37]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:15:37]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:15:37]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:15:37]  * ASSEMBLY     auto:intel
+[2018-10-18 20:15:37]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:15:37]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:15:37]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:15:37] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:15:37] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:15:38] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:15:45]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:15:45]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:15:45]  * HUGE PAGES   available
+[2018-10-18 20:15:45]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:15:45]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:15:45]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:15:45]  * ASSEMBLY     auto:intel
+[2018-10-18 20:15:45]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:15:45]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:15:45]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:15:45] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:15:45] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:15:45] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:15:50] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:15:58]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:15:58]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:15:58]  * HUGE PAGES   available
+[2018-10-18 20:15:58]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:15:58]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:15:58]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:15:58]  * ASSEMBLY     auto:intel
+[2018-10-18 20:15:58]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:15:58]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:15:58]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:15:58] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:15:59] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:15:59] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:16:05]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:16:05]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:16:05]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:16:05]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:16:05]  * ASSEMBLY     auto:intel
+[2018-10-18 20:16:05]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:16:05]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:16:05]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:16:05]  * HUGE PAGES   available
+[2018-10-18 20:16:05]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:16:05] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 20:16:05] new job from xmr.pool.hashto.cash:80 diff 1000 algo cn/2
+[2018-10-18 20:16:05] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:16:07]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:16:07]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:16:07]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:16:07]  * ASSEMBLY     auto:intel
+[2018-10-18 20:16:07]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:16:07]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:16:07]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:16:07]  * HUGE PAGES   available
+[2018-10-18 20:16:07]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:16:07]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:16:07] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:16:07] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:16:07]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:16:07]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:16:07]  * HUGE PAGES   available
+[2018-10-18 20:16:07]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:16:07]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:16:07]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:16:07]  * ASSEMBLY     auto:intel
+[2018-10-18 20:16:07]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:16:07]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:16:07]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:16:08] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:16:08] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:16:09]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:16:09]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:16:09]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:16:09]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:16:09]  * ASSEMBLY     auto:intel
+[2018-10-18 20:16:09]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:16:09]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:16:09]  * HUGE PAGES   available
+[2018-10-18 20:16:09]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:16:09]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:16:09] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-18 20:16:09] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:16:10] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:19:36]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:19:36]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:19:36]  * HUGE PAGES   available
+[2018-10-18 20:19:36]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:19:36]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:19:36]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:19:36]  * ASSEMBLY     auto:intel
+[2018-10-18 20:19:36]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:19:36]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:19:36]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:19:36] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:19:36] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:19:37] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:29:59]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:29:59]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:29:59]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:29:59]  * ASSEMBLY     auto:intel
+[2018-10-18 20:29:59]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:29:59]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:29:59]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:29:59]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:29:59]  * HUGE PAGES   available
+[2018-10-18 20:29:59]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:29:59] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:29:59] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:30:00] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-18 20:30:02] accepted (1/0) diff 1100 (89 ms)
+[2018-10-18 20:31:28]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-18 20:31:28]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-18 20:31:28]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-18 20:31:28]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-18 20:31:28]  * ASSEMBLY     auto:intel
+[2018-10-18 20:31:28]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-18 20:31:28]  * API BIND     0.0.0.0:25002
+[2018-10-18 20:31:28]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-18 20:31:28]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-18 20:31:28]  * HUGE PAGES   available
+[2018-10-18 20:31:28] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-18 20:31:28] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-18 20:31:28] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-19 22:25:15]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-19 22:25:15]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-19 22:25:15]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-19 22:25:15]  * ASSEMBLY     auto:intel
+[2018-10-19 22:25:15]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-19 22:25:15]  * API BIND     0.0.0.0:25002
+[2018-10-19 22:25:15]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-19 22:25:15]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-19 22:25:15]  * HUGE PAGES   available
+[2018-10-19 22:25:15]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-19 22:25:15] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-19 22:25:15] new job from xmr.pool.hashto.cash:80 diff 1000 algo cn/2
+[2018-10-19 22:25:15] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-19 22:25:17] new job from xmr.pool.hashto.cash:80 diff 1000 algo cn/2
+[2018-10-19 22:26:32]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-19 22:26:32]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-19 22:26:32]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-19 22:26:32]  * ASSEMBLY     auto:intel
+[2018-10-19 22:26:32]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-19 22:26:32]  * API BIND     0.0.0.0:25002
+[2018-10-19 22:26:32]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-19 22:26:32]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-19 22:26:32]  * HUGE PAGES   available
+[2018-10-19 22:26:32]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-19 22:26:32] use pool xmr.pool.hashto.cash:80  188.166.192.159
+[2018-10-19 22:26:32] new job from xmr.pool.hashto.cash:80 diff 1000 algo cn/2
+[2018-10-19 22:26:32] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-19 22:28:46]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-19 22:28:46]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-19 22:28:46]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-19 22:28:46]  * ASSEMBLY     auto:intel
+[2018-10-19 22:28:46]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-19 22:28:46]  * API BIND     0.0.0.0:25002
+[2018-10-19 22:28:46]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-19 22:28:46]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-19 22:28:46]  * HUGE PAGES   available
+[2018-10-19 22:28:46]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-19 22:28:47] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-19 22:28:47] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-19 22:28:47] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-19 22:51:11]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-19 22:51:11]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-19 22:51:11]  * HUGE PAGES   available
+[2018-10-19 22:51:11]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-19 22:51:11]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-19 22:51:11]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-19 22:51:11]  * ASSEMBLY     auto:intel
+[2018-10-19 22:51:11]  * POOL #1      xmr.pool.hashto.cash:80 variant=auto, TLS=0
+[2018-10-19 22:51:11]  * API BIND     0.0.0.0:25002
+[2018-10-19 22:51:11]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-19 22:51:11] use pool xmr.pool.hashto.cash:80  195.201.169.235
+[2018-10-19 22:51:11] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-19 22:51:11] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-19 22:51:12] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
+[2018-10-19 22:51:22] accepted (1/0) diff 1100 (95 ms)

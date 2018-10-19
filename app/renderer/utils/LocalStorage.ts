@@ -114,11 +114,11 @@ export class LocalStorage extends EventEmitter {
   }
 
   // ToDo typings
-  static get poolsReport(): any | null {
+  static get poolsReport(): any[] | null {
     return safeParse(localStorage.poolsReport);
   }
 
-  static set poolsReport(val: any | null) {
+  static set poolsReport(val: any[] | null) {
     localStorage.poolsReport = JSON.stringify(val);
   }
 

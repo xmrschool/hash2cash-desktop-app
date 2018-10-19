@@ -47,7 +47,6 @@ export default class Dropdown extends React.Component<DropdownProps> {
     const wrapper = this.element;
     const button = this.props.childRef;
 
-    console.log('btn: ', button);
     if (
       !wrapper.contains(event.target) &&
       (!button || !button.contains(event.target))

@@ -9,7 +9,7 @@ import { sleep } from '../../../renderer/utils/sleep';
 import LocalizedError from '../../errors/LocalizedError';
 let LocalStorage: any;
 if (process.env.NODE_ENV !== 'test') {
-  LocalStorage = require('../../../renderer/utils/LocalStorage');
+  LocalStorage = require('../../../renderer/utils/LocalStorage').LocalStorage;
 }
 
 const debug = require('debug')('app:tests:poolResolver');
@@ -128,7 +128,7 @@ export class PoolResolver extends Test {
           __kind: 'intl',
           ...messages.checking,
           values: {
-            number: index,
+            number: index + 1,
           },
         },
         status: 'waiting',
@@ -161,7 +161,9 @@ export class PoolResolver extends Test {
             report.push({ host, port, isTls, isOk: false });
           }
         },
-        resolve
+        () => {
+          resolve();
+        }
       )
     );
 

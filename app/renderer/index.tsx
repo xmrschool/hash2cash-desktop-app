@@ -1,3 +1,6 @@
+import '../core/cas';
+import '../core/diagnostics/tests/expose';
+
 import { ipcRenderer } from 'electron';
 import * as React from 'react';
 import { render } from 'react-dom';
@@ -7,13 +10,10 @@ import socket from './socket';
 import './app.global.scss';
 import trackError from '../core/raven';
 
-if (__DEV__) {
-  const { whyDidYouUpdate } = require('why-did-you-update');
-  whyDidYouUpdate(React);
-}
-
 const { configureStore, history } = require('./store/configureStore').default;
 const store = configureStore();
+
+delete (window as any).eval;
 
 // simple !__WIN32__ doesnt work...
 if (__WIN32__ === false) {

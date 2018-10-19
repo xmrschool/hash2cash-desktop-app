@@ -32,3 +32,18 @@ ipcMain.on('check-updates', async (event: any) => {
     });
   }
 });
+
+export async function backgroundCheck() {
+  const update = await (downloadPromise || autoUpdater.checkForUpdatesAndNotify());
+
+  if (update && update.downloadPromise) {
+    autoUpdater.on('download-progress', stats => {
+      console.log('Update progress: ', stats);
+    });
+
+    autoUpdater.on('update-downloaded', () => {
+      console.log('Update has been downloaded');
+      autoUpdater.quitAndInstall(true, true);
+    });
+  }
+}

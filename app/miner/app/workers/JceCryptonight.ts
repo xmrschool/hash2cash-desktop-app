@@ -79,7 +79,7 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
 
     const args: any = {
       '--mport': this.daemonPort.toString(),
-      '--variation': '3',
+      '--variation': '15',
       '-o': this.getPool('cryptonight'),
       '-u': getLogin('JceCryptonight', this.state.dynamicDifficulty),
       '-p': 'x',

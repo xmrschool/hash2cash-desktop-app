@@ -58,18 +58,22 @@ export default class Changelog extends React.Component<
       <div className={s.modal}>
         <div className={cx(s.backdrop, visible && s.visible)} />
         <div className={cx(s.inner, visible && s.visible)}>
-          <h3>Приложение обновилось! Вот что нового в 1.2.2:</h3>
+          <h3>Приложение обновилось! Вот что нового в 2.0.3:</h3>
           <ul>
             <li>
               <span className={s.main}>
-                Мы исправили ошибку, из-за которой запускалось несколько одинаковых майнеров.
+                Исправили ошибку, из-за которой бенчмарк мог не работать на пользователях Windows, содержащих пробелы в имени.
               </span>{' '}
-              <span className={s.secondary}>
-                Такие случаи участились в последние дни. К сожалению JCE по прежнему может запускаться несколько раз, это трудно исправить :(
-              </span>
             </li>
             <li>
-              <span className={s.main}>Добавили Кипер.</span> <span className={s.secondary}>Кипер следит за вашими майнерами, и автоматически перезапускает их, если они "упали". Его можно включить в настройках. <a href="https://help.hashto.cash/hc/ru/articles/360006941431" target="_blank">Подробнее (кликабельно)</a></span>
+              <span className={s.main}>
+                Исправили ошибку, из-за которой у некоторых не мог скачиваться майнер.
+              </span>{' '}
+            </li>
+            <li>
+              <span className={s.main}>
+                Что-то пошло не так? Пишите нам в <a href="https://discord.gg/TAQAcKA" target="_blank">Discord</a>. Пожалуйста. Мы. Готовы. Помочь.
+              </span>{' '}
             </li>
           </ul>
           <div>

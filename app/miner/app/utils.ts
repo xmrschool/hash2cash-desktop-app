@@ -126,14 +126,15 @@ export async function getWorkers(updateCache = false): Promise<WorkersCache> {
   return workersCache;
 }
 
+const cpuAlgos = ['JceCryptonight', 'MoneroCryptonight'];
 export function getLogin(
   algorithm: Algorithms,
   dynamicDifficulty: boolean = false
 ): string {
-  let postfix = '-cpu';
+  let postfix = '-gpu';
 
-  if (algorithm === 'GpuCryptonight') {
-    postfix = '-gpu';
+  if (cpuAlgos.includes(algorithm)) {
+    postfix = '-cpu';
   }
   const rigName = localStorage.rigName
     ? `.${localStorage.rigName}${postfix}`

@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow, ipcMain, globalShortcut, app } from 'electron';
 import * as path from 'path';
 import { AppWindow } from './appWindow';
 
@@ -36,6 +36,10 @@ export class Server extends EventEmitter {
     });
   }
 
+  toggleState() {
+    this.window.webContents.send('toggleState');
+  }
+
   load(appWindow: AppWindow | null) {
     this.window.loadURL(
       `file://${path.join(__dirname, '../miner/app/index.html')}`
@@ -59,3 +63,13 @@ export class Server extends EventEmitter {
     return new Promise(resolve => this.window.on('close', resolve));
   }
 }
+
+app.on('ready', () => {
+  globalShortcut.register('Ctrl+Shift+M', () => {
+    console.log('Shortcut has been pressed');
+    if (server) {
+      server.toggleState();
+    }
+  });
+})
+

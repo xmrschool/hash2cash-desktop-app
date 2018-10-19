@@ -1,9 +1,11 @@
 import * as electron from 'electron';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 
 import { EventEmitter } from 'events';
 import { Downloadable } from '../api/Api';
 import extract7z from '../../core/7z/extractPromise';
+import { getRequestArgs } from '../../core/cas';
 
 const md5File = require('md5-file/promise');
 const DecompressZip = require('decompress-zip');
@@ -62,9 +64,12 @@ export async function extractFile(
     case 'zip':
       await extractZip(fileName, output);
 
+      fs.writeFile(path.join(output, 'unpacked'), 'yeaah boy');
       return true;
     case '7z':
       await extract7z(fileName, output);
+
+      fs.writeFile(path.join(output, 'unpacked'), 'yeaah boy');
 
       return true;
     default:
@@ -184,7 +189,7 @@ export default class FileDownloader extends EventEmitter {
                     );
 
                     const downloader = progress(
-                      request.get(miner.downloadUrl),
+                      request.get({ url: miner.downloadUrl, ...getRequestArgs() }),
                       {
                         throttle: 500,
                       }
@@ -243,7 +248,7 @@ export default class FileDownloader extends EventEmitter {
                   details: error,
                   miner,
                   formattedMessage: `Unexpected error happened: ${
-                    error.message
+                    error && error.message ? error.message : error
                   }`,
                 });
 

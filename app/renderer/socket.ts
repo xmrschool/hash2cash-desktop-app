@@ -2,6 +2,7 @@ import * as io from 'socket.io-client';
 import CurrenciesService from './mobx-store/CurrenciesService';
 import { LocalStorage } from './utils/LocalStorage';
 import userState from './mobx-store/User';
+
 const config = require('../config.js'); // tslint:disable-line
 
 export type MinerReadyCallback = (_socket: SocketIOClient.Socket) => any;

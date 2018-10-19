@@ -1,3 +1,5 @@
+import '../core/cas';
+
 import { app, ipcMain, Menu } from 'electron';
 import * as fs from 'fs-extra';
 import { AppWindow } from './appWindow';
@@ -10,7 +12,7 @@ import buildTray from './tray';
 import enableUpdates from './appUpdater';
 import trackError from '../core/raven';
 import { enable } from '../renderer/utils/startup';
-import './updateIpc';
+import { backgroundCheck } from './updateIpc';
 import { initializeConfig } from './config';
 
 require('source-map-support').install();
@@ -140,6 +142,14 @@ app.on('ready', () => {
   createServer();
   createSandbox();
 });
+
+export function bindBackgroundCheck() {
+  setInterval(() => {
+    if (!mainWindow || mainWindow.destroyed()) {
+      backgroundCheck();
+    }
+  }, 1000 * 60 * 3);
+}
 
 export function openMainWindow() {
   if (quitting) return;

@@ -4,6 +4,7 @@ import * as path from 'path';
 import { EventEmitter } from 'events';
 import { Downloadable } from '../api/Api';
 import { extractFile } from './FileDownloader';
+import { getRequestArgs } from '../../core/cas';
 
 const md5File = require('md5-file/promise');
 const DecompressZip = require('decompress-zip');
@@ -142,7 +143,7 @@ export default class FileDownloaderAlone extends EventEmitter {
 
         debug('Fetching up miner: ', miner, ' to directory ', outputDir);
 
-        const downloader = progress(request.get(miner.downloadUrl), {
+        const downloader = progress(request.get({ url: miner.downloadUrl, ...getRequestArgs() }), {
           throttle: 500,
         });
 

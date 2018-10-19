@@ -149,7 +149,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
       console.info('Setting up a keeper because we have runningSince');
       const diff = moment().diff(this.runningSince);
       console.info('Diff between current time and runningSince is (ms) ', diff);
-      if (diff >= 10000) {
+      if (diff >= 30000) {
         setTimeout(() => {
           workQueue.add(() => this.start().catch(console.error));
         }, 10000);

@@ -307,7 +307,6 @@ export default async function collectHardware(): Promise<Architecture> {
     openCl!.devices.forEach(device => {
       try {
         const vendor = determineOpenclVendor(device.vendor);
-        console.log('vendor is: ', vendor);
         const wmicDevice = wmicDevices
           ? wmicDevices.find(
               d =>

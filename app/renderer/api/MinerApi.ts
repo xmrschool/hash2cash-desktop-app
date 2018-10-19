@@ -148,6 +148,10 @@ export class Worker extends EventEmitter {
       const resp = await minerApi.fetch(
         `/workers/${this.data.name}/start${minerApi.getQuery(commit)}`
       );
+      console.log(resp);
+      if (resp.success) {
+        this.data.running = true;
+      }
       this.pendingRequest = false;
 
       return resp;
@@ -177,6 +181,9 @@ export class Worker extends EventEmitter {
       const resp = await minerApi.fetch(
         `/workers/${this.data.name}/stop${minerApi.getQuery(commit)}`
       );
+      if (resp.success) {
+        this.data.running = false;
+      }
       this.pendingRequest = false;
       return resp;
     } catch (e) {

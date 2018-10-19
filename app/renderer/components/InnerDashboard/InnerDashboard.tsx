@@ -29,6 +29,7 @@ import Changelog from '../Changelog/Changelog';
 import formatHashrate from '../../utils/formatHashrate';
 import { StatsView } from './StatsView';
 import { MobxState } from '../../mobx-store';
+import { quitAccount, quitApp } from '../../utils/logout';
 
 const settings = require('../../../core/icon/settings.svg');
 const ws = require('scenes/Initialization/Worker.css');
@@ -556,8 +557,8 @@ export class InnerDashboard extends React.Component<any> {
         <Delimiter />
         <DropdownPick onClick={() => globalState.showLayer('settings') && this.toggle()}><FormattedMessage id="SETTINGS_MENU_GO_SETTINGS" /></DropdownPick>
         <Delimiter />
-        <DropdownPick><FormattedMessage id="SETTINGS_MENU_LOGOUT" /></DropdownPick>
-        <DropdownPick><FormattedMessage id="SETTINGS_MENU_LOGOUT_YEAH" /></DropdownPick>
+        <DropdownPick onClick={() => quitAccount(this.props)}><FormattedMessage id="SETTINGS_MENU_LOGOUT" /></DropdownPick>
+        <DropdownPick onClick={() => quitApp()}><FormattedMessage id="SETTINGS_MENU_LOGOUT_YEAH" /></DropdownPick>
       </div>
     )
   }

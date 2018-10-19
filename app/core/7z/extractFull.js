@@ -16,13 +16,12 @@ export default function (archive, dest, { exePath, ...options } = {}) {
   return when.promise(function (resolve, reject, progress) {
 
     // Create a string that can be parsed by `run`.
-    let command = exePath ? exePath : (/(rar)$/i.test(archive))? '7z' : '7za'
-    command += ' x -r -y -bsp1 "' + archive + '" -o"' + dest + '" '
+    const args = 'x -r -y -bsp1 "' + archive + '" -o"' + dest + '" '
     //   recursive-^   |    ^--- This makes it print the progress to node
     //                  °.. Always assume "yes" (to overwrite and stuff)
     
     // Start the command
-    u.run(command, options)
+    u.run(exePath, args, options)
 
     // When a stdout is emitted, parse each line and search for a pattern. When
     // the pattern is found, extract the file (or directory) name from it and
