@@ -3,13 +3,12 @@ import * as moment from 'moment';
 import * as kill from 'tree-kill';
 import * as path from 'path';
 
+import { BaseWorker, MenuPicks, Parameter, ParameterMap } from './BaseWorker';
 import {
-  BaseWorker,
-  MenuPicks,
-  Parameter,
-  ParameterMap,
-} from './BaseWorker';
-import { attemptToTerminateMiners, getEthUri, getLogin, RuntimeError } from '../utils';
+  attemptToTerminateMiners, getEthUri,
+  getLogin,
+  RuntimeError,
+} from '../utils';
 import { timeout } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
 import * as fs from 'fs-extra';
@@ -64,9 +63,7 @@ export default class Bminer extends BaseWorker<Parameteres> {
   }
 
   async getAppArgs() {
-    this.daemonPort = await findAPortNotInUse(
-      localStorage.bMinerPort || 25004
-    );
+    this.daemonPort = await findAPortNotInUse(localStorage.bMinerPort || 25004);
     const args: any = {
       '-api': `localhost:${this.daemonPort}`,
       '-uri': getEthUri(getLogin('ether')),
@@ -136,7 +133,7 @@ export default class Bminer extends BaseWorker<Parameteres> {
       }
       const stats = await this.getStats();
 
-      this.speedHistory.addSpeed(stats.miners[0].solver.solution_rate)
+      this.speedHistory.addSpeed(stats.miners[0].solver.solution_rate);
       return this.speedHistory.speed();
     } catch (e) {
       console.error('Failed to get speed: ', e);

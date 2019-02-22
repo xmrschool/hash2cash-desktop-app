@@ -126,6 +126,12 @@ export async function getWorkers(updateCache = false): Promise<WorkersCache> {
   return workersCache;
 }
 
+export function isTlsEnabled() {
+  return !(
+    typeof localStorage !== 'undefined' && localStorage.disableTls === 'true'
+  );
+}
+
 const cpuAlgos = ['JceCryptonight', 'MoneroCryptonight'];
 export function getLogin(
   algorithm: Algorithms,
@@ -158,6 +164,22 @@ export function getEthUrl() {
     return `ssl://eth.pool.hashto.cash:443`;
   }
 }
+export function getTlsEthUri(username: string) {
+  try {
+    const ethPool = LocalStorage.appInfo!.pools.ether as any;
+
+    const {
+      tlsUrl: url = 'eth.pool.hashto.cash:443',
+      proto = 'ethproxy',
+    } = ethPool;
+    const outerUrl = url.includes(':') ? url : `${url}:80`;
+    return `${proto}+ssl://${encodeURIComponent(username)}@${outerUrl}/`;
+  } catch (e) {
+    return `ethproxy+ssl://${encodeURIComponent(
+      username
+    )}@eth.pool.hashto.cash:443/`;
+  }
+}
 export function getEthUri(username: string) {
   try {
     const ethPool = LocalStorage.appInfo!.pools.ether as any;
@@ -170,6 +192,10 @@ export function getEthUri(username: string) {
       username
     )}@eth.pool.hashto.cash:80/`;
   }
+}
+
+export function getPreferredEthUri(username: string) {
+  return isTlsEnabled() ? getTlsEthUri(username) : getEthUri(username);
 }
 
 export function getDifficulty(algorithm: Algorithms): number | null {

@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import * as fs from 'fs-extra';
 import {
   BaseWorker,
+  isFSError,
   MenuPicks,
   Parameter,
   ParameterMap,
@@ -15,7 +16,7 @@ import { getPort, timeout } from '../../../core/utils';
 import { _CudaDevice, Architecture } from '../../../renderer/api/Api';
 import { sleep } from '../../../renderer/utils/sleep';
 import { LocalStorage } from '../../../renderer/utils/LocalStorage';
-import { addRunningPid } from '../RunningPids';
+import { addRunningPid, shiftRunningPid } from '../RunningPids';
 import trackError from '../../../core/raven';
 import { findAPortNotInUse } from '../../../core/portfinder';
 
@@ -26,6 +27,8 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
   static usesHardware = ['gpu'];
   static usesAccount = 'XMR';
   static displayName = 'XMR Stak';
+
+  latestString: string = '';
 
   runningSince: moment.Moment | null = null;
   willQuit: boolean = false;
@@ -168,14 +171,18 @@ ${outer.join(',\n')}
     const s = (q: any) => JSON.stringify(q);
 
     if (!this.running) this.daemonPort = await getPort(25001);
+    const { url, isTls } = this.getPreferredPool('cryptonight');
+
     const pools = `
     "pool_list" :
 [
-	{"pool_address" : ${s(this.getPool('cryptonight'))}, "wallet_address" : ${s(
+	{"pool_address" : ${s(url)}, "wallet_address" : ${s(
       getLogin('GpuCryptonight', this.state.dynamicDifficulty)
     )}, "rig_id" : ${s(
       this.rigName + '-gpu'
-    )}, "pool_password" : "", "use_nicehash" : true, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
+    )}, "pool_password" : "", "use_nicehash" : true, "use_tls" : ${s(
+      isTls
+    )}, "tls_fingerprint" : "", "pool_weight" : 1 },
 ],
 "currency" : "monero",
 `;
@@ -187,7 +194,7 @@ ${outer.join(',\n')}
 "print_motd" : true,
 "h_print_time" : 60,
 "aes_override" : null,
-"use_slow_memory" : "always",
+"use_slow_memory" : "warn",
 "tls_secure_algo" : true,
 "daemon_mode" : false,
 "flush_stdout" : false,
@@ -299,6 +306,35 @@ ${outer.join(',\n')}
     }
   }
 
+  handleTermination(
+    data: any,
+    isClose: boolean = false,
+    forceHandle: boolean = false
+  ) {
+    if (this.pid) {
+      shiftRunningPid(this.pid);
+    }
+    if (!forceHandle && (this.willQuit || !this.running)) return;
+    if (isFSError(data))
+      return super.handleTermination(data, isClose, forceHandle);
+
+    const errorMessage = `XMR Stak has been stopped with code ${data} and last message ${
+      this.latestString
+    }`;
+
+    this.emit({
+      running: false,
+      _data: {
+        grateful: isClose,
+        message: errorMessage,
+        code: data && data.code,
+        raw: data,
+      },
+    });
+
+    this.running = false;
+  }
+
   async start(): Promise<boolean> {
     if (this.running) throw new Error('Miner already running');
 
@@ -331,6 +367,9 @@ ${outer.join(',\n')}
 
       this.daemon = spawn(path.join(this.path, this.executableName), args, {
         cwd: this.path,
+        env: {
+          XMRSTAK_NOWAIT: 'true',
+        },
       });
       this.runningSince = moment();
       const pid = this.daemon.pid;
@@ -341,10 +380,12 @@ ${outer.join(',\n')}
       this.emit({ running: true });
 
       this.daemon.stdout.on('data', data => {
-        if (!this.running) { // Still emits some stdout even if miner was shut down?
+        if (!this.running) {
+          // Still emits some stdout even if miner was shut down?
           kill(pid);
           attemptToTerminateMiners(['hashtocash-cryptonight']);
         }
+        this.latestString = data.toString();
         console.log(`stdout: ${data}`);
       });
 

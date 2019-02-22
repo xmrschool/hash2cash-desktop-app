@@ -3126,3 +3126,32 @@ cash:80 diff 1410 algo cn/1
 [2018-10-19 22:51:11] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
 [2018-10-19 22:51:12] new job from xmr.pool.hashto.cash:80 diff 1100 algo cn/2
 [2018-10-19 22:51:22] accepted (1/0) diff 1100 (95 ms)
+[2018-10-26 23:15:44]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-26 23:15:44]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-26 23:15:44]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-26 23:15:44]  * ASSEMBLY     auto:intel
+[2018-10-26 23:15:44]  * POOL #1      xmr.pool.hashto.cash:443 variant=auto, TLS=1
+[2018-10-26 23:15:44]  * API BIND     0.0.0.0:25002
+[2018-10-26 23:15:44]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-26 23:15:44]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-26 23:15:44]  * HUGE PAGES   available
+[2018-10-26 23:15:44]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-26 23:15:45] use pool xmr.pool.hashto.cash:443 TLSv1.2 188.166.192.159
+[2018-10-26 23:15:45] fingerprint (SHA-256): "f10cc4571a10338fd2c56d6078b8871eb4358151b5fba770925ffa956027d6c2"
+[2018-10-26 23:15:45] new job from xmr.pool.hashto.cash:443 diff 1000 algo cn/2
+[2018-10-26 23:15:45] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-26 23:16:11]  * ABOUT        XMRig/2.8.1 MSVC/2017
+[2018-10-26 23:16:11]  * LIBS         libuv/1.20.3 OpenSSL/1.1.0i microhttpd/0.9.59 
+[2018-10-26 23:16:11]  * HUGE PAGES   available
+[2018-10-26 23:16:11]  * CPU          Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1) x64 AES
+[2018-10-26 23:16:11]  * CPU L2/L3    1.0 MB/6.0 MB
+[2018-10-26 23:16:11]  * THREADS      3, cryptonight, av=0, donate=0%
+[2018-10-26 23:16:11]  * ASSEMBLY     auto:intel
+[2018-10-26 23:16:11]  * POOL #1      xmr.pool.hashto.cash:443 variant=auto, TLS=1
+[2018-10-26 23:16:11]  * API BIND     0.0.0.0:25002
+[2018-10-26 23:16:11]  * COMMANDS     'h' hashrate, 'p' pause, 'r' resume
+[2018-10-26 23:16:12] use pool xmr.pool.hashto.cash:443 TLSv1.2 188.166.192.159
+[2018-10-26 23:16:12] fingerprint (SHA-256): "f10cc4571a10338fd2c56d6078b8871eb4358151b5fba770925ffa956027d6c2"
+[2018-10-26 23:16:12] new job from xmr.pool.hashto.cash:443 diff 1000 algo cn/2
+[2018-10-26 23:16:12] READY (CPU) threads 3(3) huge pages 3/3 100% memory 6.0 MB
+[2018-10-26 23:16:25] new job from xmr.pool.hashto.cash:443 diff 1000 algo cn/2

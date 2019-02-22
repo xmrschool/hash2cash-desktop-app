@@ -77,10 +77,12 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
       localStorage.jceCryptonightPort || 25003
     );
 
+    const { url, isTls } = this.getPreferredPool('cryptonight');
+
     const args: any = {
       '--mport': this.daemonPort.toString(),
       '--variation': '15',
-      '-o': this.getPool('cryptonight'),
+      '-o': url,
       '-u': getLogin('JceCryptonight', this.state.dynamicDifficulty),
       '-p': 'x',
     };
@@ -92,6 +94,9 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
     });
     if (this.parameters.power === 'low') {
       outer.push('--low');
+    }
+    if (isTls) {
+      outer.push('--ssl');
     }
 
     outer.push('--nicehash', '--stakjson', '--any', '--auto');

@@ -12,6 +12,7 @@ export type Pool = {
   isOk: boolean;
   proto: string;
   url: string;
+  tlsUrl?: string;
   unavialbleReason: string | null;
   status: 'ok' | 'down';
 };

@@ -373,8 +373,7 @@ export default class Initialization extends React.Component<
             this.renderBenchmarkDetails(initializationState)}
           </div>
         </div>
-        {initializationState.hardware &&
-          minerObserver.workers &&
+        {initializationState.everythingDone &&
           this.renderResults()}
         {initializationState.unexpectedError && (
           <Modal>

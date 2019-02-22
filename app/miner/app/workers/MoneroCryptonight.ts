@@ -118,6 +118,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     this.daemonPort = await findAPortNotInUse(
       localStorage.xmrigPort || 25002
     );
+    const { url, isTls } = this.getPreferredPool('cryptonight');
 
     const args: any = {
       '-l': './log.txt',
@@ -125,7 +126,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       '--print-time': 10000,
       '--max-cpu-usage': this.parameters.power,
       '--cpu-priority': this.parameters.priority,
-      '-o': this.getPool('cryptonight'),
+      '-o': url,
       '-u': getLogin('MoneroCryptonight', this.state.dynamicDifficulty),
       '-p': 'x',
     };
@@ -135,6 +136,9 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       outer.push(d);
       outer.push(args[d]);
     });
+    if (isTls) {
+      outer.push('--tls');
+    }
     outer.push('--no-color', '-k');
 
     return outer;

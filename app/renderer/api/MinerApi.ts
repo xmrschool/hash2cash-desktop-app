@@ -1,7 +1,7 @@
 import * as queryString from 'querystring';
 import { groupBy, sortBy } from 'lodash';
 import { EventEmitter } from 'events';
-import { action, observable } from 'mobx';
+import { action, observable, toJS } from 'mobx';
 
 import globalState, { default as GlobalState } from 'mobx-store/GlobalState';
 import { OuterJSON } from '../../miner/app/workers/BaseWorker';
@@ -46,10 +46,12 @@ export class Worker extends EventEmitter {
     onceMinerReady(localSocket => {
       debug('Miner backend was ready', localSocket);
       localSocket.on('state', ({ name, _data, ...params }: any) => {
-        debug('Received new state: ', { name, _data, ...params });
+        debug(`Received new state in ${this.data.name}: `, { name, _data, ...params });
 
         if (name === this.name) {
+          console.log('Miner data before: ', toJS(this.data));
           this.data = Object.assign(this.data, params);
+          console.log('Miner data after: ', toJS(this.data));
 
           this.emit('state', this);
 
@@ -148,10 +150,6 @@ export class Worker extends EventEmitter {
       const resp = await minerApi.fetch(
         `/workers/${this.data.name}/start${minerApi.getQuery(commit)}`
       );
-      console.log(resp);
-      if (resp.success) {
-        this.data.running = true;
-      }
       this.pendingRequest = false;
 
       return resp;

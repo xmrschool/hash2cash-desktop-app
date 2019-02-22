@@ -7,6 +7,7 @@ import { LocalStorage } from '../../../renderer/utils/LocalStorage';
 import { shiftRunningPid } from '../RunningPids';
 import trackError from '../../../core/raven';
 import workQueue from '../queue';
+import { isTlsEnabled } from '../utils';
 
 const config = require('../../../config.js');
 
@@ -35,7 +36,6 @@ export type OuterJSON<P extends string> = {
   updateThrottle?: number;
 };
 
-
 export interface IWorker<P> {
   running: boolean;
 
@@ -48,6 +48,11 @@ export interface IWorker<P> {
   reload(): Promise<void>;
 }
 
+export function isFSError(data: any) {
+  return (data && (data.code === 'UNKNOWN' || data.code === 'ENOENT')) ||
+    data === -4058 ||
+    data === 4058;
+}
 /**
  * Every worker must extend this class.
  * <P> is Enum allowed parameters
@@ -145,7 +150,12 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
   }
 
   handleKeeper() {
-    if (this.runningSince && localStorage.enableKeeper && localStorage.benchmark) { // We don't use keeper when running a benchmark
+    if (
+      this.runningSince &&
+      localStorage.enableKeeper &&
+      localStorage.benchmark
+    ) {
+      // We don't use keeper when running a benchmark
       console.info('Setting up a keeper because we have runningSince');
       const diff = moment().diff(this.runningSince);
       console.info('Diff between current time and runningSince is (ms) ', diff);
@@ -180,11 +190,7 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
     }
 
     console.log('Handling termination', data, data && data.code);
-    if (
-      (data && (data.code === 'UNKNOWN' || data.code === 'ENOENT')) ||
-      data === -4058 ||
-      data === 4058
-    ) {
+    if (isFSError(data)) {
       // If miner has been deleted we remove record that indicates if miner has been unpacked
       fs.remove(this.pathTo('unpacked'));
 
@@ -252,6 +258,26 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
     if (!findValue) throw new Error("Specified value doesn't exist");
 
     return findValue;
+  }
+
+  getTlsPool(algorithm: string): string | null {
+    try {
+      const parsed = LocalStorage.appInfo!.pools;
+
+      return parsed[algorithm].tlsUrl || 'xmr.pool.hashto.cash:443';
+    } catch (e) {
+      console.error('Failed to get an pool URL: ', e);
+      return null;
+    }
+  }
+
+  getPreferredPool(algorithm: string): { isTls: boolean; url: string | null } {
+    const isTls = isTlsEnabled();
+
+    return {
+      isTls,
+      url: isTls ? this.getTlsPool(algorithm) : this.getPool(algorithm),
+    };
   }
 
   getPool(algorithm: string): string | null {

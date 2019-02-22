@@ -47,30 +47,47 @@ const messages = defineMessages({
 export const TOTAL_BENCHMARK_TIME = 60; // Seconds, default set to 60
 
 export class InitializationState {
-  @observable hardware?: Architecture;
-  @observable manifest?: Manifest;
-  @observable unexpectedError?: string | null;
-  @observable status: string = 'Collecting hardware';
-  @observable step: number = 0; // A progress bar step
-  @observable progressText?: string;
-  @observable downloadError?: DownloadError & { miner: Downloadable };
+  @observable
+  hardware?: Architecture;
+  @observable
+  manifest?: Manifest;
+  @observable
+  unexpectedError?: string | null;
+  @observable
+  status: string = 'Collecting hardware';
+  @observable
+  step: number = 0; // A progress bar step
+  @observable
+  progressText?: string;
+  @observable
+  downloadError?: DownloadError & { miner: Downloadable };
 
-  @observable bechmarking = false;
-  @observable benchmarkQueue: InternalObserver[] = [];
-  @observable benchmarkQueueIndex = 0;
-  @observable benchmarkSecsLeft = 0;
-  @observable everythingDone = false;
+  @observable
+  bechmarking = false;
+  @observable
+  benchmarkQueue: InternalObserver[] = [];
+  @observable
+  benchmarkQueueIndex = 0;
+  @observable
+  benchmarkSecsLeft = 0;
+  @observable
+  everythingDone = false;
   benchmarkCountDown: any;
 
   aborted: boolean = false;
 
   // Used for downloader
-  @observable speed: number = 0;
-  @observable downloaded: number = 0;
-  @observable totalSize: number = 0;
-  @observable downloading: boolean = false;
+  @observable
+  speed: number = 0;
+  @observable
+  downloaded: number = 0;
+  @observable
+  totalSize: number = 0;
+  @observable
+  downloading: boolean = false;
 
-  @action reset() {
+  @action
+  reset() {
     this.hardware = undefined;
     this.manifest = undefined;
     this.unexpectedError = null;
@@ -184,16 +201,19 @@ export class InitializationState {
         this.aborted = true;
 
         if (this.benchmarkQueue[this.benchmarkQueueIndex]) {
-          this.benchmarkQueue[this.benchmarkQueueIndex]._data.stop()
+          this.benchmarkQueue[this.benchmarkQueueIndex]._data.stop();
         }
         resolve();
       });
 
+      debug('[benchmark] stopping all miners...');
       await minerApi.stopAll();
       // Wait till all workers are done
       await sleep(200);
 
+      debug('[benchmark] getting all workers...');
       const workers = await minerApi.getWorkers(true); // Force get new workers
+      debug('[benchmark] retrieved workers %O', minerApi.workers);
       if (minerApi.workers.length === 0) {
         throw new Error('Failed to get any of workers. Seems to be strange!');
       }
@@ -201,8 +221,10 @@ export class InitializationState {
       this.benchmarkQueue = workers.map(worker =>
         minerObserver.observe(worker, false)
       );
+      debug('[benchmark] built queue %O', this.benchmarkQueue);
       this.benchmarkSecsLeft = TOTAL_BENCHMARK_TIME * workers.length;
 
+      debug('[benchmark] starting a real benchmark');
       await this.nextMiner();
 
       const results = minerObserver.workers.map(result => ({
@@ -218,7 +240,7 @@ export class InitializationState {
       globalState.setBenchmark(benchmark);
       LocalStorage.benchmark = benchmark;
 
-      console.log('Benchmark is done!');
+      debug('[benchmark] benchmark has been done!', localStorage.benchmark);
     });
   }
 
@@ -228,11 +250,12 @@ export class InitializationState {
     try {
       if (this.benchmarkQueue.length <= this.benchmarkQueueIndex) {
         // element doesnt exist
-        debug('No miners anymore');
+        debug('[benchmark] no miners anymore');
         return;
       }
       const miner = this.benchmarkQueue[this.benchmarkQueueIndex];
 
+      debug('[benchmark] starting miner or timeout(10000)...');
       await Promise.race([sleep(10000), miner._data.start(false)]);
       miner.start();
 
