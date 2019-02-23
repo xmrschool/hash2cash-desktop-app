@@ -1,3 +1,4 @@
+import { remote } from 'electron';
 import { action, observable } from 'mobx';
 import Api from '../api/Api';
 
@@ -11,7 +12,9 @@ import { LocalStorage } from '../utils/LocalStorage';
 import { sleep } from '../utils/sleep';
 import calculateHourlyReturn from '../utils/calculator';
 
-export const INTERVAL_TIME = 1000;
+import BrowserWindow = Electron.BrowserWindow;
+
+export const INTERVAL_TIME = 2000;
 
 export class InternalObserver extends EventEmitter {
   @observable name: string;
@@ -22,6 +25,7 @@ export class InternalObserver extends EventEmitter {
   @observable.ref monthly: any = null;
   @observable.ref daily: any = null;
 
+  private currentWindow: BrowserWindow;
   private isObserving = false;
   _interval: any;
   _isObserver: true = true;
@@ -35,6 +39,7 @@ export class InternalObserver extends EventEmitter {
 
     this.name = worker.name;
     this._data = worker;
+    this.currentWindow = remote.getCurrentWindow();
   }
 
   async tryToEmitMetrics(stats: { highest: number; total: number[] }) {
@@ -83,6 +88,15 @@ export class InternalObserver extends EventEmitter {
 
     try {
       const stats = await this._data.getSpeed();
+
+      try {
+        const internalStats = await this._data.getStats();
+
+        console.log('Internal stats: ', internalStats);
+        if (internalStats.results.hashes_total) {
+          this.hashesSubmitted = internalStats.results.hashes_total;
+        }
+      } catch (e) {}
 
       if (stats === null) return;
 
@@ -150,9 +164,13 @@ export class InternalObserver extends EventEmitter {
   }
 
   async tick(): Promise<any> {
-    await sleep(this._data.data.updateThrottle || INTERVAL_TIME);
+    const isFocused = this.currentWindow.isFocused();
+    const updateInterval = this._data.data.updateThrottle || INTERVAL_TIME;
 
-    if (this.isObserving) {
+    await sleep(isFocused ? updateInterval : updateInterval * 3);
+
+    const visible = this.currentWindow.isVisible();
+    if (this.isObserving && visible) {
       await this.updateWorkerData();
     }
 

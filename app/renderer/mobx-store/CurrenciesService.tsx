@@ -95,8 +95,8 @@ export class CurrencyInstance {
   // Seems ESLint don't understand ! in property name
   /* eslint-disable */
   @observable name!: string;
-  @observable type!: AllowedTypes;
-  @observable symbol!: AllowedCurrencies;
+  @observable.ref type!: AllowedTypes;
+  @observable.ref symbol!: AllowedCurrencies;
   @observable unicodeSymbol?: string;
   @observable svgSymbol?: string;
 

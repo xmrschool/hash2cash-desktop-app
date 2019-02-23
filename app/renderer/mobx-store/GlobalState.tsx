@@ -45,16 +45,16 @@ export class GlobalState {
   connectionPromise?: Promise<void>;
   connectionResolve?: () => void;
 
-  @observable currentLocale: LocaleWithData | null = LocalStorage.currentLocale;
+  @observable.ref currentLocale: LocaleWithData | null = LocalStorage.currentLocale;
   @observable minerPort?: number;
   @observable socketConnected: boolean = false;
   @observable socketCantConnect: boolean = false;
   @observable userShare: number = 0.6;
-  @observable benchmark?: Benchmark;
-  @observable currentNotify?: Notify;
+  @observable.ref benchmark?: Benchmark;
+  @observable.ref currentNotify?: Notify;
 
-  @observable toast?: Toast;
-  @observable openedLayer: 'settings' | 'tips' | null = null;
+  @observable.ref toast?: Toast;
+  @observable.ref openedLayer: 'settings' | 'tips' | null = null;
   @observable layerOpened: boolean = false;
   @observable layerAnimating: boolean = false;
 

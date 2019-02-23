@@ -54,7 +54,7 @@ const debug = require('debug')('app:antivirusState');
 
 export class AntivirusState extends PersistedState {
   // Is result has been checked
-  @observable checked: boolean = false;
+  @observable.ref checked: boolean = false;
   // Are we adding folder to exceptions currently
   @observable running: boolean = false;
   // Does PC have any anti-virus software
@@ -64,9 +64,9 @@ export class AntivirusState extends PersistedState {
   // Is it already whitelisted and everything is fine. Can be checked only on Defender. Toggled on other anti-viruses, for instance, when miner is deleted.
   @observable whitelisted: boolean = false;
   // What's name of anti-virus
-  @observable name: string = '';
+  @observable.ref name: string = '';
   // What's error, if exists.
-  @observable error?: string;
+  @observable.ref error?: string;
 
   constructor() {
     super(

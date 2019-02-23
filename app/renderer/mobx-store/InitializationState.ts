@@ -47,9 +47,9 @@ const messages = defineMessages({
 export const TOTAL_BENCHMARK_TIME = 60; // Seconds, default set to 60
 
 export class InitializationState {
-  @observable
+  @observable.ref
   hardware?: Architecture;
-  @observable
+  @observable.ref
   manifest?: Manifest;
   @observable
   unexpectedError?: string | null;
@@ -59,7 +59,7 @@ export class InitializationState {
   step: number = 0; // A progress bar step
   @observable
   progressText?: string;
-  @observable
+  @observable.ref
   downloadError?: DownloadError & { miner: Downloadable };
 
   @observable

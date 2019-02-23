@@ -62,6 +62,7 @@ export class Balance extends React.Component<DefaultProps> {
   }
 }
 
+@observer
 export class Performance extends React.Component<{
   s: any;
 }> {
