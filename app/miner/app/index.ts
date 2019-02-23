@@ -20,6 +20,7 @@ import { sleep } from '../../renderer/utils/sleep';
 import { LocalStorage } from '../../renderer/utils/LocalStorage';
 import '../../core/raven';
 import { clearPids, getRunningPids } from './RunningPids';
+import { PoolResolver } from '../../core/diagnostics/tests/poolResolver';
 
 const logger = require('debug')('app:miner:server');
 const koa = new Koa();
@@ -319,6 +320,10 @@ async function killUnkilledProccesses() {
 if (!localStorage.minerAccessKey) {
   localStorage.minerAccessKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
+
+(new PoolResolver()).resolve().then(d => {
+  console.log('What pools are alive: ', d);
+});
 
 attemptToTerminateMiners()
   .then(() => killUnkilledProccesses()) // A trick to terminate miners that are not somehow closed

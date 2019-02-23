@@ -7,7 +7,6 @@ import {
   MenuPicks,
   Parameter,
   ParameterMap,
-  Pick,
 } from './BaseWorker';
 import { attemptToTerminateMiners, getLogin, RuntimeError } from '../utils';
 import { timeout } from '../../../core/utils';
@@ -16,23 +15,28 @@ import * as fs from 'fs-extra';
 import workersCache from '../workersCache';
 import { findAPortNotInUse } from '../../../core/portfinder';
 
-export type Parameteres = 'power' | 'priority';
+export type Parameteres = 'power';
 
-const debug = require('debug')('app:workers:moneroCryptonight');
-export default class MoneroCryptonight extends BaseWorker<Parameteres> {
-  static requiredModules = ['cryptonight'];
-  static usesHardware = ['cpu'];
+const maps: any = {
+  optimized: [12, 200],
+  middle: [10, 120],
+  speed: [8, 100],
+};
+
+const debug = require('debug')('app:workers:xmrigNvidia');
+export default class XmrigNvidia extends BaseWorker<Parameteres> {
+  static requiredModules = ['xmrig-nvidia'];
+  static usesHardware = ['gpu'];
   static usesAccount = 'XMR';
-  static displayName = 'XMRig';
+  static displayName = 'XMRig nVidia';
 
-  workerName: string = 'MoneroCryptonight';
+  workerName: string = 'XmrigNvidia';
   runningSince: moment.Moment | null = null;
 
   path: string = '';
   state: { [p: string]: any } = { dynamicDifficulty: false };
   parameters: ParameterMap<Parameteres> = {
-    power: 100,
-    priority: 0,
+    power: 'optimized',
   };
   daemon?: ChildProcess;
   running: boolean = false;
@@ -41,40 +45,15 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   pid?: number;
 
   get requiredModules() {
-    return MoneroCryptonight.requiredModules;
+    return XmrigNvidia.requiredModules;
   }
 
   get usesHardware() {
-    return MoneroCryptonight.usesHardware;
+    return XmrigNvidia.usesHardware;
   }
 
   get usesAccount() {
-    return MoneroCryptonight.usesAccount;
-  }
-
-  getSpeeds(): Pick[] {
-    return [
-      {
-        name: '🔥 Ultra 🔥',
-        value: 100,
-      },
-      {
-        name: '🔥 High',
-        value: 75,
-      },
-      {
-        name: 'Low',
-        value: 50,
-      },
-      {
-        name: 'Low',
-        value: 25,
-      },
-      {
-        name: 'Lowest possible',
-        value: 10,
-      },
-    ];
+    return XmrigNvidia.usesAccount;
   }
 
   getMenuItems(): MenuPicks {
@@ -88,43 +67,28 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   getPriorities() {
     return [
       {
-        name: 'Low',
-        value: 0,
+        name: 'More system speed',
+        value: 'optimized',
       },
       {
-        name: 'Below normal',
-        value: 1,
+        name: 'Middle',
+        value: 'middle',
       },
       {
-        name: 'Normal',
-        value: 2,
-      },
-      {
-        name: 'Above normal',
-        value: 3,
-      },
-      {
-        name: 'High',
-        value: 4,
-      },
-      {
-        name: '🔥Realtime',
-        value: 5,
+        name: 'More mining speed',
+        value: 'full',
       },
     ];
   }
 
   async getAppArgs() {
-    this.daemonPort = await findAPortNotInUse(localStorage.xmrigPort || 25002);
+    this.daemonPort = await findAPortNotInUse(localStorage.xmrigPort || 25007);
     const { url, isTls } = this.getPreferredPool('cryptonight');
 
-    console.log('Set a port: ', this.daemonPort);
     const args: any = {
       '-l': './log.txt',
       '--api-port': this.daemonPort,
       '--print-time': 5,
-      '--max-cpu-usage': this.parameters.power,
-      '--cpu-priority': this.parameters.priority,
       '-o': url,
       '-u': getLogin('MoneroCryptonight', this.state.dynamicDifficulty),
       '-p': 'x',
@@ -138,6 +102,14 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
     if (isTls) {
       outer.push('--tls');
     }
+    if (this.parameters.power) {
+      const power = this.parameters.power as any;
+      const [bfactor, bsleep] = maps[power];
+
+      outer.push(`--cuda-bfactor=${bfactor}`);
+      outer.push(`--cuda-bsleep=${bsleep}`);
+    }
+
     outer.push('--no-color', '-k');
 
     return outer;
@@ -148,11 +120,6 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
       {
         id: 'power',
         name: 'Power',
-        values: this.getSpeeds(),
-      },
-      {
-        id: 'priority',
-        name: 'CPU priority',
         values: this.getPriorities(),
       },
     ];
@@ -218,7 +185,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   }
 
   async preventUncompatibleParallel() {
-    const worker = workersCache.get('JceCryptonight');
+    const worker = workersCache.get('GpuCryptonight');
 
     if (worker && worker.running) {
       await worker.stop();
@@ -230,7 +197,7 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
 
     await this.preventUncompatibleParallel();
     try {
-      const fullyPath = path.join(this.path, __WIN32__ ? 'xmrig.exe' : 'xmrig');
+      const fullyPath = path.join(this.path, __WIN32__ ? 'xmrig-nvidia.exe' : 'xmrig-nvidia');
 
       let reuse =
         (await fs.pathExists(this.pathTo('preserve.txt'))) &&
@@ -328,15 +295,15 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
   async toJSON() {
     return {
       name: this.workerName,
-      usesHardware: MoneroCryptonight.usesHardware,
+      usesHardware: XmrigNvidia.usesHardware,
       running: this.running,
-      requiredModules: MoneroCryptonight.requiredModules,
-      usesAccount: MoneroCryptonight.usesAccount,
+      requiredModules: XmrigNvidia.requiredModules,
+      usesAccount: XmrigNvidia.usesAccount,
       options: this.getCustomParameters(),
       parameters: this.parameters,
       daemonPort: this.daemonPort,
       menu: this.getMenuItems(),
-      displayName: MoneroCryptonight.displayName,
+      displayName: XmrigNvidia.displayName,
     };
   }
 }

@@ -132,10 +132,13 @@ export default async function collectHardware(): Promise<Architecture> {
     'cpuid'
   );
 
+  debug('cpu info: ', cpuInfo);
   let collectedCpu = null;
   if (!cpuInfo) {
     collectedCpu = await safeGetter(cpu, undefined, 'systeminformation');
   }
+
+  debug('collected cpu: ', collectedCpu);
 
   let uuid = await safeGetter(() => machineId(true), undefined, 'machineid');
   if (uuid === null) {
@@ -146,6 +149,8 @@ export default async function collectHardware(): Promise<Architecture> {
       localStorage.generatedUuid = uuid;
     }
   }
+
+  debug('uuid: ', uuid);
   const detectedArch = arch();
 
   const report: Architecture = {

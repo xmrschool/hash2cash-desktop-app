@@ -173,7 +173,7 @@ export class WorkerView extends React.Component<
     const observer = this.state.observer;
     if (observer && isOn) {
       return (
-        <FallbackLoader condition={observer.latestSpeed}>
+        <FallbackLoader condition={!!observer.latestSpeed}>
           {formatHashrate(observer.latestSpeed || 0)}
         </FallbackLoader>
       );
@@ -367,7 +367,8 @@ export default class Layer extends React.Component<
             s.layer,
             s.reverse,
             (!layer || !layerOpened) && s.shown,
-            !layerAnimating && !layerOpened && s.animationDone
+            !layerAnimating && !layerOpened && s.animationDone,
+            __DARWIN__ && s.darwin,
           )}
         >
           <InnerDashboard {...props} />

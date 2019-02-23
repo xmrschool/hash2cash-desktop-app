@@ -239,6 +239,11 @@ export function joinArray(array: string[]) {
 export async function attemptToTerminateMiners(
   workers: string[] = defaultWorkers
 ) {
+  // Powershell applicable only on Windows
+  if (__WIN32__ === false) {
+    return;
+  }
+
   const ps: Shell | null = null;
   try {
     const joined = joinArray(workers);

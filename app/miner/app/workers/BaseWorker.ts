@@ -3,11 +3,11 @@ import * as moment from 'moment';
 import { remote } from 'electron';
 import * as fs from 'fs-extra';
 import socket from '../socket';
-import { LocalStorage } from '../../../renderer/utils/LocalStorage';
 import { shiftRunningPid } from '../RunningPids';
 import trackError from '../../../core/raven';
 import workQueue from '../queue';
 import { isTlsEnabled } from '../utils';
+import { getAlivePool } from './poolsUtils';
 
 const config = require('../../../config.js');
 
@@ -254,43 +254,22 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
     if (!findProperty) throw new Error("ID of this param doesn't exist");
 
     // ToDo we should use ===, but first we need use same types
-    const findValue = findProperty.values.find(d => d.value == value);
+    const findValue = findProperty.values.find(d => d.value === value);
     if (!findValue) throw new Error("Specified value doesn't exist");
 
     return findValue;
   }
 
-  getTlsPool(algorithm: string): string | null {
-    try {
-      const parsed = LocalStorage.appInfo!.pools;
-
-      return parsed[algorithm].tlsUrl || 'xmr.pool.hashto.cash:443';
-    } catch (e) {
-      console.error('Failed to get an pool URL: ', e);
-      return null;
-    }
-  }
-
   getPreferredPool(algorithm: string): { isTls: boolean; url: string | null } {
     const isTls = isTlsEnabled();
+    const preferredPool = getAlivePool(algorithm, isTls);
 
     return {
       isTls,
-      url: isTls ? this.getTlsPool(algorithm) : this.getPool(algorithm),
+      // ToDo get this done
+      url: preferredPool || 'xmr.pool.hashto.cash:80',
     };
   }
-
-  getPool(algorithm: string): string | null {
-    try {
-      const parsed = LocalStorage.appInfo!.pools;
-
-      return parsed[algorithm].url || null;
-    } catch (e) {
-      console.error('Failed to get an pool URL: ', e);
-      return null;
-    }
-  }
-
   /**
    * Function which fetch speed of mining
    * @returns {Promise<number>} [current hashrate, hashrate per minute, per hour]

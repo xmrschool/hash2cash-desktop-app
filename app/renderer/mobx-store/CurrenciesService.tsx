@@ -8,7 +8,10 @@ import userOptions from './UserOptions';
 import { LocalStorage } from '../utils/LocalStorage';
 
 const debug = require('debug')('app:services:currencies');
-const rubleSymbol = require('../assets/ruble-currency-sign.svg');
+let rubleSymbol: any;
+try {
+  rubleSymbol = require('../assets/ruble-currency-sign.svg');
+} catch (e) {}
 
 export enum AllowedCurrenciesEnum {
   'USD',

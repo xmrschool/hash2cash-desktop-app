@@ -13,7 +13,9 @@ const isDebug = process.env.NODE_ENV !== 'production';
 function proposeVersion() {
   const cli = new SentryCli('./sentry.properties');
 
-  const hash = require('crypto').randomBytes(30).toString('hex');
+  const hash = require('crypto')
+    .randomBytes(30)
+    .toString('hex');
 
   return `${require('./package').version}-${hash}`;
 }
@@ -33,9 +35,12 @@ module.exports = {
               plugins: [
                 '@babel/plugin-proposal-object-rest-spread',
                 '@babel/plugin-syntax-dynamic-import',
-                ["react-intl", {
-                  "messagesDir": "./locales/"
-                }]
+                [
+                  'react-intl',
+                  {
+                    messagesDir: './locales/',
+                  },
+                ],
               ],
             },
           },
@@ -68,7 +73,5 @@ module.exports = {
     __dirname: false,
     __filename: false,
   },
-  plugins: [
-    new webpack.DefinePlugin(getReplacements(version)),
-  ],
+  plugins: [new webpack.DefinePlugin(getReplacements(version))],
 };

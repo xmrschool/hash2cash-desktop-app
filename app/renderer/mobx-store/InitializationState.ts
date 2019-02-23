@@ -240,6 +240,8 @@ export class InitializationState {
       globalState.setBenchmark(benchmark);
       LocalStorage.benchmark = benchmark;
 
+      this.everythingDone = true;
+
       debug('[benchmark] benchmark has been done!', localStorage.benchmark);
     });
   }

@@ -91,9 +91,20 @@ export default class Dashboard extends React.Component<
   };
 
   componentDidMount() {
+    if (!globalState.benchmark) {
+      minerApi.stopAll();
+    }
+
     setTimeout(() => this.setState({ appeared: true }), 10);
     if (!globalState.benchmark) {
       minerApi.stopAll();
+
+      if (__WIN32__ === false) {
+        this.navigate();
+
+        return;
+      }
+
       antivirusState.check();
     }
   }
@@ -114,6 +125,10 @@ export default class Dashboard extends React.Component<
   }
 
   renderAv() {
+    if (__WIN32__ === false) {
+      return null;
+    }
+
     let child;
     if (antivirusState.checked) {
       if (antivirusState.haveAny) {

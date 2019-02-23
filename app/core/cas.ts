@@ -1,5 +1,35 @@
 // We had some troubles with CA root servers.
-require('https').globalAgent.options.ca = require('ssl-root-cas/ssl-root-cas-latest.js');
+import * as path from 'path';
+import { exists } from 'fs-extra';
+
+const config = require('../config.js');
+
+try {
+  async function generateCerts() {
+    const generate = require('ssl-root-cas/ca-store-generator').generate;
+    const file = path.join(config.CONFIG_PATH, 'ssl-root-cas-latest.js');
+
+    // @ts-ignore
+    if (await exists(file)) {
+      generate(file).then(() => {
+        // Refresh certs
+        generateCerts();
+      });
+
+      return require(file);
+    } else {
+      return require('ssl-root-cas/ssl-root-cas');
+    }
+  }
+
+  generateCerts().then(certs => {
+    console.log('Received certs. Injecting them... ', certs.length);
+    certs.inject();
+  });
+} catch (e) {
+  console.warn('Failed to initialize rootCas: ', e);
+}
+
 /*
 import * as fs from 'fs';
 const generate = require('ssl-root-cas/ca-store-generator').generate;

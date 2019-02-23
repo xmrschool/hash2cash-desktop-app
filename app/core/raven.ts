@@ -19,18 +19,22 @@ Sentry.init({
   release: __RELEASE__,
 });
 
-Sentry.setTagsContext({
-  process: process.type || 'main',
-  electron: process.versions.electron,
-  chrome: process.versions.chrome,
-  platform: os.platform(),
-  platform_release: os.release(),
-  app_version: app.getVersion(),
-});
+function configureScope() {
+  Sentry.configureScope(scope => {
+    scope.setExtra('localStorage', clearLocalStorage());
+  });
+}
 
-Sentry.setExtraContext({
-  localStorage: clearLocalStorage(),
-});
+export function getSystemContext() {
+  return {
+    process: process.type || 'main',
+    electron: process.versions.electron,
+    chrome: process.versions.chrome,
+    platform: os.platform(),
+    platform_release: os.release(),
+    app_version: app.getVersion(),
+  };
+}
 
 export function getUser(): { id: string } | undefined {
   if (typeof localStorage !== 'undefined' && localStorage.userId) {
@@ -45,12 +49,7 @@ export function getUser(): { id: string } | undefined {
 export default function trackError(e: Error, extra?: any) {
   if (__DEV__) return;
 
-  const user = getUser();
-  if (user && user.id) Sentry.setUserContext(user);
-  Sentry.setExtraContext({
-    localStorage: clearLocalStorage(),
-    extra: JSON.stringify(extra || {}),
-  });
+  configureScope()
 
   Sentry.captureException(e);
 }

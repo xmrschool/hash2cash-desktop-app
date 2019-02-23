@@ -7,6 +7,7 @@ import { AppInfo, Architecture, SuccessManifest } from '../api/Api';
 import { Currency } from '../mobx-store/CurrenciesService';
 import { SettingsStore } from '../mobx-store/UserOptions';
 import { LocaleWithData } from '../intl';
+import { PoolReport } from '../../core/diagnostics/tests/poolResolver';
 
 export type Benchmark = {
   time: Date;
@@ -113,12 +114,11 @@ export class LocalStorage extends EventEmitter {
     localStorage.settings = JSON.stringify(val);
   }
 
-  // ToDo typings
-  static get poolsReport(): any[] | null {
+  static get poolsReport(): PoolReport[] | null {
     return safeParse(localStorage.poolsReport);
   }
 
-  static set poolsReport(val: any[] | null) {
+  static set poolsReport(val: PoolReport[] | null) {
     localStorage.poolsReport = JSON.stringify(val);
   }
 

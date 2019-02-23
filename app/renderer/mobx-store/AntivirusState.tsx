@@ -87,6 +87,10 @@ export class AntivirusState extends PersistedState {
 
   @action
   async check() {
+    if (__WIN32__ === false) {
+      return;
+    }
+
     const result = await Promise.race([timeout(1500), this._check()]);
 
     if (result === false) {

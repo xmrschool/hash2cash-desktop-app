@@ -12,7 +12,7 @@ const getReplacements = require('./app/app-info').getReplacements;
 module.exports = merge(baseConfig, {
   devtool: 'source-map',
 
-  mode: 'development',
+  mode: 'production',
   entry: ['./app/renderer/index.tsx'],
 
   output: {
@@ -68,10 +68,6 @@ module.exports = merge(baseConfig, {
             options: {
               modules: true,
               sourceMap: false,
-              minimize: {
-                discardComments: { removeAll: true },
-              },
-              importLoaders: 1,
               localIdentName: '[hash:base64:5]',
             },
           },
@@ -92,10 +88,6 @@ module.exports = merge(baseConfig, {
             options: {
               modules: true,
               sourceMap: false,
-              minimize: {
-                discardComments: { removeAll: true },
-              },
-              importLoaders: 1,
               localIdentName: '[hash:base64:5]',
             },
           },

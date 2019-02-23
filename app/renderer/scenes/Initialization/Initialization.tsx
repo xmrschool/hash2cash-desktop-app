@@ -153,17 +153,23 @@ export default class Initialization extends React.Component<
     try {
       const { formatMessage } = this.props.intl;
 
-      debug('Starting initialization...');
+      debug('[benchmark] starting initialization');
       initializationState.reset();
+      debug('[benchmark] setting status');
       initializationState.setStatus(
         formatMessage({ id: 'mobx.init.status.collecting' })
       );
 
+      debug('[benchmark] stopping all miners');
       await minerApi.stopAll();
+      debug('[benchmark] checking vc');
+
       await initializationState.checkIfVcredistInstalled();
 
+      debug('[benchmark] collecting hardware');
       const hardware = await collectHardware();
 
+      debug('[benchmark] collected hardware: %o', hardware);;
       initializationState.setHardware(hardware);
       initializationState.setStep(1 / 7);
 

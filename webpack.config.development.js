@@ -56,8 +56,13 @@ module.exports = merge(baseConfig, {
             loader: 'style-loader',
           },
           {
-            loader:
-              'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+            },
           },
         ],
       },
@@ -92,7 +97,6 @@ module.exports = merge(baseConfig, {
             options: {
               modules: true,
               sourceMap: true,
-              importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]',
             },
           },

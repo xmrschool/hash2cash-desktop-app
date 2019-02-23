@@ -42,8 +42,8 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
     dynamicDifficulty: false,
   };
   parameters: ParameterMap<Parameteres> = {
-    main: 'full',
-    additional: 'full',
+    main: 'ultraOptimized',
+    additional: 'ultraOptimized',
   };
   daemon?: ChildProcess;
   running: boolean = false;

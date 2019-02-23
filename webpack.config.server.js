@@ -17,11 +17,22 @@ const port = process.env.PORT || 4513;
 module.exports = merge(baseConfig, {
   devtool: isDebug ? 'cheap-module-inline-source-map' : 'source-map',
 
-  mode: 'development',
+  mode: isDebug ? 'development' : 'production',
   externals: [
-    nodeExternals({
-      whitelist: [/webpack-hot-middleware/],
-    }),
+    'cuda-detector',
+    'opencl-detector',
+    'native-utils',
+    'cpuid-detector',
+    'fs-extra',
+    'systeminformation',
+    'request',
+    'request-progress',
+    'p-queue',
+    '@sentry/electron',
+    'socket.io',
+    'tree-kill',
+    'koa',
+    'koa-router',
   ],
   entry: isDebug
     ? [

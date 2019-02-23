@@ -1,9 +1,9 @@
-import * as React from 'react';
 import { eachOf } from 'async';
+import { sortBy } from 'lodash';
 import { observable } from 'mobx';
 import * as net from 'net';
 import * as tls from 'tls';
-import { FormattedMessage, defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl';
 import { Test } from './test';
 import { sleep } from '../../../renderer/utils/sleep';
 import LocalizedError from '../../errors/LocalizedError';
@@ -43,6 +43,8 @@ export const poolEndpoints: [number, string, boolean][] = [
   [80, 'xmr.pool.hashto.cash', false],
   [3000, 'xmr.pool.hashto.cash', false],
   [3001, 'xmr.pool.hashto.cash', true],
+  [7000, 'xmr.pool.hashto.cash', false],
+  [7001, 'xmr.pool.hashto.cash', true],
 ];
 
 export async function checkServer(
@@ -52,9 +54,13 @@ export async function checkServer(
 ): Promise<any> {
   return new Promise((resolve, reject) => {
     const usedClient: typeof net = (isTls ? tls : net) as any;
-    const client = usedClient.connect(port, host, {
-      rejectUnauthorized: false,
-    } as any);
+    const client = usedClient.connect(
+      port,
+      host,
+      {
+        rejectUnauthorized: false,
+      } as any
+    );
 
     client.on('error', err => {
       reject(err);
@@ -110,14 +116,21 @@ export async function checkServer(
       );
     });
 
-    sleep(4000).then(d =>
-      reject(new LocalizedError(messages.timeout))
-    );
+    sleep(4000).then(d => reject(new LocalizedError(messages.timeout)));
   });
 }
+
+export type PoolReport = {
+  port: number;
+  host: string;
+  isTls: boolean;
+  isOk: boolean;
+};
+
 export class PoolResolver extends Test {
   id = 'pool-checker';
-  @observable title = 'Checking pools availability';
+  @observable
+  title = 'Checking pools availability';
 
   constructor() {
     super();
@@ -139,8 +152,7 @@ export class PoolResolver extends Test {
   }
 
   async resolve(): Promise<void> {
-    const report: any = [];
-    let onceFailed = false;
+    const report: PoolReport[] = [];
     await new Promise(resolve =>
       eachOf(
         poolEndpoints,
@@ -154,7 +166,6 @@ export class PoolResolver extends Test {
           } catch (e) {
             debug('Failed to resolve pool: ', { port, host, isTls }, e);
 
-            onceFailed = true;
             this.display[index].status = 'failure';
             this.display[index].errorText = e;
 
@@ -168,17 +179,7 @@ export class PoolResolver extends Test {
     );
 
     if (LocalStorage) {
-      LocalStorage.poolsReport = report;
-    }
-
-    if (onceFailed) {
-      if (this.display.find(d => d.status === 'success') !== null) {
-        this.downside = <FormattedMessage {...messages.fallback} />;
-
-        return;
-      }
-
-      this.downside = <FormattedMessage {...messages.dead} />;
+      LocalStorage.poolsReport = sortBy(report, 'port');
     }
   }
 }

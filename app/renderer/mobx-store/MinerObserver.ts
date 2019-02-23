@@ -19,8 +19,8 @@ export class InternalObserver extends EventEmitter {
   @observable speedPerMinute?: number | null;
   @observable hashesSubmitted = 0;
 
-  @observable monthly: any = null;
-  @observable daily: any = null;
+  @observable.ref monthly: any = null;
+  @observable.ref daily: any = null;
 
   private isObserving = false;
   _interval: any;
