@@ -250,7 +250,7 @@ export async function attemptToTerminateMiners(
 
     const command = `
   $processes = @(${joined})    
-  $processesRegex = [string]::Join('|', $processes) # create the regex
+  $processesRegex = "^$([string]::Join('|', $processes))$" # create the regex
   $list = Get-Process | Where-Object { $_.ProcessName -match $processesRegex } | Where-Object { $_.Path.StartsWith("$env:APPDATA\\${
     __DEV__ ? 'Electron' : 'Hash to Cash'
   }") }

@@ -92,7 +92,6 @@ export class InternalObserver extends EventEmitter {
       try {
         const internalStats = await this._data.getStats();
 
-        console.log('Internal stats: ', internalStats);
         if (internalStats.results.hashes_total) {
           this.hashesSubmitted = internalStats.results.hashes_total;
         }

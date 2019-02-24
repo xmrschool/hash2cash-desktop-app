@@ -246,11 +246,9 @@ export default class Dashboard extends React.Component<
         {antivirusState.showAfter && (
           <p className={s.time}>{d('BENCHMARK_THIRD')}</p>
         )}
-        {antivirusState.showAfter && (
-          <div className={s.button}>
-            <Button onClick={() => this.navigate()}>{d('BENCHMARK_GO')}</Button>
-          </div>
-        )}
+        <div className={s.button}>
+          <Button onClick={() => this.navigate()}>{d('BENCHMARK_GO')}</Button>
+        </div>
       </div>
     );
   }

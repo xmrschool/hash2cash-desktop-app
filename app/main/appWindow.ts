@@ -34,8 +34,8 @@ export class AppWindow {
     const windowOptions: Electron.BrowserWindowConstructorOptions = {
       x: savedWindowState.x,
       y: savedWindowState.y,
-      width: 540,
-      height: 735,
+      width: 580,
+      height: 800,
       show: false,
       // This fixes subpixel aliasing on Windows
       // See https://github.com/atom/atom/commit/683bef5b9d133cb194b476938c77cc07fd05b972

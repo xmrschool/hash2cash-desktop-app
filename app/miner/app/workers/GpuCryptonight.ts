@@ -26,7 +26,7 @@ export default class GpuCryptonight extends BaseWorker<Parameteres> {
   static requiredModules = ['cryptonight-xmrstak'];
   static usesHardware = ['gpu'];
   static usesAccount = 'XMR';
-  static displayName = 'XMR Stak';
+  static displayName = 'XMRStak';
 
   latestString: string = '';
 

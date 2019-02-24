@@ -22,11 +22,6 @@ import ProgressBar from '../../components/ProgressBar';
 import Modal from '../../components/Modal/Modal';
 import Button from '../../components/Button/Button';
 import Worker from './Worker';
-import {
-  default as currenciesService,
-  CurrencyNumber,
-} from '../../mobx-store/CurrenciesService';
-import userOptions from '../../mobx-store/UserOptions';
 import RuntimeErrorNotifier from '../../components/RuntimeErrorNotifier/RuntimeErrorNotifier';
 import { CpuInfo } from 'cpuid-detector';
 import isCpuIdReport from '../../utils/isCpuIdReport';
@@ -201,6 +196,8 @@ export default class Initialization extends React.Component<
       initializationState.setStep(1);
       initializationState.progressText = '100%';
       initializationState.everythingDone = true;
+
+      this.navigateToDashboard();
     } catch (e) {
       console.error('Main action failed: ', e);
       trackError(e, { message: initializationState.status });
@@ -298,13 +295,6 @@ export default class Initialization extends React.Component<
   }
 
   renderResults() {
-    const instance = currenciesService.ticker[userOptions.get('currency')];
-
-    const total = minerObserver.workers
-      .map(queue => queue.monthlyProfit().float())
-      .reduce((d, prev) => prev + d, 0);
-
-    const doneAmount = new CurrencyNumber(total, instance);
     return (
       <div
         className={cx(
@@ -313,14 +303,14 @@ export default class Initialization extends React.Component<
         )}
       >
         <div className={s.doneInner}>
-          {!initializationState.aborted && (
+          {/*{!initializationState.aborted && (
             <span className={s.doneAmount}>
             <span>{doneAmount.reactFormatted()}</span>
             <span className={s.donePerMonth}>
               <FormattedMessage {...messages.downsidePerMonth} />
             </span>
           </span>
-          )}
+          )}*/}
           <Button onClick={this.navigateToDashboard}>
             <FormattedMessage {...messages.startMine} />
           </Button>

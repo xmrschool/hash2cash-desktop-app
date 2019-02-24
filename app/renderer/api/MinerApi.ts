@@ -46,12 +46,10 @@ export class Worker extends EventEmitter {
     onceMinerReady(localSocket => {
       debug('Miner backend was ready', localSocket);
       localSocket.on('state', ({ name, _data, ...params }: any) => {
-        debug(`Received new state in ${this.data.name}: `, { name, _data, ...params });
-
         if (name === this.name) {
-          console.log('Miner data before: ', toJS(this.data));
-          this.data = Object.assign(this.data, params);
-          console.log('Miner data after: ', toJS(this.data));
+          debug(`Received new state in ${this.data.name}: `, { name, _data, ...params });
+
+          this.data = Object.assign({}, toJS(this.data), params);
 
           this.emit('state', this);
 
@@ -229,13 +227,18 @@ export function pickWorkerByData(data: WorkersMappedByHardware, name: string) {
   const key = `active_${name}`;
   const wanted = localStorage[key];
 
+  console.log('FInd wanted:', wanted);
   if (wanted) {
+    const running = data[name].find(d => !!d.running);
     const possible = data[name].find(d => d.name === wanted);
-    if (possible) {
-      return possible;
+    const worker = running || possible;
+
+    if (worker) {
+      return worker;
     }
   }
 
+  console.log('Data: ', data);
   return data[name] ? data[name][0] : null;
 }
 
@@ -259,7 +262,7 @@ export class Api {
     keys.forEach(hardware => {
       groupedWorkers[hardware] = sortBy<Worker>(groupedWorkers[hardware], [
         (worker: Worker) => {
-          return ticker[worker.data.usesAccount!].profitability;
+          return (100 - ticker[worker.data.usesAccount!].profitability);
         },
       ]);
     });
@@ -274,6 +277,10 @@ export class Api {
     const gpu = pickWorkerByData(workers, 'gpu');
 
     return { cpu, gpu };
+  }
+
+  updateStrategyState(): Promise<void> {
+    return this.fetch('/updateStrategyState');
   }
 
   @action

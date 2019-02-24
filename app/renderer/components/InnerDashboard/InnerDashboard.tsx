@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { remote } from 'electron';
-import { sortBy } from 'lodash';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -30,6 +29,7 @@ import formatHashrate from '../../utils/formatHashrate';
 import { StatsView } from './StatsView';
 import { MobxState } from '../../mobx-store';
 import { quitAccount, quitApp } from '../../utils/logout';
+import AutoManagerEnabler from '../AutoManagerEnabler';
 
 const settings = require('../../../core/icon/settings.svg');
 const ws = require('scenes/Initialization/Worker.css');
@@ -272,7 +272,12 @@ export class WorkerView extends React.Component<
             {currenciesService.getCurrencyName(miner.usesAccount)}
             <div className={ws.badge}>
               {miner.usesHardware![0].toUpperCase()}
-              {speed ? <span>&nbsp;—&nbsp;{speed}</span> : null}
+              {speed ? (
+                <span>
+                  &nbsp;—&nbsp;
+                  {speed}
+                </span>
+              ) : null}
             </div>
           </div>
           <div className={s.switcher}>
@@ -300,7 +305,9 @@ export class WorkerView extends React.Component<
                               defaultMessage={value.name}
                             >
                               {(message: any) => (
-                                <option key={value.value} value={value.value}>{message}</option>
+                                <option key={value.value} value={value.value}>
+                                  {message}
+                                </option>
                               )}
                             </FormattedMessage>
                           ))}
@@ -368,7 +375,7 @@ export default class Layer extends React.Component<
             s.reverse,
             (!layer || !layerOpened) && s.shown,
             !layerAnimating && !layerOpened && s.animationDone,
-            __DARWIN__ && s.darwin,
+            __DARWIN__ && s.darwin
           )}
         >
           <InnerDashboard {...props} />
@@ -410,16 +417,20 @@ export class WorkersView extends React.Component<
     const key = `active_${kind}`;
     const wanted = localStorage[key];
 
+    const running = props.workers.find(d => !!d.running);
+
+    if (running) {
+      return { active: running.name };
+    }
+
     if (wanted) {
       if (workers.find(d => d.name === wanted)) {
         return { active: wanted };
       }
     }
 
-    const sorted = sortBy(workers, worker =>
-      globalState.getBenchmarkHashrate(worker.name)
-    );
-    const name = sorted[sorted.length - 1].name;
+    const sorted = workers;
+    const name = sorted[0].name;
 
     localStorage.setItem(key, name);
 
@@ -428,7 +439,7 @@ export class WorkersView extends React.Component<
 
   get currentWorker() {
     return (
-      this.props.workers.find(d => d.name === this.state.active) ||
+      this.props.workers.find(d => !!d.running) || this.props.workers.find(d => d.name === this.state.active) ||
       this.props.workers[0]
     );
   }
@@ -467,6 +478,7 @@ export class InnerDashboard extends React.Component<any> {
   state = {
     appeared: false,
     dropdownToggled: false,
+    uiInjected: false,
   };
 
   constructor(props: any) {
@@ -482,6 +494,10 @@ export class InnerDashboard extends React.Component<any> {
     }
 
     User.watchOutForSubmitting();
+
+    setTimeout(() => {
+      this.setState({ uiInjected: true });
+    }, 100);
   }
 
   componentWillUnmount() {
@@ -553,18 +569,35 @@ export class InnerDashboard extends React.Component<any> {
   renderOptions() {
     return (
       <div>
-        <DropdownPick>v{__RELEASE__.slice(0, 15)}-{process.platform}-{process.env.NODE_ENV!.slice(0, 5)}</DropdownPick>
-        <DropdownPick onClick={() => this.props.run()}><FormattedMessage id="mobx.reload.update" /></DropdownPick>
+        <DropdownPick>
+          v{__RELEASE__.slice(0, 15)}-{process.platform}-
+          {process.env.NODE_ENV!.slice(0, 5)}
+        </DropdownPick>
+        <DropdownPick onClick={() => this.props.run()}>
+          <FormattedMessage id="mobx.reload.update" />
+        </DropdownPick>
         <Delimiter />
-        <DropdownPick onClick={() => globalState.showLayer('settings') && this.toggle()}><FormattedMessage id="SETTINGS_MENU_GO_SETTINGS" /></DropdownPick>
+        <DropdownPick
+          onClick={() => globalState.showLayer('settings') && this.toggle()}
+        >
+          <FormattedMessage id="SETTINGS_MENU_GO_SETTINGS" />
+        </DropdownPick>
         <Delimiter />
-        <DropdownPick onClick={() => quitAccount(this.props)}><FormattedMessage id="SETTINGS_MENU_LOGOUT" /></DropdownPick>
-        <DropdownPick onClick={() => quitApp()}><FormattedMessage id="SETTINGS_MENU_LOGOUT_YEAH" /></DropdownPick>
+        <DropdownPick onClick={() => quitAccount(this.props)}>
+          <FormattedMessage id="SETTINGS_MENU_LOGOUT" />
+        </DropdownPick>
+        <DropdownPick onClick={() => quitApp()}>
+          <FormattedMessage id="SETTINGS_MENU_LOGOUT_YEAH" />
+        </DropdownPick>
       </div>
-    )
+    );
   }
 
   render() {
+    if (!this.state.uiInjected) {
+      return null;
+    }
+
     const workers = minerApi.findMostProfitableWorkers();
     return (
       <div className={s.root}>
@@ -581,12 +614,18 @@ export class InnerDashboard extends React.Component<any> {
             >
               {this.renderOptions()}
             </Dropdown>
-            <img src={settings} className={s.icon} onClick={() => this.toggle()} />
+            <img
+              src={settings}
+              style={{ maxWidth: 25, maxHeight: 25 }}
+              className={s.icon}
+              onClick={() => this.toggle()}
+            />
           </div>
         </div>
         <StatsView s={s} />
         <ActionBar workers={workers} />
         {!workers.cpu && <h3 className={s.header}>Загрузка майнеров...</h3>}
+        <AutoManagerEnabler />
         {workers.gpu && <h3 className={s.header}>GPU</h3>}
         {workers.gpu && <WorkersView workers={workers.gpu} kind="gpu" />}
         {workers.cpu && <h3 className={s.header}>CPU</h3>}

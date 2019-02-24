@@ -60,6 +60,4 @@ export class HomePage extends React.Component<
   }
 }
 
-export default (HomePage as any) as React.StatelessComponent<
-  RouteComponentProps<any>
->;
+export default (HomePage as any) as any;

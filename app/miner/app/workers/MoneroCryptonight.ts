@@ -9,7 +9,7 @@ import {
   ParameterMap,
   Pick,
 } from './BaseWorker';
-import { attemptToTerminateMiners, getLogin, RuntimeError } from '../utils';
+import { getLogin, RuntimeError } from '../utils';
 import { timeout } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
 import * as fs from 'fs-extra';
@@ -269,7 +269,6 @@ export default class MoneroCryptonight extends BaseWorker<Parameteres> {
         );
       }
 
-      await attemptToTerminateMiners(['jce', 'xmrig']);
       if (this.daemon && this.daemon.kill) {
         try {
           await this.stop();

@@ -58,21 +58,45 @@ export default class Changelog extends React.Component<
       <div className={s.modal}>
         <div className={cx(s.backdrop, visible && s.visible)} />
         <div className={cx(s.inner, visible && s.visible)}>
-          <h3>Приложение обновилось! Вот что нового в 2.0.3:</h3>
+          <h3>Приложение обновилось! Вот что нового в 2.1.0:</h3>
           <ul>
             <li>
               <span className={s.main}>
-                Исправили ошибку, из-за которой бенчмарк мог не работать на пользователях Windows, содержащих пробелы в имени.
+                Мы полностью убрали бенчмарк - теперь мы анализируем данные на
+                основе вашего ПК.
               </span>{' '}
             </li>
             <li>
               <span className={s.main}>
-                Исправили ошибку, из-за которой у некоторых не мог скачиваться майнер.
+                Добавили умную стратегию майнинга. Она автоматически регулирует
+                майнеры в зависимости от загруженности. Бета
               </span>{' '}
             </li>
             <li>
               <span className={s.main}>
-                Что-то пошло не так? Пишите нам в <a href="https://discord.gg/TAQAcKA" target="_blank">Discord</a>. Пожалуйста. Мы. Готовы. Помочь.
+                Майнинг можно запустить / остановить через комбинацию клавиш Ctrl+Shift+M. И раньше можно было, но никто об этом не знал
+              </span>{' '}
+            </li>
+            <li>
+              <span className={s.main}>
+                Обновили майнеры, добавили XMRig nVidia и AMD (рекомендуем, больше скорость)
+              </span>{' '}
+            </li>
+            <li>
+              <span className={s.main}>
+                Оптимизировали работу приложения
+              </span>{' '}
+            </li>
+            <li>
+              <span className={s.main}>Исправили совместимость с macOS</span>{' '}
+            </li>
+            <li>
+              <span className={s.main}>
+                Что-то пошло не так? Пишите нам в{' '}
+                <a href="https://discord.gg/TAQAcKA" target="_blank">
+                  Discord
+                </a>
+                . Пожалуйста. Мы. Готовы. Помочь.
               </span>{' '}
             </li>
           </ul>

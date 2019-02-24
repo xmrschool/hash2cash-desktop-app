@@ -1,16 +1,15 @@
 import { ChildProcess, spawn } from 'child_process';
 import * as moment from 'moment';
 import * as path from 'path';
-import * as kill from 'tree-kill';
 
 import {
   BaseWorker,
   MenuPicks,
   Parameter,
   ParameterMap,
-  Pick,
 } from './BaseWorker';
 import { attemptToTerminateMiners, getLogin, RuntimeError } from '../utils';
+import { timeout } from '../../../core/utils';
 import { addRunningPid } from '../RunningPids';
 import * as fs from 'fs-extra';
 import workersCache from '../workersCache';
@@ -18,20 +17,20 @@ import { findAPortNotInUse } from '../../../core/portfinder';
 
 export type Parameteres = 'power';
 
-const debug = require('debug')('app:workers:jceCryptonight');
-export default class JceCryptonight extends BaseWorker<Parameteres> {
-  static requiredModules = ['jce-cryptonight'];
-  static usesHardware = ['cpu'];
+const debug = require('debug')('app:workers:xmrigNvidia');
+export default class XmrigAmd extends BaseWorker<Parameteres> {
+  static requiredModules = ['xmrig-amd'];
+  static usesHardware = ['gpu'];
   static usesAccount = 'XMR';
-  static displayName = 'JCE Miner';
+  static displayName = 'XMRig AMD';
 
-  workerName: string = 'JceCryptonight';
+  workerName: string = 'XmrigAmd';
   runningSince: moment.Moment | null = null;
 
   path: string = '';
   state: { [p: string]: any } = { dynamicDifficulty: false };
   parameters: ParameterMap<Parameteres> = {
-    power: 'default',
+    power: 'optimized',
   };
   daemon?: ChildProcess;
   running: boolean = false;
@@ -40,28 +39,15 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
   pid?: number;
 
   get requiredModules() {
-    return JceCryptonight.requiredModules;
+    return XmrigAmd.requiredModules;
   }
 
   get usesHardware() {
-    return JceCryptonight.usesHardware;
+    return XmrigAmd.usesHardware;
   }
 
   get usesAccount() {
-    return JceCryptonight.usesAccount;
-  }
-
-  getSpeeds(): Pick[] {
-    return [
-      {
-        name: 'Default',
-        value: 'ultra',
-      },
-      {
-        name: 'Low',
-        value: 'low',
-      },
-    ];
+    return XmrigAmd.usesAccount;
   }
 
   getMenuItems(): MenuPicks {
@@ -72,19 +58,34 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
     ];
   }
 
-  async getAppArgs() {
-    this.daemonPort = this.daemonPort = await findAPortNotInUse(
-      localStorage.jceCryptonightPort || 25003
-    );
+  getPriorities() {
+    return [
+      {
+        name: 'More system speed',
+        value: 'optimized',
+      },
+      {
+        name: 'Middle',
+        value: 'middle',
+      },
+      {
+        name: 'More mining speed',
+        value: 'full',
+      },
+    ];
+  }
 
+  async getAppArgs() {
+    this.daemonPort = await findAPortNotInUse(localStorage.xmrigPort || 25007);
     const { url, isTls } = this.getPreferredPool('cryptonight');
 
     const args: any = {
-      '--mport': this.daemonPort.toString(),
-      '--variation': '21',
+      '-l': './log.txt',
+      '--api-port': this.daemonPort,
+      '--print-time': 5,
       '-o': url,
-      '-u': getLogin('JceCryptonight', this.state.dynamicDifficulty),
-      '-p': 'algo:cn/half',
+      '-u': getLogin('MoneroCryptonight', this.state.dynamicDifficulty),
+      '-p': 'x',
     };
 
     const outer: string[] = [];
@@ -92,14 +93,10 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
       outer.push(d);
       outer.push(args[d]);
     });
-    if (this.parameters.power === 'low') {
-      outer.push('--low');
-    }
     if (isTls) {
-      outer.push('--ssl');
+      outer.push('--tls');
     }
-
-    outer.push('--nicehash', '--stakjson', '--any', '--auto');
+    outer.push('--no-color', '-k');
 
     return outer;
   }
@@ -109,7 +106,7 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
       {
         id: 'power',
         name: 'Power',
-        values: this.getSpeeds(),
+        values: this.getPriorities(),
       },
     ];
   }
@@ -134,12 +131,27 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
       if (!this.running) {
         throw new Error('Worker is not running');
       }
-      const resp = await fetch(`http://localhost:${this.daemonPort}`);
+
+      const resp = await Promise.race([
+        timeout(),
+        fetch(`http://localhost:${this.daemonPort}`),
+      ]);
+
+      if (resp === false) {
+        return new RuntimeError(
+          'Failed to getStats',
+          new Error('Timeout error while getting stats'),
+          false
+        );
+      }
+
       const json = await resp.json();
+
+      localStorage.largePageState = json.hugepages;
 
       return json;
     } catch (e) {
-      throw new RuntimeError('Failed to get stats', e);
+      throw new RuntimeError('Failed to get stats', e, false);
     }
   }
 
@@ -159,7 +171,7 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
   }
 
   async preventUncompatibleParallel() {
-    const worker = workersCache.get('MoneroCryptonight');
+    const worker = workersCache.get('GpuCryptonight');
 
     if (worker && worker.running) {
       await worker.stop();
@@ -170,9 +182,8 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
     if (this.running) throw new Error('Miner already running');
 
     await this.preventUncompatibleParallel();
-
     try {
-      const fullyPath = path.join(this.path, __WIN32__ ? 'jce.exe' : 'jce');
+      const fullyPath = path.join(this.path, __WIN32__ ? 'xmrig-amd.exe' : 'xmrig-amd');
 
       let reuse =
         (await fs.pathExists(this.pathTo('preserve.txt'))) &&
@@ -211,21 +222,16 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
         );
       }
 
+      await attemptToTerminateMiners(['jce']);
       if (this.daemon && this.daemon.kill) {
         try {
           await this.stop();
         } catch (e) {}
       }
-      await attemptToTerminateMiners(['jce', 'xmrig']);
 
-      this.daemon = spawn(fullyPath, args, {
-        cwd: this.path,
-        stdio: ['ignore'],
-      });
-      this.running = true;
+      this.daemon = spawn(fullyPath, args);
       this.runningSince = moment();
       this.pid = this.daemon.pid;
-      this.daemon.unref();
 
       addRunningPid(this.pid);
 
@@ -244,6 +250,7 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
       this.daemon.on('close', err => this.handleTermination(err, true));
       this.daemon.on('error', err => this.handleTermination(err));
 
+      this.running = true;
 
       return true;
     } catch (e) {
@@ -255,17 +262,13 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
   }
 
   async stop(): Promise<boolean> {
-    if (!this.running) {
-      return true;
-    }
+    if (!this.running) throw new Error('Miner not running');
 
     this.running = false;
     this.emit({ running: false });
 
     this.willQuit = true;
-
-    kill(this.pid as number);
-    this.daemon = undefined;
+    this.daemon!.kill();
 
     return true;
   }
@@ -278,15 +281,15 @@ export default class JceCryptonight extends BaseWorker<Parameteres> {
   async toJSON() {
     return {
       name: this.workerName,
-      usesHardware: JceCryptonight.usesHardware,
+      usesHardware: XmrigAmd.usesHardware,
       running: this.running,
-      requiredModules: JceCryptonight.requiredModules,
-      usesAccount: JceCryptonight.usesAccount,
+      requiredModules: XmrigAmd.requiredModules,
+      usesAccount: XmrigAmd.usesAccount,
       options: this.getCustomParameters(),
       parameters: this.parameters,
       daemonPort: this.daemonPort,
       menu: this.getMenuItems(),
-      displayName: JceCryptonight.displayName,
+      displayName: XmrigAmd.displayName,
     };
   }
 }

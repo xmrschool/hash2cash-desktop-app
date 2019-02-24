@@ -122,6 +122,14 @@ export class LocalStorage extends EventEmitter {
     localStorage.poolsReport = JSON.stringify(val);
   }
 
+  static get smartStrategy(): boolean | null {
+    return safeParse(localStorage.smartStrategy);
+  }
+
+  static set smartStrategy(val: boolean | null) {
+    localStorage.smartStrategy = JSON.stringify(val);
+  }
+
   // ToDo typings
   static get availablePorts(): number[] | null {
     return safeParse(localStorage.availablePorts);

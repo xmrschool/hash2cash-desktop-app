@@ -21,6 +21,7 @@ import { LocalStorage } from '../../renderer/utils/LocalStorage';
 import '../../core/raven';
 import { clearPids, getRunningPids } from './RunningPids';
 import { PoolResolver } from '../../core/diagnostics/tests/poolResolver';
+import { enableStrategyIfNeeded, triggerDisable } from './smart';
 
 const logger = require('debug')('app:miner:server');
 const koa = new Koa();
@@ -131,6 +132,8 @@ router.get('/workers/:action(start|stop|reload)', async ctx => {
     }
   }
 
+  triggerDisable();
+
   ctx.body = { success: true, reloaded };
 });
 
@@ -161,6 +164,15 @@ router.get('/workers/:id/:action(start|stop|reload)', async ctx => {
 
       return;
     }
+
+    // Change the active one.
+    if (action === 'start') {
+      const key = `active_${worker.usesHardware[0]}`;
+
+      localStorage[key] = worker.workerName;
+    }
+
+    triggerDisable();
 
     await workQueue.add(async () => worker[action]());
     if (mustCommit) worker.commit();
@@ -253,6 +265,12 @@ router.get('/workers/:id', async ctx => {
   }
 });
 
+router.get('/updateStrategyState', async ctx => {
+  enableStrategyIfNeeded();
+
+  ctx.body = { success: true };
+});
+
 koa.use(router.routes());
 
 ipcRenderer.on('quit', async () => {
@@ -321,13 +339,13 @@ if (!localStorage.minerAccessKey) {
   localStorage.minerAccessKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
-(new PoolResolver()).resolve().then(d => {
-  console.log('What pools are alive: ', d);
+(new PoolResolver()).resolve().then(() => {
 });
 
 attemptToTerminateMiners()
   .then(() => killUnkilledProccesses()) // A trick to terminate miners that are not somehow closed
   .then(() => updateWorkersInCache())
+  .then(() => enableStrategyIfNeeded())
   .then(() =>
     getPort(8024).then(port => {
       listen(port);

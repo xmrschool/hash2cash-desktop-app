@@ -95,6 +95,10 @@ export abstract class BaseWorker<P extends string> implements IWorker<P> {
 
   abstract getMenuItems(): MenuPicks;
 
+  applyUltimateSettings() {
+    return true;
+  }
+
   openInExplorer(): MenuPick {
     return {
       id: 'explorer',

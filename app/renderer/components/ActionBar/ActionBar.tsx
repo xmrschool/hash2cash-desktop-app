@@ -41,6 +41,7 @@ export default class ActionBar extends React.Component<Props> {
   runEverything(action: 'stop' | 'start') {
     const workers = minerApi.findWorkersInView();
 
+    console.log('Workers here: ', workers.gpu!.running, workers.gpu!.name);
     if (
       workers.gpu &&
       workers.gpu.running === (action === 'stop')

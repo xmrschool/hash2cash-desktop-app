@@ -18,9 +18,10 @@ import { findAPortNotInUse } from '../../../core/portfinder';
 export type Parameteres = 'power';
 
 const maps: any = {
+  superOptimized: [12, 300],
   optimized: [12, 200],
   middle: [10, 120],
-  speed: [8, 100],
+  full: [8, 100],
 };
 
 const debug = require('debug')('app:workers:xmrigNvidia');
@@ -236,13 +237,14 @@ export default class XmrigNvidia extends BaseWorker<Parameteres> {
         );
       }
 
-      await attemptToTerminateMiners(['jce', 'xmrig']);
+      await attemptToTerminateMiners(['jce']);
       if (this.daemon && this.daemon.kill) {
         try {
           await this.stop();
         } catch (e) {}
       }
 
+      this.running = true;
       this.daemon = spawn(fullyPath, args);
       this.runningSince = moment();
       this.pid = this.daemon.pid;
@@ -250,6 +252,7 @@ export default class XmrigNvidia extends BaseWorker<Parameteres> {
       addRunningPid(this.pid);
 
       this.daemon.stdout.on('data', data => {
+        this.running = true;
         if (debug.enabled)
           debug(
             '%c[STDOUT] %c\n%s',

@@ -1,7 +1,7 @@
 {
   "name": "hashtocash",
   "productName": "Hash to Cash",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "description": "Hash to cash allows you to mine cryptocurrencies and transform them directly to fiat. Future is here!",
   "main": "app/main/main.js",
   "scripts": {
@@ -126,8 +126,8 @@
     "auto-launch": "^5.0.5",
     "classnames": "^2.2.5",
     "compare-versions": "^3.1.0",
-    "cpuid-detector": "file:../deps/CpuIdDetector",
-    "cuda-detector": "file:../deps/cuda-detector",
+    "cpuid-detector": "file:../electron-deps/cpuid-detector",
+    "cuda-detector": "file:../electron-deps/cuda-detector",
     "cyrillic-to-translit-js": "^2.1.0",
     "decompress-zip": "^0.3.0",
     "electron-log": "^3.0.1",
@@ -147,11 +147,11 @@
     "node-7z": "^1.1.0",
     "node-machine-id": "^1.1.10",
     "node-powershell": "^4.0.0",
-    "opencl-detector": "file:../deps/opencl-detector",
+    "opencl-detector": "file:../electron-deps/opencl-detector",
     "p-queue": "^3.1.0",
     "progressbar.js": "^1.0.1",
     "raven": "^2.4.2",
-    "react": "^16.2.0",
+    "react": "^16.8.3",
     "request": "^2.85.0",
     "request-progress": "^3.0.0",
     "socket.io": "^2.0.4",
@@ -186,7 +186,7 @@
     "@types/node-powershell": "^3.1.0",
     "@types/p-queue": "^3.0.0",
     "@types/prop-types": "^15.5.2",
-    "@types/react": "^16.4.16",
+    "@types/react": "^16.8.4",
     "@types/react-dom": "^16.0.9",
     "@types/react-hot-loader": "^4.1.0",
     "@types/react-intl": "^2.3.5",
@@ -244,8 +244,8 @@
     "node-loader": "^0.6.0",
     "node-sass": "^4.9.0",
     "prettier": "^1.10.2",
-    "react-dom": "^16.2.0",
-    "react-hot-loader": "^4.0.0",
+    "react-dom": "^16.8.3",
+    "react-hot-loader": "^4.7.1",
     "react-intl": "^2.4.0",
     "react-redux": "^6.0.1",
     "react-router": "^4.2.0",
@@ -283,8 +283,5 @@
   "devEngines": {
     "node": ">=6.x",
     "npm": ">=3.x"
-  },
-  "optionalDependencies": {
-    "fsevents": "^1.2.4"
   }
 }

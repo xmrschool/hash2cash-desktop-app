@@ -29,6 +29,5 @@ export default function elevate(
   const p = params(options, callback);
   const command =
     '"' + path.join(getWindowsUtils(), 'elevate.cmd') + '" ' + cmd;
-  console.log('Elevating command..', command);
   return exec(command, p.options, p.callback);
 }

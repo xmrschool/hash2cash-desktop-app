@@ -225,7 +225,7 @@ export class InitializationState {
       this.benchmarkSecsLeft = TOTAL_BENCHMARK_TIME * workers.length;
 
       debug('[benchmark] starting a real benchmark');
-      await this.nextMiner();
+      // await this.nextMiner();
 
       const results = minerObserver.workers.map(result => ({
         speed: result.speedPerMinute,
@@ -243,6 +243,8 @@ export class InitializationState {
       this.everythingDone = true;
 
       debug('[benchmark] benchmark has been done!', localStorage.benchmark);
+
+      resolve();
     });
   }
 
@@ -257,6 +259,11 @@ export class InitializationState {
       }
       const miner = this.benchmarkQueue[this.benchmarkQueueIndex];
 
+      if (miner.name === 'GpuCryptonight') {
+        this.benchmarkQueueIndex = this.benchmarkQueueIndex + 1;
+
+        return await this.nextMiner();
+      }
       debug('[benchmark] starting miner or timeout(10000)...');
       await Promise.race([sleep(10000), miner._data.start(false)]);
       miner.start();

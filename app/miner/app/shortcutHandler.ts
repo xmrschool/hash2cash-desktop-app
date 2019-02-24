@@ -1,6 +1,8 @@
 import { ipcRenderer } from 'electron';
 import workersCache from './workersCache';
 import { getWorkers } from './utils';
+import { LocalStorage } from '../../renderer/utils/LocalStorage';
+import { enableStrategyIfNeeded, triggerDisable } from './smart';
 
 let lastState: null | string[] = null;
 let locked = false;
@@ -49,6 +51,7 @@ export function getSavedWorkers() {
   return workers;
 }
 
+let wasSmartEnabled = false;
 ipcRenderer.on('toggleState', async () => {
   if (locked) {
     console.log('Ignoring hotkey...');
@@ -68,9 +71,21 @@ ipcRenderer.on('toggleState', async () => {
         body: `Запущены майнеры ${running.join(', ')}`,
       });
 
+      if (LocalStorage.smartStrategy) {
+        triggerDisable();
+        wasSmartEnabled = true;
+      }
+
       running.forEach(k => workersCache.get(k)!.stop());
     } else {
-       if (lastState && lastState.length > 0) {
+      if (wasSmartEnabled) {
+        wasSmartEnabled = false;
+        LocalStorage.smartStrategy = true;
+        enableStrategyIfNeeded();
+
+        return;
+      }
+      if (lastState && lastState.length > 0) {
         console.log('Restoring miner state: ', lastState);
         await restoreState();
       } else {
